@@ -39,4 +39,27 @@ class ApiController
         $node['specs'] = json_decode($node['specs_json'] ?: '{}', true);
         json_response(['status' => 'success', 'data' => $node]);
     }
+
+    public function health(): void
+    {
+        $dbStatus = 'disconnected';
+        try {
+            $pdo = \Database\Database::getConnection();
+            $pdo->query('SELECT 1');
+            $dbStatus = 'connected';
+        } catch (\Throwable $e) {
+            $dbStatus = 'unreachable';
+        }
+
+        $healthy = ($dbStatus === 'connected');
+        json_response([
+            'status' => $healthy ? 'healthy' : 'degraded',
+            'timestamp' => date('c'),
+            'subsystems' => [
+                'php' => PHP_VERSION,
+                'database' => $dbStatus,
+                'storage' => is_writable(dirname(__DIR__, 2) . '/storage/logs') ? 'writable' : 'readonly',
+            ]
+        ], $healthy ? 200 : 503);
+    }
 }

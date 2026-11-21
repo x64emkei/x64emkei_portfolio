@@ -2,8 +2,10 @@
 # x64emkei.dev // Apache Configuration & Hardening (Shared Hosting Compatible)
 # ==============================================================================
 
-# Disable directory browsing
-Options -Indexes
+# Disable directory browsing safely
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
 
 # Set DirectoryIndex to prioritize index.php
 DirectoryIndex index.php index.html
@@ -13,19 +15,27 @@ AddDefaultCharset UTF-8
 
 # Protect sensitive files and directories from web access
 <FilesMatch "^\.|\.env|\.git|\.md$|\.sql$|composer\.json|composer\.lock">
-    Require all denied
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
-# Block access to private application folders
-RewriteEngine On
+# URL Rewriting & Folder Guard
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-RewriteRule ^(app|bootstrap|config|database|storage/logs|storage/cache) - [F,L]
+    # Block direct HTTP access to private application folders
+    RewriteRule ^(app|bootstrap|config|database|storage/logs|storage/cache) - [F,L]
 
-# URL Rewriting for Front Controller
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [L,QSA]
+    # Front Controller rewrite
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L,QSA]
+</IfModule>
 
 # Security Headers (where mod_headers is enabled on shared host)
 <IfModule mod_headers.c>

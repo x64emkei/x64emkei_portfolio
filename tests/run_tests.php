@@ -206,6 +206,38 @@ it("UploadService enforces directory security and rejects fake files", function(
 });
 
 // ----------------------------------------------------
+// 7. System Health Endpoint & HttpException
+// ----------------------------------------------------
+it("HttpException carries accurate status code and health diagnostics function", function() {
+    $e = new \App\Services\HttpException(503, "Service Offline");
+    if ($e->getStatusCode() !== 503) {
+        throw new Exception("HttpException failed to preserve status code 503.");
+    }
+
+    $cmd = 'C:\xampp\php\php.exe -r "require \'bootstrap/autoload.php\'; require \'bootstrap/app.php\'; require \'routes/web.php\'; (new \App\Controllers\ApiController())->health();"';
+    $output = shell_exec($cmd);
+    $data = json_decode((string)$output, true);
+    if (!isset($data['status'])) {
+        throw new Exception("Health endpoint failed to return structured status. Raw: " . $output);
+    }
+});
+
+// ----------------------------------------------------
+// 8. Resilient Logging & Security Redaction
+// ----------------------------------------------------
+it("Application logger redacts sensitive credentials from log stream", function() {
+    app_log('INFO', 'Test security logging', [
+        'password' => 'SuperSecret123',
+        'db_pass' => 'DBPassword456',
+        'safe_field' => 'TelemetryData'
+    ]);
+    $logContent = (string)@file_get_contents(dirname(__DIR__) . '/storage/logs/app.log');
+    if (str_contains($logContent, 'SuperSecret123') || str_contains($logContent, 'DBPassword456')) {
+        throw new Exception("Sensitive credentials leaked into log file!");
+    }
+});
+
+// ----------------------------------------------------
 // Summary
 // ----------------------------------------------------
 echo "\n------------------------------------------------------\n";

@@ -33,6 +33,7 @@ $router = new Router();
 // 1. PUBLIC ROUTES
 // ==========================================
 $router->get('/', [HomeController::class, 'index']);
+$router->get('health', [ApiController::class, 'health']);
 $router->post('contact', [ContactController::class, 'submit'], [CsrfMiddleware::class]);
 
 // API Endpoints for dynamic client modals & filters
@@ -55,6 +56,7 @@ $router->post('admin/logout', [AuthController::class, 'logout'], [CsrfMiddleware
 // ==========================================
 $router->get('admin', [DashboardController::class, 'index'], [AuthMiddleware::class]);
 $router->get('admin/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
+$router->get('admin/system-health', [DashboardController::class, 'systemHealth'], [AuthMiddleware::class]);
 
 // Profile
 $router->get('admin/profile', [ProfileController::class, 'edit'], [AuthMiddleware::class]);
