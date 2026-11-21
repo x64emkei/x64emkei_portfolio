@@ -25,7 +25,7 @@ if (Test-Path $zipFile) {
 New-Item -ItemType Directory -Path $deployDir -Force | Out-Null
 
 # 2. Copy production directories
-$copyDirs = @("app", "bootstrap", "config", "database", "images", "storage")
+$copyDirs = @("app", "bootstrap", "config", "database", "images", "storage", "routes")
 foreach ($d in $copyDirs) {
     $src = "$rootDir\$d"
     $dst = "$deployDir\$d"
