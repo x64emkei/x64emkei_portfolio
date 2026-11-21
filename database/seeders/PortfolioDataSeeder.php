@@ -14,23 +14,27 @@ class PortfolioDataSeeder
         $this->pdo = $pdo;
     }
 
-    public function run(): void
+    public function run(bool $force = false): void
     {
-        $this->seedProfile();
-        $this->seedProjects();
-        $this->seedHardwareNodes();
-        $this->seedSkills();
-        $this->seedExperiences();
-        $this->seedEducation();
-        $this->seedServices();
-        $this->seedSocialLinks();
-        $this->seedSiteSettings();
+        $this->seedProfile($force);
+        $this->seedProjects($force);
+        $this->seedHardwareNodes($force);
+        $this->seedSkills($force);
+        $this->seedExperiences($force);
+        $this->seedEducation($force);
+        $this->seedServices($force);
+        $this->seedSocialLinks($force);
+        $this->seedSiteSettings($force);
     }
 
-    private function seedProfile(): void
+    private function seedProfile(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `profile`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `profile`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `profile`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $sql = "INSERT INTO `profile` 
             (`full_name`, `title`, `tagline`, `bio_short`, `bio_full`, `avatar_url`, `cover_url`, `location`, `availability_status`, `resume_url`, `email`)
@@ -52,10 +56,14 @@ class PortfolioDataSeeder
         ]);
     }
 
-    private function seedProjects(): void
+    private function seedProjects(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `projects`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `projects`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `projects`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $projects = [
             [
@@ -494,10 +502,14 @@ class PortfolioDataSeeder
         }
     }
 
-    private function seedHardwareNodes(): void
+    private function seedHardwareNodes(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `hardware_nodes`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `hardware_nodes`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `hardware_nodes`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $nodes = [
             [
@@ -577,10 +589,14 @@ class PortfolioDataSeeder
         }
     }
 
-    private function seedSkills(): void
+    private function seedSkills(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `skills`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `skills`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `skills`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $skills = [
             // Languages
@@ -614,10 +630,14 @@ class PortfolioDataSeeder
         }
     }
 
-    private function seedExperiences(): void
+    private function seedExperiences(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `experiences`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `experiences`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `experiences`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $experiences = [
             [
@@ -662,10 +682,14 @@ class PortfolioDataSeeder
         }
     }
 
-    private function seedEducation(): void
+    private function seedEducation(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `education`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `education`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `education`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $edu = [
             [
@@ -695,10 +719,14 @@ class PortfolioDataSeeder
         }
     }
 
-    private function seedServices(): void
+    private function seedServices(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `services`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `services`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `services`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $services = [
             [
@@ -740,10 +768,14 @@ class PortfolioDataSeeder
         }
     }
 
-    private function seedSocialLinks(): void
+    private function seedSocialLinks(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `social_links`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `social_links`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `social_links`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $links = [
             ['github', 'GitHub', 'https://github.com/x64_emkei', 1],
@@ -764,10 +796,14 @@ class PortfolioDataSeeder
         }
     }
 
-    private function seedSiteSettings(): void
+    private function seedSiteSettings(bool $force = false): void
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM `site_settings`");
-        if ((int)$stmt->fetchColumn() > 0) return;
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `site_settings`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `site_settings`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
 
         $settings = [
             ['site_title', 'Michael Benedict Ordenes | x64emkei.dev', 'general', 'Public title of the portfolio'],

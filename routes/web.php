@@ -57,6 +57,8 @@ $router->post('admin/logout', [AuthController::class, 'logout'], [CsrfMiddleware
 $router->get('admin', [DashboardController::class, 'index'], [AuthMiddleware::class]);
 $router->get('admin/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
 $router->get('admin/system-health', [DashboardController::class, 'systemHealth'], [AuthMiddleware::class]);
+$router->get('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class]);
+$router->post('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class, CsrfMiddleware::class]);
 
 // Profile
 $router->get('admin/profile', [ProfileController::class, 'edit'], [AuthMiddleware::class]);

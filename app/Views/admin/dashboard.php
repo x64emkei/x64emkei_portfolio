@@ -35,6 +35,20 @@
     </div>
 </div>
 
+<!-- Database Telemetry Sync Card -->
+<div class="admin-card" style="border-left: 3px solid var(--admin-cyan); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+    <div>
+        <h3 style="color: var(--admin-cyan); margin: 0 0 4px 0; font-size: 0.95rem;">// PORTFOLIO DATASET SYNCHRONIZATION</h3>
+        <p style="color: #94a3b8; margin: 0; font-size: 0.8rem;">Update or restore MySQL with all 16 projects, 6 hardware nodes, skills, education, and services from your portfolio archives.</p>
+    </div>
+    <form method="POST" action="<?= e(url('admin/database/sync')) ?>" onsubmit="return confirm('Synchronize database with portfolio archives?');">
+        <?= csrf_field() ?>
+        <button type="submit" class="btn-admin btn-admin-primary" style="font-size: 0.78rem; padding: 7px 16px;">
+            &#x21bb; SYNC DATASET TO MYSQL
+        </button>
+    </form>
+</div>
+
 <!-- Two Column Info Grid -->
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
     <!-- Recent Transmitted Messages -->

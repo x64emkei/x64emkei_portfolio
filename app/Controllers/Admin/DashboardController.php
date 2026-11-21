@@ -100,4 +100,23 @@ class DashboardController
 
         json_response($health, ($health['status'] === 'OPTIMAL') ? 200 : 503);
     }
+
+    public function syncDatabase(): void
+    {
+        try {
+            $pdo = \Database\Database::getConnection();
+            $runner = new \Database\MigrationRunner($pdo);
+            $runner->run();
+
+            $seeder = new \Database\Seeders\PortfolioDataSeeder($pdo);
+            $seeder->run(true);
+
+            \App\Models\ActivityLog::record(\App\Services\AuthService::id(), 'DATABASE_SYNC', 'Synchronized database with authentic portfolio dataset');
+            flash('success', 'Database synchronized with full portfolio archives (16 projects, 6 hardware nodes, skills, education, and services).');
+        } catch (\Throwable $e) {
+            flash('error', 'Database sync failed: ' . $e->getMessage());
+        }
+
+        redirect('admin/dashboard');
+    }
 }

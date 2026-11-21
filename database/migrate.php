@@ -37,13 +37,15 @@ try {
     $stmt = $pdo->query("SELECT COUNT(*) FROM `projects`");
     $projectCount = (int)$stmt->fetchColumn();
 
-    if ($projectCount === 0) {
-        echo "\n[INFO] Projects table empty. Executing PortfolioDataSeeder...\n";
+    $force = in_array('--force', $argv ?? [], true) || in_array('-f', $argv ?? [], true);
+
+    if ($projectCount === 0 || $force) {
+        echo "\n[INFO] Executing PortfolioDataSeeder (Force refresh: " . ($force ? 'YES' : 'NO') . ")...\n";
         $seeder = new PortfolioDataSeeder($pdo);
-        $seeder->run();
+        $seeder->run($force);
         echo "[SUCCESS] Database seeded with full portfolio dataset (projects, hardware nodes, profile, skills, education, services).\n";
     } else {
-        echo "[INFO] Projects table already contains {$projectCount} records. Skipping seeder.\n";
+        echo "[INFO] Projects table already contains {$projectCount} records. (Use --force to refresh)\n";
     }
 
     echo "\nDatabase is ready for production!\n\n";
