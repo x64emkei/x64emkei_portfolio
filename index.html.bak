@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Michael Benedict Ordenes — Computer Science Student, IT Enthusiast & Developer portfolio.">
+    <title>My Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Mobile Navigation Toggle -->
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+    </button>
+
+    <!-- Sidebar Backdrop for Mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="profile-avatar">
+                <span class="avatar-text">MBO</span>
+                <span class="status-indicator" title="Active & Available"></span>
+            </div>
+            <h2 class="profile-name">Michael Benedict Ordenes</h2>
+            <p class="profile-role">CS Student • IT Enthusiast • Developer</p>
+            <span class="badge-status">Open for Opportunities</span>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main Navigation">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-section="home">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link" data-section="about">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="5"/>
+                            <path d="M20 21a8 8 0 0 0-16 0"/>
+                        </svg>
+                        <span>About</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link" data-section="services">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2"/>
+                            <path d="m9 8 6 4-6 4Z"/>
+                        </svg>
+                        <span>Services</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#portfolio" class="nav-link" data-section="portfolio">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        <span>Portfolio</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link" data-section="contact">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        <span>Contact</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <!-- Theme Toggle Button -->
+            <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light/dark theme">
+                <span class="theme-icon-container">
+                    <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                    </svg>
+                </span>
+                <span class="theme-label" id="themeLabel">Dark Mode</span>
+            </button>
+
+            <!-- Social Links -->
+            <div class="social-links">
+                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                        <path d="M9 18c-4.51 2-5-2-7-2"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/michael-ordenes/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect width="4" height="12" x="2" y="9"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+                <a href="mailto:mordenes@acm.org" class="social-btn" aria-label="Email Michael">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="20" height="16" x="2" y="4" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="copyright-text">&copy; 2026 Michael Benedict Ordenes</p>
+        </div>
+    </aside>
+
+    <!-- Main Content Area: Center Fixed Width View -->
+    <main class="main-content">
+        <div class="view-wrapper">
+            
+            <!-- ================= HOME SECTION VIEW ================= -->
+            <section id="home" class="page-view active-view" aria-label="Home View">
+                <div class="hero-container">
+                    <div class="hero-tag">
+                        <span class="tag-pulse"></span>
+                        <span>CS Student • IT Enthusiast • Developer</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        Michael Benedict <span class="text-gradient">Ordenes</span>
+                    </h1>
+
+                    <p class="hero-subtitle-badge">
+                        Computer Science Student &bull; IT Enthusiast &bull; Developer
+                    </p>
+
+                    <p class="hero-description">
+                        Building practical software, experimenting with technology, and exploring systems, networking, and computing.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#portfolio" class="btn btn-primary nav-trigger" data-target="portfolio">
+                            <span>View Projects</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </a>
+                        <a href="#contact" class="btn btn-outline nav-trigger" data-target="contact">
+                            <span>Contact Me</span>
+                        </a>
+                    </div>
+
+                    <!-- Focus Area Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-badge">Code</span>
+                            <span class="stat-number">Dev</span>
+                            <span class="stat-label">Software & Web Apps</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-badge">Servers</span>
+                            <span class="stat-number">Lab</span>
+                            <span class="stat-label">Proxmox & Docker</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-badge">Mesh</span>
+                            <span class="stat-number">Net</span>
+                            <span class="stat-label">DNS, VPN & Tailscale</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-badge">Retro</span>
+                            <span class="stat-number">Sys</span>
+                            <span class="stat-label">Legacy & Hardware</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ABOUT SECTION VIEW ================= -->
+            <section id="about" class="page-view" aria-label="About View">
+                <div class="section-header">
+                    <span class="section-subtitle">Biography & Background</span>
+                    <h2 class="section-title">About Me</h2>
+                    <div class="section-divider"></div>
+                </div>
+
+                <div class="about-grid">
+                    <!-- Bio Card -->
+                    <div class="about-bio-card">
+                        <h3 class="about-heading">Curious mind passionate about systems, code, and hardware.</h3>
+                        <p class="about-text">
+                            I’m a Computer Science student interested in software development, IT infrastructure, networking, systems administration, and emerging technologies.
+                        </p>
+                        <p class="about-text">
+                            I enjoy turning ideas into functional projects and experimenting with both modern and legacy hardware/software.
+                        </p>
+
+                        <!-- Education Block -->
+                        <div class="education-block">
+                            <h4 class="block-heading">Education</h4>
+                            <div class="edu-item">
+                                <div class="edu-dot"></div>
+                                <div>
+                                    <div class="edu-degree">Bachelor of Science in Computer Science</div>
+                                    <div class="edu-school">Laguna College of Business and Arts</div>
+                                </div>
+                            </div>
+                            <div class="edu-item">
+                                <div class="edu-dot"></div>
+                                <div>
+                                    <div class="edu-degree">Senior High School &ndash; STEM</div>
+                                    <div class="edu-school">St. Vincent College of Cabuyao</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certifications -->
+                        <div class="cert-block">
+                            <h4 class="block-heading">Certifications</h4>
+                            <div class="cert-item">
+                                <span class="cert-icon">&bull;</span>
+                                <span class="cert-name">Certified Six Sigma White Belt</span>
+                            </div>
+                            <div class="cert-item">
+                                <span class="cert-icon">&bull;</span>
+                                <span class="cert-name">EF SET English Certificate &mdash; C1 Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills Card -->
+                    <div class="about-skills-card">
+                        <h3 class="about-heading">Technical Skills</h3>
+
+                        <div class="skills-category">
+                            <h4 class="category-title">Programming</h4>
+                            <div class="pill-group">
+                                <span class="skill-pill">HTML</span>
+                                <span class="skill-pill">CSS</span>
+                                <span class="skill-pill">JavaScript</span>
+                                <span class="skill-pill">Python</span>
+                                <span class="skill-pill">Java</span>
+                                <span class="skill-pill">C#</span>
+                                <span class="skill-pill">MySQL</span>
+                            </div>
+                        </div>
+
+                        <div class="skills-category">
+                            <h4 class="category-title">Web</h4>
+                            <div class="pill-group">
+                                <span class="skill-pill">Vanilla JS</span>
+                                <span class="skill-pill">Responsive Design</span>
+                                <span class="skill-pill">CSS Flexbox / Grid</span>
+                            </div>
+                        </div>
+
+                        <div class="skills-category">
+                            <h4 class="category-title">Systems & Virtualization</h4>
+                            <div class="pill-group">
+                                <span class="skill-pill">Windows</span>
+                                <span class="skill-pill">Linux</span>
+                                <span class="skill-pill">Proxmox</span>
+                                <span class="skill-pill">Docker</span>
+                            </div>
+                        </div>
+
+                        <div class="skills-category">
+                            <h4 class="category-title">Networking</h4>
+                            <div class="pill-group">
+                                <span class="skill-pill">DNS</span>
+                                <span class="skill-pill">VPN</span>
+                                <span class="skill-pill">Tailscale</span>
+                                <span class="skill-pill">Network Administration</span>
+                            </div>
+                        </div>
+
+                        <div class="skills-category">
+                            <h4 class="category-title">Tools & Workflow</h4>
+                            <div class="pill-group">
+                                <span class="skill-pill">Git</span>
+                                <span class="skill-pill">GitHub</span>
+                                <span class="skill-pill">VS Code</span>
+                                <span class="skill-pill">Antigravity</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience & Activities -->
+                <div class="timeline-container">
+                    <h3 class="timeline-heading">Experience & Activities</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-bullet"></div>
+                            <div class="activity-text">Computer Science student focused on software engineering and system architecture.</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-bullet"></div>
+                            <div class="activity-text">Active student organization involvement and academic collaboration.</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-bullet"></div>
+                            <div class="activity-text">Practical web and software development across diverse stacks.</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-bullet"></div>
+                            <div class="activity-text">Homelab and IT infrastructure experimentation with self-hosted virtualization.</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-bullet"></div>
+                            <div class="activity-text">Hardware restoration, diagnostics, component repair, and troubleshooting.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= SERVICES SECTION VIEW ================= -->
+            <section id="services" class="page-view" aria-label="Services View">
+                <div class="section-header">
+                    <span class="section-subtitle">What I Do</span>
+                    <h2 class="section-title">Services & Specialties</h2>
+                    <div class="section-divider"></div>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"/>
+                                <polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Web & Software Development</h3>
+                        <p class="service-description">
+                            Designing and coding functional web applications and software solutions with clean, maintainable, dependency-light code.
+                        </p>
+                        <ul class="service-features">
+                            <li>Vanilla JS, HTML5 & Modern CSS</li>
+                            <li>Python, Java, & C# Programming</li>
+                            <li>Relational Database Modeling (MySQL)</li>
+                            <li>Responsive, Accessible Interface Layouts</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                <path d="M7 7h10"/>
+                                <path d="M7 12h10"/>
+                                <path d="M7 17h10"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Homelab & Infrastructure</h3>
+                        <p class="service-description">
+                            Setting up and maintaining virtualized homelab environments, containers, and resilient self-hosted platforms.
+                        </p>
+                        <ul class="service-features">
+                            <li>Proxmox VE Hypervisor Management</li>
+                            <li>Docker Containerization & Stacks</li>
+                            <li>Debian & Linux Server Configuration</li>
+                            <li>Service Uptime & Resource Monitoring</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M2 12h20"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Networking & Systems</h3>
+                        <p class="service-description">
+                            Configuring secure remote connectivity, internal mesh networks, and reliable infrastructure routing.
+                        </p>
+                        <ul class="service-features">
+                            <li>Tailscale Mesh & Secure VPN Setup</li>
+                            <li>DNS Management & Subdomain Routing</li>
+                            <li>Windows & Linux System Administration</li>
+                            <li>Local & Network Access Control</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect width="20" height="14" x="2" y="3" rx="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Hardware & Legacy Systems</h3>
+                        <p class="service-description">
+                            Restoring, configuring, and modernizing vintage computing hardware alongside modern PC diagnostic troubleshooting.
+                        </p>
+                        <ul class="service-features">
+                            <li>Legacy OS Configuration & Restoration</li>
+                            <li>Hardware Diagnostics & Component Testing</li>
+                            <li>Retro Computing Modernization</li>
+                            <li>Benchmarking & System Maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= PORTFOLIO SECTION VIEW ================= -->
+            <section id="portfolio" class="page-view" aria-label="Portfolio View">
+                <div class="section-header">
+                    <span class="section-subtitle">Featured Work</span>
+                    <h2 class="section-title">Projects Showcase</h2>
+                    <div class="section-divider"></div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="portfolio-filter-group" role="tablist" aria-label="Portfolio Category Filter">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="systems">Systems & Homelab</button>
+                    <button class="filter-btn" data-filter="web">Web Projects</button>
+                    <button class="filter-btn" data-filter="legacy">Legacy & Hardware</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="portfolio-grid" id="portfolioGrid">
+                    <!-- Project 1: XpressPOINT -->
+                    <article class="project-card" data-category="systems">
+                        <div class="project-banner">
+                            <div class="project-badge">Homelab & Systems</div>
+                            <div class="project-mockup mockup-analytics">
+                                <div class="mockup-header">
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-title">xpresspoint.local</span>
+                                </div>
+                                <div class="mockup-body">
+                                    <div class="mockup-chart-bar h-80"></div>
+                                    <div class="mockup-chart-bar h-50"></div>
+                                    <div class="mockup-chart-bar h-95"></div>
+                                    <div class="mockup-chart-bar h-65"></div>
+                                    <div class="mockup-chart-bar h-85"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">XpressPOINT</h3>
+                            <p class="project-description">
+                                Homelab management and monitoring portal designed for managing services, networking, and infrastructure.
+                            </p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Dashboard</span>
+                                <span class="tech-tag">Homelab</span>
+                                <span class="tech-tag">Networking</span>
+                                <span class="tech-tag">Systems</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#contact" class="card-link primary-link nav-trigger" data-target="contact">Inquire Details</a>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="card-link secondary-link">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2: Homelab Infrastructure -->
+                    <article class="project-card" data-category="systems">
+                        <div class="project-banner">
+                            <div class="project-badge">Infrastructure</div>
+                            <div class="project-mockup mockup-devlink">
+                                <div class="mockup-header">
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-title">proxmox-node-cluster</span>
+                                </div>
+                                <div class="mockup-body code-lines">
+                                    <div class="code-line w-75"></div>
+                                    <div class="code-line w-50"></div>
+                                    <div class="code-line w-85"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Homelab Infrastructure</h3>
+                            <p class="project-description">
+                                A personal environment built around Proxmox, Debian, Docker, DNS, VPN, and self-hosted services.
+                            </p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Proxmox</span>
+                                <span class="tech-tag">Debian</span>
+                                <span class="tech-tag">Docker</span>
+                                <span class="tech-tag">DNS</span>
+                                <span class="tech-tag">VPN</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#contact" class="card-link primary-link nav-trigger" data-target="contact">Explore Setup</a>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="card-link secondary-link">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3: Web Projects -->
+                    <article class="project-card" data-category="web">
+                        <div class="project-banner">
+                            <div class="project-badge">Web Application</div>
+                            <div class="project-mockup mockup-kanban">
+                                <div class="mockup-header">
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-title">web-experiments</span>
+                                </div>
+                                <div class="mockup-body kanban-columns">
+                                    <div class="kanban-col">
+                                        <div class="kanban-card"></div>
+                                        <div class="kanban-card"></div>
+                                    </div>
+                                    <div class="kanban-col">
+                                        <div class="kanban-card"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Web Projects</h3>
+                            <p class="project-description">
+                                Various websites and web applications focused on UI design, functionality, and experimentation.
+                            </p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Vanilla JS</span>
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">UI Design</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#contact" class="card-link primary-link nav-trigger" data-target="contact">View Showcase</a>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="card-link secondary-link">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 4: Legacy Computing Projects -->
+                    <article class="project-card" data-category="legacy">
+                        <div class="project-banner">
+                            <div class="project-badge">Hardware & Restoration</div>
+                            <div class="project-mockup mockup-cloud">
+                                <div class="mockup-header">
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-dot"></span>
+                                    <span class="mock-title">legacy-rig-bios</span>
+                                </div>
+                                <div class="mockup-body ui-tokens">
+                                    <div class="token-circle red"></div>
+                                    <div class="token-circle gray-dark"></div>
+                                    <div class="token-circle gray-light"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Legacy Computing Projects</h3>
+                            <p class="project-description">
+                                Restoration, configuration, and modernization of older computers and operating systems.
+                            </p>
+                            <div class="project-tech-tags">
+                                <span class="tech-tag">Hardware Restoration</span>
+                                <span class="tech-tag">Legacy OS</span>
+                                <span class="tech-tag">Diagnostics</span>
+                                <span class="tech-tag">Troubleshooting</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#contact" class="card-link primary-link nav-trigger" data-target="contact">Read More</a>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="card-link secondary-link">GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- ================= CONTACT SECTION VIEW ================= -->
+            <section id="contact" class="page-view" aria-label="Contact View">
+                <div class="section-header">
+                    <span class="section-subtitle">Get In Touch</span>
+                    <h2 class="section-title">Let’s build something.</h2>
+                    <div class="section-divider"></div>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- Info Panel -->
+                    <div class="contact-info-panel">
+                        <h3 class="contact-panel-title">Let’s connect.</h3>
+                        <p class="contact-panel-description">
+                            Interested in collaborating, discussing technology, or checking out my projects? Reach out anytime!
+                        </p>
+
+                        <div class="contact-action-links">
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="contact-chip-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                                </svg>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-chip-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                    <rect width="4" height="12" x="2" y="9"/>
+                                    <circle cx="4" cy="4" r="2"/>
+                                </svg>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="mailto:contact@michaelordenes.dev" class="contact-chip-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                                </svg>
+                                <span>Email</span>
+                            </a>
+                        </div>
+
+                        <div class="contact-card-list">
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                                    </svg>
+                                </div>
+                                <div class="contact-item-details">
+                                    <span class="contact-item-label">Direct Inquiries</span>
+                                    <a href="mailto:contact@michaelordenes.dev" class="contact-item-link">contact@michaelordenes.dev</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                </div>
+                                <div class="contact-item-details">
+                                    <span class="contact-item-label">Location</span>
+                                    <span class="contact-item-text">Laguna, Philippines</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Panel -->
+                    <div class="contact-form-panel">
+                        <form class="contact-form" id="contactForm" novalidate>
+                            <div class="form-group">
+                                <label for="userName" class="form-label">Your Name</label>
+                                <input type="text" id="userName" name="name" class="form-input" placeholder="e.g. Alex" required>
+                                <span class="form-error" id="nameError">Please enter your name</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userEmail" class="form-label">Email Address</label>
+                                <input type="email" id="userEmail" name="email" class="form-input" placeholder="e.g. alex@example.com" required>
+                                <span class="form-error" id="emailError">Please enter a valid email address</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userSubject" class="form-label">Subject</label>
+                                <input type="text" id="userSubject" name="subject" class="form-input" placeholder="Collaboration / Tech Discussion / Project" required>
+                                <span class="form-error" id="subjectError">Please enter a subject</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userMessage" class="form-label">Message</label>
+                                <textarea id="userMessage" name="message" class="form-textarea" rows="5" placeholder="Tell me what you'd like to build or discuss..." required></textarea>
+                                <span class="form-error" id="messageError">Message must be at least 10 characters</span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+                                <span class="btn-text">Send Message</span>
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast Notification Component -->
+    <div class="toast-container" id="toastContainer" role="status" aria-live="polite">
+        <div class="toast-card" id="toastCard">
+            <div class="toast-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+            <div class="toast-content">
+                <h4 class="toast-title" id="toastTitle">Success!</h4>
+                <p class="toast-message" id="toastMessage">Your message has been dispatched successfully.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
