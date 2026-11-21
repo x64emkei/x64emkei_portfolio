@@ -1,0 +1,23 @@
+#!/bin/sh
+# Auto-upload git hook: pushes commits automatically to GitHub upon successful commit
+
+# Avoid recursion or pushing during rebase/merge if in progress
+if [ -d "$(git rev-parse --git-dir)/rebase-merge" ] || [ -d "$(git rev-parse --git-dir)/rebase-apply" ]; then
+    exit 0
+fi
+
+echo ""
+echo "======================================================================"
+echo " [AUTO-UPLOAD] Pushing local commit to GitHub (origin)..."
+echo "======================================================================"
+
+git push origin HEAD 2>&1
+push_status=$?
+
+if [ $push_status -eq 0 ]; then
+    echo "[AUTO-UPLOAD] OK: Changes pushed successfully to GitHub!"
+else
+    echo "[AUTO-UPLOAD] NOTICE: Push did not complete automatically (error code: $push_status)."
+    echo "             Check your connection or run 'git push origin main' manually."
+fi
+echo ""

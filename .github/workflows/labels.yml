@@ -1,0 +1,30 @@
+name: Lint Commit Labels
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  check-labels:
+    name: Verify Conventional Commit Labels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate Commit Message Format
+        run: |
+          REGEX="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9_\.\-]+\))?!?: .+$"
+          COMMIT_MSG=$(git log -1 --pretty=%B | head -n 1)
+          echo "Inspecting commit: $COMMIT_MSG"
+          if [[ ! "$COMMIT_MSG" =~ $REGEX ]]; then
+            echo "ERROR: Commit message does not match Conventional Commit labels format."
+            echo "Allowed prefixes: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+            exit 1
+          fi
+          echo "Commit message passed label validation."

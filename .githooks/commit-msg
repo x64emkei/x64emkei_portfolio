@@ -1,0 +1,25 @@
+#!/bin/sh
+# Conventional Commit message validator
+# Enforces proper commit labels: feat, fix, style, docs, perf, refactor, chore, test, ci, build, revert
+
+commit_regex='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9_\.\-]+\))?!?: .+$'
+
+commit_message=$(head -n 1 "$1")
+
+if ! echo "$commit_message" | grep -qE "$commit_regex"; then
+    echo ""
+    echo "======================================================================"
+    echo " [COMMIT REJECTED] Improper commit label format!"
+    echo " Commit must follow Conventional Commits format, e.g.:"
+    echo "   feat: add interactive project filter"
+    echo "   fix(nav): fix mobile drawer navigation closing bug"
+    echo "   style(hero): update telemetry equalizer neon glow"
+    echo "   docs: update portfolio README with skills integration"
+    echo "   chore(deps): update git hooks"
+    echo ""
+    echo " Allowed labels: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+    echo " Your commit message was: \"$commit_message\""
+    echo "======================================================================"
+    echo ""
+    exit 1
+fi
