@@ -1,3 +1,6 @@
+<?php
+$secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +63,7 @@
                 </div>
             </div>
             <h2 class="brand-title">x64emkei<span class="brand-dot">.</span>dev</h2>
-            <span class="brand-subtitle">Michael Benedict Ordenes</span>
+            <span class="brand-subtitle"><?= e($profile['full_name'] ?? "Michael Benedict Ordenes") ?></span>
         </div>
 
         <nav class="sidebar-nav" aria-label="Main Navigation">
@@ -83,6 +86,7 @@
                         <span>About</span>
                     </a>
                 </li>
+                <?php if ($secHelper->isVisible('services', $services)): ?>
                 <li class="nav-item">
                     <a href="#services" class="nav-link" data-section="services">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -92,6 +96,8 @@
                         <span>Services</span>
                     </a>
                 </li>
+                <?php endif; ?>
+                <?php if ($secHelper->isVisible('projects', $projects)): ?>
                 <li class="nav-item">
                     <a href="#portfolio" class="nav-link" data-section="portfolio">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -101,6 +107,7 @@
                         <span>Portfolio</span>
                     </a>
                 </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a href="#contact" class="nav-link" data-section="contact">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -186,7 +193,7 @@
                     </svg>
                 </a>
             </div>
-            <p class="copyright-text">&copy; 2026 Michael Benedict Ordenes</p>
+            <p class="copyright-text"><?= e($settings['copyright_text'] ?? "© 2026 Michael Benedict Ordenes. Systems Architecture // All telemetry active.") ?></p>
         </div>
     </aside>
 
@@ -204,7 +211,7 @@
                         <div class="hero-content">
                             <div class="hero-tag">
                                 <span class="tag-pulse"></span>
-                                <span>CS Student • IT Infrastructure • Systems Builder</span>
+                                <span><?= e($profile['title'] ?? "CS Student • IT Infrastructure • Systems Builder") ?></span>
                             </div>
 
                             <h1 class="hero-title">
@@ -212,11 +219,11 @@
                             </h1>
 
                             <p class="hero-subtitle-badge">
-                                Michael Benedict Ordenes &bull; Computer Science &bull; Systems &bull; Retro Compute
+                                <?= e($profile['full_name'] ?? "Michael Benedict Ordenes") ?> &bull; <?= e($profile['tagline'] ?? "Computer Science • Systems • Retro Compute") ?>
                             </p>
 
                             <p class="hero-description">
-                                Building resilient software architectures, deploying virtualized server homelabs, and experimenting across the boundary of modern edge systems and vintage computing hardware.
+                                <?= e($profile['bio_short'] ?? "Building resilient software architectures, deploying virtualized server homelabs, and experimenting across the boundary of modern edge systems and vintage computing hardware.") ?>
                             </p>
 
                             <div class="hero-actions">
@@ -317,13 +324,10 @@
                                             <span class="win-btn win-close">&times;</span>
                                         </div>
                                     </div>
-                                    <h3 class="bento-heading">Curious mind passionate about systems, code, and hardware.</h3>
-                                    <p class="about-text">
-                                        I’m a Computer Science student interested in software development, IT infrastructure, networking, systems administration, and emerging technologies.
-                                    </p>
-                                    <p class="about-text" style="margin-top: 10px;">
-                                        I enjoy turning ideas into functional projects and experimenting with both modern and legacy hardware/software.
-                                    </p>
+                                    <h3 class="bento-heading"><?= e($profile['tagline'] ?: "Curious mind passionate about systems, code, and hardware.") ?></h3>
+                                    <div class="about-text" style="line-height: 1.7; color: #cbd5e1;">
+                                        <?= nl2br(e($profile['bio_full'] ?: $profile['bio_short'])) ?>
+                                    </div>
                                 </div>
                                 <div class="bio-card-actions">
                                     <button class="btn btn-outline" id="aboutManifestoBtn" type="button">
@@ -337,7 +341,7 @@
                                 </div>
                             </div>
                             <div class="bio-card-photo-pane">
-                                <img src="images/me_2.png" alt="Michael Benedict Ordenes" class="bio-flush-photo" loading="lazy">
+                                <img src="<?= e(asset($profile['avatar_url'] ?: "images/me_2.png")) ?>" alt="<?= e($profile['full_name'] ?? "Michael Benedict Ordenes") ?>" class="bio-flush-photo" loading="lazy">
                                 <div class="bio-photo-telemetry">
                                     <span class="tag-pulse"></span>
                                     <span class="bio-photo-label">x64emkei // OPERATOR</span>
@@ -359,38 +363,28 @@
                         <h3 class="bento-heading">Education & Credentials</h3>
 
                         <div class="edu-container">
-                            <!-- Higher Ed -->
-                            <div class="edu-entry-card">
-                                <div class="edu-entry-header">
-                                    <span class="edu-level-badge">Undergraduate</span>
-                                    <span class="edu-status-badge">In Progress</span>
-                                </div>
-                                <div class="edu-degree-title">Bachelor of Science in Computer Science</div>
-                                <div class="edu-school-row">
-                                    <svg class="edu-school-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                                    </svg>
-                                    <span class="edu-school-name">Laguna College of Business and Arts</span>
-                                </div>
+                                <?php if (!empty($education)): ?>
+                                    <?php foreach ($education as $edu): ?>
+                                    <div class="edu-entry-card">
+                                        <div class="edu-entry-header">
+                                            <span class="edu-level-badge"><?= e($edu['degree']) ?></span>
+                                            <span class="edu-status-badge"><?= e($edu['period']) ?></span>
+                                        </div>
+                                        <div class="edu-degree-title"><?= e($edu['field_of_study']) ?></div>
+                                        <div class="edu-school-row">
+                                            <svg class="edu-school-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                                            </svg>
+                                            <span class="edu-school-name"><?= e($edu['institution']) ?></span>
+                                        </div>
+                                        <?php if (!empty($edu['honors'])): ?>
+                                            <div style="font-size: 0.78rem; color: #fbbf24; margin-top: 4px;"><?= e($edu['honors']) ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
-
-                            <!-- Senior High -->
-                            <div class="edu-entry-card">
-                                <div class="edu-entry-header">
-                                    <span class="edu-level-badge">Senior High School</span>
-                                    <span class="edu-status-badge edu-status-done">Completed</span>
-                                </div>
-                                <div class="edu-degree-title">Science, Technology, Engineering & Mathematics</div>
-                                <div class="edu-school-row">
-                                    <svg class="edu-school-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                                    </svg>
-                                    <span class="edu-school-name">St. Vincent College of Cabuyao</span>
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Certifications Sub-block -->
                         <div class="edu-cert-section">
@@ -399,20 +393,20 @@
                                 <span>Verified Credentials & Honors</span>
                             </div>
                             <div class="edu-cert-list">
-                                <div class="edu-cert-card">
-                                    <span class="edu-cert-bullet"></span>
-                                    <div class="edu-cert-info">
-                                        <span class="edu-cert-name">Certified Six Sigma White Belt</span>
-                                        <span class="edu-cert-desc">Continuous Quality Improvement & Process Optimization</span>
+                                <?php if (!empty($certifications)): ?>
+                                    <?php foreach ($certifications as $cert): ?>
+                                    <div class="edu-cert-card">
+                                        <span class="edu-cert-bullet"></span>
+                                        <div class="edu-cert-info">
+                                            <span class="edu-cert-name"><?= e($cert['title']) ?></span>
+                                            <span class="edu-cert-desc"><?= e($cert['issuer']) ?> &bull; <?= e($cert['issue_date']) ?></span>
+                                            <?php if (!empty($cert['credential_url'])): ?>
+                                                <a href="<?= e($cert['credential_url']) ?>" target="_blank" style="color: var(--color-cyan); font-size: 0.72rem; text-decoration: underline;">[VERIFY &nearr;]</a>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="edu-cert-card">
-                                    <span class="edu-cert-bullet"></span>
-                                    <div class="edu-cert-info">
-                                        <span class="edu-cert-name">EF SET English Certificate &mdash; C1 Advanced</span>
-                                        <span class="edu-cert-desc">Proficient Professional Technical Communication</span>
-                                    </div>
-                                </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -432,70 +426,27 @@
                         <h3 class="bento-heading">Technical Skills & Tooling</h3>
 
                         <div class="skills-simple-container">
-                            <!-- Group 1: Programming & Scripting -->
-                            <div class="skills-group">
-                                <div class="skills-group-header">
-                                    <span class="group-code-tag">DEV.01</span>
-                                    <h4 class="skills-group-title">Programming & Scripting</h4>
-                                </div>
-                                <div class="skills-badge-list">
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 2l1.6 18.5L12 23l7.4-2.5L21 2H3z" fill="#E44D26"/><path d="M12 3.7v17.4l5.9-2 1.4-15.4H12z" fill="#F16529"/><path d="M12 7.7H7.7l.3 3.3H12v-3.3zm0 5.6H9.7l.2 2.3 2.1.6v-2.9z" fill="#EBEBEB"/><path d="M12 7.7h4.3l-.4 4.5h-3.9v3.3l-2.1-.6-.1-1.5H8.3l.3 3.2 3.4.9 3.4-.9.4-4.8.1-1.3.3-3.6H12v.7z" fill="#FFFFFF"/></svg>HTML5</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 2l1.6 18.5L12 23l7.4-2.5L21 2H3z" fill="#1572B6"/><path d="M12 3.7v17.4l5.9-2 1.4-15.4H12z" fill="#33A9DC"/><path d="M12 7.7H7.7l.3 3.3H12v-3.3zm0 5.6H9.7l.2 2.3 2.1.6v-2.9z" fill="#EBEBEB"/><path d="M12 7.7h4.3l-.4 4.5h-3.9v3.3l-2.1-.6-.1-1.5H8.3l.3 3.2 3.4.9 3.4-.9.4-4.8.1-1.3.3-3.6H12v.7z" fill="#FFFFFF"/></svg>CSS3 / Grid</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#F7DF1E"/><path d="M8 12.5v4.5c0 1-.7 1.4-1.7 1.4-.7 0-1.3-.3-1.6-.7l.9-1c.2.2.4.4.7.4.3 0 .4-.2.4-.5v-3.7H8zm8.5 0c1 0 1.8.6 1.8 1.6 0 .7-.4 1.2-1 1.4l-.8.3c-.4.1-.6.3-.6.6 0 .3.3.4.6.4.4 0 .8-.2 1-.5l.8 1c-.5.5-1.1.7-1.8.7-1.2 0-2-.7-2-1.8 0-.7.4-1.3 1.1-1.5l.8-.3c.4-.1.5-.3.5-.5 0-.3-.3-.4-.6-.4-.3 0-.7.2-.9.4l-.8-1c.6-.5 1.2-.8 1.8-.8z" fill="#000000"/></svg>JavaScript (ES6+)</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M8 18.5c3 .3 7.5.3 10.5-1 0 0-1.5.8-3.5 1.2 4.5.3 8.5-.7 8.5-.7s-2 1.5-6.5 1.9c5 .3 9.5-.7 9.5-.7s-3.5 1.8-12 1.5c-3-.1-5.5-.9-6.5-1.5-.7-.4-.7-.8 0-.7zm-1-4c2.5.3 5.5.4 8.5-.2 0 0-1 .5-2.5.7 3.5.2 6.5-.4 6.5-.4s-1.5 1-4.5 1.2c3.5.2 6.5-.4 6.5-.4s-2.5 1.3-9 1.1c-2.3-.1-4.2-.7-5-1.2-.5-.4-.5-.6-.5-.8zm6.5-8.5c1 1.2.6 2.3-.2 3.5-1.1 1.6-1.5 2.6.5 4.3-1.8-.4-3-1.7-2.6-3.3.4-1.6 2.1-2.2 2.3-4.5zm-3-3c1.2 1.5.7 2.8-.3 4.3-1.3 1.9-1.8 3.2.6 5.3-2.2-.5-3.7-2.1-3.2-4.1.5-2 2.6-2.8 2.9-5.5z" fill="#EA2D2E"/><path d="M15 10.5c.7.8.4 1.6-.2 2.4-.7 1.1-1 1.8.3 3-1.2-.3-2-1.2-1.8-2.3.3-1.1 1.4-1.5 1.7-3.1z" fill="#5382A1"/></svg>Java</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C#</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(0, 117, 143, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>MySQL</span>
-                                </div>
+                                <?php if (!empty($skillsGrouped)): ?>
+                                    <?php foreach ($skillsGrouped as $category => $skills): ?>
+                                    <div class="skills-group">
+                                        <div class="skills-group-header">
+                                            <span class="group-code-tag"><?= e(strtoupper(substr($category, 0, 3))) ?></span>
+                                            <h4 class="skills-group-title"><?= e($category) ?></h4>
+                                        </div>
+                                        <div class="skills-badge-list">
+                                            <?php foreach ($skills as $s): ?>
+                                                <span class="skill-badge">
+                                                    <?= e($s['name']) ?>
+                                                    <?php if (!empty($s['proficiency_level'])): ?>
+                                                        <small style="opacity: 0.65; font-size: 0.7rem; margin-left: 4px;">(<?= e($s['proficiency_level']) ?>)</small>
+                                                    <?php endif; ?>
+                                                </span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
-
-                            <!-- Group 2: Systems, Homelab & Virtualization -->
-                            <div class="skills-group">
-                                <div class="skills-group-header">
-                                    <span class="group-code-tag tag-sys">SYS.02</span>
-                                    <h4 class="skills-group-title">Systems & Virtualization</h4>
-                                </div>
-                                <div class="skills-badge-list">
-                                    <span class="skill-badge skill-badge-win"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#0078D4"><path d="M3 4.2l7.5-1v8.3H3V4.2zm0 8.3h7.5v8.3L3 19.8v-7.3zm8.5-9.4L21 2v9.5h-9.5V3.1zm0 9.4H21V22l-9.5-1.3v-8.2z"/></svg>Windows 10/11</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="14" rx="6" ry="7" fill="#E8B007"/><ellipse cx="12" cy="13.5" rx="5" ry="6" fill="#1C1B1F"/><ellipse cx="12" cy="14.5" rx="3.5" ry="4" fill="#FFFFFF"/><circle cx="12" cy="6.5" r="4" fill="#1C1B1F"/><circle cx="10.8" cy="6" r="0.8" fill="#FFFFFF"/><circle cx="13.2" cy="6" r="0.8" fill="#FFFFFF"/><polygon points="12,7 10.5,9 13.5,9" fill="#FFA500"/><path d="M6 18c1-1 3.5 0 4.5 2-2 1-4.5 0-4.5-2zm12 0c-1-1-3.5 0-4.5 2 2 1 4.5 0 4.5-2z" fill="#FFA500"/></svg>Linux (Debian/Ubuntu)</span>
-                                    <span class="skill-badge skill-badge-highlight"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="#E57000" stroke-width="1.8" fill="rgba(229, 112, 0, 0.15)"/><path d="M7.5 10l4.5 2.5 4.5-2.5M12 12.5V18" stroke="#E57000" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7" r="1.5" fill="#E57000"/></svg>Proxmox VE</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M2.5 13.5c.5-2.5 2.5-4 5-4h13.5c1 1.5 1 3.5 0 5-1.5 2-4 3.5-8.5 3.5-4.5 0-8-2-10-4.5z" fill="#2496ED" opacity="0.25"/><path d="M22 12.5c-.8-.5-2.2-.7-3.3-.2-.4-1.8-1.8-3.1-3.7-3.1-.2 0-.4 0-.6.1-.8-1.5-2.4-2.5-4.2-2.5-.3 0-.6 0-.9.1V6.5H6.8V9H4.3v2.5H2v1.5c.8 4 4.5 7 9 7 6 0 9.8-3.5 10.7-6.8.5-.2.8-.4.3-.7z" stroke="#2496ED" stroke-width="1.6"/><rect x="6.8" y="9.5" width="2" height="2" fill="#2496ED"/><rect x="9.3" y="9.5" width="2" height="2" fill="#2496ED"/><rect x="11.8" y="9.5" width="2" height="2" fill="#2496ED"/><rect x="9.3" y="7" width="2" height="2" fill="#2496ED"/></svg>Docker Containers</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="#00C48C"/><circle cx="18" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="6" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="18" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><line x1="8.5" y1="12" x2="9" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="15" y1="12" x2="15.5" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="8.5" x2="12" y2="9" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="15" x2="12" y2="15.5" stroke="#00C48C" stroke-width="1.5"/></svg>Tailscale Mesh</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>DNS & Routing</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>WireGuard VPN</span>
-                                </div>
-                            </div>
-
-                            <!-- Group 3: Creative & Media Tools -->
-                            <div class="skills-group">
-                                <div class="skills-group-header">
-                                    <span class="group-code-tag tag-media">MEDIA.03</span>
-                                    <h4 class="skills-group-title">Creative & Digital Media</h4>
-                                </div>
-                                <div class="skills-badge-list">
-                                    <span class="skill-badge skill-badge-creative"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#001E36" stroke="#31A8FF" stroke-width="1.2"/><path d="M6.5 7.5h3.5c1.8 0 2.8 1 2.8 2.4 0 1.5-1 2.4-2.8 2.4h-2v4.2H6.5V7.5zm1.5 3.5h2c.8 0 1.3-.4 1.3-1.1 0-.7-.5-1.1-1.3-1.1H8v2.2z" fill="#31A8FF"/><path d="M14.5 12.8c.8-.4 1.8-.7 2.6-.7 1.2 0 1.9.5 1.9 1.4 0 .9-.7 1.3-1.8 1.7l-.8.3c-1.4.5-2.1 1.2-2.1 2.3 0 1.5 1.3 2.5 3.2 2.5 1.1 0 2.1-.3 2.7-.7l-.5-1.2c-.6.3-1.4.6-2.2.6-1.1 0-1.7-.5-1.7-1.2 0-.8.6-1.2 1.8-1.6l.8-.3c1.5-.5 2.1-1.3 2.1-2.4 0-1.6-1.3-2.6-3.2-2.6-1 0-2.1.3-2.8.7l.5 1.2z" fill="#31A8FF"/></svg>Adobe Photoshop</span>
-                                    <span class="skill-badge skill-badge-creative"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#330000" stroke="#FF9A00" stroke-width="1.2"/><path d="M9.5 7.5L6 16.5h1.7l.8-2.2h3.5l.8 2.2h1.7l-3.5-9h-1.5zm-5 6.8l1.3-3.6 1.3 3.6H9z" fill="#FF9A00"/><path d="M16.5 7.5h1.5v1.5h-1.5V7.5zm0 3.5h1.5v5.5h-1.5V11z" fill="#FF9A00"/></svg>Adobe Illustrator</span>
-                                    <span class="skill-badge skill-badge-creative"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#333" stroke-width="1" fill="#0E1218"/><circle cx="12" cy="7.5" r="3.2" fill="#E62B34"/><circle cx="8" cy="15" r="3.2" fill="#2B7DE6"/><circle cx="16" cy="15" r="3.2" fill="#E6B82B"/></svg>DaVinci Resolve</span>
-                                    <span class="skill-badge skill-badge-office"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="8.5" height="8.5" x="2.5" y="2.5" rx="1.5" fill="#E83B26"/><rect width="8.5" height="8.5" x="13" y="2.5" rx="1.5" fill="#185ABD"/><rect width="8.5" height="8.5" x="2.5" y="13" rx="1.5" fill="#107C41"/><rect width="8.5" height="8.5" x="13" y="13" rx="1.5" fill="#7719AA"/></svg>Office Suite</span>
-                                </div>
-                            </div>
-
-                            <!-- Group 4: Workflow & Engineering Operations -->
-                            <div class="skills-group">
-                                <div class="skills-group-header">
-                                    <span class="group-code-tag tag-ops">OPS.04</span>
-                                    <h4 class="skills-group-title">Workflow & Operations</h4>
-                                </div>
-                                <div class="skills-badge-list">
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="16" height="16" x="4" y="4" rx="2.5" transform="rotate(45 12 12)" fill="#F05032"/><path d="M15 12a1.8 1.8 0 1 1-2.5-1.6V8.6a1.8 1.8 0 1 1 1.2 0v1.8c.8.3 1.3 1 1.3 1.6zm-3.5 1.5a1.8 1.8 0 1 1-2.5-1.6V9a1.8 1.8 0 1 1 1.2 0v2.9c.8.3 1.3 1 1.3 1.6z" fill="#FFFFFF"/></svg>Git</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>GitHub</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M17.5 2.5L7 11.5l10.5 9 4.5-2.2V4.7L17.5 2.5z" fill="#007ACC"/><path d="M17.5 2.5L2 9.5l4 3.5 11.5-10.5z" fill="#1F9CF0"/><path d="M6 13l-4 3.5 15.5 5 4.5-2.2L6 13z" fill="#0066B8"/></svg>VS Code</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z" fill="#FF2A2A"/></svg>Antigravity</span>
-                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Hardware Diags</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- 4. Academic & Community Affiliations Bento Card (Span 12) -->
@@ -511,36 +462,48 @@
                         <h3 class="bento-heading">Experience, Leadership & Activities</h3>
 
                         <div class="affiliation-list">
-                            <div class="affiliation-item">
-                                <div class="affiliation-bullet"></div>
-                                <div class="affiliation-details">
-                                    <div class="affiliation-name">Alliance of Computer Engineering and Computer Science Students</div>
-                                    <div class="affiliation-role">Academic Organization, Secretary</div>
+                            <?php if (!empty($experiences)): ?>
+                                <?php foreach ($experiences as $exp): ?>
+                                <div class="affiliation-item">
+                                    <div class="affiliation-bullet"></div>
+                                    <div class="affiliation-details">
+                                        <div class="affiliation-name"><?= e($exp['organization']) ?></div>
+                                        <div class="affiliation-role"><?= e($exp['role_title']) ?> &bull; <span style="color: var(--color-cyan);"><?= e($exp['period']) ?></span></div>
+                                        <?php if (!empty($exp['description'])): ?>
+                                            <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px;"><?= nl2br(e($exp['description'])) ?></div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="affiliation-item">
-                                <div class="affiliation-bullet"></div>
-                                <div class="affiliation-details">
-                                    <div class="affiliation-name">National Youth Movement for the West Philippine Sea</div>
-                                    <div class="affiliation-role">Laguna Chapter Chairperson</div>
-                                </div>
-                            </div>
-                            <div class="affiliation-item">
-                                <div class="affiliation-bullet"></div>
-                                <div class="affiliation-details">
-                                    <div class="affiliation-name">FPJ Youth</div>
-                                    <div class="affiliation-role">Director for Communications and Publications</div>
-                                </div>
-                            </div>
-                            <div class="affiliation-item">
-                                <div class="affiliation-bullet"></div>
-                                <div class="affiliation-details">
-                                    <div class="affiliation-name">International Association of Engineers (IAENG)</div>
-                                    <div class="affiliation-role">Professional Organization</div>
-                                </div>
-                            </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
+
+                    <!-- Conferred Honors & Achievements Bento Card (Span 12) -->
+                    <?php if (!empty($achievements)): ?>
+                    <div class="bento-card bento-achievements" style="grid-column: span 12;">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>HONORS // CONFERRED DISTINCTIONS</span>
+                        </div>
+                        <h3 class="bento-heading"><?= e($secHelper->getSection('achievements')['title'] ?? 'Honors & Distinctions') ?></h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px;">
+                            <?php foreach ($achievements as $ach): ?>
+                            <div class="edu-cert-card" style="background: rgba(14, 18, 26, 0.7); padding: 14px; border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
+                                <span class="edu-cert-bullet"></span>
+                                <div class="edu-cert-info">
+                                    <span class="edu-cert-name" style="font-size: 0.9rem; color: #f8fafc;"><?= e($ach['title']) ?></span>
+                                    <span class="edu-cert-desc" style="color: var(--color-cyan); font-size: 0.75rem; display: block; margin: 3px 0;"><?= e($ach['issuer']) ?> &bull; <?= e($ach['award_date']) ?></span>
+                                    <p style="font-size: 0.78rem; color: #94a3b8; margin: 4px 0 0 0;"><?= e($ach['description']) ?></p>
+                                    <?php if (!empty($ach['verification_url'])): ?>
+                                        <a href="<?= e($ach['verification_url']) ?>" target="_blank" style="color: var(--color-cyan); font-size: 0.72rem; text-decoration: underline; margin-top: 4px; display: inline-block;">[VERIFY &nearr;]</a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
 
                     <!-- 5. Vintage Hardware & Compute Lab (Span 12) -->
                     <div class="bento-card bento-retro">
@@ -669,112 +632,27 @@
                 </div>
 
                 <div class="services-grid">
-                    <!-- Service 1 (Span 7) -->
-                    <div class="bento-card service-card service-card-red">
-                        <div class="bento-tag">
-                            <span class="tag-rec-dot"></span>
-                            <span>CORE SPECIALTY // DEV</span>
-                            <div class="win-controls">
-                                <span class="win-btn">_</span>
-                                <span class="win-btn win-close">&times;</span>
+                    <?php if (!empty($services)): ?>
+                        <?php foreach ($services as $srv): 
+                            $caps = is_array($srv['capabilities_json']) ? $srv['capabilities_json'] : (json_decode((string)($srv['capabilities_json'] ?? '[]'), true) ?: []);
+                        ?>
+                        <div class="bento-card service-card">
+                            <div class="bento-tag">
+                                <span class="tag-rec-dot"></span>
+                                <span>// <?= strtoupper(e($srv['category'])) ?></span>
                             </div>
+                            <h3 class="service-title"><?= e($srv['title']) ?></h3>
+                            <p class="service-description"><?= e($srv['description']) ?></p>
+                            <?php if (!empty($caps)): ?>
+                                <ul class="service-features">
+                                    <?php foreach ($caps as $c): ?>
+                                        <li><?= e((string)$c) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
                         </div>
-                        <h3 class="service-title">Web & Software Development</h3>
-                        <p class="service-description">
-                            Designing and coding responsive web applications and reliable software solutions with clean, structured, dependency-conscious code.
-                        </p>
-                        <ul class="service-features">
-                            <li>Vanilla JavaScript (ES6+), HTML5 Semantics & Modern CSS3 Grid/Flex</li>
-                            <li>Python, C#, C++, and Java Application Development</li>
-                            <li>Relational Database Modeling & MySQL Query Optimization</li>
-                            <li>Accessible, Fast, Device-Responsive User Interfaces</li>
-                        </ul>
-                    </div>
-
-                    <!-- Service 2 (Span 5) -->
-                    <div class="bento-card service-card">
-                        <div class="bento-tag">
-                            <span class="tag-rec-dot"></span>
-                            <span>SYSTEMS // INFRA</span>
-                            <div class="win-controls">
-                                <span class="win-btn">_</span>
-                                <span class="win-btn win-close">&times;</span>
-                            </div>
-                        </div>
-                        <h3 class="service-title">Homelab & Virtualization</h3>
-                        <p class="service-description">
-                            Building and administering resilient virtual environments, hypervisors, and container stacks.
-                        </p>
-                        <ul class="service-features">
-                            <li>Proxmox VE Hypervisor Deployment & Cluster Setup</li>
-                            <li>Docker & Containerized Microservice Workflows</li>
-                            <li>Debian / Linux Server Configuration & Hardening</li>
-                            <li>Local Service Uptime Monitoring & Storage Management</li>
-                        </ul>
-                    </div>
-
-                    <!-- Service 3 (Span 4) -->
-                    <div class="bento-card service-card">
-                        <div class="bento-tag">
-                            <span class="tag-rec-dot"></span>
-                            <span>NETWORKS // SECURITY</span>
-                            <div class="win-controls">
-                                <span class="win-btn">_</span>
-                                <span class="win-btn win-close">&times;</span>
-                            </div>
-                        </div>
-                        <h3 class="service-title">Networking & Systems</h3>
-                        <p class="service-description">
-                            Configuring mesh routing, secure tunnel overlays, and local network infrastructure.
-                        </p>
-                        <ul class="service-features">
-                            <li>Tailscale Encrypted Mesh & Remote Access</li>
-                            <li>Local DNS Resolution & Subdomain Management</li>
-                            <li>Windows & Linux System Administration</li>
-                        </ul>
-                    </div>
-
-                    <!-- Service 4 (Span 4) -->
-                    <div class="bento-card service-card">
-                        <div class="bento-tag">
-                            <span class="tag-rec-dot"></span>
-                            <span>HARDWARE // RETRO</span>
-                            <div class="win-controls">
-                                <span class="win-btn">_</span>
-                                <span class="win-btn win-close">&times;</span>
-                            </div>
-                        </div>
-                        <h3 class="service-title">Hardware Restoration</h3>
-                        <p class="service-description">
-                            Refurbishing, troubleshooting, and diagnosing modern and vintage computing platforms.
-                        </p>
-                        <ul class="service-features">
-                            <li>Component-Level Diagnostic Testing & Benchmarking</li>
-                            <li>Legacy Operating System Maintenance & Drivers</li>
-                            <li>Thermal Re-pasting, BIOS Updates & Restoration</li>
-                        </ul>
-                    </div>
-
-                    <!-- Service 5 (Span 4) -->
-                    <div class="bento-card service-card">
-                        <div class="bento-tag">
-                            <span class="tag-rec-dot"></span>
-                            <span>ANALYSIS // ARCHITECTURE</span>
-                            <div class="win-controls">
-                                <span class="win-btn">_</span>
-                                <span class="win-btn win-close">&times;</span>
-                            </div>
-                        </div>
-                        <h3 class="service-title">Technical Problem Solving</h3>
-                        <p class="service-description">
-                            Systematic troubleshooting, documentation, and continuous process optimization.
-                        </p>
-                        <ul class="service-features">
-                            <li>Six Sigma White Belt Continuous Improvement Practices</li>
-                            <li>Technical Architecture Documentation</li>
-                            <li>Software Debugging & System Diagnostics</li>
-                        </ul>
-                    </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </section>
 
@@ -788,6 +666,13 @@
                     <div class="section-divider"></div>
                 </div>
 
+                <?php
+$featuredProjects = array_filter($projects ?? [], fn($p) => !empty($p['is_featured']));
+$csharpProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'csharp') !== false || stripos($p['technologies'] ?? '', 'C#') !== false);
+$pythonProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'python') !== false || stripos($p['technologies'] ?? '', 'Python') !== false);
+$webdevProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'web') !== false || stripos($p['technologies'] ?? '', 'PHP') !== false || stripos($p['technologies'] ?? '', 'HTML') !== false);
+$cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'cpp') !== false || stripos($p['technologies'] ?? '', 'C++') !== false);
+?>
                 <!-- Filter Controls -->
                 <div class="portfolio-filter-group" role="tablist" aria-label="Portfolio Category Filter">
                     <button class="filter-btn active" data-filter="featured"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#FFB800"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Featured</span></button>
@@ -810,168 +695,48 @@
                         <p class="portfolio-subsection-desc">Selected high-impact software systems demonstrating low-level kernel routines, real-time edge intelligence, and distributed architectures.</p>
                     </div>
 
+                    
                     <div class="featured-programs-grid programs-grid-sm">
-                        <!-- Featured 1: Valkyrie POS Pro -->
-                        <article class="program-card program-card-sm" data-category="featured systems csharp" data-project-id="valkyriepos">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# / .NET 9</span>
-                                    <span class="program-id-badge">CS.001</span>
-                                </div>
-                                <span class="program-featured-star">★ FEATURED</span>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Valkyrie POS Pro</h4>
-                                <p class="program-desc">Autonomous offline retail engine featuring cryptographic transaction ledgers and multi-terminal peer sync.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# 12</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#0078D4"><path d="M3 4.2l7.5-1v8.3H3V4.2zm0 8.3h7.5v8.3L3 19.8v-7.3zm8.5-9.4L21 2v9.5h-9.5V3.1zm0 9.4H21V22l-9.5-1.3v-8.2z"/></svg>WPF</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(0, 117, 143, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>SQLite</span>
+                        <?php if (!empty($featuredProjects)): ?>
+                            <?php foreach ($featuredProjects as $p): ?>
+                            <article class="program-card program-card-sm" data-category="featured <?= e($p['category']) ?>" data-project-id="<?= e($p['slug']) ?>">
+                                <div class="program-card-header">
+                                    <div class="program-tags-group">
+                                        <span class="program-lang-tag"><?= e(strtoupper($p['category'])) ?></span>
+                                        <span class="program-id-badge">ID.<?= e(str_pad((string)$p['id'], 3, '0', STR_PAD_LEFT)) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">0.8ms TX Latency</span>
+                                    <?php if (!empty($p['is_featured'])): ?>
+                                        <span class="program-featured-star">★ FEATURED</span>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="valkyriepos" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Featured 2: AegisKernel Micro-Hypervisor -->
-                        <article class="program-card program-card-sm" data-category="featured cpp systems" data-project-id="aegiskernel">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Ring-0</span>
-                                    <span class="program-id-badge">CPP.001</span>
-                                </div>
-                                <span class="program-featured-star">★ FEATURED</span>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">AegisKernel Microvisor</h4>
-                                <p class="program-desc">Type-1 bare-metal microkernel with memory-enclave isolation, zero-syscall switching, and CPU telemetry.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>x86 ASM</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>Paging</span>
+                                <div class="program-card-body">
+                                    <h4 class="program-title"><?= e($p['title']) ?></h4>
+                                    <p class="program-desc"><?= e($p['short_description']) ?></p>
+                                    <div class="program-compact-meta">
+                                        <div class="program-tech-tags">
+                                            <?php 
+                                            $techs = is_array($p['technologies']) ? $p['technologies'] : explode(',', (string)($p['technologies'] ?? ''));
+                                            foreach (array_slice($techs, 0, 3) as $t):
+                                                $t = trim($t);
+                                                if ($t === '') continue;
+                                            ?>
+                                                <span class="skill-badge"><?= e($t) ?></span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <span class="program-metric-badge"><?= e(strtoupper($p['status'])) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">Zero Syscalls</span>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="aegiskernel" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Featured 3: NeuroPulse Vision AI -->
-                        <article class="program-card program-card-sm" data-category="featured python systems" data-project-id="neuropulse">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python / CUDA</span>
-                                    <span class="program-id-badge">PY.001</span>
+                                <div class="program-card-footer" style="display: flex; gap: 8px;">
+                                    <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="<?= e($p['slug']) ?>" type="button">Inspect</button>
+                                    <a href="<?= e(url('project/' . $p['slug'])) ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Dossier &nearr;</a>
                                 </div>
-                                <span class="program-featured-star">★ FEATURED</span>
+                            </article>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
+                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
                             </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">NeuroPulse Vision AI</h4>
-                                <p class="program-desc">Real-time edge neural pipeline performing object categorization and biometric telemetry streaming.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M13 2.5a6 6 0 0 0-6 6c0 1.6.6 3 1.6 4.1L7 14.2a8 8 0 1 1 11.3 0l-1.6-1.6a6 6 0 0 0 1.6-4.1 6 6 0 0 0-5.3-6z" fill="#EE4C2C"/><circle cx="15.5" cy="5" r="1.5" fill="#EE4C2C"/></svg>PyTorch</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 12c0-5 4-9 9-9 4.5 0 8.3 3.3 9 7.8-.3-1.6-1.7-2.8-3.4-2.8-2 0-3.6 1.6-3.6 3.6 0 1.2.6 2.3 1.5 2.9-1.2 1-2.8 1.5-4.5 1.5-4 0-7-3-7-7z" stroke="#76B900" stroke-width="1.8" fill="rgba(118, 185, 0, 0.15)"/><circle cx="12" cy="12" r="2.5" fill="#76B900"/></svg>CUDA</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="#EA2D2E" stroke-width="2"/><circle cx="7" cy="16" r="4" stroke="#2496ED" stroke-width="2"/><circle cx="17" cy="16" r="4" stroke="#39FF14" stroke-width="2"/></svg>OpenCV</span>
-                                    </div>
-                                    <span class="program-metric-badge">144 FPS Edge</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="neuropulse" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Featured 4: QuantumMesh Zero-Trust Tunnel -->
-                        <article class="program-card program-card-sm" data-category="featured systems python" data-project-id="quantummesh">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>Mesh / Daemon</span>
-                                    <span class="program-id-badge">SYS.001</span>
-                                </div>
-                                <span class="program-featured-star">★ FEATURED</span>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">QuantumMesh Tunnel</h4>
-                                <p class="program-desc">Autonomous mesh routing daemon managing dynamic encrypted WireGuard tunnels and gateway health checks.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python 3</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>WireGuard</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="#00C48C"/><circle cx="18" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="6" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="18" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><line x1="8.5" y1="12" x2="9" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="15" y1="12" x2="15.5" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="8.5" x2="12" y2="9" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="15" x2="12" y2="15.5" stroke="#00C48C" stroke-width="1.5"/></svg>Tailscale</span>
-                                    </div>
-                                    <span class="program-metric-badge">&lt;5ms Failover</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="quantummesh" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Featured 5: CyberTerm x64 Web Shell -->
-                        <article class="program-card program-card-sm" data-category="featured webdev" data-project-id="cyberterm">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#654FF0"/><path d="M5 8.5l2.5 7L10 8.5l2.5 7L15 8.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 12l2 3.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/></svg>WASM / WebDev</span>
-                                    <span class="program-id-badge">WEB.001</span>
-                                </div>
-                                <span class="program-featured-star">★ FEATURED</span>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">CyberTerm x64 Shell</h4>
-                                <p class="program-desc">In-browser WebAssembly virtual machine executing an interactive retro Unix terminal with CRT phosphor shaders.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#F7DF1E"/><path d="M8 12.5v4.5c0 1-.7 1.4-1.7 1.4-.7 0-1.3-.3-1.6-.7l.9-1c.2.2.4.4.7.4.3 0 .4-.2.4-.5v-3.7H8zm8.5 0c1 0 1.8.6 1.8 1.6 0 .7-.4 1.2-1 1.4l-.8.3c-.4.1-.6.3-.6.6 0 .3.3.4.6.4.4 0 .8-.2 1-.5l.8 1c-.5.5-1.1.7-1.8.7-1.2 0-2-.7-2-1.8 0-.7.4-1.3 1.1-1.5l.8-.3c.4-.1.5-.3.5-.5 0-.3-.3-.4-.6-.4-.3 0-.7.2-.9.4l-.8-1c.6-.5 1.2-.8 1.8-.8z" fill="#000000"/></svg>HTML/CSS/JS</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#654FF0"/><path d="M5 8.5l2.5 7L10 8.5l2.5 7L15 8.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 12l2 3.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/></svg>WASM</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>Canvas</span>
-                                    </div>
-                                    <span class="program-metric-badge">60 FPS CRT GL</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="cyberterm" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Featured 6: Chronos Time-Series DB -->
-                        <article class="program-card program-card-sm" data-category="featured cpp systems" data-project-id="chronosdb">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Storage</span>
-                                    <span class="program-id-badge">CPP.002</span>
-                                </div>
-                                <span class="program-featured-star">★ FEATURED</span>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Chronos Time-Series DB</h4>
-                                <p class="program-desc">Lock-free in-memory time-series database ingesting millions of sensor telemetry ticks via ring buffers.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>AVX-512</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Atomics</span>
-                                    </div>
-                                    <span class="program-metric-badge">12.5M Ticks/s</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="chronosdb" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -979,117 +744,53 @@
                 <div class="portfolio-subsection is-filtered-out" data-section-category="csharp">
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
-                            <span class="subsection-badge-tag">// .NET ECOSYSTEM</span>
-                            <span class="subsection-counter">4 BUILDS</span>
+                            <span class="subsection-badge-tag">// ENTERPRISE .NET PLATFORMS</span>
+                            <span class="subsection-counter"><?= count($csharpProjects) ?> COMMITTED BUILDS</span>
                         </div>
                         <h3 class="portfolio-subsection-title">C# &bull; Systems & Desktop Engineering</h3>
-                        <p class="portfolio-subsection-desc">High-performance Windows enterprise clients, multi-threaded priority task dispatchers, and distributed service brokers.</p>
+                        <p class="portfolio-subsection-desc">High-performance Windows enterprise clients, autonomous POS retail engines, and hardware driver telemetry bridges.</p>
                     </div>
-
                     <div class="featured-programs-grid programs-grid-sm">
-                        <!-- C# Project 1: Valkyrie POS Pro -->
-                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="valkyriepos">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><span class="badge-dot dot-csharp"></span>C# 12 / .NET 9</span>
-                                    <span class="program-id-badge">CS.001</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Valkyrie POS Pro</h4>
-                                <p class="program-desc">Enterprise point-of-sale terminal engine featuring cryptographic offline ledger sync and scanner abstraction.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# 12</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-win"></span>WPF</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(0, 117, 143, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>SQLite</span>
+                        <?php if (!empty($csharpProjects)): ?>
+                            <?php foreach ($csharpProjects as $p): ?>
+                            <article class="program-card program-card-sm" data-category="csharp <?= e($p['category']) ?>" data-project-id="<?= e($p['slug']) ?>">
+                                <div class="program-card-header">
+                                    <div class="program-tags-group">
+                                        <span class="program-lang-tag"><?= e(strtoupper($p['category'])) ?></span>
+                                        <span class="program-id-badge">ID.<?= e(str_pad((string)$p['id'], 3, '0', STR_PAD_LEFT)) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">0.8ms TX</span>
+                                    <?php if (!empty($p['is_featured'])): ?>
+                                        <span class="program-featured-star">★ FEATURED</span>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="valkyriepos" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- C# Project 2: OmniThread Engine -->
-                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="omnithread">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# / Concurrency</span>
-                                    <span class="program-id-badge">CS.002</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">OmniThread Engine</h4>
-                                <p class="program-desc">Custom task scheduler and priority thread dispatcher with work-stealing algorithms and telemetry hooks.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><span class="badge-dot dot-csharp"></span>C# .NET 8</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Threading</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-pd"></span>Diagnostics</span>
+                                <div class="program-card-body">
+                                    <h4 class="program-title"><?= e($p['title']) ?></h4>
+                                    <p class="program-desc"><?= e($p['short_description']) ?></p>
+                                    <div class="program-compact-meta">
+                                        <div class="program-tech-tags">
+                                            <?php 
+                                            $techs = is_array($p['technologies']) ? $p['technologies'] : explode(',', (string)($p['technologies'] ?? ''));
+                                            foreach (array_slice($techs, 0, 3) as $t):
+                                                $t = trim($t);
+                                                if ($t === '') continue;
+                                            ?>
+                                                <span class="skill-badge"><?= e($t) ?></span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <span class="program-metric-badge"><?= e(strtoupper($p['status'])) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">Zero Starvation</span>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="omnithread" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- C# Project 3: HyperBus Microservices -->
-                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="hyperbus">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><span class="badge-dot dot-csharp"></span>C# / Distributed</span>
-                                    <span class="program-id-badge">CS.003</span>
+                                <div class="program-card-footer" style="display: flex; gap: 8px;">
+                                    <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="<?= e($p['slug']) ?>" type="button">Inspect</button>
+                                    <a href="<?= e(url('project/' . $p['slug'])) ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Dossier &nearr;</a>
                                 </div>
+                            </article>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
+                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
                             </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">HyperBus Service Broker</h4>
-                                <p class="program-desc">Zero-allocation pub/sub event bus supporting RPC serialization over shared memory and loopback sockets.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><span class="badge-dot dot-csharp"></span>gRPC</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>IPC</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-ops"></span>Zero-Alloc</span>
-                                    </div>
-                                    <span class="program-metric-badge">2.4M Msg/s</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="hyperbus" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- C# Project 4: AeroUI Fluent Kit -->
-                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="aeroui">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# / UI Engine</span>
-                                    <span class="program-id-badge">CS.004</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">AeroUI Fluent Component Kit</h4>
-                                <p class="program-desc">GPU-accelerated desktop UI control system bringing glassmorphic blur and retrofuturistic HUD styling to WPF.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><span class="badge-dot dot-csharp"></span>WPF</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-win"></span>DirectX</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-dev"></span>Glass UI</span>
-                                    </div>
-                                    <span class="program-metric-badge">60 FPS Sync</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="aeroui" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -1097,117 +798,53 @@
                 <div class="portfolio-subsection is-filtered-out" data-section-category="python">
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
-                            <span class="subsection-badge-tag">// PYTHON SYSTEM LABS</span>
-                            <span class="subsection-counter">4 BUILDS</span>
+                            <span class="subsection-badge-tag">// AI & DISTRIBUTED DATA ENGINES</span>
+                            <span class="subsection-counter"><?= count($pythonProjects) ?> ACTIVE DEPLOYS</span>
                         </div>
                         <h3 class="portfolio-subsection-title">Python &bull; AI, Automation & Network Daemons</h3>
-                        <p class="portfolio-subsection-desc">High-throughput asynchronous scraping daemons, deep learning neural models, and real-time raw packet analyzers.</p>
+                        <p class="portfolio-subsection-desc">High-throughput asynchronous scraping daemons, PyTorch computer vision networks, and distributed messaging bots.</p>
                     </div>
-
                     <div class="featured-programs-grid programs-grid-sm">
-                        <!-- Python Project 1: NeuroPulse Vision AI -->
-                        <article class="program-card program-card-sm" data-category="python" data-project-id="neuropulse">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><span class="badge-dot dot-python"></span>Python / Vision</span>
-                                    <span class="program-id-badge">PY.001</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">NeuroPulse Vision AI</h4>
-                                <p class="program-desc">Hardware-accelerated edge neural network classifying synthetic telemetry and biometric micro-expressions.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M13 2.5a6 6 0 0 0-6 6c0 1.6.6 3 1.6 4.1L7 14.2a8 8 0 1 1 11.3 0l-1.6-1.6a6 6 0 0 0 1.6-4.1 6 6 0 0 0-5.3-6z" fill="#EE4C2C"/><circle cx="15.5" cy="5" r="1.5" fill="#EE4C2C"/></svg>PyTorch</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 12c0-5 4-9 9-9 4.5 0 8.3 3.3 9 7.8-.3-1.6-1.7-2.8-3.4-2.8-2 0-3.6 1.6-3.6 3.6 0 1.2.6 2.3 1.5 2.9-1.2 1-2.8 1.5-4.5 1.5-4 0-7-3-7-7z" stroke="#76B900" stroke-width="1.8" fill="rgba(118, 185, 0, 0.15)"/><circle cx="12" cy="12" r="2.5" fill="#76B900"/></svg>CUDA</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="#EA2D2E" stroke-width="2"/><circle cx="7" cy="16" r="4" stroke="#2496ED" stroke-width="2"/><circle cx="17" cy="16" r="4" stroke="#39FF14" stroke-width="2"/></svg>OpenCV</span>
+                        <?php if (!empty($pythonProjects)): ?>
+                            <?php foreach ($pythonProjects as $p): ?>
+                            <article class="program-card program-card-sm" data-category="python <?= e($p['category']) ?>" data-project-id="<?= e($p['slug']) ?>">
+                                <div class="program-card-header">
+                                    <div class="program-tags-group">
+                                        <span class="program-lang-tag"><?= e(strtoupper($p['category'])) ?></span>
+                                        <span class="program-id-badge">ID.<?= e(str_pad((string)$p['id'], 3, '0', STR_PAD_LEFT)) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">144 FPS Edge</span>
+                                    <?php if (!empty($p['is_featured'])): ?>
+                                        <span class="program-featured-star">★ FEATURED</span>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="neuropulse" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Python Project 2: QuantumMesh Tunnel -->
-                        <article class="program-card program-card-sm" data-category="python" data-project-id="quantummesh">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><span class="badge-dot dot-python"></span>Python / Mesh</span>
-                                    <span class="program-id-badge">PY.002</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">QuantumMesh Tunnel</h4>
-                                <p class="program-desc">Autonomous mesh routing daemon managing dynamic encrypted WireGuard tunnels and gateway health checks.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python 3</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>WireGuard</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="#00C48C"/><circle cx="18" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="6" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="18" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><line x1="8.5" y1="12" x2="9" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="15" y1="12" x2="15.5" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="8.5" x2="12" y2="9" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="15" x2="12" y2="15.5" stroke="#00C48C" stroke-width="1.5"/></svg>Tailscale</span>
+                                <div class="program-card-body">
+                                    <h4 class="program-title"><?= e($p['title']) ?></h4>
+                                    <p class="program-desc"><?= e($p['short_description']) ?></p>
+                                    <div class="program-compact-meta">
+                                        <div class="program-tech-tags">
+                                            <?php 
+                                            $techs = is_array($p['technologies']) ? $p['technologies'] : explode(',', (string)($p['technologies'] ?? ''));
+                                            foreach (array_slice($techs, 0, 3) as $t):
+                                                $t = trim($t);
+                                                if ($t === '') continue;
+                                            ?>
+                                                <span class="skill-badge"><?= e($t) ?></span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <span class="program-metric-badge"><?= e(strtoupper($p['status'])) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">&lt;5ms Failover</span>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="quantummesh" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Python Project 3: Specter Async Crawler -->
-                        <article class="program-card program-card-sm" data-category="python" data-project-id="spectercrawler">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python / Scraper</span>
-                                    <span class="program-id-badge">PY.003</span>
+                                <div class="program-card-footer" style="display: flex; gap: 8px;">
+                                    <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="<?= e($p['slug']) ?>" type="button">Inspect</button>
+                                    <a href="<?= e(url('project/' . $p['slug'])) ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Dossier &nearr;</a>
                                 </div>
+                            </article>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
+                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
                             </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Specter Async Deep Scraper</h4>
-                                <p class="program-desc">Distributed asynchronous web scraping pipeline with automatic rotating proxy pools and TLS fingerprint spoofing.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><span class="badge-dot dot-python"></span>Asyncio</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-ops"></span>Aiohttp</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Redis</span>
-                                    </div>
-                                    <span class="program-metric-badge">5,000 req/s</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="spectercrawler" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Python Project 4: PacketSnoop Raw Analyzer -->
-                        <article class="program-card program-card-sm" data-category="python" data-project-id="packetsnoop">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python / NetSec</span>
-                                    <span class="program-id-badge">PY.004</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">PacketSnoop Protocol Sniffer</h4>
-                                <p class="program-desc">Raw socket network sniffer performing deep packet inspection, TCP stream reassembly, and TLS handshake decryption.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><span class="badge-dot dot-python"></span>Raw Sockets</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-pd"></span>Scapy</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>PCAP</span>
-                                    </div>
-                                    <span class="program-metric-badge">Zero-Copy Capture</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="packetsnoop" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -1215,117 +852,53 @@
                 <div class="portfolio-subsection is-filtered-out" data-section-category="webdev">
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
-                            <span class="subsection-badge-tag">// WEB ARCHITECTURES</span>
-                            <span class="subsection-counter">4 BUILDS</span>
+                            <span class="subsection-badge-tag">// FRONTEND & CMS ENGINES</span>
+                            <span class="subsection-counter"><?= count($webdevProjects) ?> WEB PLATFORMS</span>
                         </div>
-                        <h3 class="portfolio-subsection-title">WebDev &bull; HTML &bull; CSS &bull; JS & Beyond</h3>
-                        <p class="portfolio-subsection-desc">Bleeding-edge browser experiences, WebAssembly virtual shells, WebGL shaders, and high-frequency WebSocket protocols.</p>
+                        <h3 class="portfolio-subsection-title">WebDev &bull; HTML &bull; CSS &bull; JS &bull; PHP</h3>
+                        <p class="portfolio-subsection-desc">Browser experiences, custom CMS architectures, and responsive developer showcases.</p>
                     </div>
-
                     <div class="featured-programs-grid programs-grid-sm">
-                        <!-- Web Project 1: CyberTerm x64 Shell -->
-                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="cyberterm">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><span class="badge-dot dot-web"></span>HTML/CSS/JS</span>
-                                    <span class="program-id-badge">WEB.001</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">CyberTerm x64 Shell</h4>
-                                <p class="program-desc">In-browser WebAssembly virtual machine executing an interactive retro Unix terminal with CRT phosphor shaders.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><span class="badge-dot dot-dev"></span>WASM</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-web"></span>Canvas</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>WebAudio</span>
+                        <?php if (!empty($webdevProjects)): ?>
+                            <?php foreach ($webdevProjects as $p): ?>
+                            <article class="program-card program-card-sm" data-category="webdev <?= e($p['category']) ?>" data-project-id="<?= e($p['slug']) ?>">
+                                <div class="program-card-header">
+                                    <div class="program-tags-group">
+                                        <span class="program-lang-tag"><?= e(strtoupper($p['category'])) ?></span>
+                                        <span class="program-id-badge">ID.<?= e(str_pad((string)$p['id'], 3, '0', STR_PAD_LEFT)) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">60 FPS CRT GL</span>
+                                    <?php if (!empty($p['is_featured'])): ?>
+                                        <span class="program-featured-star">★ FEATURED</span>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="cyberterm" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Web Project 2: Spectra 3D Audio Visualizer -->
-                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="spectraviz">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><span class="badge-dot dot-web"></span>WebGL / Audio</span>
-                                    <span class="program-id-badge">WEB.002</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Spectra 3D Audio Visualizer</h4>
-                                <p class="program-desc">Hardware-accelerated 3D audio frequency visualizer rendering real-time FFT spectrum bars with custom GLSL shaders.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8"><polygon points="12 2 2 19.5 22 19.5"/><polygon points="12 2 12 19.5 2 19.5"/><line x1="12" y1="11" x2="22" y2="19.5"/></svg>Three.js</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-web"></span>Web Audio</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-ai"></span>GLSL</span>
+                                <div class="program-card-body">
+                                    <h4 class="program-title"><?= e($p['title']) ?></h4>
+                                    <p class="program-desc"><?= e($p['short_description']) ?></p>
+                                    <div class="program-compact-meta">
+                                        <div class="program-tech-tags">
+                                            <?php 
+                                            $techs = is_array($p['technologies']) ? $p['technologies'] : explode(',', (string)($p['technologies'] ?? ''));
+                                            foreach (array_slice($techs, 0, 3) as $t):
+                                                $t = trim($t);
+                                                if ($t === '') continue;
+                                            ?>
+                                                <span class="skill-badge"><?= e($t) ?></span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <span class="program-metric-badge"><?= e(strtoupper($p['status'])) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">120Hz Smooth</span>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="spectraviz" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Web Project 3: Nexus Protocol P2P Chat -->
-                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="nexuschat">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#3399FF" stroke-width="1.8"><circle cx="6" cy="12" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="6" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="18" r="3" fill="rgba(51, 153, 255, 0.2)"/><path d="M8.5 10.5l7-3M8.5 13.5l7 3" stroke-dasharray="2 2"/></svg>WebRTC / Sockets</span>
-                                    <span class="program-id-badge">WEB.003</span>
+                                <div class="program-card-footer" style="display: flex; gap: 8px;">
+                                    <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="<?= e($p['slug']) ?>" type="button">Inspect</button>
+                                    <a href="<?= e(url('project/' . $p['slug'])) ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Dossier &nearr;</a>
                                 </div>
+                            </article>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
+                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
                             </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Nexus Protocol P2P Chat</h4>
-                                <p class="program-desc">End-to-end encrypted peer-to-peer browser messenger with ephemeral rooms, WebRTC data channels, and zero logs.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#3399FF" stroke-width="1.8"><circle cx="6" cy="12" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="6" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="18" r="3" fill="rgba(51, 153, 255, 0.2)"/><path d="M8.5 10.5l7-3M8.5 13.5l7 3" stroke-dasharray="2 2"/></svg>WebRTC</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-ops"></span>WebSocket</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Crypto API</span>
-                                    </div>
-                                    <span class="program-metric-badge">E2E AES-256</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="nexuschat" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- Web Project 4: Glassmorphic OS Dashboard -->
-                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="glassos">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><span class="badge-dot dot-web"></span>CSS Glass / JS</span>
-                                    <span class="program-id-badge">WEB.004</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Glassmorphic OS Dashboard</h4>
-                                <p class="program-desc">Desktop-class responsive web workspace featuring draggable floating windows, minimize trays, and live HUD widgets.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#F7DF1E"/><path d="M8 12.5v4.5c0 1-.7 1.4-1.7 1.4-.7 0-1.3-.3-1.6-.7l.9-1c.2.2.4.4.7.4.3 0 .4-.2.4-.5v-3.7H8zm8.5 0c1 0 1.8.6 1.8 1.6 0 .7-.4 1.2-1 1.4l-.8.3c-.4.1-.6.3-.6.6 0 .3.3.4.6.4.4 0 .8-.2 1-.5l.8 1c-.5.5-1.1.7-1.8.7-1.2 0-2-.7-2-1.8 0-.7.4-1.3 1.1-1.5l.8-.3c.4-.1.5-.3.5-.5 0-.3-.3-.4-.6-.4-.3 0-.7.2-.9.4l-.8-1c.6-.5 1.2-.8 1.8-.8z" fill="#000000"/></svg>Vanilla JS</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-web"></span>CSS Glass</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>LocalState</span>
-                                    </div>
-                                    <span class="program-metric-badge">Zero Libraries</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="glassos" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -1333,117 +906,53 @@
                 <div class="portfolio-subsection is-filtered-out" data-section-category="cpp">
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
-                            <span class="subsection-badge-tag">// C++ SYSTEMS SILICON</span>
-                            <span class="subsection-counter">4 BUILDS</span>
+                            <span class="subsection-badge-tag">// KERNEL ARCHITECTURE & HARDWARE</span>
+                            <span class="subsection-counter"><?= count($cppProjects) ?> SYSTEM BUILDS</span>
                         </div>
                         <h3 class="portfolio-subsection-title">C++ &bull; Low-Level Hardware & Systems Architecture</h3>
-                        <p class="portfolio-subsection-desc">Bare-metal microkernels, lock-free time-series storage, cycle-accurate retro CPU emulators, and SIMD math engines.</p>
+                        <p class="portfolio-subsection-desc">Bare-metal microkernels, lock-free time-series metric loggers, and Direct3D rendering subsystems.</p>
                     </div>
-
                     <div class="featured-programs-grid programs-grid-sm">
-                        <!-- C++ Project 1: AegisKernel Micro-Hypervisor -->
-                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="aegiskernel">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Ring-0</span>
-                                    <span class="program-id-badge">CPP.001</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">AegisKernel Microvisor</h4>
-                                <p class="program-desc">Type-1 bare-metal microkernel with memory-enclave isolation, zero-syscall switching, and CPU telemetry.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>x86 ASM</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>Paging</span>
+                        <?php if (!empty($cppProjects)): ?>
+                            <?php foreach ($cppProjects as $p): ?>
+                            <article class="program-card program-card-sm" data-category="cpp <?= e($p['category']) ?>" data-project-id="<?= e($p['slug']) ?>">
+                                <div class="program-card-header">
+                                    <div class="program-tags-group">
+                                        <span class="program-lang-tag"><?= e(strtoupper($p['category'])) ?></span>
+                                        <span class="program-id-badge">ID.<?= e(str_pad((string)$p['id'], 3, '0', STR_PAD_LEFT)) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">Zero Syscalls</span>
+                                    <?php if (!empty($p['is_featured'])): ?>
+                                        <span class="program-featured-star">★ FEATURED</span>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="aegiskernel" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- C++ Project 2: Chronos Time-Series DB -->
-                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="chronosdb">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Storage</span>
-                                    <span class="program-id-badge">CPP.002</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Chronos Time-Series DB</h4>
-                                <p class="program-desc">Lock-free in-memory time-series database ingesting millions of sensor telemetry ticks via ring buffers.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>AVX-512</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Atomics</span>
+                                <div class="program-card-body">
+                                    <h4 class="program-title"><?= e($p['title']) ?></h4>
+                                    <p class="program-desc"><?= e($p['short_description']) ?></p>
+                                    <div class="program-compact-meta">
+                                        <div class="program-tech-tags">
+                                            <?php 
+                                            $techs = is_array($p['technologies']) ? $p['technologies'] : explode(',', (string)($p['technologies'] ?? ''));
+                                            foreach (array_slice($techs, 0, 3) as $t):
+                                                $t = trim($t);
+                                                if ($t === '') continue;
+                                            ?>
+                                                <span class="skill-badge"><?= e($t) ?></span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <span class="program-metric-badge"><?= e(strtoupper($p['status'])) ?></span>
                                     </div>
-                                    <span class="program-metric-badge">12.5M Ticks/s</span>
                                 </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="chronosdb" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- C++ Project 3: Vortex-8 Hardware Emulator -->
-                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="vortex8">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++ / Emulation</span>
-                                    <span class="program-id-badge">CPP.003</span>
+                                <div class="program-card-footer" style="display: flex; gap: 8px;">
+                                    <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="<?= e($p['slug']) ?>" type="button">Inspect</button>
+                                    <a href="<?= e(url('project/' . $p['slug'])) ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Dossier &nearr;</a>
                                 </div>
+                            </article>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
+                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
                             </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">Vortex-8 Hardware Emulator</h4>
-                                <p class="program-desc">Cycle-accurate virtual CPU emulator featuring opcode disassembler, memory debugger, and 60 FPS video synthesizer.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++17</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>SDL2</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Opcodes</span>
-                                    </div>
-                                    <span class="program-metric-badge">100% Cycle Acc</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="vortex8" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
-
-                        <!-- C++ Project 4: SIMD Vector Math Engine -->
-                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="simdmath">
-                            <div class="program-card-header">
-                                <div class="program-tags-group">
-                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / SIMD</span>
-                                    <span class="program-id-badge">CPP.004</span>
-                                </div>
-                            </div>
-                            <div class="program-card-body">
-                                <h4 class="program-title">SIMD Vector Math Engine</h4>
-                                <p class="program-desc">Hardware-intrinsics vectorized matrix math library accelerating 4x4 coordinate transformations with AVX2.</p>
-                                <div class="program-compact-meta">
-                                    <div class="program-tech-tags">
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
-                                        <span class="skill-badge"><span class="badge-dot dot-pd"></span>AVX2</span>
-                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Intrinsics</span>
-                                    </div>
-                                    <span class="program-metric-badge">8x Throughput</span>
-                                </div>
-                            </div>
-                            <div class="program-card-footer">
-                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="simdmath" type="button">Inspect</button>
-                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
-                            </div>
-                        </article>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -1481,11 +990,23 @@
                                 <div class="contact-card-list">
                                     <div class="contact-item">
                                         <span class="contact-item-label">Direct Email</span>
-                                        <a href="mailto:mordenes@acm.org" class="contact-item-link">mordenes@acm.org</a>
+                                        <a href="mailto:<?= e($profile['email'] ?? "mordenes@acm.org") ?>" class="contact-item-link"><?= e($profile['email'] ?? "mordenes@acm.org") ?></a>
                                     </div>
                                     <div class="contact-item">
                                         <span class="contact-item-label">Location / Base</span>
-                                        <span class="contact-item-text">Laguna, Philippines</span>
+                                        <span class="contact-item-text"><?= e($profile['location'] ?? "Laguna, Philippines") ?></span>
+                                    </div>
+                                    <div class="contact-item" style="margin-top: 10px;">
+                                        <span class="contact-item-label">Social & Networks</span>
+                                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+                                            <?php if (!empty($socialLinks)): ?>
+                                                <?php foreach ($socialLinks as $sl): ?>
+                                                    <a href="<?= e($sl['url']) ?>" target="_blank" rel="noopener noreferrer" style="color: var(--color-cyan); font-size: 0.8rem; text-decoration: underline;">
+                                                        <?= e($sl['label']) ?> &nearr;
+                                                    </a>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

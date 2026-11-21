@@ -22,9 +22,11 @@ class PortfolioDataSeeder
         $this->seedSkills($force);
         $this->seedExperiences($force);
         $this->seedEducation($force);
+        $this->seedAchievements($force);
         $this->seedServices($force);
         $this->seedSocialLinks($force);
         $this->seedSiteSettings($force);
+        $this->seedSections($force);
     }
 
     private function seedProfile(bool $force = false): void
@@ -825,6 +827,101 @@ class PortfolioDataSeeder
                 ':v' => $st[1],
                 ':g' => $st[2],
                 ':d' => $st[3]
+            ]);
+        }
+    }
+
+    private function seedAchievements(bool $force = false): void
+    {
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `achievements`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `achievements`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
+
+        $achievements = [
+            [
+                'Consistent Dean\'s Lister',
+                'Mapúa Malayan Colleges Laguna',
+                'Conferred academic honors for consecutive academic terms in BS Computer Science, maintaining exceptional academic performance across algorithmic analysis and systems development.',
+                '2023 - Present',
+                'Academic',
+                1,
+                1
+            ],
+            [
+                'ACM Student Chapter Operations Officer',
+                'Association for Computing Machinery (ACM)',
+                'Elected chapter officer overseeing systems engineering projects, student technical workshops, and competitive programming initiatives.',
+                'AY 2024 - 2025',
+                'Leadership',
+                1,
+                2
+            ],
+            [
+                'Systems Architect Distinction',
+                'College of Computer and Information Science',
+                'Recognized for exceptional software architecture and development of resilient enterprise point-of-sale and homelab telemetry platforms.',
+                '2024',
+                'Professional',
+                1,
+                3
+            ]
+        ];
+
+        $sql = "INSERT INTO `achievements` (`title`, `issuer`, `description`, `award_date`, `category`, `is_featured`, `display_order`, `is_published`)
+                VALUES (:title, :issuer, :description, :award_date, :category, :is_featured, :display_order, 1)";
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($achievements as $ach) {
+            $stmt->execute([
+                ':title' => $ach[0],
+                ':issuer' => $ach[1],
+                ':description' => $ach[2],
+                ':award_date' => $ach[3],
+                ':category' => $ach[4],
+                ':is_featured' => $ach[5],
+                ':display_order' => $ach[6],
+            ]);
+        }
+    }
+
+    private function seedSections(bool $force = false): void
+    {
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `portfolio_sections`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `portfolio_sections`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
+
+        $sections = [
+            ['hero', 'OPERATIONAL ARCHITECTURE', 'SYSTEMS SCHOLAR // HARDWARE SPECIALIST', 'High-performance computing student, systems architect, and IT enthusiast.', 1, 1, 'default', 0],
+            ['about', 'BIOGRAPHY // CORE DIRECTIVE', 'IDENTITY & SCHOLASTIC DISCIPLINE', 'Computer Science student and systems engineer exploring low-level hardware and resilient platforms.', 1, 2, 'default', 0],
+            ['projects', 'FEATURED PRODUCTION ARCHITECTURES', 'DEPLOYED PLATFORMS & SOFTWARE CODEBASES', 'Engineered desktop engines, embedded terminal POS systems, neural networks, and distributed services.', 1, 3, 'cards', 1],
+            ['hardware', 'HARDWARE LAB ARCHIVE & FLEET INFRASTRUCTURE', 'LAB FLEET TELEMETRY & RETRO HARDWARE REPOSITORY', 'High-performance compute clusters, bare-metal hypervisors, and vintage x86 compute artifacts.', 1, 4, 'cards', 1],
+            ['skills', 'TECHNICAL PROFICIENCIES & CAPABILITIES', 'ENGINEERING MATRIX // PROFICIENCY CATALOG', 'Grouped multi-disciplinary technical competencies from systems programming to cloud architectures.', 1, 5, 'default', 1],
+            ['experience', 'ORGANIZATIONAL EXPERIENCE & LEADERSHIP', 'CHRONOLOGY & RESPONSIBILITIES', 'Track record of student leadership, technical committee stewardship, and academic operations.', 1, 6, 'timeline', 1],
+            ['education', 'ACADEMIC FOUNDATION', 'DEGREES & SCHOLASTIC FORMATION', 'Higher education history and formal Computer Science undergraduate curriculum.', 1, 7, 'cards', 1],
+            ['achievements', 'HONORS & RECOGNITIONS', 'ACADEMIC & INDUSTRY DISTINCTIONS', 'Academic distinctions, hackathon recognitions, and professional commendations.', 1, 8, 'cards', 1],
+            ['certifications', 'CERTIFICATIONS & CREDENTIALS', 'VERIFIED SPECIALIZATIONS', 'Industry credentials and vendor qualifications.', 1, 9, 'cards', 1],
+            ['services', 'SPECIALIZED ENGINEERING OFFERINGS', 'CAPABILITIES & ADVISORY', 'Custom application engineering, systems optimization, and network topology consulting.', 1, 10, 'cards', 1],
+            ['contact', 'INITIALIZE SECURE TRANSMISSION', 'TELEMETRY UPLINK & DIRECT DISPATCH', 'Connect directly via encrypted transmission or explore active communication channels.', 1, 11, 'default', 0],
+        ];
+
+        $sql = "INSERT INTO `portfolio_sections` (`section_key`, `title`, `subtitle`, `intro_text`, `is_enabled`, `display_order`, `layout_variation`, `hide_if_empty`)
+                VALUES (:key, :title, :subtitle, :intro, :enabled, :order, :layout, :hide)";
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($sections as $s) {
+            $stmt->execute([
+                ':key' => $s[0],
+                ':title' => $s[1],
+                ':subtitle' => $s[2],
+                ':intro' => $s[3],
+                ':enabled' => $s[4],
+                ':order' => $s[5],
+                ':layout' => $s[6],
+                ':hide' => $s[7],
             ]);
         }
     }

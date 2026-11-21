@@ -32,7 +32,9 @@ try {
         'skills' => (int)$pdo->query("SELECT COUNT(*) FROM `skills`")->fetchColumn(),
         'experiences' => (int)$pdo->query("SELECT COUNT(*) FROM `experiences`")->fetchColumn(),
         'education' => (int)$pdo->query("SELECT COUNT(*) FROM `education`")->fetchColumn(),
+        'achievements' => (int)$pdo->query("SELECT COUNT(*) FROM `achievements`")->fetchColumn(),
         'services' => (int)$pdo->query("SELECT COUNT(*) FROM `services`")->fetchColumn(),
+        'sections' => (int)$pdo->query("SELECT COUNT(*) FROM `portfolio_sections`")->fetchColumn(),
         'social_links' => (int)$pdo->query("SELECT COUNT(*) FROM `social_links`")->fetchColumn(),
     ];
 

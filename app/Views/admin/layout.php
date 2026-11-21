@@ -284,11 +284,13 @@ $currentUser = AuthService::user();
         </div>
         <ul class="admin-nav">
             <li><a href="<?= e(url('admin')) ?>" class="<?= (($_SERVER['REQUEST_URI'] ?? '') === url('admin') || str_contains($_SERVER['REQUEST_URI'] ?? '', 'dashboard')) ? 'active' : '' ?>"><span>// DASHBOARD</span></a></li>
+            <li><a href="<?= e(url('admin/sections')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'sections') ? 'active' : '' ?>"><span>// SECTIONS ARCH</span></a></li>
             <li><a href="<?= e(url('admin/profile')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'profile') ? 'active' : '' ?>"><span>// PROFILE</span></a></li>
             <li><a href="<?= e(url('admin/projects')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'projects') ? 'active' : '' ?>"><span>// PROJECTS MATRIX</span></a></li>
             <li><a href="<?= e(url('admin/skills')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'skills') ? 'active' : '' ?>"><span>// SKILLS</span></a></li>
             <li><a href="<?= e(url('admin/experience')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'experience') ? 'active' : '' ?>"><span>// EXPERIENCE</span></a></li>
             <li><a href="<?= e(url('admin/education')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'education') ? 'active' : '' ?>"><span>// EDUCATION</span></a></li>
+            <li><a href="<?= e(url('admin/achievements')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'achievements') ? 'active' : '' ?>"><span>// ACHIEVEMENTS</span></a></li>
             <li><a href="<?= e(url('admin/services')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'services') ? 'active' : '' ?>"><span>// SERVICES</span></a></li>
             <li><a href="<?= e(url('admin/hardware')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'hardware') ? 'active' : '' ?>"><span>// LAB ARCHIVE</span></a></li>
             <li><a href="<?= e(url('admin/certifications')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'certifications') ? 'active' : '' ?>"><span>// CERTS</span></a></li>

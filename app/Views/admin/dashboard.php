@@ -33,6 +33,20 @@
             Preserved Lab Archive Systems
         </div>
     </div>
+    <div class="admin-card" style="margin-bottom: 0;">
+        <div class="form-label">// RECOGNITIONS & AWARDS</div>
+        <div style="font-size: 2rem; font-weight: 700; color: #38bdf8;"><?= e((string)($stats['total_achievements'] ?? 0)) ?></div>
+        <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">
+            Academic & Industry Honors
+        </div>
+    </div>
+    <div class="admin-card" style="margin-bottom: 0;">
+        <div class="form-label">// SECTIONS ARCHITECTURE</div>
+        <div style="font-size: 2rem; font-weight: 700; color: #a855f7;"><?= e((string)($stats['total_sections'] ?? 0)) ?></div>
+        <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">
+            Dynamic HUD Telemetry Channels
+        </div>
+    </div>
 </div>
 
 <!-- Database Telemetry Sync Card -->

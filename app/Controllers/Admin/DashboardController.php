@@ -8,6 +8,8 @@ use App\Models\HardwareNode;
 use App\Models\Skill;
 use App\Models\Experience;
 use App\Models\Education;
+use App\Models\Achievement;
+use App\Models\PortfolioSection;
 use App\Models\Service;
 use App\Models\Message;
 use App\Models\Media;
@@ -25,6 +27,8 @@ class DashboardController
             'total_hardware' => HardwareNode::count(),
             'total_skills' => Skill::count(),
             'total_experiences' => Experience::count(),
+            'total_achievements' => Achievement::count(),
+            'total_sections' => PortfolioSection::count(),
             'total_services' => Service::count(),
             'unread_messages' => Message::countUnread(),
             'total_messages' => Message::count(),

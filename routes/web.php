@@ -18,6 +18,8 @@ use App\Controllers\Admin\EducationController;
 use App\Controllers\Admin\ServicesController;
 use App\Controllers\Admin\HardwareController;
 use App\Controllers\Admin\CertificationsController;
+use App\Controllers\Admin\AchievementsController;
+use App\Controllers\Admin\SectionsController;
 use App\Controllers\Admin\SocialLinksController;
 use App\Controllers\Admin\MediaController;
 use App\Controllers\Admin\MessagesController;
@@ -33,6 +35,7 @@ $router = new Router();
 // 1. PUBLIC ROUTES
 // ==========================================
 $router->get('/', [HomeController::class, 'index']);
+$router->get('project/{slug}', [HomeController::class, 'project']);
 $router->get('health', [ApiController::class, 'health']);
 $router->post('contact', [ContactController::class, 'submit'], [CsrfMiddleware::class]);
 
@@ -59,6 +62,11 @@ $router->get('admin/dashboard', [DashboardController::class, 'index'], [AuthMidd
 $router->get('admin/system-health', [DashboardController::class, 'systemHealth'], [AuthMiddleware::class]);
 $router->get('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class]);
 $router->post('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class, CsrfMiddleware::class]);
+
+// Portfolio Sections Architecture
+$router->get('admin/sections', [SectionsController::class, 'index'], [AuthMiddleware::class]);
+$router->post('admin/sections/{id}/update', [SectionsController::class, 'update'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->post('admin/sections/{id}/toggle', [SectionsController::class, 'toggle'], [AuthMiddleware::class, CsrfMiddleware::class]);
 
 // Profile
 $router->get('admin/profile', [ProfileController::class, 'edit'], [AuthMiddleware::class]);
@@ -101,6 +109,12 @@ $router->post('admin/hardware/{id}/delete', [HardwareController::class, 'delete'
 $router->get('admin/certifications', [CertificationsController::class, 'index'], [AuthMiddleware::class]);
 $router->post('admin/certifications', [CertificationsController::class, 'store'], [AuthMiddleware::class, CsrfMiddleware::class]);
 $router->post('admin/certifications/{id}/delete', [CertificationsController::class, 'delete'], [AuthMiddleware::class, CsrfMiddleware::class]);
+
+// Achievements CRUD
+$router->get('admin/achievements', [AchievementsController::class, 'index'], [AuthMiddleware::class]);
+$router->post('admin/achievements', [AchievementsController::class, 'store'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->post('admin/achievements/{id}/update', [AchievementsController::class, 'update'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->post('admin/achievements/{id}/delete', [AchievementsController::class, 'delete'], [AuthMiddleware::class, CsrfMiddleware::class]);
 
 // Social Links CRUD
 $router->get('admin/social', [SocialLinksController::class, 'index'], [AuthMiddleware::class]);

@@ -9,10 +9,14 @@ use App\Models\HardwareNode;
 use App\Models\Skill;
 use App\Models\Experience;
 use App\Models\Education;
+use App\Models\Certification;
+use App\Models\Achievement;
 use App\Models\Service;
 use App\Models\SocialLink;
 use App\Models\SiteSetting;
+use App\Models\PortfolioSection;
 use App\Services\ViewRenderer;
+use App\Services\HttpException;
 
 class HomeController
 {
@@ -39,9 +43,12 @@ class HomeController
             $skillsGrouped = Skill::getPublishedGrouped();
             $experiences = Experience::getPublished();
             $education = Education::getPublished();
+            $certifications = Certification::getPublished();
+            $achievements = Achievement::getPublished();
             $services = Service::getPublished();
             $socialLinks = SocialLink::getPublished();
             $settings = SiteSetting::getAllKeyed();
+            $sections = PortfolioSection::allKeyed();
         } catch (\Throwable $e) {
             // Graceful fallback to default offline telemetry
             $profile = $defaultProfile;
@@ -50,9 +57,12 @@ class HomeController
             $skillsGrouped = [];
             $experiences = [];
             $education = [];
+            $certifications = [];
+            $achievements = [];
             $services = [];
             $socialLinks = [];
             $settings = [];
+            $sections = [];
         }
 
         $metaTitle = $settings['site_title'] ?? ($profile['full_name'] . ' | ' . $profile['title']);
@@ -67,9 +77,12 @@ class HomeController
             'skillsGrouped' => $skillsGrouped,
             'experiences' => $experiences,
             'education' => $education,
+            'certifications' => $certifications,
+            'achievements' => $achievements,
             'services' => $services,
             'socialLinks' => $socialLinks,
             'settings' => $settings,
+            'sections' => $sections,
             'metaTitle' => $metaTitle,
             'metaDesc' => $metaDesc,
             'metaKeywords' => $metaKeywords,
@@ -78,5 +91,18 @@ class HomeController
 
         $renderer = new ViewRenderer();
         echo $renderer->render('public.layout', $viewData);
+    }
+
+    public function project(string $slug): void
+    {
+        $project = Project::findBySlug($slug);
+        if (!$project || empty($project['is_published'])) {
+            throw new HttpException(404, "Project dossier for '{$slug}' could not be located in telemetry archive.");
+        }
+
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.project_detail', [
+            'project' => $project
+        ]);
     }
 }

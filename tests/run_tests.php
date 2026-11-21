@@ -238,6 +238,31 @@ it("Application logger redacts sensitive credentials from log stream", function(
 });
 
 // ----------------------------------------------------
+// 9. Sections Architecture & Achievements Model Test
+// ----------------------------------------------------
+it("PortfolioSection and Achievement models operate correctly", function() {
+    $secCount = \App\Models\PortfolioSection::count();
+    if ($secCount < 5) {
+        throw new Exception("Expected at least 5 portfolio sections, found {$secCount}");
+    }
+
+    $heroSec = \App\Models\PortfolioSection::findByKey('hero');
+    if (!$heroSec || empty($heroSec['title'])) {
+        throw new Exception("Hero section record missing or invalid.");
+    }
+
+    $achievements = \App\Models\Achievement::getPublished();
+    if (empty($achievements)) {
+        throw new Exception("Published achievements list is empty.");
+    }
+
+    $project = \App\Models\Project::findBySlug('valkyrie-pos-pro');
+    if (!$project || $project['title'] !== 'Valkyrie POS Pro') {
+        throw new Exception("Valkyrie POS project lookup failed.");
+    }
+});
+
+// ----------------------------------------------------
 // Summary
 // ----------------------------------------------------
 echo "\n------------------------------------------------------\n";
