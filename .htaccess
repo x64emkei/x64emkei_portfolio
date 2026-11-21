@@ -1,0 +1,35 @@
+# ==============================================================================
+# x64emkei.dev // Apache Configuration & Hardening (Shared Hosting Compatible)
+# ==============================================================================
+
+# Disable directory browsing
+Options -Indexes
+
+# Set DirectoryIndex to prioritize index.php
+DirectoryIndex index.php index.html
+
+# UTF-8 default encoding
+AddDefaultCharset UTF-8
+
+# Protect sensitive files and directories from web access
+<FilesMatch "^\.|\.env|\.git|\.md$|\.sql$|composer\.json|composer\.lock">
+    Require all denied
+    Deny from all
+</FilesMatch>
+
+# Block access to private application folders
+RewriteEngine On
+
+RewriteRule ^(app|bootstrap|config|database|storage/logs|storage/cache) - [F,L]
+
+# URL Rewriting for Front Controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]
+
+# Security Headers (where mod_headers is enabled on shared host)
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

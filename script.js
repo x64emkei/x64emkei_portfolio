@@ -1030,7 +1030,7 @@ The principles should not.
     const modalProjectCode = document.getElementById('modalProjectCode');
     const modalProjectTechPills = document.getElementById('modalProjectTechPills');
 
-    const PROJECTS_DB = {
+    const PROJECTS_DB = (typeof window !== 'undefined' && window.__SERVER_PROJECTS__) ? window.__SERVER_PROJECTS__ : {
         valkyriepos: {
             id: 'CS.001 // ENTERPRISE_POS',
             category: 'C# 12 / .NET 9',
@@ -1507,7 +1507,7 @@ The principles should not.
     const modalHwLog = document.getElementById('modalHwLog');
     const modalHwOem = document.getElementById('modalHwOem');
 
-    const HARDWARE_DB = [
+    const HARDWARE_DB = (typeof window !== 'undefined' && window.__SERVER_HARDWARE__) ? window.__SERVER_HARDWARE__ : [
         {
             nodeId: 'NODE.01 // LAB ARCHIVE',
             tag: 'PRESERVED',
