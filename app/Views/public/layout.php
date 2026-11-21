@@ -3,60 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= e($metaTitle) ?></title>
-    <meta name="description" content="<?= e($metaDesc) ?>">
-    <meta name="keywords" content="<?= e($metaKeywords) ?>">
-    <meta name="author" content="<?= e($profile['full_name']) ?>">
-    <link rel="canonical" href="<?= e($siteUrl) ?>">
-
-    <!-- Open Graph / Social Sharing -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="<?= e($siteUrl) ?>">
-    <meta property="og:title" content="<?= e($metaTitle) ?>">
-    <meta property="og:description" content="<?= e($metaDesc) ?>">
-    <meta property="og:image" content="<?= e($siteUrl . '/' . ltrim($profile['avatar_url'], '/')) ?>">
-
-    <!-- Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?= e($metaTitle) ?>">
-    <meta name="twitter:description" content="<?= e($metaDesc) ?>">
-    <meta name="twitter:image" content="<?= e($siteUrl . '/' . ltrim($profile['avatar_url'], '/')) ?>">
-
+    <meta name="description" content="<?= e($metaDesc ?? "Michael Benedict Ordenes — Computer Science Student, IT Enthusiast & Developer portfolio.") ?>">
+    <title><?= e($metaTitle ?? "Michael Benedict Ordenes | Portfolio") ?></title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="<?= asset('style.css') ?>">
-
-    <!-- JSON-LD Structured Data Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "<?= e($profile['full_name']) ?>",
-        "jobTitle": "<?= e($profile['title']) ?>",
-        "url": "<?= e($siteUrl) ?>",
-        "sameAs": [
-            <?php 
-            $urls = array_map(fn($l) => '"' . e($l['url']) . '"', $socialLinks);
-            echo implode(', ', $urls);
-            ?>
-        ],
-        "knowsAbout": [
-            <?php
-            $skillNames = [];
-            foreach ($skillsGrouped as $catSkills) {
-                foreach ($catSkills as $sk) {
-                    $skillNames[] = '"' . e($sk['name']) . '"';
-                }
-            }
-            echo implode(', ', array_slice($skillNames, 0, 15));
-            ?>
-        ]
-    }
-    </script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- High-Tech Color Sweep Screen Transition Curtain -->
@@ -106,7 +60,7 @@
                 </div>
             </div>
             <h2 class="brand-title">x64emkei<span class="brand-dot">.</span>dev</h2>
-            <span class="brand-subtitle"><?= e($profile['full_name']) ?></span>
+            <span class="brand-subtitle">Michael Benedict Ordenes</span>
         </div>
 
         <nav class="sidebar-nav" aria-label="Main Navigation">
@@ -159,7 +113,7 @@
         </nav>
 
         <div class="sidebar-footer">
-            <!-- Telemetry Live HUD Clock -->
+            <!-- Telemetry Live HUD Clock (Clickable 12/24H toggle) -->
             <div class="sidebar-telemetry-hud" title="Local System Time (Click to toggle 12/24H mode)">
                 <span class="hud-clock-label">SYS.TIME</span>
                 <span class="hud-clock-val" id="liveSysClock">--:--:-- --</span>
@@ -167,14 +121,14 @@
 
             <!-- AI Manifesto Trigger Button -->
             <button class="btn-manifesto" id="sidebarManifestoBtn" aria-label="Open AI Manifesto">
-                <span class="manifesto-hazard">&#9889;</span>
+                <span class="manifesto-hazard">⚡</span>
                 <span>AI MANIFESTO</span>
                 <span class="manifesto-glitch">v1.0</span>
             </button>
 
             <!-- Trust Me Button -->
             <a href="#about" class="btn btn-trust-me sidebar-trust-btn nav-trigger" data-target="about">
-                <span class="trust-hazard">&#9888;</span>
+                <span class="trust-hazard">⚠️</span>
                 <span>TRUST ME</span>
                 <span class="trust-glitch">// LAB</span>
             </a>
@@ -183,10 +137,15 @@
             <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light/dark theme">
                 <span class="theme-icon-container">
                     <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                     </svg>
                     <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
@@ -195,33 +154,39 @@
                 <span class="theme-label" id="themeLabel">Dark Mode</span>
             </button>
 
+                            <li class="nav-item">
+                    <a href="<?= url('admin') ?>" class="nav-link" data-section="admin" title="Operator Control Deck">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2">
+                            <rect width="18" height="18" x="3" y="3" rx="2"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
+                        <span style="color:#00E5FF;">Control Deck</span>
+                    </a>
+                </li>
+
             <!-- Social Links -->
             <div class="social-links">
-                <?php foreach ($socialLinks as $link): ?>
-                    <a href="<?= e($link['url']) ?>" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="<?= e($link['label']) ?>">
-                        <?php if (str_contains(strtolower($link['platform']), 'github')): ?>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                                <path d="M9 18c-4.51 2-5-2-7-2"/>
-                            </svg>
-                        <?php elseif (str_contains(strtolower($link['platform']), 'linkedin')): ?>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                                <rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
-                            </svg>
-                        <?php else: ?>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                            </svg>
-                        <?php endif; ?>
-                    </a>
-                <?php endforeach; ?>
+                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                        <path d="M9 18c-4.51 2-5-2-7-2"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/michael-ordenes/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect width="4" height="12" x="2" y="9"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+                <a href="mailto:mordenes@acm.org" class="social-btn" aria-label="Email Michael">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="20" height="16" x="2" y="4" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                </a>
             </div>
-            
-            <p class="copyright-text">
-                &copy; <?= date('Y') ?> <?= e($profile['full_name']) ?> &bull; 
-                <a href="<?= e(url('admin')) ?>" style="color: #64748b; text-decoration: none;" title="Operator CMS Control Deck">[CMS]</a>
-            </p>
+            <p class="copyright-text">&copy; 2026 Michael Benedict Ordenes</p>
         </div>
     </aside>
 
@@ -239,7 +204,7 @@
                         <div class="hero-content">
                             <div class="hero-tag">
                                 <span class="tag-pulse"></span>
-                                <span><?= e($profile['title']) ?></span>
+                                <span>CS Student • IT Infrastructure • Systems Builder</span>
                             </div>
 
                             <h1 class="hero-title">
@@ -247,18 +212,19 @@
                             </h1>
 
                             <p class="hero-subtitle-badge">
-                                <?= e($profile['full_name']) ?> &bull; Systems Architecture &bull; Low-Level Compute
+                                Michael Benedict Ordenes &bull; Computer Science &bull; Systems &bull; Retro Compute
                             </p>
 
                             <p class="hero-description">
-                                <?= e($profile['tagline'] ?: $profile['bio_short']) ?>
+                                Building resilient software architectures, deploying virtualized server homelabs, and experimenting across the boundary of modern edge systems and vintage computing hardware.
                             </p>
 
                             <div class="hero-actions">
                                 <a href="#portfolio" class="btn btn-primary nav-trigger" data-target="portfolio">
                                     <span>Explore Portfolio</span>
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                        <polyline points="12 5 19 12 12 19"/>
                                     </svg>
                                 </a>
                                 <a href="#about" class="btn btn-outline nav-trigger" data-target="about">
@@ -271,12 +237,13 @@
                                 </button>
                             </div>
 
+
                             <!-- Focus Area Cards (2x2 Brutalist Grid with Meta Tags) -->
                             <div class="stats-grid">
                                 <div class="stat-card">
                                     <div class="stat-header-row">
                                         <span class="stat-badge">DEV.CORE</span>
-                                        <span class="stat-tag-mini"><?= count($projects) ?> BUILDS</span>
+                                        <span class="stat-tag-mini">16 BUILDS</span>
                                     </div>
                                     <span class="stat-number">Software</span>
                                     <span class="stat-label">C#, C++, Python, WASM & WebDev</span>
@@ -300,7 +267,7 @@
                                 <div class="stat-card">
                                     <div class="stat-header-row">
                                         <span class="stat-badge stat-badge-hw">SYS.ARCHIVE</span>
-                                        <span class="stat-tag-mini"><?= count($hardwareNodes) ?> NODES</span>
+                                        <span class="stat-tag-mini">6 NODES</span>
                                     </div>
                                     <span class="stat-number">Hardware</span>
                                     <span class="stat-label">Restoration & Legacy Platforms</span>
@@ -311,8 +278,8 @@
                         <!-- Right Column: Hero Image Panel (Clip-Path Wipe Reveal) -->
                         <div class="hero-image-panel hero-photo-container" id="heroImagePanel">
                             <div class="hero-image-wrapper hero-photo-wrapper">
-                                <img src="<?= e(asset($profile['avatar_url'] ?: 'images/me_2.png')) ?>" 
-                                     alt="Portrait of <?= e($profile['full_name']) ?> — <?= e($profile['title']) ?>" 
+                                <img src="images/me.png" 
+                                     alt="Portrait of Michael Benedict Ordenes — Computer Science student, systems architect, and software developer in front of custom hardware homelab" 
                                      class="hero-image hero-photo" 
                                      id="heroImage" 
                                      loading="eager">
@@ -331,83 +298,361 @@
                 <div class="section-watermark-num">01</div>
                 
                 <div class="section-header">
-                    <span class="section-subtitle">Systems Dossier</span>
-                    <h2 class="section-title">About & Engineering Philosophy</h2>
+                    <span class="section-subtitle">Biography & Background</span>
+                    <h2 class="section-title">About Me</h2>
                     <div class="section-divider"></div>
                 </div>
 
-                <div class="about-grid">
-                    <div class="bento-card about-bio-card" style="grid-column: 1 / -1;">
-                        <h3 class="about-section-heading">// PROFESSIONAL DOSSIER</h3>
-                        <p class="about-lead">
-                            <?= e($profile['bio_full'] ?: $profile['bio_short']) ?>
-                        </p>
-                        <div style="margin-top: 15px; font-size: 0.85rem; color: #94a3b8;">
-                            <span>LOCATION: <b style="color: var(--accent-cyan);"><?= e($profile['location']) ?></b></span> &bull; 
-                            <span>AVAILABILITY: <b style="color: var(--accent-emerald);"><?= e($profile['availability_status']) ?></b></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Skills Matrix Bento -->
-                <div style="margin-top: 30px;">
-                    <h3 class="about-section-heading">// CORE COMPETENCIES MATRIX</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 14px;">
-                        <?php foreach ($skillsGrouped as $category => $categorySkills): ?>
-                            <div class="bento-card">
-                                <div class="bento-tag">
-                                    <span class="tag-rec-dot"></span>
-                                    <span><?= e(strtoupper($category)) ?></span>
-                                </div>
-                                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-                                    <?php foreach ($categorySkills as $sk): ?>
-                                        <div>
-                                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
-                                                <span style="color: #f8fafc; font-weight: 500;"><?= e($sk['name']) ?></span>
-                                                <span style="color: var(--accent-cyan);"><?= (int)$sk['proficiency_level'] ?>%</span>
-                                            </div>
-                                            <div style="background: rgba(255,255,255,0.06); height: 4px; border-radius: 2px;">
-                                                <div style="background: var(--accent-cyan); height: 100%; width: <?= (int)$sk['proficiency_level'] ?>%; border-radius: 2px;"></div>
-                                            </div>
+                <div class="about-bento-grid">
+                    <!-- 1. Bio & Philosophy Bento Card (Span 12) -->
+                    <div class="bento-card bento-bio">
+                        <div class="bio-card-layout">
+                            <div class="bio-card-text">
+                                <div>
+                                    <div class="bento-tag">
+                                        <span class="tag-rec-dot"></span>
+                                        <span>BIOGRAPHY // PROFILE</span>
+                                        <div class="win-controls">
+                                            <span class="win-btn">_</span>
+                                            <span class="win-btn win-close">&times;</span>
                                         </div>
-                                    <?php endforeach; ?>
+                                    </div>
+                                    <h3 class="bento-heading">Curious mind passionate about systems, code, and hardware.</h3>
+                                    <p class="about-text">
+                                        I’m a Computer Science student interested in software development, IT infrastructure, networking, systems administration, and emerging technologies.
+                                    </p>
+                                    <p class="about-text" style="margin-top: 10px;">
+                                        I enjoy turning ideas into functional projects and experimenting with both modern and legacy hardware/software.
+                                    </p>
+                                </div>
+                                <div class="bio-card-actions">
+                                    <button class="btn btn-outline" id="aboutManifestoBtn" type="button">
+                                        <span class="btn-live-pip"></span>
+                                        <span>AI Manifesto v1.0</span>
+                                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <!-- Experience & Education Dual Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 36px;">
-                    <!-- Experience -->
-                    <div class="bento-card">
-                        <h3 class="about-section-heading">// EXPERIENCE & LEADERSHIP</h3>
-                        <div style="display: flex; flex-direction: column; gap: 18px; margin-top: 14px;">
-                            <?php foreach ($experiences as $exp): ?>
-                                <div style="border-left: 2px solid var(--accent-cyan); padding-left: 14px;">
-                                    <div style="font-size: 0.95rem; font-weight: 700; color: #fff;"><?= e($exp['title']) ?></div>
-                                    <div style="font-size: 0.8rem; color: var(--accent-cyan); margin: 2px 0;">
-                                        <?= e($exp['organization']) ?> &bull; <?= e($exp['period_start']) ?> &ndash; <?= e($exp['period_end'] ?: 'Present') ?>
-                                    </div>
-                                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0 0 0;"><?= e($exp['description']) ?></p>
+                            <div class="bio-card-photo-pane">
+                                <img src="images/me_2.png" alt="Michael Benedict Ordenes" class="bio-flush-photo" loading="lazy">
+                                <div class="bio-photo-telemetry">
+                                    <span class="tag-pulse"></span>
+                                    <span class="bio-photo-label">x64emkei // OPERATOR</span>
                                 </div>
-                            <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Education -->
-                    <div class="bento-card">
-                        <h3 class="about-section-heading">// ACADEMIC BACKGROUND</h3>
-                        <div style="display: flex; flex-direction: column; gap: 18px; margin-top: 14px;">
-                            <?php foreach ($education as $edu): ?>
-                                <div style="border-left: 2px solid var(--accent-magenta); padding-left: 14px;">
-                                    <div style="font-size: 0.95rem; font-weight: 700; color: #fff;"><?= e($edu['degree']) ?></div>
-                                    <div style="font-size: 0.8rem; color: var(--accent-magenta); margin: 2px 0;">
-                                        <?= e($edu['institution']) ?> &bull; <?= e($edu['period_start']) ?> &ndash; <?= e($edu['period_end'] ?: 'Present') ?>
-                                    </div>
-                                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0 0 0;"><?= e($edu['achievements']) ?></p>
+                    <!-- 2. Education & Credentials Bento Card (Span 6) -->
+                    <div class="bento-card bento-edu">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>ACADEMICS // PATHWAY</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
+                            </div>
+                        </div>
+                        <h3 class="bento-heading">Education & Credentials</h3>
+
+                        <div class="edu-container">
+                            <!-- Higher Ed -->
+                            <div class="edu-entry-card">
+                                <div class="edu-entry-header">
+                                    <span class="edu-level-badge">Undergraduate</span>
+                                    <span class="edu-status-badge">In Progress</span>
                                 </div>
-                            <?php endforeach; ?>
+                                <div class="edu-degree-title">Bachelor of Science in Computer Science</div>
+                                <div class="edu-school-row">
+                                    <svg class="edu-school-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                                    </svg>
+                                    <span class="edu-school-name">Laguna College of Business and Arts</span>
+                                </div>
+                            </div>
+
+                            <!-- Senior High -->
+                            <div class="edu-entry-card">
+                                <div class="edu-entry-header">
+                                    <span class="edu-level-badge">Senior High School</span>
+                                    <span class="edu-status-badge edu-status-done">Completed</span>
+                                </div>
+                                <div class="edu-degree-title">Science, Technology, Engineering & Mathematics</div>
+                                <div class="edu-school-row">
+                                    <svg class="edu-school-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                                    </svg>
+                                    <span class="edu-school-name">St. Vincent College of Cabuyao</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certifications Sub-block -->
+                        <div class="edu-cert-section">
+                            <div class="edu-cert-header">
+                                <span class="indicator-pulse-dot"></span>
+                                <span>Verified Credentials & Honors</span>
+                            </div>
+                            <div class="edu-cert-list">
+                                <div class="edu-cert-card">
+                                    <span class="edu-cert-bullet"></span>
+                                    <div class="edu-cert-info">
+                                        <span class="edu-cert-name">Certified Six Sigma White Belt</span>
+                                        <span class="edu-cert-desc">Continuous Quality Improvement & Process Optimization</span>
+                                    </div>
+                                </div>
+                                <div class="edu-cert-card">
+                                    <span class="edu-cert-bullet"></span>
+                                    <div class="edu-cert-info">
+                                        <span class="edu-cert-name">EF SET English Certificate &mdash; C1 Advanced</span>
+                                        <span class="edu-cert-desc">Proficient Professional Technical Communication</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Technical Skills Bento Card (Span 6) -->
+                    <div class="bento-card bento-skills bento-skills-featured">
+                        <div class="featured-header-row">
+                            <div class="bento-tag featured-tag">
+                                <span class="tag-rec-dot"></span>
+                                <span>SYSTEM ARSENAL // TECH STACK</span>
+                            </div>
+                            <div class="featured-indicator">
+                                <span class="indicator-pulse-dot"></span>
+                                <span>Active Proficiency</span>
+                            </div>
+                        </div>
+                        <h3 class="bento-heading">Technical Skills & Tooling</h3>
+
+                        <div class="skills-simple-container">
+                            <!-- Group 1: Programming & Scripting -->
+                            <div class="skills-group">
+                                <div class="skills-group-header">
+                                    <span class="group-code-tag">DEV.01</span>
+                                    <h4 class="skills-group-title">Programming & Scripting</h4>
+                                </div>
+                                <div class="skills-badge-list">
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 2l1.6 18.5L12 23l7.4-2.5L21 2H3z" fill="#E44D26"/><path d="M12 3.7v17.4l5.9-2 1.4-15.4H12z" fill="#F16529"/><path d="M12 7.7H7.7l.3 3.3H12v-3.3zm0 5.6H9.7l.2 2.3 2.1.6v-2.9z" fill="#EBEBEB"/><path d="M12 7.7h4.3l-.4 4.5h-3.9v3.3l-2.1-.6-.1-1.5H8.3l.3 3.2 3.4.9 3.4-.9.4-4.8.1-1.3.3-3.6H12v.7z" fill="#FFFFFF"/></svg>HTML5</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 2l1.6 18.5L12 23l7.4-2.5L21 2H3z" fill="#1572B6"/><path d="M12 3.7v17.4l5.9-2 1.4-15.4H12z" fill="#33A9DC"/><path d="M12 7.7H7.7l.3 3.3H12v-3.3zm0 5.6H9.7l.2 2.3 2.1.6v-2.9z" fill="#EBEBEB"/><path d="M12 7.7h4.3l-.4 4.5h-3.9v3.3l-2.1-.6-.1-1.5H8.3l.3 3.2 3.4.9 3.4-.9.4-4.8.1-1.3.3-3.6H12v.7z" fill="#FFFFFF"/></svg>CSS3 / Grid</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#F7DF1E"/><path d="M8 12.5v4.5c0 1-.7 1.4-1.7 1.4-.7 0-1.3-.3-1.6-.7l.9-1c.2.2.4.4.7.4.3 0 .4-.2.4-.5v-3.7H8zm8.5 0c1 0 1.8.6 1.8 1.6 0 .7-.4 1.2-1 1.4l-.8.3c-.4.1-.6.3-.6.6 0 .3.3.4.6.4.4 0 .8-.2 1-.5l.8 1c-.5.5-1.1.7-1.8.7-1.2 0-2-.7-2-1.8 0-.7.4-1.3 1.1-1.5l.8-.3c.4-.1.5-.3.5-.5 0-.3-.3-.4-.6-.4-.3 0-.7.2-.9.4l-.8-1c.6-.5 1.2-.8 1.8-.8z" fill="#000000"/></svg>JavaScript (ES6+)</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M8 18.5c3 .3 7.5.3 10.5-1 0 0-1.5.8-3.5 1.2 4.5.3 8.5-.7 8.5-.7s-2 1.5-6.5 1.9c5 .3 9.5-.7 9.5-.7s-3.5 1.8-12 1.5c-3-.1-5.5-.9-6.5-1.5-.7-.4-.7-.8 0-.7zm-1-4c2.5.3 5.5.4 8.5-.2 0 0-1 .5-2.5.7 3.5.2 6.5-.4 6.5-.4s-1.5 1-4.5 1.2c3.5.2 6.5-.4 6.5-.4s-2.5 1.3-9 1.1c-2.3-.1-4.2-.7-5-1.2-.5-.4-.5-.6-.5-.8zm6.5-8.5c1 1.2.6 2.3-.2 3.5-1.1 1.6-1.5 2.6.5 4.3-1.8-.4-3-1.7-2.6-3.3.4-1.6 2.1-2.2 2.3-4.5zm-3-3c1.2 1.5.7 2.8-.3 4.3-1.3 1.9-1.8 3.2.6 5.3-2.2-.5-3.7-2.1-3.2-4.1.5-2 2.6-2.8 2.9-5.5z" fill="#EA2D2E"/><path d="M15 10.5c.7.8.4 1.6-.2 2.4-.7 1.1-1 1.8.3 3-1.2-.3-2-1.2-1.8-2.3.3-1.1 1.4-1.5 1.7-3.1z" fill="#5382A1"/></svg>Java</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C#</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(0, 117, 143, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>MySQL</span>
+                                </div>
+                            </div>
+
+                            <!-- Group 2: Systems, Homelab & Virtualization -->
+                            <div class="skills-group">
+                                <div class="skills-group-header">
+                                    <span class="group-code-tag tag-sys">SYS.02</span>
+                                    <h4 class="skills-group-title">Systems & Virtualization</h4>
+                                </div>
+                                <div class="skills-badge-list">
+                                    <span class="skill-badge skill-badge-win"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#0078D4"><path d="M3 4.2l7.5-1v8.3H3V4.2zm0 8.3h7.5v8.3L3 19.8v-7.3zm8.5-9.4L21 2v9.5h-9.5V3.1zm0 9.4H21V22l-9.5-1.3v-8.2z"/></svg>Windows 10/11</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="14" rx="6" ry="7" fill="#E8B007"/><ellipse cx="12" cy="13.5" rx="5" ry="6" fill="#1C1B1F"/><ellipse cx="12" cy="14.5" rx="3.5" ry="4" fill="#FFFFFF"/><circle cx="12" cy="6.5" r="4" fill="#1C1B1F"/><circle cx="10.8" cy="6" r="0.8" fill="#FFFFFF"/><circle cx="13.2" cy="6" r="0.8" fill="#FFFFFF"/><polygon points="12,7 10.5,9 13.5,9" fill="#FFA500"/><path d="M6 18c1-1 3.5 0 4.5 2-2 1-4.5 0-4.5-2zm12 0c-1-1-3.5 0-4.5 2 2 1 4.5 0 4.5-2z" fill="#FFA500"/></svg>Linux (Debian/Ubuntu)</span>
+                                    <span class="skill-badge skill-badge-highlight"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="#E57000" stroke-width="1.8" fill="rgba(229, 112, 0, 0.15)"/><path d="M7.5 10l4.5 2.5 4.5-2.5M12 12.5V18" stroke="#E57000" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7" r="1.5" fill="#E57000"/></svg>Proxmox VE</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M2.5 13.5c.5-2.5 2.5-4 5-4h13.5c1 1.5 1 3.5 0 5-1.5 2-4 3.5-8.5 3.5-4.5 0-8-2-10-4.5z" fill="#2496ED" opacity="0.25"/><path d="M22 12.5c-.8-.5-2.2-.7-3.3-.2-.4-1.8-1.8-3.1-3.7-3.1-.2 0-.4 0-.6.1-.8-1.5-2.4-2.5-4.2-2.5-.3 0-.6 0-.9.1V6.5H6.8V9H4.3v2.5H2v1.5c.8 4 4.5 7 9 7 6 0 9.8-3.5 10.7-6.8.5-.2.8-.4.3-.7z" stroke="#2496ED" stroke-width="1.6"/><rect x="6.8" y="9.5" width="2" height="2" fill="#2496ED"/><rect x="9.3" y="9.5" width="2" height="2" fill="#2496ED"/><rect x="11.8" y="9.5" width="2" height="2" fill="#2496ED"/><rect x="9.3" y="7" width="2" height="2" fill="#2496ED"/></svg>Docker Containers</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="#00C48C"/><circle cx="18" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="6" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="18" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><line x1="8.5" y1="12" x2="9" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="15" y1="12" x2="15.5" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="8.5" x2="12" y2="9" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="15" x2="12" y2="15.5" stroke="#00C48C" stroke-width="1.5"/></svg>Tailscale Mesh</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>DNS & Routing</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>WireGuard VPN</span>
+                                </div>
+                            </div>
+
+                            <!-- Group 3: Creative & Media Tools -->
+                            <div class="skills-group">
+                                <div class="skills-group-header">
+                                    <span class="group-code-tag tag-media">MEDIA.03</span>
+                                    <h4 class="skills-group-title">Creative & Digital Media</h4>
+                                </div>
+                                <div class="skills-badge-list">
+                                    <span class="skill-badge skill-badge-creative"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#001E36" stroke="#31A8FF" stroke-width="1.2"/><path d="M6.5 7.5h3.5c1.8 0 2.8 1 2.8 2.4 0 1.5-1 2.4-2.8 2.4h-2v4.2H6.5V7.5zm1.5 3.5h2c.8 0 1.3-.4 1.3-1.1 0-.7-.5-1.1-1.3-1.1H8v2.2z" fill="#31A8FF"/><path d="M14.5 12.8c.8-.4 1.8-.7 2.6-.7 1.2 0 1.9.5 1.9 1.4 0 .9-.7 1.3-1.8 1.7l-.8.3c-1.4.5-2.1 1.2-2.1 2.3 0 1.5 1.3 2.5 3.2 2.5 1.1 0 2.1-.3 2.7-.7l-.5-1.2c-.6.3-1.4.6-2.2.6-1.1 0-1.7-.5-1.7-1.2 0-.8.6-1.2 1.8-1.6l.8-.3c1.5-.5 2.1-1.3 2.1-2.4 0-1.6-1.3-2.6-3.2-2.6-1 0-2.1.3-2.8.7l.5 1.2z" fill="#31A8FF"/></svg>Adobe Photoshop</span>
+                                    <span class="skill-badge skill-badge-creative"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#330000" stroke="#FF9A00" stroke-width="1.2"/><path d="M9.5 7.5L6 16.5h1.7l.8-2.2h3.5l.8 2.2h1.7l-3.5-9h-1.5zm-5 6.8l1.3-3.6 1.3 3.6H9z" fill="#FF9A00"/><path d="M16.5 7.5h1.5v1.5h-1.5V7.5zm0 3.5h1.5v5.5h-1.5V11z" fill="#FF9A00"/></svg>Adobe Illustrator</span>
+                                    <span class="skill-badge skill-badge-creative"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#333" stroke-width="1" fill="#0E1218"/><circle cx="12" cy="7.5" r="3.2" fill="#E62B34"/><circle cx="8" cy="15" r="3.2" fill="#2B7DE6"/><circle cx="16" cy="15" r="3.2" fill="#E6B82B"/></svg>DaVinci Resolve</span>
+                                    <span class="skill-badge skill-badge-office"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="8.5" height="8.5" x="2.5" y="2.5" rx="1.5" fill="#E83B26"/><rect width="8.5" height="8.5" x="13" y="2.5" rx="1.5" fill="#185ABD"/><rect width="8.5" height="8.5" x="2.5" y="13" rx="1.5" fill="#107C41"/><rect width="8.5" height="8.5" x="13" y="13" rx="1.5" fill="#7719AA"/></svg>Office Suite</span>
+                                </div>
+                            </div>
+
+                            <!-- Group 4: Workflow & Engineering Operations -->
+                            <div class="skills-group">
+                                <div class="skills-group-header">
+                                    <span class="group-code-tag tag-ops">OPS.04</span>
+                                    <h4 class="skills-group-title">Workflow & Operations</h4>
+                                </div>
+                                <div class="skills-badge-list">
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="16" height="16" x="4" y="4" rx="2.5" transform="rotate(45 12 12)" fill="#F05032"/><path d="M15 12a1.8 1.8 0 1 1-2.5-1.6V8.6a1.8 1.8 0 1 1 1.2 0v1.8c.8.3 1.3 1 1.3 1.6zm-3.5 1.5a1.8 1.8 0 1 1-2.5-1.6V9a1.8 1.8 0 1 1 1.2 0v2.9c.8.3 1.3 1 1.3 1.6z" fill="#FFFFFF"/></svg>Git</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>GitHub</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M17.5 2.5L7 11.5l10.5 9 4.5-2.2V4.7L17.5 2.5z" fill="#007ACC"/><path d="M17.5 2.5L2 9.5l4 3.5 11.5-10.5z" fill="#1F9CF0"/><path d="M6 13l-4 3.5 15.5 5 4.5-2.2L6 13z" fill="#0066B8"/></svg>VS Code</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z" fill="#FF2A2A"/></svg>Antigravity</span>
+                                    <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Hardware Diags</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Academic & Community Affiliations Bento Card (Span 12) -->
+                    <div class="bento-card bento-affiliations">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>INVOLVEMENT // ORGS</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
+                            </div>
+                        </div>
+                        <h3 class="bento-heading">Experience, Leadership & Activities</h3>
+
+                        <div class="affiliation-list">
+                            <div class="affiliation-item">
+                                <div class="affiliation-bullet"></div>
+                                <div class="affiliation-details">
+                                    <div class="affiliation-name">Alliance of Computer Engineering and Computer Science Students</div>
+                                    <div class="affiliation-role">Academic Organization, Secretary</div>
+                                </div>
+                            </div>
+                            <div class="affiliation-item">
+                                <div class="affiliation-bullet"></div>
+                                <div class="affiliation-details">
+                                    <div class="affiliation-name">National Youth Movement for the West Philippine Sea</div>
+                                    <div class="affiliation-role">Laguna Chapter Chairperson</div>
+                                </div>
+                            </div>
+                            <div class="affiliation-item">
+                                <div class="affiliation-bullet"></div>
+                                <div class="affiliation-details">
+                                    <div class="affiliation-name">FPJ Youth</div>
+                                    <div class="affiliation-role">Director for Communications and Publications</div>
+                                </div>
+                            </div>
+                            <div class="affiliation-item">
+                                <div class="affiliation-bullet"></div>
+                                <div class="affiliation-details">
+                                    <div class="affiliation-name">International Association of Engineers (IAENG)</div>
+                                    <div class="affiliation-role">Professional Organization</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Vintage Hardware & Compute Lab (Span 12) -->
+                    <div class="bento-card bento-retro">
+                        <div class="retro-header-row">
+                            <div class="bento-tag">
+                                <span class="tag-rec-dot"></span>
+                                <span>RETRO HARDWARE LAB // LEGACY ARCHIVE</span>
+                            </div>
+                            <div class="retro-indicator">
+                                <span class="indicator-pulse-dot"></span>
+                                <span>6 Operational Nodes</span>
+                            </div>
+                        </div>
+                        <h3 class="bento-heading">Vintage Hardware Diagnostics & Restoration Lab</h3>
+                        <p class="retro-subtitle">Hands-on hardware diagnostics, BIOS recovery, and preservation across iconic architectures.</p>
+
+                        <div class="retro-machine-grid">
+                            <!-- Machine 1: Sony Vaio W-series VPCW115XG -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.01</span>
+                                    <span class="retro-form-tag">Netbook</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Sony Vaio W-series VPCW115XG</div>
+                                    <div class="retro-machine-desc">Intel Atom N280, 10.1" WXGA (1366&times;768), island keyboard design. Classic Japanese ultraportable engineering.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Preserved</span>
+                                    <span class="retro-oem-tag">Sony VAIO</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 2: Panasonic Lets Note CF-T4GW5AXR -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.02</span>
+                                    <span class="retro-form-tag">Toughbook Ultra</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Panasonic Let's Note CF-T4GW5AXR</div>
+                                    <div class="retro-machine-desc">Intel Pentium M ULV 753, magnesium alloy bonnet chassis, circular optical touchpad, fanless silent architecture.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Operational</span>
+                                    <span class="retro-oem-tag">Panasonic Japan</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 3: HP Compaq nx6320 -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">RIG.03</span>
+                                    <span class="retro-form-tag">Business Notebook</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">HP Compaq nx6320</div>
+                                    <div class="retro-machine-desc">Intel Core 2 Duo platform, 15.0" 4:3 matte panel, legacy serial & parallel I/O, dedicated hardware diagnostic terminal.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Diagnostic Rig</span>
+                                    <span class="retro-oem-tag">HP / Compaq</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 4: HP Pavilion a6000 sleeper build -->
+                            <div class="retro-machine-card retro-card-sleeper">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">RIG.04</span>
+                                    <span class="retro-form-tag tag-sleeper">Sleeper Build</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">HP Pavilion a6000 (Sleeper)</div>
+                                    <div class="retro-machine-desc">Iconic mid-2000s glossy wave-front chassis refitted with high-efficiency modern internals, modular cooling & quiet airflow.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active status-sleeper"><span class="retro-status-dot dot-sleeper"></span>Daily Workstation</span>
+                                    <span class="retro-oem-tag">HP Custom Sleeper</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 5: Dell Optiplex 3010 Homelab server -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.05</span>
+                                    <span class="retro-form-tag">Homelab Server</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Dell OptiPlex 3010 Server</div>
+                                    <div class="retro-machine-desc">Intel Core host with expanded RAM and gigabit uplink. Configured for 24/7 Proxmox VE, Linux containers & network services.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Online // 24/7</span>
+                                    <span class="retro-oem-tag">Dell Homelab</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 6: Dell Optiplex 760 USFF -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.06</span>
+                                    <span class="retro-form-tag">Ultra SFF</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Dell OptiPlex 760 USFF</div>
+                                    <div class="retro-machine-desc">Ultra-small form factor desktop, Intel Core 2 Duo, low-power compact footprint, headless network test node.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Bench Test</span>
+                                    <span class="retro-oem-tag">Dell Legacy</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -424,20 +669,112 @@
                 </div>
 
                 <div class="services-grid">
-                    <?php foreach ($services as $index => $srv): ?>
-                        <div class="bento-card service-card <?= $index === 0 ? 'service-card-red' : '' ?>">
-                            <div class="bento-tag">
-                                <span class="tag-rec-dot"></span>
-                                <span><?= e(strtoupper($srv['category'])) ?></span>
-                                <div class="win-controls">
-                                    <span class="win-btn">_</span>
-                                    <span class="win-btn win-close">&times;</span>
-                                </div>
+                    <!-- Service 1 (Span 7) -->
+                    <div class="bento-card service-card service-card-red">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>CORE SPECIALTY // DEV</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
                             </div>
-                            <h3 class="service-title"><?= e($srv['title']) ?></h3>
-                            <p class="service-description"><?= e($srv['description']) ?></p>
                         </div>
-                    <?php endforeach; ?>
+                        <h3 class="service-title">Web & Software Development</h3>
+                        <p class="service-description">
+                            Designing and coding responsive web applications and reliable software solutions with clean, structured, dependency-conscious code.
+                        </p>
+                        <ul class="service-features">
+                            <li>Vanilla JavaScript (ES6+), HTML5 Semantics & Modern CSS3 Grid/Flex</li>
+                            <li>Python, C#, C++, and Java Application Development</li>
+                            <li>Relational Database Modeling & MySQL Query Optimization</li>
+                            <li>Accessible, Fast, Device-Responsive User Interfaces</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 (Span 5) -->
+                    <div class="bento-card service-card">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>SYSTEMS // INFRA</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
+                            </div>
+                        </div>
+                        <h3 class="service-title">Homelab & Virtualization</h3>
+                        <p class="service-description">
+                            Building and administering resilient virtual environments, hypervisors, and container stacks.
+                        </p>
+                        <ul class="service-features">
+                            <li>Proxmox VE Hypervisor Deployment & Cluster Setup</li>
+                            <li>Docker & Containerized Microservice Workflows</li>
+                            <li>Debian / Linux Server Configuration & Hardening</li>
+                            <li>Local Service Uptime Monitoring & Storage Management</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 (Span 4) -->
+                    <div class="bento-card service-card">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>NETWORKS // SECURITY</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
+                            </div>
+                        </div>
+                        <h3 class="service-title">Networking & Systems</h3>
+                        <p class="service-description">
+                            Configuring mesh routing, secure tunnel overlays, and local network infrastructure.
+                        </p>
+                        <ul class="service-features">
+                            <li>Tailscale Encrypted Mesh & Remote Access</li>
+                            <li>Local DNS Resolution & Subdomain Management</li>
+                            <li>Windows & Linux System Administration</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 4 (Span 4) -->
+                    <div class="bento-card service-card">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>HARDWARE // RETRO</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
+                            </div>
+                        </div>
+                        <h3 class="service-title">Hardware Restoration</h3>
+                        <p class="service-description">
+                            Refurbishing, troubleshooting, and diagnosing modern and vintage computing platforms.
+                        </p>
+                        <ul class="service-features">
+                            <li>Component-Level Diagnostic Testing & Benchmarking</li>
+                            <li>Legacy Operating System Maintenance & Drivers</li>
+                            <li>Thermal Re-pasting, BIOS Updates & Restoration</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 5 (Span 4) -->
+                    <div class="bento-card service-card">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>ANALYSIS // ARCHITECTURE</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
+                            </div>
+                        </div>
+                        <h3 class="service-title">Technical Problem Solving</h3>
+                        <p class="service-description">
+                            Systematic troubleshooting, documentation, and continuous process optimization.
+                        </p>
+                        <ul class="service-features">
+                            <li>Six Sigma White Belt Continuous Improvement Practices</li>
+                            <li>Technical Architecture Documentation</li>
+                            <li>Software Debugging & System Diagnostics</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -453,70 +790,660 @@
 
                 <!-- Filter Controls -->
                 <div class="portfolio-filter-group" role="tablist" aria-label="Portfolio Category Filter">
-                    <button class="filter-btn active" data-filter="featured"><span>Featured</span></button>
-                    <button class="filter-btn" data-filter="csharp"><span>C# (.NET)</span></button>
-                    <button class="filter-btn" data-filter="python"><span>Python</span></button>
-                    <button class="filter-btn" data-filter="web"><span>WebDev</span></button>
-                    <button class="filter-btn" data-filter="cpp"><span>C++</span></button>
-                    <button class="filter-btn" data-filter="all"><span>All Projects (<?= count($projects) ?>)</span></button>
+                    <button class="filter-btn active" data-filter="featured"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#FFB800"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Featured</span></button>
+                    <button class="filter-btn" data-filter="csharp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg><span>C# (.NET)</span></button>
+                    <button class="filter-btn" data-filter="python"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg><span>Python</span></button>
+                    <button class="filter-btn" data-filter="webdev"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg><span>WebDev</span></button>
+                    <button class="filter-btn" data-filter="cpp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg><span>C++</span></button>
+                    <button class="filter-btn" data-filter="all"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>All Projects</span></button>
                 </div>
 
-                <!-- Flagship Applications Container -->
+                <!-- Primary Featured Programs Grid -->
+                <!-- ================= 1. FEATURED PROGRAMS SUBSECTION (ONE-PAGE SMALL CARDS) ================= -->
                 <div class="portfolio-subsection featured-programs-section" data-section-category="featured">
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
-                            <span class="subsection-badge-tag">// SYSTEM ARCHIVES</span>
-                            <span class="subsection-counter"><?= count($projects) ?> TOTAL BUILDS</span>
+                            <span class="subsection-badge-tag">// FLAGSHIP SYSTEMS ARCHIVE</span>
+                            <span class="subsection-counter">6 FEATURED BUILDS</span>
                         </div>
-                        <h3 class="portfolio-subsection-title">Flagship Applications & Systems</h3>
-                        <p class="portfolio-subsection-desc">Interactive software builds demonstrating low-level kernel routines, real-time edge neural pipelines, and mission-critical architectures.</p>
+                        <h3 class="portfolio-subsection-title">Featured Flagship Applications</h3>
+                        <p class="portfolio-subsection-desc">Selected high-impact software systems demonstrating low-level kernel routines, real-time edge intelligence, and distributed architectures.</p>
                     </div>
 
-                    <div class="programs-matrix-grid">
-                        <?php foreach ($projects as $proj): ?>
-                            <div class="program-node-card portfolio-item" 
-                                 data-category="<?= e($proj['filter_tag']) ?>" 
-                                 data-featured="<?= $proj['is_featured'] ? 'true' : 'false' ?>"
-                                 data-project-key="<?= e($proj['slug']) ?>">
-                                <div class="node-card-glitch-border"></div>
-                                <div class="node-meta-banner">
-                                    <span class="node-pulse-pip"></span>
-                                    <span class="node-code-id"><?= e($proj['code_id']) ?></span>
-                                    <span class="node-status-tag"><?= e($proj['operational_status']) ?></span>
+                    <div class="featured-programs-grid programs-grid-sm">
+                        <!-- Featured 1: Valkyrie POS Pro -->
+                        <article class="program-card program-card-sm" data-category="featured systems csharp" data-project-id="valkyriepos">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# / .NET 9</span>
+                                    <span class="program-id-badge">CS.001</span>
                                 </div>
-                                <div class="node-card-body">
-                                    <div class="node-category-label"><?= e($proj['category']) ?></div>
-                                    <h4 class="node-title"><?= e($proj['title']) ?></h4>
-                                    <p class="node-tagline"><?= e($proj['tagline']) ?></p>
-                                    
-                                    <div class="node-specs-block">
-                                        <div class="node-spec-line">
-                                            <span class="spec-label">ENV</span>
-                                            <span class="spec-val"><?= e($proj['environment'] ?: 'Linux / Desktop') ?></span>
-                                        </div>
-                                        <div class="node-spec-line">
-                                            <span class="spec-label">PERF</span>
-                                            <span class="spec-val"><?= e($proj['performance_metric'] ?: 'High-Throughput') ?></span>
-                                        </div>
+                                <span class="program-featured-star">★ FEATURED</span>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Valkyrie POS Pro</h4>
+                                <p class="program-desc">Autonomous offline retail engine featuring cryptographic transaction ledgers and multi-terminal peer sync.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# 12</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#0078D4"><path d="M3 4.2l7.5-1v8.3H3V4.2zm0 8.3h7.5v8.3L3 19.8v-7.3zm8.5-9.4L21 2v9.5h-9.5V3.1zm0 9.4H21V22l-9.5-1.3v-8.2z"/></svg>WPF</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(0, 117, 143, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>SQLite</span>
                                     </div>
-                                    
-                                    <div class="node-actions-row">
-                                        <button class="btn-inspect-node project-open-btn" data-project="<?= e($proj['slug']) ?>">
-                                            <span>Inspect Node</span>
-                                            <span class="btn-arrow">&rarr;</span>
-                                        </button>
-                                        <?php if (!empty($proj['github_url'])): ?>
-                                            <a href="<?= e($proj['github_url']) ?>" target="_blank" rel="noopener noreferrer" class="btn-repo-link" aria-label="GitHub Repository">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                                                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                                                    <path d="M9 18c-4.51 2-5-2-7-2"/>
-                                                </svg>
-                                            </a>
-                                        <?php endif; ?>
-                                    </div>
+                                    <span class="program-metric-badge">0.8ms TX Latency</span>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="valkyriepos" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Featured 2: AegisKernel Micro-Hypervisor -->
+                        <article class="program-card program-card-sm" data-category="featured cpp systems" data-project-id="aegiskernel">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Ring-0</span>
+                                    <span class="program-id-badge">CPP.001</span>
+                                </div>
+                                <span class="program-featured-star">★ FEATURED</span>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">AegisKernel Microvisor</h4>
+                                <p class="program-desc">Type-1 bare-metal microkernel with memory-enclave isolation, zero-syscall switching, and CPU telemetry.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>x86 ASM</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>Paging</span>
+                                    </div>
+                                    <span class="program-metric-badge">Zero Syscalls</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="aegiskernel" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Featured 3: NeuroPulse Vision AI -->
+                        <article class="program-card program-card-sm" data-category="featured python systems" data-project-id="neuropulse">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python / CUDA</span>
+                                    <span class="program-id-badge">PY.001</span>
+                                </div>
+                                <span class="program-featured-star">★ FEATURED</span>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">NeuroPulse Vision AI</h4>
+                                <p class="program-desc">Real-time edge neural pipeline performing object categorization and biometric telemetry streaming.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M13 2.5a6 6 0 0 0-6 6c0 1.6.6 3 1.6 4.1L7 14.2a8 8 0 1 1 11.3 0l-1.6-1.6a6 6 0 0 0 1.6-4.1 6 6 0 0 0-5.3-6z" fill="#EE4C2C"/><circle cx="15.5" cy="5" r="1.5" fill="#EE4C2C"/></svg>PyTorch</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 12c0-5 4-9 9-9 4.5 0 8.3 3.3 9 7.8-.3-1.6-1.7-2.8-3.4-2.8-2 0-3.6 1.6-3.6 3.6 0 1.2.6 2.3 1.5 2.9-1.2 1-2.8 1.5-4.5 1.5-4 0-7-3-7-7z" stroke="#76B900" stroke-width="1.8" fill="rgba(118, 185, 0, 0.15)"/><circle cx="12" cy="12" r="2.5" fill="#76B900"/></svg>CUDA</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="#EA2D2E" stroke-width="2"/><circle cx="7" cy="16" r="4" stroke="#2496ED" stroke-width="2"/><circle cx="17" cy="16" r="4" stroke="#39FF14" stroke-width="2"/></svg>OpenCV</span>
+                                    </div>
+                                    <span class="program-metric-badge">144 FPS Edge</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="neuropulse" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Featured 4: QuantumMesh Zero-Trust Tunnel -->
+                        <article class="program-card program-card-sm" data-category="featured systems python" data-project-id="quantummesh">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>Mesh / Daemon</span>
+                                    <span class="program-id-badge">SYS.001</span>
+                                </div>
+                                <span class="program-featured-star">★ FEATURED</span>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">QuantumMesh Tunnel</h4>
+                                <p class="program-desc">Autonomous mesh routing daemon managing dynamic encrypted WireGuard tunnels and gateway health checks.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python 3</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>WireGuard</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="#00C48C"/><circle cx="18" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="6" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="18" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><line x1="8.5" y1="12" x2="9" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="15" y1="12" x2="15.5" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="8.5" x2="12" y2="9" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="15" x2="12" y2="15.5" stroke="#00C48C" stroke-width="1.5"/></svg>Tailscale</span>
+                                    </div>
+                                    <span class="program-metric-badge">&lt;5ms Failover</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="quantummesh" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Featured 5: CyberTerm x64 Web Shell -->
+                        <article class="program-card program-card-sm" data-category="featured webdev" data-project-id="cyberterm">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#654FF0"/><path d="M5 8.5l2.5 7L10 8.5l2.5 7L15 8.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 12l2 3.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/></svg>WASM / WebDev</span>
+                                    <span class="program-id-badge">WEB.001</span>
+                                </div>
+                                <span class="program-featured-star">★ FEATURED</span>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">CyberTerm x64 Shell</h4>
+                                <p class="program-desc">In-browser WebAssembly virtual machine executing an interactive retro Unix terminal with CRT phosphor shaders.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#F7DF1E"/><path d="M8 12.5v4.5c0 1-.7 1.4-1.7 1.4-.7 0-1.3-.3-1.6-.7l.9-1c.2.2.4.4.7.4.3 0 .4-.2.4-.5v-3.7H8zm8.5 0c1 0 1.8.6 1.8 1.6 0 .7-.4 1.2-1 1.4l-.8.3c-.4.1-.6.3-.6.6 0 .3.3.4.6.4.4 0 .8-.2 1-.5l.8 1c-.5.5-1.1.7-1.8.7-1.2 0-2-.7-2-1.8 0-.7.4-1.3 1.1-1.5l.8-.3c.4-.1.5-.3.5-.5 0-.3-.3-.4-.6-.4-.3 0-.7.2-.9.4l-.8-1c.6-.5 1.2-.8 1.8-.8z" fill="#000000"/></svg>HTML/CSS/JS</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#654FF0"/><path d="M5 8.5l2.5 7L10 8.5l2.5 7L15 8.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 12l2 3.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/></svg>WASM</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>Canvas</span>
+                                    </div>
+                                    <span class="program-metric-badge">60 FPS CRT GL</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="cyberterm" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Featured 6: Chronos Time-Series DB -->
+                        <article class="program-card program-card-sm" data-category="featured cpp systems" data-project-id="chronosdb">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Storage</span>
+                                    <span class="program-id-badge">CPP.002</span>
+                                </div>
+                                <span class="program-featured-star">★ FEATURED</span>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Chronos Time-Series DB</h4>
+                                <p class="program-desc">Lock-free in-memory time-series database ingesting millions of sensor telemetry ticks via ring buffers.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>AVX-512</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Atomics</span>
+                                    </div>
+                                    <span class="program-metric-badge">12.5M Ticks/s</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="chronosdb" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- ================= 2. C# SUBSECTION ================= -->
+                <div class="portfolio-subsection is-filtered-out" data-section-category="csharp">
+                    <div class="portfolio-subsection-header">
+                        <div class="subsection-meta-row">
+                            <span class="subsection-badge-tag">// .NET ECOSYSTEM</span>
+                            <span class="subsection-counter">4 BUILDS</span>
+                        </div>
+                        <h3 class="portfolio-subsection-title">C# &bull; Systems & Desktop Engineering</h3>
+                        <p class="portfolio-subsection-desc">High-performance Windows enterprise clients, multi-threaded priority task dispatchers, and distributed service brokers.</p>
+                    </div>
+
+                    <div class="featured-programs-grid programs-grid-sm">
+                        <!-- C# Project 1: Valkyrie POS Pro -->
+                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="valkyriepos">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><span class="badge-dot dot-csharp"></span>C# 12 / .NET 9</span>
+                                    <span class="program-id-badge">CS.001</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Valkyrie POS Pro</h4>
+                                <p class="program-desc">Enterprise point-of-sale terminal engine featuring cryptographic offline ledger sync and scanner abstraction.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# 12</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-win"></span>WPF</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(0, 117, 143, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>SQLite</span>
+                                    </div>
+                                    <span class="program-metric-badge">0.8ms TX</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="valkyriepos" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- C# Project 2: OmniThread Engine -->
+                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="omnithread">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# / Concurrency</span>
+                                    <span class="program-id-badge">CS.002</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">OmniThread Engine</h4>
+                                <p class="program-desc">Custom task scheduler and priority thread dispatcher with work-stealing algorithms and telemetry hooks.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><span class="badge-dot dot-csharp"></span>C# .NET 8</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Threading</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-pd"></span>Diagnostics</span>
+                                    </div>
+                                    <span class="program-metric-badge">Zero Starvation</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="omnithread" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- C# Project 3: HyperBus Microservices -->
+                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="hyperbus">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><span class="badge-dot dot-csharp"></span>C# / Distributed</span>
+                                    <span class="program-id-badge">CS.003</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">HyperBus Service Broker</h4>
+                                <p class="program-desc">Zero-allocation pub/sub event bus supporting RPC serialization over shared memory and loopback sockets.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><span class="badge-dot dot-csharp"></span>gRPC</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>IPC</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-ops"></span>Zero-Alloc</span>
+                                    </div>
+                                    <span class="program-metric-badge">2.4M Msg/s</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="hyperbus" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- C# Project 4: AeroUI Fluent Kit -->
+                        <article class="program-card program-card-sm" data-category="csharp" data-project-id="aeroui">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>C# / UI Engine</span>
+                                    <span class="program-id-badge">CS.004</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">AeroUI Fluent Component Kit</h4>
+                                <p class="program-desc">GPU-accelerated desktop UI control system bringing glassmorphic blur and retrofuturistic HUD styling to WPF.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><span class="badge-dot dot-csharp"></span>WPF</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-win"></span>DirectX</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-dev"></span>Glass UI</span>
+                                    </div>
+                                    <span class="program-metric-badge">60 FPS Sync</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="aeroui" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- ================= 3. PYTHON SUBSECTION ================= -->
+                <div class="portfolio-subsection is-filtered-out" data-section-category="python">
+                    <div class="portfolio-subsection-header">
+                        <div class="subsection-meta-row">
+                            <span class="subsection-badge-tag">// PYTHON SYSTEM LABS</span>
+                            <span class="subsection-counter">4 BUILDS</span>
+                        </div>
+                        <h3 class="portfolio-subsection-title">Python &bull; AI, Automation & Network Daemons</h3>
+                        <p class="portfolio-subsection-desc">High-throughput asynchronous scraping daemons, deep learning neural models, and real-time raw packet analyzers.</p>
+                    </div>
+
+                    <div class="featured-programs-grid programs-grid-sm">
+                        <!-- Python Project 1: NeuroPulse Vision AI -->
+                        <article class="program-card program-card-sm" data-category="python" data-project-id="neuropulse">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><span class="badge-dot dot-python"></span>Python / Vision</span>
+                                    <span class="program-id-badge">PY.001</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">NeuroPulse Vision AI</h4>
+                                <p class="program-desc">Hardware-accelerated edge neural network classifying synthetic telemetry and biometric micro-expressions.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M13 2.5a6 6 0 0 0-6 6c0 1.6.6 3 1.6 4.1L7 14.2a8 8 0 1 1 11.3 0l-1.6-1.6a6 6 0 0 0 1.6-4.1 6 6 0 0 0-5.3-6z" fill="#EE4C2C"/><circle cx="15.5" cy="5" r="1.5" fill="#EE4C2C"/></svg>PyTorch</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 12c0-5 4-9 9-9 4.5 0 8.3 3.3 9 7.8-.3-1.6-1.7-2.8-3.4-2.8-2 0-3.6 1.6-3.6 3.6 0 1.2.6 2.3 1.5 2.9-1.2 1-2.8 1.5-4.5 1.5-4 0-7-3-7-7z" stroke="#76B900" stroke-width="1.8" fill="rgba(118, 185, 0, 0.15)"/><circle cx="12" cy="12" r="2.5" fill="#76B900"/></svg>CUDA</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="#EA2D2E" stroke-width="2"/><circle cx="7" cy="16" r="4" stroke="#2496ED" stroke-width="2"/><circle cx="17" cy="16" r="4" stroke="#39FF14" stroke-width="2"/></svg>OpenCV</span>
+                                    </div>
+                                    <span class="program-metric-badge">144 FPS Edge</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="neuropulse" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Python Project 2: QuantumMesh Tunnel -->
+                        <article class="program-card program-card-sm" data-category="python" data-project-id="quantummesh">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><span class="badge-dot dot-python"></span>Python / Mesh</span>
+                                    <span class="program-id-badge">PY.002</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">QuantumMesh Tunnel</h4>
+                                <p class="program-desc">Autonomous mesh routing daemon managing dynamic encrypted WireGuard tunnels and gateway health checks.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python 3</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V6l-8-4z" stroke="#88171A" stroke-width="1.8" fill="rgba(136, 23, 26, 0.15)"/><path d="M9 12c1-2 2-3 3-3s2 1 3 3-1 3-3 3-2-1-3-3z" stroke="#FF414D" stroke-width="1.6"/><circle cx="12" cy="12" r="1.5" fill="#FF414D"/></svg>WireGuard</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="#00C48C"/><circle cx="18" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="6" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="18" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><line x1="8.5" y1="12" x2="9" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="15" y1="12" x2="15.5" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="8.5" x2="12" y2="9" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="15" x2="12" y2="15.5" stroke="#00C48C" stroke-width="1.5"/></svg>Tailscale</span>
+                                    </div>
+                                    <span class="program-metric-badge">&lt;5ms Failover</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="quantummesh" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Python Project 3: Specter Async Crawler -->
+                        <article class="program-card program-card-sm" data-category="python" data-project-id="spectercrawler">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python / Scraper</span>
+                                    <span class="program-id-badge">PY.003</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Specter Async Deep Scraper</h4>
+                                <p class="program-desc">Distributed asynchronous web scraping pipeline with automatic rotating proxy pools and TLS fingerprint spoofing.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><span class="badge-dot dot-python"></span>Asyncio</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-ops"></span>Aiohttp</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Redis</span>
+                                    </div>
+                                    <span class="program-metric-badge">5,000 req/s</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="spectercrawler" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Python Project 4: PacketSnoop Raw Analyzer -->
+                        <article class="program-card program-card-sm" data-category="python" data-project-id="packetsnoop">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>Python / NetSec</span>
+                                    <span class="program-id-badge">PY.004</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">PacketSnoop Protocol Sniffer</h4>
+                                <p class="program-desc">Raw socket network sniffer performing deep packet inspection, TCP stream reassembly, and TLS handshake decryption.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><span class="badge-dot dot-python"></span>Raw Sockets</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-pd"></span>Scapy</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>PCAP</span>
+                                    </div>
+                                    <span class="program-metric-badge">Zero-Copy Capture</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="packetsnoop" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- ================= 4. WEBDEV SUBSECTION ================= -->
+                <div class="portfolio-subsection is-filtered-out" data-section-category="webdev">
+                    <div class="portfolio-subsection-header">
+                        <div class="subsection-meta-row">
+                            <span class="subsection-badge-tag">// WEB ARCHITECTURES</span>
+                            <span class="subsection-counter">4 BUILDS</span>
+                        </div>
+                        <h3 class="portfolio-subsection-title">WebDev &bull; HTML &bull; CSS &bull; JS & Beyond</h3>
+                        <p class="portfolio-subsection-desc">Bleeding-edge browser experiences, WebAssembly virtual shells, WebGL shaders, and high-frequency WebSocket protocols.</p>
+                    </div>
+
+                    <div class="featured-programs-grid programs-grid-sm">
+                        <!-- Web Project 1: CyberTerm x64 Shell -->
+                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="cyberterm">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><span class="badge-dot dot-web"></span>HTML/CSS/JS</span>
+                                    <span class="program-id-badge">WEB.001</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">CyberTerm x64 Shell</h4>
+                                <p class="program-desc">In-browser WebAssembly virtual machine executing an interactive retro Unix terminal with CRT phosphor shaders.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><span class="badge-dot dot-dev"></span>WASM</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-web"></span>Canvas</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>WebAudio</span>
+                                    </div>
+                                    <span class="program-metric-badge">60 FPS CRT GL</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="cyberterm" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Web Project 2: Spectra 3D Audio Visualizer -->
+                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="spectraviz">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><span class="badge-dot dot-web"></span>WebGL / Audio</span>
+                                    <span class="program-id-badge">WEB.002</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Spectra 3D Audio Visualizer</h4>
+                                <p class="program-desc">Hardware-accelerated 3D audio frequency visualizer rendering real-time FFT spectrum bars with custom GLSL shaders.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8"><polygon points="12 2 2 19.5 22 19.5"/><polygon points="12 2 12 19.5 2 19.5"/><line x1="12" y1="11" x2="22" y2="19.5"/></svg>Three.js</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-web"></span>Web Audio</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-ai"></span>GLSL</span>
+                                    </div>
+                                    <span class="program-metric-badge">120Hz Smooth</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="spectraviz" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Web Project 3: Nexus Protocol P2P Chat -->
+                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="nexuschat">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#3399FF" stroke-width="1.8"><circle cx="6" cy="12" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="6" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="18" r="3" fill="rgba(51, 153, 255, 0.2)"/><path d="M8.5 10.5l7-3M8.5 13.5l7 3" stroke-dasharray="2 2"/></svg>WebRTC / Sockets</span>
+                                    <span class="program-id-badge">WEB.003</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Nexus Protocol P2P Chat</h4>
+                                <p class="program-desc">End-to-end encrypted peer-to-peer browser messenger with ephemeral rooms, WebRTC data channels, and zero logs.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#3399FF" stroke-width="1.8"><circle cx="6" cy="12" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="6" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="18" r="3" fill="rgba(51, 153, 255, 0.2)"/><path d="M8.5 10.5l7-3M8.5 13.5l7 3" stroke-dasharray="2 2"/></svg>WebRTC</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-ops"></span>WebSocket</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Crypto API</span>
+                                    </div>
+                                    <span class="program-metric-badge">E2E AES-256</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="nexuschat" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- Web Project 4: Glassmorphic OS Dashboard -->
+                        <article class="program-card program-card-sm" data-category="webdev" data-project-id="glassos">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><span class="badge-dot dot-web"></span>CSS Glass / JS</span>
+                                    <span class="program-id-badge">WEB.004</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Glassmorphic OS Dashboard</h4>
+                                <p class="program-desc">Desktop-class responsive web workspace featuring draggable floating windows, minimize trays, and live HUD widgets.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#F7DF1E"/><path d="M8 12.5v4.5c0 1-.7 1.4-1.7 1.4-.7 0-1.3-.3-1.6-.7l.9-1c.2.2.4.4.7.4.3 0 .4-.2.4-.5v-3.7H8zm8.5 0c1 0 1.8.6 1.8 1.6 0 .7-.4 1.2-1 1.4l-.8.3c-.4.1-.6.3-.6.6 0 .3.3.4.6.4.4 0 .8-.2 1-.5l.8 1c-.5.5-1.1.7-1.8.7-1.2 0-2-.7-2-1.8 0-.7.4-1.3 1.1-1.5l.8-.3c.4-.1.5-.3.5-.5 0-.3-.3-.4-.6-.4-.3 0-.7.2-.9.4l-.8-1c.6-.5 1.2-.8 1.8-.8z" fill="#000000"/></svg>Vanilla JS</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-web"></span>CSS Glass</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>LocalState</span>
+                                    </div>
+                                    <span class="program-metric-badge">Zero Libraries</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="glassos" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- ================= 5. C++ SUBSECTION ================= -->
+                <div class="portfolio-subsection is-filtered-out" data-section-category="cpp">
+                    <div class="portfolio-subsection-header">
+                        <div class="subsection-meta-row">
+                            <span class="subsection-badge-tag">// C++ SYSTEMS SILICON</span>
+                            <span class="subsection-counter">4 BUILDS</span>
+                        </div>
+                        <h3 class="portfolio-subsection-title">C++ &bull; Low-Level Hardware & Systems Architecture</h3>
+                        <p class="portfolio-subsection-desc">Bare-metal microkernels, lock-free time-series storage, cycle-accurate retro CPU emulators, and SIMD math engines.</p>
+                    </div>
+
+                    <div class="featured-programs-grid programs-grid-sm">
+                        <!-- C++ Project 1: AegisKernel Micro-Hypervisor -->
+                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="aegiskernel">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Ring-0</span>
+                                    <span class="program-id-badge">CPP.001</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">AegisKernel Microvisor</h4>
+                                <p class="program-desc">Type-1 bare-metal microkernel with memory-enclave isolation, zero-syscall switching, and CPU telemetry.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>x86 ASM</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>Paging</span>
+                                    </div>
+                                    <span class="program-metric-badge">Zero Syscalls</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="aegiskernel" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- C++ Project 2: Chronos Time-Series DB -->
+                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="chronosdb">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / Storage</span>
+                                    <span class="program-id-badge">CPP.002</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Chronos Time-Series DB</h4>
+                                <p class="program-desc">Lock-free in-memory time-series database ingesting millions of sensor telemetry ticks via ring buffers.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>AVX-512</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Atomics</span>
+                                    </div>
+                                    <span class="program-metric-badge">12.5M Ticks/s</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="chronosdb" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- C++ Project 3: Vortex-8 Hardware Emulator -->
+                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="vortex8">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++ / Emulation</span>
+                                    <span class="program-id-badge">CPP.003</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">Vortex-8 Hardware Emulator</h4>
+                                <p class="program-desc">Cycle-accurate virtual CPU emulator featuring opcode disassembler, memory debugger, and 60 FPS video synthesizer.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++17</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>SDL2</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-sys"></span>Opcodes</span>
+                                    </div>
+                                    <span class="program-metric-badge">100% Cycle Acc</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="vortex8" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
+
+                        <!-- C++ Project 4: SIMD Vector Math Engine -->
+                        <article class="program-card program-card-sm" data-category="cpp" data-project-id="simdmath">
+                            <div class="program-card-header">
+                                <div class="program-tags-group">
+                                    <span class="program-lang-tag"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20 / SIMD</span>
+                                    <span class="program-id-badge">CPP.004</span>
+                                </div>
+                            </div>
+                            <div class="program-card-body">
+                                <h4 class="program-title">SIMD Vector Math Engine</h4>
+                                <p class="program-desc">Hardware-intrinsics vectorized matrix math library accelerating 4x4 coordinate transformations with AVX2.</p>
+                                <div class="program-compact-meta">
+                                    <div class="program-tech-tags">
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>C++20</span>
+                                        <span class="skill-badge"><span class="badge-dot dot-pd"></span>AVX2</span>
+                                        <span class="skill-badge"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>Intrinsics</span>
+                                    </div>
+                                    <span class="program-metric-badge">8x Throughput</span>
+                                </div>
+                            </div>
+                            <div class="program-card-footer">
+                                <button class="btn btn-primary btn-sm btn-inspect-project" data-project-id="simdmath" type="button">Inspect</button>
+                                <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">GitHub</a>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </section>
@@ -526,110 +1453,568 @@
                 <div class="section-watermark-num">04</div>
                 
                 <div class="section-header">
-                    <span class="section-subtitle">Get in Touch</span>
-                    <h2 class="section-title">Transmit a Signal</h2>
+                    <span class="section-subtitle">Get In Touch</span>
+                    <h2 class="section-title">Let’s connect.</h2>
                     <div class="section-divider"></div>
                 </div>
 
-                <div class="contact-grid">
-                    <!-- Left: Contact Details -->
-                    <div class="bento-card contact-info-card">
-                        <div class="bento-tag">
-                            <span class="tag-rec-dot"></span>
-                            <span>TELEMETRY INGRESS</span>
-                        </div>
-                        <h3 class="contact-card-title">Direct Communication</h3>
-                        <p class="contact-card-text">
-                            Have an engineering inquiry, systems question, or collaboration opportunity? Transmit a secure signal directly to my inbox.
-                        </p>
-                        
-                        <div class="contact-details-list">
-                            <div class="contact-item">
-                                <span class="contact-icon">&#9993;</span>
+                <div class="contact-bento-grid">
+                    <!-- Contact Hero Card (Span 7) with Flush Photo Right -->
+                    <div class="bento-card contact-hero-card">
+                        <div class="contact-card-layout">
+                            <div class="contact-card-text">
                                 <div>
-                                    <div class="contact-label">EMAIL</div>
-                                    <a href="mailto:<?= e($profile['email']) ?>" class="contact-val"><?= e($profile['email']) ?></a>
+                                    <div class="bento-tag">
+                                        <span class="tag-rec-dot"></span>
+                                        <span>DIRECT COMMS // INQUIRIES</span>
+                                        <div class="win-controls">
+                                            <span class="win-btn">_</span>
+                                            <span class="win-btn win-close">&times;</span>
+                                        </div>
+                                    </div>
+                                    <h3 class="bento-heading">Interested in collaborating or discussing systems?</h3>
+                                    <p class="about-text">
+                                        Whether you want to discuss technology, software engineering, homelab setups, or potential opportunities, feel free to reach out anytime.
+                                    </p>
+                                </div>
+
+                                <div class="contact-card-list">
+                                    <div class="contact-item">
+                                        <span class="contact-item-label">Direct Email</span>
+                                        <a href="mailto:mordenes@acm.org" class="contact-item-link">mordenes@acm.org</a>
+                                    </div>
+                                    <div class="contact-item">
+                                        <span class="contact-item-label">Location / Base</span>
+                                        <span class="contact-item-text">Laguna, Philippines</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="contact-item">
-                                <span class="contact-icon">&#128205;</span>
-                                <div>
-                                    <div class="contact-label">LOCATION</div>
-                                    <span class="contact-val"><?= e($profile['location']) ?></span>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <span class="contact-icon">&#9889;</span>
-                                <div>
-                                    <div class="contact-label">OPERATING STATUS</div>
-                                    <span class="contact-val" style="color: var(--accent-emerald);"><?= e($profile['availability_status']) ?></span>
+
+                            <div class="contact-card-photo-pane">
+                                <img src="images/me_3.jpg" alt="Michael Benedict Ordenes" class="contact-flush-photo">
+                                <div class="contact-photo-telemetry">
+                                    <span class="tag-pulse"></span>
+                                    <span class="contact-photo-label">x64emkei // TERMINAL READY</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right: CSRF-Protected Form -->
-                    <div class="bento-card contact-form-card">
-                        <?php if (has_flash('success')): ?>
-                            <div class="form-status-alert success" style="margin-bottom: 20px; padding: 12px; border: 1px solid var(--accent-emerald); background: rgba(16,185,129,0.1); color: var(--accent-emerald); border-radius: 4px;">
-                                &#10004; <?= e(flash('success')) ?>
+                    <!-- Contact Form Panel (Span 5) -->
+                    <div class="bento-card contact-channels-card">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>SEND MESSAGE // DISPATCH</span>
+                            <div class="win-controls">
+                                <span class="win-btn">_</span>
+                                <span class="win-btn win-close">&times;</span>
                             </div>
-                        <?php endif; ?>
-                        <?php if (has_flash('error')): ?>
-                            <div class="form-status-alert error" style="margin-bottom: 20px; padding: 12px; border: 1px solid var(--accent-magenta); background: rgba(255,51,102,0.1); color: var(--accent-magenta); border-radius: 4px;">
-                                &#9888; <?= e(flash('error')) ?>
-                            </div>
-                        <?php endif; ?>
+                        </div>
+                        <h3 class="bento-heading">Quick Message</h3>
 
-                        <form id="contactForm" action="<?= e(url('contact')) ?>" method="POST" class="contact-form">
-                            <?= csrf_field() ?>
-                            <!-- Honeypot -->
-                            <input type="text" name="contact_botcheck" style="display:none !important;" tabindex="-1" autocomplete="off">
-
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="contactName">SENDER NAME *</label>
-                                    <input type="text" id="contactName" name="name" value="<?= old('name') ?>" required placeholder="Operator Identifier">
-                                </div>
-                                <div class="form-field">
-                                    <label for="contactEmail">EMAIL ADDRESS *</label>
-                                    <input type="email" id="contactEmail" name="email" value="<?= old('email') ?>" required placeholder="signal@domain.org">
-                                </div>
+                        <form class="contact-form" id="contactForm" novalidate>
+                        <?= csrf_field() ?>
+                            <div class="form-group">
+                                <label for="userName" class="form-label">Your Name</label>
+                                <input type="text" id="userName" name="name" class="form-input" placeholder="e.g. Alex Cruz" required>
+                                <span class="form-error" id="nameError">Please enter your name</span>
                             </div>
 
-                            <div class="form-field">
-                                <label for="contactSubject">TRANSMISSION SUBJECT</label>
-                                <input type="text" id="contactSubject" name="subject" value="<?= old('subject') ?>" placeholder="Inquiry / Systems Consultation">
+                            <div class="form-group">
+                                <label for="userEmail" class="form-label">Email Address</label>
+                                <input type="email" id="userEmail" name="email" class="form-input" placeholder="e.g. alex@example.com" required>
+                                <span class="form-error" id="emailError">Please enter a valid email address</span>
                             </div>
 
-                            <div class="form-field">
-                                <label for="contactMessage">PAYLOAD MESSAGE *</label>
-                                <textarea id="contactMessage" name="message" rows="5" required placeholder="Enter telemetry payload..."><?= old('message') ?></textarea>
+                            <div class="form-group">
+                                <label for="userSubject" class="form-label">Subject</label>
+                                <input type="text" id="userSubject" name="subject" class="form-input" placeholder="Collaboration / Tech Discussion / Project" required>
+                                <span class="form-error" id="subjectError">Please enter a subject</span>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-submit-telemetry">
-                                <span>TRANSMIT SIGNAL</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            <div class="form-group">
+                                <label for="userMessage" class="form-label">Message</label>
+                                <textarea id="userMessage" name="message" class="form-textarea" rows="4" placeholder="Tell me what you'd like to build or discuss..." required></textarea>
+                                <span class="form-error" id="messageError">Message must be at least 10 characters</span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+                                <span class="btn-text">Send Message</span>
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                                 </svg>
                             </button>
                         </form>
+
+                        <div class="bento-channel-links">
+                            <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="bento-channel-item">
+                                <div class="channel-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                                        <path d="M9 18c-4.51 2-5-2-7-2"/>
+                                    </svg>
+                                </div>
+                                <div class="channel-details">
+                                    <span class="channel-name">GitHub</span>
+                                    <span class="channel-handle">@x64_emkei</span>
+                                </div>
+                                <svg class="channel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                            </a>
+
+                            <a href="https://linkedin.com/in/michael-ordenes/" target="_blank" rel="noopener noreferrer" class="bento-channel-item">
+                                <div class="channel-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                        <rect width="4" height="12" x="2" y="9"/>
+                                        <circle cx="4" cy="4" r="2"/>
+                                    </svg>
+                                </div>
+                                <div class="channel-details">
+                                    <span class="channel-name">LinkedIn</span>
+                                    <span class="channel-handle">in/michael-ordenes</span>
+                                </div>
+                                <svg class="channel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Project Inspector Modal (Hydrated Dynamically via script.js from Database) -->
+    <!-- Toast Notification Component -->
+    <div class="toast-container" id="toastContainer" role="status" aria-live="polite">
+        <div class="toast-card" id="toastCard">
+            <div class="toast-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+            <div class="toast-content">
+                <h4 class="toast-title" id="toastTitle">Success!</h4>
+                <p class="toast-message" id="toastMessage">Your message has been dispatched successfully.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Manifesto Interactive Modal & Carousel Component -->
+    <div class="manifesto-modal-backdrop" id="manifestoModalBackdrop" aria-hidden="true">
+        <div class="manifesto-modal-container" id="manifestoModal" role="dialog" aria-modal="true" aria-labelledby="currentSectionName">
+            <!-- Modal Header -->
+            <div class="manifesto-modal-header">
+                <div class="manifesto-header-meta">
+                    <span class="manifesto-live-pip"></span>
+                    <span class="manifesto-header-id">SYS.DOC // AI_MANIFESTO_V1.0</span>
+                    <span class="manifesto-header-tag">ETHICS & SKILL</span>
+                </div>
+                <div class="manifesto-header-controls">
+                    <button class="manifesto-view-toggle-btn" id="manifestoViewToggle" aria-label="Toggle Full Reading Mode">
+                        <span class="view-toggle-icon">📜</span>
+                        <span class="view-toggle-text">Full Read View</span>
+                    </button>
+                    <button class="manifesto-close-btn" id="manifestoCloseBtn" aria-label="Close Manifesto Dialog">&times;</button>
+                </div>
+            </div>
+
+            <!-- Button Carousel Nav Bar -->
+            <div class="manifesto-carousel-nav" role="tablist" aria-label="Manifesto Sections">
+                <button class="carousel-nav-btn active" data-slide="0" role="tab" aria-selected="true">
+                    <span class="nav-btn-idx">00</span>
+                    <span>Preamble</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="1" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">01</span>
+                    <span>I. Tool vs Skill</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="2" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">02</span>
+                    <span>II. Creativity</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="3" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">03</span>
+                    <span>III. Development</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="4" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">04</span>
+                    <span>IV. Responsibility</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="5" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">05</span>
+                    <span>V. Opportunities</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="6" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">06</span>
+                    <span>VI. Capable Future</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="7" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">07</span>
+                    <span>VII. Governance</span>
+                </button>
+                <button class="carousel-nav-btn" data-slide="8" role="tab" aria-selected="false">
+                    <span class="nav-btn-idx">08</span>
+                    <span>VIII. Creed</span>
+                </button>
+            </div>
+
+            <!-- Modal Body & Carousel Track (9 Slides) -->
+            <div class="manifesto-modal-body" id="manifestoModalBody">
+                <div class="manifesto-carousel-track" id="manifestoCarouselTrack">
+                    
+                    <!-- Slide 0: Preamble -->
+                    <div class="manifesto-slide active-slide" data-slide="0">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// PREAMBLE</span>
+                                <h3 class="slide-main-title">My AI Manifesto</h3>
+                                <p class="slide-subtitle">A Personal Position on AI, Human Skill, and Responsible Progress</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <p class="manifesto-lead-p">
+                                    Artificial intelligence is becoming part of the way people learn, work, create, and solve problems. As a student preparing for a professional career in technology, its presence is impossible to ignore.
+                                </p>
+                                <p>
+                                    There is excitement in what AI can accomplish, but there is also a responsibility to understand what should remain distinctly human.
+                                </p>
+                                <div class="manifesto-highlight-banner">
+                                    <span class="banner-pulse-icon">⚡</span>
+                                    <span>This manifesto represents the principles that will guide my relationship with AI—not as something to fear or reject, but as something to understand, use responsibly, and keep in its proper place.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 1: Tool vs Skill -->
+                    <div class="manifesto-slide" data-slide="1">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 01</span>
+                                <h3 class="slide-main-title">I. AI Is a Tool, Not a Substitute for Skill</h3>
+                                <p class="slide-subtitle">AI should remain a tool for developing and extending human capability.</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <p>
+                                    As a student, learning should not be reduced to asking an AI for an answer. The purpose of education is not simply to produce an output, but to develop the ability to understand, reason, create, solve problems, and make decisions independently.
+                                </p>
+                                <div class="manifesto-dichotomy-grid">
+                                    <div class="dichotomy-card tool-side">
+                                        <div class="dichotomy-header">
+                                            <span class="dichotomy-code">TOOL.ASSIST</span>
+                                            <h4>Assistance</h4>
+                                        </div>
+                                        <p>AI can help explain a difficult concept, suggest an approach, assist with code, or provide another perspective.</p>
+                                    </div>
+                                    <div class="dichotomy-card skill-side">
+                                        <div class="dichotomy-header">
+                                            <span class="dichotomy-code">HUMAN.SKILL</span>
+                                            <h4>Mastery</h4>
+                                        </div>
+                                        <p>Years of studying, practicing, experimenting, failing, and gaining experience cannot be equated to writing an effective prompt in minutes.</p>
+                                    </div>
+                                </div>
+                                <div class="manifesto-verdict-box">
+                                    <span class="verdict-tag">// CORE PRINCIPLE</span>
+                                    <span>The value of professional skill lies not only in producing an output, but in understanding why it works, whether it is correct, how it can be improved, and what consequences follow from using it.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Human Creativity -->
+                    <div class="manifesto-slide" data-slide="2">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 02</span>
+                                <h3 class="slide-main-title">II. Human Creativity Still Matters</h3>
+                                <p class="slide-subtitle">Human capability enhanced by AI.</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <p>
+                                    Much of what AI can produce is connected to knowledge and creative work that originated from people. Art, writing, programming, research, engineering, design, and other forms of human work have contributed to the knowledge from which modern AI systems derive their capabilities.
+                                </p>
+                                <div class="manifesto-craft-panel">
+                                    <div class="craft-panel-top">
+                                        <span class="craft-chip">CRAFT // TASTE</span>
+                                    </div>
+                                    <p class="craft-statement">A person who has spent years developing a craft possesses something that cannot be reduced to a prompt: <strong>experience</strong>.</p>
+                                    <p class="craft-breakdown">That experience shapes judgment, taste, intuition, creativity, and the ability to recognize possibilities that may not be immediately apparent.</p>
+                                </div>
+                                <div class="manifesto-grand-quote quote-crimson">
+                                    <span class="grand-quote-label">// MANDATE</span>
+                                    <blockquote>The goal should not be to choose between humans and AI. The goal must be human capability enhanced by AI.</blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Professional Development -->
+                    <div class="manifesto-slide" data-slide="3">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 03</span>
+                                <h3 class="slide-main-title">III. AI Should Strengthen Professional Development</h3>
+                                <p class="slide-subtitle">Competence over dependency.</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <p class="manifesto-lead-p">
+                                    A strong professional should be capable of working with AI without becoming dependent upon it. That means developing the fundamentals:
+                                </p>
+                                <div class="manifesto-pillars-grid">
+                                    <div class="pillar-card">
+                                        <span class="pillar-num">01</span>
+                                        <span class="pillar-text">Understanding the code behind the abstraction.</span>
+                                    </div>
+                                    <div class="pillar-card">
+                                        <span class="pillar-num">02</span>
+                                        <span class="pillar-text">Understanding the reasoning behind the answer.</span>
+                                    </div>
+                                    <div class="pillar-card">
+                                        <span class="pillar-num">03</span>
+                                        <span class="pillar-text">Knowing when an AI-generated solution is wrong or hallucinated.</span>
+                                    </div>
+                                    <div class="pillar-card">
+                                        <span class="pillar-num">04</span>
+                                        <span class="pillar-text">Being able to independently verify and validate information.</span>
+                                    </div>
+                                    <div class="pillar-card">
+                                        <span class="pillar-num">05</span>
+                                        <span class="pillar-text">Being capable of solving a problem even when the tool is unavailable.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Responsibility -->
+                    <div class="manifesto-slide" data-slide="4">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 04</span>
+                                <h3 class="slide-main-title">IV. Responsibility Cannot Be Automated</h3>
+                                <p class="slide-subtitle">Accountability remains human.</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <p>
+                                    AI can generate an answer, but it cannot carry professional responsibility for that answer. When AI contributes to a project, the human using it remains responsible for the final result.
+                                </p>
+                                <div class="manifesto-alert-panel">
+                                    <div class="alert-tag-line">
+                                        <span class="tag-pulse"></span>
+                                        <span>CRITICAL ETHICAL AXIOM</span>
+                                    </div>
+                                    <p class="manifesto-p-emph">This principle is especially important in professional environments where mistakes can affect people, organizations, finances, privacy, security, or public welfare.</p>
+                                </div>
+                                <p>
+                                    AI should therefore be questioned, tested, and verified rather than blindly trusted. The presence of an AI system should never become an excuse for avoiding accountability.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: Opportunities & PAX Silica -->
+                    <div class="manifesto-slide" data-slide="5">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 05</span>
+                                <h3 class="slide-main-title">V. Technology Should Create Opportunities</h3>
+                                <p class="slide-subtitle">Progress measured by opportunities created for communities.</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <div class="manifesto-silica-card">
+                                    <span class="silica-badge">POLICY & INVESTMENT // PAX SILICA</span>
+                                    <h4 class="silica-title">Responsible Tech Investment</h4>
+                                    <p class="silica-lead">Large technological investments such as PAX Silica must create tangible opportunities for workers, students, researchers, and local industries.</p>
+                                    <span class="silica-list-title">Target Returns:</span>
+                                    <div class="silica-grid">
+                                        <div class="silica-item"><span class="silica-bullet">&bull;</span> High-quality tech careers & jobs</div>
+                                        <div class="silica-item"><span class="silica-bullet">&bull;</span> Knowledge & technology transfer</div>
+                                        <div class="silica-item"><span class="silica-bullet">&bull;</span> Opportunities for Filipino talent</div>
+                                        <div class="silica-item"><span class="silica-bullet">&bull;</span> Resilient economic growth</div>
+                                    </div>
+                                </div>
+                                <div class="manifesto-filipino-maxim-card">
+                                    <div class="maxim-flag-row">
+                                        <span class="maxim-dot-blue"></span>
+                                        <span class="maxim-dot-yellow"></span>
+                                        <span class="maxim-dot-red"></span>
+                                        <span class="maxim-hud">FILIPINO GUIDING MAXIM</span>
+                                    </div>
+                                    <blockquote class="maxim-quote">
+                                        &ldquo;Walang dapat agrabyado; lahat dapat may pagkakataong makinabang.&rdquo;
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6: Capable Future -->
+                    <div class="manifesto-slide" data-slide="6">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 06</span>
+                                <h3 class="slide-main-title">VI. A Future Where People Become More Capable</h3>
+                                <p class="slide-subtitle">Expanding human capability rather than rendering people disposable.</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <div class="manifesto-questions-grid">
+                                    <div class="question-box question-stale">
+                                        <span class="q-type">Stale Question</span>
+                                        <p>&ldquo;What jobs can be replaced?&rdquo;</p>
+                                    </div>
+                                    <div class="question-box question-generative">
+                                        <span class="q-type">Generative Question</span>
+                                        <p>&ldquo;What new capabilities and opportunities can be created?&rdquo;</p>
+                                    </div>
+                                </div>
+                                <div class="manifesto-enablement-flow">
+                                    <div class="flow-card">
+                                        <span class="flow-agent">Students</span>
+                                        <span class="flow-arrow">&rarr;</span>
+                                        <span class="flow-action">Understand complex concepts deeper</span>
+                                    </div>
+                                    <div class="flow-card">
+                                        <span class="flow-agent">Developers</span>
+                                        <span class="flow-arrow">&rarr;</span>
+                                        <span class="flow-action">Explore solutions and build resilient code</span>
+                                    </div>
+                                    <div class="flow-card">
+                                        <span class="flow-agent">Researchers</span>
+                                        <span class="flow-arrow">&rarr;</span>
+                                        <span class="flow-action">Analyze data and synthesize insights</span>
+                                    </div>
+                                    <div class="flow-card">
+                                        <span class="flow-agent">Citizens</span>
+                                        <span class="flow-arrow">&rarr;</span>
+                                        <span class="flow-action">Benefit from efficient, transparent services</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 7: Governance -->
+                    <div class="manifesto-slide" data-slide="7">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 07</span>
+                                <h3 class="slide-main-title">VII. Progress Must Come With Responsible Governance</h3>
+                                <p class="slide-subtitle">Developing talent, transparency, and public responsibility.</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <p>
+                                    For the Philippines, technological development should not simply mean becoming a market for technologies developed elsewhere. It must mean developing Filipino talent and capability.
+                                </p>
+                                <div class="manifesto-stakeholder-matrix">
+                                    <div class="matrix-cell">
+                                        <span class="cell-target">Students</span>
+                                        <span class="cell-benefit">Opportunities to learn and innovate</span>
+                                    </div>
+                                    <div class="matrix-cell">
+                                        <span class="cell-target">Professionals</span>
+                                        <span class="cell-benefit">Opportunities to work with dignity</span>
+                                    </div>
+                                    <div class="matrix-cell">
+                                        <span class="cell-target">Researchers</span>
+                                        <span class="cell-benefit">Resources to contribute to global science</span>
+                                    </div>
+                                    <div class="matrix-cell">
+                                        <span class="cell-target">Communities</span>
+                                        <span class="cell-benefit">Equitable access to technological benefits</span>
+                                    </div>
+                                </div>
+                                <div class="manifesto-core-callout">
+                                    <div class="callout-indicator-bar"></div>
+                                    <p class="callout-lead-text">
+                                        Good governance allows innovation to flourish while ensuring that the benefits of progress reach the people who make that progress possible.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 8: Creed -->
+                    <div class="manifesto-slide" data-slide="8">
+                        <div class="slide-inner">
+                            <div class="slide-header">
+                                <span class="slide-hud-tag">// SECTION 08</span>
+                                <h3 class="slide-main-title">VIII. The Professional I Aspire to Become</h3>
+                                <p class="slide-subtitle">Core Principles & Creed</p>
+                                <div class="slide-divider"></div>
+                            </div>
+                            <div class="slide-text-body">
+                                <span class="commitments-title">// THE FOUNDATION BEGINS AS A STUDENT:</span>
+                                <div class="commitments-checklist">
+                                    <div class="commit-row"><span class="commit-idx">01</span><span class="commit-text">Learn the fundamentals thoroughly.</span></div>
+                                    <div class="commit-row"><span class="commit-idx">02</span><span class="commit-text">Develop genuine, independent skills.</span></div>
+                                    <div class="commit-row"><span class="commit-idx">03</span><span class="commit-text">Use AI without becoming dependent on it.</span></div>
+                                    <div class="commit-row"><span class="commit-idx">04</span><span class="commit-text">Question and verify outputs rigorously.</span></div>
+                                    <div class="commit-row"><span class="commit-idx">05</span><span class="commit-text">Use technological knowledge to create opportunities for others.</span></div>
+                                </div>
+
+                                <div class="manifesto-creed-box">
+                                    <div class="creed-box-header">
+                                        <span class="creed-live-dot"></span>
+                                        <h4>CORE CREED</h4>
+                                        <span class="creed-tag">x64emkei // CREED</span>
+                                    </div>
+                                    <ul class="creed-tenets">
+                                        <li><span class="tenet-marker">&bull;</span><span class="tenet-body"><strong>AI should make people more capable,</strong> not more disposable.</span></li>
+                                        <li><span class="tenet-marker">&bull;</span><span class="tenet-body"><strong>Human skill should be strengthened,</strong> not devalued.</span></li>
+                                        <li><span class="tenet-marker">&bull;</span><span class="tenet-body"><strong>Technology should create opportunities,</strong> not merely eliminate them.</span></li>
+                                        <li><span class="tenet-marker">&bull;</span><span class="tenet-body"><strong>Innovation should serve people,</strong> not leave them behind.</span></li>
+                                        <li><span class="tenet-marker">&bull;</span><span class="tenet-body"><strong>Professional competence should always remain greater</strong> than the ability to simply operate a tool.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal Footer Controls -->
+            <div class="manifesto-modal-footer">
+                <div class="manifesto-bottom-ctrls">
+                    <button class="carousel-nav-arrow-btn" id="prevSlideBtn" aria-label="Previous Slide">&larr; Prev</button>
+                    <div class="carousel-hud-progress">
+                        <div class="hud-progress-labels">
+                            <span class="hud-sec-num" id="currentSlideDisplay">SEC 00 / 08</span>
+                            <span class="hud-sec-label" id="currentSectionName">Preamble</span>
+                        </div>
+                        <div class="hud-progress-track">
+                            <div class="hud-progress-bar" id="carouselProgressBar" style="width: 11.11%;"></div>
+                        </div>
+                    </div>
+                    <button class="carousel-nav-arrow-btn" id="nextSlideBtn" aria-label="Next Slide">Next &rarr;</button>
+                </div>
+                <div class="manifesto-footer-actions">
+                    <button class="manifesto-action-btn" id="copyManifestoBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                        </svg>
+                        <span id="copyManifestoText">Copy Text</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =========================================================================
+         INTERACTIVE MODAL WINDOW: PROJECT ARCHITECTURE & CODE INSPECTOR
+         ========================================================================= -->
     <div class="project-modal-backdrop" id="projectModalBackdrop" aria-hidden="true">
         <div class="project-modal-container" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
-            <div class="modal-corner-bracket modal-corner-tl"></div>
-            <div class="modal-corner-bracket modal-corner-tr"></div>
-            <div class="modal-corner-bracket modal-corner-bl"></div>
-            <div class="modal-corner-bracket modal-corner-br"></div>
-            
-            <div class="modal-header-telemetry">
-                <div class="modal-meta-left">
+            <!-- Modal Header -->
+            <div class="project-modal-header">
+                <div class="project-modal-meta">
                     <span class="modal-pulse-pip"></span>
                     <span class="modal-code-id" id="modalProjectId">PROJECT.INSPECTOR // ARCHITECTURE</span>
                     <span class="modal-category-tag" id="modalProjectCategory">C# .NET</span>
@@ -639,54 +2024,62 @@
                 </div>
             </div>
 
-            <div class="modal-body-scrollable">
-                <div class="modal-hero-strip">
+            <!-- Modal Body -->
+            <div class="project-modal-body">
+                <div class="project-modal-hero">
                     <h3 class="project-modal-title" id="modalProjectTitle">Project Title</h3>
                     <p class="project-modal-tagline" id="modalProjectTagline">Architecture overview and system purpose.</p>
                 </div>
 
-                <div class="modal-specs-bar">
-                    <div class="modal-spec-col">
-                        <span class="project-spec-key">TARGET ENVIRONMENT</span>
+                <div class="project-modal-specs-grid">
+                    <div class="project-spec-item">
+                        <span class="project-spec-label">Platform / Target</span>
                         <span class="project-spec-value" id="modalProjectEnv">Proxmox VE &bull; Linux</span>
                     </div>
-                    <div class="modal-spec-col">
-                        <span class="project-spec-key">EXECUTION TELEMETRY</span>
+                    <div class="project-spec-item">
+                        <span class="project-spec-label">Execution Profile</span>
                         <span class="project-spec-value" id="modalProjectPerf">Sub-millisecond &bull; Low Memory Footprint</span>
                     </div>
-                    <div class="modal-spec-col">
-                        <span class="project-spec-key">STATUS</span>
+                    <div class="project-spec-item">
+                        <span class="project-spec-label">Deployment Status</span>
                         <span class="project-spec-value modal-status-active" id="modalProjectStatus">Active &bull; Operational</span>
                     </div>
                 </div>
 
-                <div class="modal-section-block">
-                    <h4 class="modal-block-heading">// ARCHITECTURAL SPECIFICATION</h4>
-                    <p class="modal-block-text" id="modalProjectDesc">Detailed technical breakdown.</p>
-                </div>
-
-                <div class="modal-section-block">
-                    <h4 class="modal-block-heading">// KEY SYSTEM CAPABILITIES</h4>
-                    <ul class="modal-features-list" id="modalProjectFeatures"></ul>
-                </div>
-
-                <div class="modal-section-block">
-                    <div class="modal-code-header">
-                        <h4 class="modal-block-heading" style="margin:0;">// SYSTEM ARCHITECTURE LOGIC</h4>
-                        <span class="code-file-tag" id="modalCodeFileName">Architecture.cs</span>
+                <div class="project-modal-content-stack">
+                    <div class="modal-section-block">
+                        <h4 class="modal-block-heading">// ARCHITECTURAL SPECIFICATION</h4>
+                        <p class="modal-block-text" id="modalProjectDesc">Detailed technical breakdown.</p>
                     </div>
-                    <pre class="modal-code-viewer"><code id="modalProjectCode">// Code goes here</code></pre>
+
+                    <div class="modal-section-block">
+                        <h4 class="modal-block-heading">// KEY SYSTEM CAPABILITIES</h4>
+                        <ul class="modal-features-list" id="modalProjectFeatures">
+                            <!-- Populated dynamically via JS -->
+                        </ul>
+                    </div>
+
+                    <div class="modal-section-block">
+                        <div class="code-block-header">
+                            <span class="code-file-tag" id="modalCodeFileName">Architecture.cs</span>
+                            <button class="btn-copy-code" id="btnCopyProjectCode" type="button">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                                <span id="copyCodeText">Copy Snippet</span>
+                            </button>
+                        </div>
+                        <pre class="modal-code-viewer"><code id="modalProjectCode">// Code goes here</code></pre>
+                    </div>
                 </div>
             </div>
 
-            <div class="modal-footer-telemetry">
-                <div class="modal-tech-pills-row" id="modalProjectTechPills"></div>
-                <div class="modal-footer-actions">
+            <!-- Modal Footer -->
+            <div class="project-modal-footer">
+                <div class="modal-tech-pills-row" id="modalProjectTechPills">
+                    <!-- Populated dynamically -->
+                </div>
+                <div class="project-modal-buttons">
                     <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="btn btn-outline" id="modalProjectGithubLink">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                            <path d="M9 18c-4.51 2-5-2-7-2"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
                         <span>Source Code</span>
                     </a>
                     <button class="btn btn-primary" id="modalProjectCloseActionBtn" type="button">Dismiss</button>
@@ -695,45 +2088,44 @@
         </div>
     </div>
 
-    <!-- Inject Database Data to Client-side Window Bridge -->
-    <script>
-        window.__SERVER_PROJECTS__ = <?= json_encode(array_combine(
-            array_column($projects, 'slug'),
-            array_map(function($p) {
-                return [
-                    'id' => $p['code_id'],
-                    'category' => $p['category'],
-                    'title' => $p['title'],
-                    'tagline' => $p['tagline'],
-                    'env' => $p['environment'],
-                    'perf' => $p['performance_metric'],
-                    'status' => $p['operational_status'],
-                    'desc' => $p['description'],
-                    'features' => json_decode($p['features_json'] ?: '[]', true),
-                    'fileName' => $p['code_filename'],
-                    'code' => $p['code_snippet'],
-                    'tech' => json_decode($p['technologies_json'] ?: '[]', true),
-                    'github' => $p['github_url'],
-                    'demo' => $p['demo_url']
-                ];
-            }, $projects)
-        ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    <!-- =========================================================================
+         INTERACTIVE MODAL WINDOW: VINTAGE HARDWARE NODE TELEMETRY INSPECTOR
+         ========================================================================= -->
+    <div class="hardware-modal-backdrop" id="hardwareModalBackdrop" aria-hidden="true">
+        <div class="hardware-modal-container" id="hardwareModal" role="dialog" aria-modal="true" aria-labelledby="modalHwTitle">
+            <div class="hardware-modal-header">
+                <div class="hardware-modal-meta">
+                    <span class="modal-pulse-pip"></span>
+                    <span class="modal-code-id" id="modalHwNodeId">NODE.01 // LAB ARCHIVE</span>
+                    <span class="modal-category-tag" id="modalHwTag">PRESERVED</span>
+                </div>
+                <button class="hardware-modal-close-btn" id="hardwareModalCloseBtn" aria-label="Close Hardware Inspector">&times;</button>
+            </div>
+            <div class="hardware-modal-body">
+                <div class="hardware-modal-hero">
+                    <h3 class="hardware-modal-title" id="modalHwTitle">Sony Vaio W-series VPCW115XG</h3>
+                    <p class="hardware-modal-subtitle" id="modalHwSubtitle">Intel Atom N280 Netbook Platform &bull; Japanese Ultraportable Engineering</p>
+                </div>
+                <div class="hardware-specs-matrix" id="modalHwSpecsMatrix">
+                    <!-- Populated dynamically via JS -->
+                </div>
+                <div class="hardware-logs-card">
+                    <h4 class="modal-block-heading">// RESTORATION HISTORY & LAB DIAGNOSTICS</h4>
+                    <p class="modal-block-text" id="modalHwLog">Restoration history notes.</p>
+                </div>
+            </div>
+            <div class="hardware-modal-footer">
+                <span class="hardware-oem-tag" id="modalHwOem">OEM: Sony VAIO Corp.</span>
+                <button class="btn btn-primary" id="hardwareModalCloseActionBtn" type="button">Close Telemetry</button>
+            </div>
+        </div>
+    </div>
 
-        window.__SERVER_HARDWARE__ = <?= json_encode(array_map(function($h) {
-            return [
-                'nodeId' => $h['node_id'],
-                'tag' => $h['tag'],
-                'title' => $h['title'],
-                'subtitle' => $h['subtitle'],
-                'oem' => $h['oem'],
-                'specs' => json_decode($h['specs_json'] ?: '{}', true),
-                'log' => $h['diagnostics_log'],
-                'img' => $h['image_url']
-            ];
-        }, $hardwareNodes), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+        <script>
+        window.__SERVER_PROJECTS__ = <?= json_encode($projects ?? []) ?>;
+        window.__SERVER_HARDWARE__ = <?= json_encode($hardwareNodes ?? []) ?>;
     </script>
-
-    <!-- Client Script -->
+    <!-- Main Logic -->
     <script src="<?= asset('script.js') ?>"></script>
 </body>
 </html>
