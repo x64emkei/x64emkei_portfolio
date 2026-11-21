@@ -29,12 +29,30 @@ foreach ($envPaths as $envFile) {
                     (str_starts_with($val, "'") && str_ends_with($val, "'"))) {
                     $val = substr($val, 1, -1);
                 }
-                putenv("{$key}={$val}");
+                @putenv("{$key}={$val}");
                 $_ENV[$key] = $val;
                 $_SERVER[$key] = $val;
             }
         }
         break;
+    }
+}
+
+// 1.1 Robust env() helper compatible with environments where putenv() is restricted
+if (!function_exists('env')) {
+    function env(string $key, mixed $default = null): mixed
+    {
+        if (isset($_ENV[$key]) && $_ENV[$key] !== '') {
+            return $_ENV[$key];
+        }
+        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') {
+            return $_SERVER[$key];
+        }
+        $val = @getenv($key);
+        if ($val !== false && $val !== '') {
+            return $val;
+        }
+        return $default;
     }
 }
 

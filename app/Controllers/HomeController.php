@@ -18,7 +18,7 @@ class HomeController
 {
     public function index(): void
     {
-        $profile = Profile::get() ?: [
+        $defaultProfile = [
             'full_name' => 'Michael Benedict Ordenes',
             'title' => 'Computer Science Student, IT Enthusiast & Developer',
             'tagline' => 'Architecting resilient software systems and high-performance applications.',
@@ -32,14 +32,28 @@ class HomeController
             'email' => 'mordenes@acm.org'
         ];
 
-        $projects = Project::getPublished();
-        $hardwareNodes = HardwareNode::getPublished();
-        $skillsGrouped = Skill::getPublishedGrouped();
-        $experiences = Experience::getPublished();
-        $education = Education::getPublished();
-        $services = Service::getPublished();
-        $socialLinks = SocialLink::getPublished();
-        $settings = SiteSetting::getAllKeyed();
+        try {
+            $profile = Profile::get() ?: $defaultProfile;
+            $projects = Project::getPublished();
+            $hardwareNodes = HardwareNode::getPublished();
+            $skillsGrouped = Skill::getPublishedGrouped();
+            $experiences = Experience::getPublished();
+            $education = Education::getPublished();
+            $services = Service::getPublished();
+            $socialLinks = SocialLink::getPublished();
+            $settings = SiteSetting::getAllKeyed();
+        } catch (\Throwable $e) {
+            // Graceful fallback to default offline telemetry
+            $profile = $defaultProfile;
+            $projects = [];
+            $hardwareNodes = [];
+            $skillsGrouped = [];
+            $experiences = [];
+            $education = [];
+            $services = [];
+            $socialLinks = [];
+            $settings = [];
+        }
 
         $metaTitle = $settings['site_title'] ?? ($profile['full_name'] . ' | ' . $profile['title']);
         $metaDesc = $settings['meta_description'] ?? $profile['tagline'];

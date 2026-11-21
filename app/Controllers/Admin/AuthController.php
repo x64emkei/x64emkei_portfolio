@@ -13,8 +13,11 @@ class AuthController
 {
     public function login(): void
     {
-        // If no users exist, redirect to initial setup wizard
-        if (User::count() === 0) {
+        try {
+            if (User::count() === 0) {
+                redirect('admin/setup');
+            }
+        } catch (\Throwable $e) {
             redirect('admin/setup');
         }
 
@@ -60,10 +63,13 @@ class AuthController
 
     public function setup(): void
     {
-        // Only allow first admin creation if users table is empty
-        if (User::count() > 0) {
-            flash('error', 'Administrator setup has already been initialized.');
-            redirect('admin/login');
+        try {
+            if (User::count() > 0) {
+                flash('error', 'Administrator setup has already been initialized.');
+                redirect('admin/login');
+            }
+        } catch (\Throwable $e) {
+            flash('warning', 'Notice: Database connection or tables need to be configured. Please verify phpMyAdmin import of schema_dump.sql.');
         }
 
         $renderer = new ViewRenderer();
