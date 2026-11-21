@@ -21,8 +21,9 @@ class MessagesController
         ], 'admin.layout');
     }
 
-    public function toggleRead(int $id): void
+    public function toggleRead(int|string $id): void
     {
+        $id = (int)$id;
         $msg = Message::find($id);
         if ($msg) {
             $newStatus = !$msg['is_read'];
@@ -32,15 +33,17 @@ class MessagesController
         redirect('admin/messages');
     }
 
-    public function archive(int $id): void
+    public function archive(int|string $id): void
     {
+        $id = (int)$id;
         Message::archive($id, true);
         flash('success', 'Message archived.');
         redirect('admin/messages');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $msg = Message::find($id);
         if ($msg) {
             Message::delete($id);

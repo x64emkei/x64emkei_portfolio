@@ -69,8 +69,9 @@ class HardwareController
         redirect('admin/hardware');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $node = HardwareNode::find($id);
         if ($node) {
             HardwareNode::delete($id);

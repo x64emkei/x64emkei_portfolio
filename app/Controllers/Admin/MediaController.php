@@ -55,8 +55,9 @@ class MediaController
         redirect('admin/media');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $item = Media::find($id);
         if ($item) {
             $uploader = new UploadService();

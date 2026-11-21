@@ -46,8 +46,9 @@ class EducationController
         redirect('admin/education');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $edu = Education::find($id);
         if ($edu) {
             Education::delete($id);

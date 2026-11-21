@@ -45,8 +45,9 @@ class CertificationsController
         redirect('admin/certifications');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $cert = Certification::find($id);
         if ($cert) {
             Certification::delete($id);

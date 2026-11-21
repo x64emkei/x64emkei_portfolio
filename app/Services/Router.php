@@ -69,12 +69,20 @@ class Router
                     $mw::handle();
                 }
 
-                // Filter named parameters
-                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                // Filter named parameters and cast integers for strict-type compatibility
+                $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                $params = [];
+                foreach ($rawParams as $name => $value) {
+                    if (is_numeric($value) && (string)(int)$value === (string)$value) {
+                        $params[] = (int)$value;
+                    } else {
+                        $params[] = $value;
+                    }
+                }
 
                 [$controllerClass, $action] = $route['handler'];
                 $controller = new $controllerClass();
-                $controller->$action(...array_values($params));
+                $controller->$action(...$params);
                 return;
             }
         }

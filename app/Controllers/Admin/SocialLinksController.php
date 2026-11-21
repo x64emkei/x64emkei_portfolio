@@ -44,8 +44,9 @@ class SocialLinksController
         redirect('admin/social');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $item = SocialLink::find($id);
         if ($item) {
             SocialLink::delete($id);

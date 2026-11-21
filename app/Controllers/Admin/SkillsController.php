@@ -45,8 +45,9 @@ class SkillsController
         redirect('admin/skills');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $skill = Skill::find($id);
         if ($skill) {
             Skill::delete($id);

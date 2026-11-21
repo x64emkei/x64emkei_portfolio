@@ -44,8 +44,9 @@ class ServicesController
         redirect('admin/services');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $srv = Service::find($id);
         if ($srv) {
             Service::delete($id);

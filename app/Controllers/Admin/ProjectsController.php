@@ -78,8 +78,9 @@ class ProjectsController
         redirect('admin/projects');
     }
 
-    public function edit(int $id): void
+    public function edit(int|string $id): void
     {
+        $id = (int)$id;
         $project = Project::find($id);
         if (!$project) {
             flash('error', 'Project not found.');
@@ -93,8 +94,9 @@ class ProjectsController
         ], 'admin.layout');
     }
 
-    public function update(int $id): void
+    public function update(int|string $id): void
     {
+        $id = (int)$id;
         $project = Project::find($id);
         if (!$project) {
             flash('error', 'Project not found.');
@@ -148,8 +150,9 @@ class ProjectsController
         redirect('admin/projects');
     }
 
-    public function delete(int $id): void
+    public function delete(int|string $id): void
     {
+        $id = (int)$id;
         $project = Project::find($id);
         if ($project) {
             Project::delete($id);
