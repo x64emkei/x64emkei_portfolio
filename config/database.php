@@ -10,9 +10,9 @@ return [
     'driver' => getenv('DB_CONNECTION') ?: 'mysql',
     'host' => getenv('DB_HOST') ?: '127.0.0.1',
     'port' => (int)(getenv('DB_PORT') ?: 3306),
-    'database' => getenv('DB_DATABASE') ?: 'x64emkei_portfolio',
-    'username' => getenv('DB_USERNAME') ?: 'root',
-    'password' => getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : '',
+    'database' => getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: 'x64emkei_portfolio'),
+    'username' => getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'root'),
+    'password' => (getenv('DB_PASSWORD') !== false && getenv('DB_PASSWORD') !== '') ? getenv('DB_PASSWORD') : (getenv('DB_PASS') !== false ? getenv('DB_PASS') : ''),
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
     'options' => [
