@@ -101,6 +101,73 @@
     --font-mono: 'JetBrains Mono', 'Space Grotesk', monospace;
     --font-display: 'Space Grotesk', sans-serif;
     --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* SPACING SCALE TOKENS */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+
+    /* RADIUS SCALE TOKENS */
+    --radius-none: 0px;
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    /* TYPOGRAPHY SCALE & METRICS */
+    --font-size-2xs: 0.65rem;
+    --font-size-xs: 0.72rem;
+    --font-size-sm: 0.82rem;
+    --font-size-base: 0.95rem;
+    --font-size-md: 1.05rem;
+    --font-size-lg: 1.2rem;
+    --font-size-xl: 1.45rem;
+    --font-size-2xl: 1.85rem;
+    --font-size-3xl: 2.3rem;
+    --font-size-4xl: 3.1rem;
+    --font-size-hero: clamp(2.2rem, 4vw + 0.5rem, 4.2rem);
+
+    --weight-light: 300;
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+    --weight-extrabold: 800;
+
+    --leading-none: 1;
+    --leading-tight: 1.15;
+    --leading-snug: 1.35;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.75;
+
+    /* ACCESSIBLE FOCUS RING TOKENS */
+    --focus-ring-color: #00E5FF;
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring: 2px solid var(--focus-ring-color);
+
+    /* STANDARDIZED ELEVATION SHADOWS */
+    --shadow-sm: 2px 2px 0px #000000;
+    --shadow-md: 4px 4px 0px #000000;
+    --shadow-lg: 6px 6px 0px #000000;
+    --shadow-red: 4px 4px 0px #FF2A2A;
+    --shadow-hover: 6px 6px 0px #FF2A2A;
+    --shadow-pressed: 1px 1px 0px #000000;
+
+    /* SURFACE & PANEL TOKENS */
+    --surface-bg: rgba(14, 18, 26, 0.72);
+    --surface-panel: rgba(18, 22, 32, 0.65);
+    --surface-border: rgba(0, 229, 255, 0.2);
+    --surface-border-hover: rgba(0, 229, 255, 0.45);
 }
 
 /* ==========================================================================
@@ -189,6 +256,20 @@ body.light-theme {
     --input-border: #94A3B8;
     --input-focus-border: #E01A2B;
     --overlay-bg: rgba(15, 23, 42, 0.65);
+
+    /* LIGHT MODE STANDARDIZED TOKENS */
+    --focus-ring-color: #0284C7;
+    --shadow-sm: 2px 2px 0px rgba(15, 23, 42, 0.85);
+    --shadow-md: 4px 4px 0px rgba(15, 23, 42, 0.85);
+    --shadow-lg: 6px 6px 0px rgba(15, 23, 42, 0.85);
+    --shadow-red: 4px 4px 0px #E01A2B;
+    --shadow-hover: 6px 6px 0px #E01A2B;
+    --shadow-pressed: 1px 1px 0px #0F172A;
+
+    --surface-bg: rgba(238, 243, 251, 0.82);
+    --surface-panel: rgba(246, 250, 255, 0.88);
+    --surface-border: rgba(148, 163, 184, 0.35);
+    --surface-border-hover: #E01A2B;
 }
 
 /* ==========================================================================
@@ -6949,5 +7030,262 @@ body.light-theme .sidebar-sub-link.child-active {
 
     .color-sweep-curtain {
         left: 0;
+    }
+}
+
+
+/* ==========================================================================
+   GLOBAL STYLE REFERENCE — STANDARDIZED COMPONENT ARCHITECTURE
+   (Shared design tokens, controls, breadcrumbs, tabs, focus & accessibility)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. GLOBAL ACCESSIBLE FOCUS RINGS (WCAG 2.2 AA)
+   -------------------------------------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color) !important;
+    outline-offset: var(--focus-ring-offset) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. STANDARDIZED HUD BREADCRUMBS
+   -------------------------------------------------------------------------- */
+.hud-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    margin-bottom: var(--space-6);
+    line-height: 1.4;
+    flex-wrap: wrap;
+}
+
+.hud-breadcrumb a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-weight: var(--weight-medium);
+    transition: var(--transition);
+}
+
+.hud-breadcrumb a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
+.hud-breadcrumb .sep {
+    color: var(--border);
+    user-select: none;
+}
+
+.hud-breadcrumb .current {
+    color: var(--text-primary);
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0.5px;
+}
+
+/* --------------------------------------------------------------------------
+   3. STANDARDIZED SUBNAV TABS
+   -------------------------------------------------------------------------- */
+.subnav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--surface-border);
+    padding-bottom: var(--space-4);
+}
+
+.subnav-btn {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-xs);
+    text-decoration: none;
+    color: var(--text-muted);
+    border: 1px solid var(--card-border);
+    background: var(--surface-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+body.light-theme .subnav-btn {
+    background: #FFFFFF;
+    color: var(--text-secondary);
+    border-color: var(--border);
+}
+
+.subnav-btn:hover,
+.subnav-btn.active {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    background: rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.25), var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+body.light-theme .subnav-btn:hover,
+body.light-theme .subnav-btn.active {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: rgba(224, 26, 43, 0.08);
+    box-shadow: 0 0 10px rgba(224, 26, 43, 0.15), var(--shadow-sm);
+}
+
+/* --------------------------------------------------------------------------
+   4. STANDARDIZED SECTION BOXES & PANELS
+   -------------------------------------------------------------------------- */
+.section-box,
+.hud-panel {
+    background: var(--surface-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-6) var(--space-8);
+    margin-bottom: var(--space-8);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    transition: var(--transition);
+}
+
+body.light-theme .section-box,
+body.light-theme .hud-panel {
+    background: var(--surface-panel);
+    border-color: var(--surface-border);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.section-box:hover,
+.hud-panel:hover {
+    border-color: var(--surface-border-hover);
+    box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   5. STANDARDIZED BUTTON DISABLED & INTERACTIVE STATES
+   -------------------------------------------------------------------------- */
+.btn:disabled,
+.btn[disabled],
+.btn.is-disabled {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    filter: grayscale(60%) !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. STANDARDIZED FORM CONTROLS & DISABLED INPUT STATES
+   -------------------------------------------------------------------------- */
+.form-input:disabled,
+.form-textarea:disabled,
+.form-select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    border-color: var(--border) !important;
+}
+
+.form-select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    background-color: var(--input-bg);
+    border: 2px solid var(--input-border);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: var(--font-size-base);
+    transition: var(--transition);
+    outline: none;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-none);
+}
+
+body.light-theme .form-select {
+    background-color: #FFFFFF;
+    border-color: #CBD5E1;
+    color: #0F172A;
+    box-shadow: 2px 2px 0px #CBD5E1;
+}
+
+.form-select:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: var(--shadow-red);
+}
+
+/* --------------------------------------------------------------------------
+   7. STANDARDIZED TAGS, BADGES & STATUS PILLS
+   -------------------------------------------------------------------------- */
+.tag-pill,
+.hud-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+    font-family: var(--font-mono);
+    border-radius: var(--radius-xs);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+}
+
+.tag-pill:hover,
+.hud-badge:hover {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    background: rgba(0, 229, 255, 0.08);
+}
+
+body.light-theme .tag-pill,
+body.light-theme .hud-badge {
+    background: rgba(15, 23, 42, 0.04);
+    border-color: var(--border);
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   8. LAYOUT UTILITIES
+   -------------------------------------------------------------------------- */
+.hud-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+}
+
+.hud-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+}
+
+.hud-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+@media (max-width: 900px) {
+    .hud-grid-2,
+    .hud-grid-3,
+    .hud-grid-4 {
+        grid-template-columns: 1fr;
     }
 }

@@ -21,51 +21,7 @@ $pageSubtitle = $subTitles[$activeSub] ?? 'Operator Dossier';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
-    <style>
-        .page-container { max-width: 1200px; margin: 0 auto; padding: 30px 24px 80px 24px; }
-        .hud-breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            color: #64748b;
-            margin-bottom: 24px;
-        }
-        .hud-breadcrumb a { color: #00e5ff; text-decoration: none; }
-        .hud-breadcrumb a:hover { text-decoration: underline; }
-        .hud-breadcrumb .sep { color: #334155; }
-        .hud-breadcrumb .current { color: #f8fafc; font-weight: 600; }
-        .subnav-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); padding-bottom: 16px; }
-        .subnav-btn {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.82rem;
-            padding: 8px 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(14, 18, 26, 0.6);
-            transition: all 0.2s;
-        }
-        .subnav-btn:hover, .subnav-btn.active {
-            color: #00e5ff;
-            border-color: #00e5ff;
-            background: rgba(0, 229, 255, 0.1);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
-        }
-        .section-box {
-            background: rgba(14, 18, 26, 0.7);
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 6px;
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: all 0.2s;
-        }
-        .section-box:hover {
-            border-color: rgba(0, 229, 255, 0.4);
-        }
-    </style>
+    
 </head>
 <body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
 
@@ -73,7 +29,7 @@ $pageSubtitle = $subTitles[$activeSub] ?? 'Operator Dossier';
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
     <main class="main-content"><div class="view-wrapper">
-<main class="page-container">
+<div class="page-container">
         <!-- Breadcrumbs -->
         <nav class="hud-breadcrumb" aria-label="Breadcrumb">
             <a href="<?= url('/') ?>">HOME</a>
@@ -259,11 +215,12 @@ $pageSubtitle = $subTitles[$activeSub] ?? 'Operator Dossier';
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-    </main>
+    </div>
     </div></main>
 
     <footer style="border-top: 1px solid rgba(0, 229, 255, 0.15); padding: 30px 24px; text-align: center; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
         &copy; <?= date('Y') ?> Michael Benedict Ordenes (x64emkei). Systems Architecture &bull; All Telemetry Active.
     </footer>
+    <script src="<?= asset('script.js') ?>"></script>
 </body>
 </html>
