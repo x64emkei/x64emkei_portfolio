@@ -62,13 +62,25 @@ $appConfig = require dirname(__DIR__) . '/config/app.php';
 // 3. Timezone
 date_default_timezone_set($appConfig['timezone'] ?? 'Asia/Manila');
 
-// 4. Secure Session Configuration
+// 4. Secure Session & HTTPS Configuration
+$isHttps = (
+    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+    (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+    (!empty($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443) ||
+    (!empty($_SERVER['HTTP_CF_VISITOR']) && str_contains($_SERVER['HTTP_CF_VISITOR'], '"scheme":"https"'))
+);
+
+// Automatic HTTPS enforcement for non-local production environments
+if (!$isHttps && php_sapi_name() !== 'cli') {
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+    if ($host !== '' && !in_array($host, ['localhost', '127.0.0.1', '::1'], true) && !str_starts_with($host, 'localhost:')) {
+        $uri = $_SERVER['REQUEST_URI'] ?? '/';
+        header('Location: https://' . $host . $uri, true, 301);
+        exit;
+    }
+}
+
 if (session_status() === PHP_SESSION_NONE) {
-    $isHttps = (
-        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
-        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
-        (!empty($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443)
-    );
 
     // Ensure session save path exists
     $sessionPath = dirname(__DIR__) . '/storage/cache';
