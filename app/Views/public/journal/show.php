@@ -108,7 +108,8 @@
     <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
     <?php require dirname(__DIR__) . '/partials/header_nav.php'; ?>
 
-    <main class="reader-container">
+    <main class="main-content"><div class="view-wrapper">
+<main class="reader-container">
         <!-- Breadcrumbs -->
         <nav style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #64748b; margin-bottom: 24px;" aria-label="Breadcrumb">
             <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none;">HOME</a>
@@ -167,6 +168,7 @@
         </section>
         <?php endif; ?>
     </main>
+    </div></main>
 
     <footer style="border-top: 1px solid rgba(0, 229, 255, 0.15); padding: 30px 24px; text-align: center; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
         &copy; <?= date('Y') ?> Michael Benedict Ordenes (x64emkei). Systems Architecture &bull; All Telemetry Active.

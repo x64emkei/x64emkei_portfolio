@@ -8,625 +8,241 @@ $isAuthenticated = AuthService::check();
 $activeNav = $activeNav ?? '';
 $activeSub = $activeSub ?? '';
 ?>
-<!-- X64EMKEI MASTER HUD PRIMARY NAVIGATION (DESKTOP & MOBILE) -->
-<header class="master-hud-header" id="masterHudHeader" role="banner">
-    <div class="hud-nav-container">
+
+<!-- COMPACT TOP UTILITY BAR (Mobile & Tablet) -->
+<header class="top-utility-bar" id="topUtilityBar" role="banner">
+    <div class="utility-bar-inner">
+        <!-- Mobile Drawer Toggle -->
+        <button type="button" class="utility-menu-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar">
+            <span class="hamburger-bar bar-1"></span>
+            <span class="hamburger-bar bar-2"></span>
+            <span class="hamburger-bar bar-3"></span>
+        </button>
+
         <!-- Brand Telemetry -->
-        <a href="<?= url('/') ?>" class="hud-brand" aria-label="x64emkei.dev Home">
-            <span class="hud-brand-symbol">&gt;</span>
-            <span class="hud-brand-text">x64emkei<span class="hud-brand-dot">.</span>dev</span>
-            <span class="hud-live-tag" aria-hidden="true">
-                <span class="hud-live-pulse"></span>
+        <a href="<?= url('/') ?>" class="utility-brand" aria-label="x64emkei.dev Home">
+            <span class="brand-sym">&gt;</span>
+            <span class="brand-txt">x64emkei<span class="brand-dot">.</span>dev</span>
+            <span class="utility-status-pill" aria-hidden="true">
+                <span class="live-dot"></span>
                 <span>SYS.ON</span>
             </span>
         </a>
 
-        <!-- Desktop Navigation Bar -->
-        <nav class="hud-desktop-nav" aria-label="Primary Navigation">
-            <ul class="hud-nav-list" role="menubar">
-                <?php foreach ($navItems as $key => $item): 
-                    $isHome = ($key === 'home');
-                    $isActiveParent = ($activeNav === $key) || 
-                                      ($isHome && ($currentUri === '/' || $currentUri === '')) ||
-                                      (!$isHome && str_starts_with($currentUri, $item['route']));
-                    $hasChildren = !empty($item['children']);
-                    $itemRoute = url(ltrim($item['route'], '/'));
-                    if ($key === 'admin' && !$isAuthenticated) {
-                        $itemRoute = url('admin/login');
-                    }
-                ?>
-                <li class="hud-nav-item <?= $hasChildren ? 'has-dropdown' : '' ?> <?= $isActiveParent ? 'is-active-parent' : '' ?>" role="none">
-                    <a href="<?= $itemRoute ?>" 
-                       class="hud-nav-link <?= $isActiveParent ? 'active' : '' ?>" 
-                       role="menuitem"
-                       <?= $hasChildren ? 'aria-haspopup="true" aria-expanded="false"' : '' ?>>
-                        <span><?= e($item['label']) ?></span>
-                        <?php if ($hasChildren): ?>
-                            <svg class="hud-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        <?php endif; ?>
-                        <?php if ($key === 'admin'): ?>
-                            <span class="hud-admin-pill"><?= $isAuthenticated ? 'AUTH' : 'LOGIN' ?></span>
-                        <?php endif; ?>
-                    </a>
-
-                    <?php if ($hasChildren): ?>
-                    <ul class="hud-dropdown-menu" role="menu" aria-label="<?= e($item['label']) ?> sub-menu">
-                        <?php foreach ($item['children'] as $child): 
-                            $childRoute = url(ltrim($child['route'], '/'));
-                            $isChildActive = ($activeSub === $child['id']) || ($currentUri === $child['route']);
-                        ?>
-                        <li role="none">
-                            <a href="<?= $childRoute ?>" 
-                               class="hud-dropdown-link <?= $isChildActive ? 'child-active' : '' ?>" 
-                               role="menuitem">
-                                <span class="dropdown-pip"></span>
-                                <span><?= e($child['label']) ?></span>
-                            </a>
-                        </li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <?php endif; ?>
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        </nav>
-
-        <!-- Right HUD Utilities -->
-        <div class="hud-utilities">
-            <a href="<?= url('journal/ai-manifesto') ?>" class="hud-manifesto-btn" title="AI Manifesto v1.0">
-                <span class="manifesto-pill-glow"></span>
-                <span>AI MANIFESTO</span>
-            </a>
-            
-            <!-- Mobile Hamburger Toggle -->
-            <button type="button" class="hud-mobile-toggle" id="hudMobileToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="hudMobileDrawer">
-                <span class="bar bar-1"></span>
-                <span class="bar bar-2"></span>
-                <span class="bar bar-3"></span>
+        <!-- Right Quick Controls -->
+        <div class="utility-actions">
+            <!-- Theme Toggle Quick Button -->
+            <button type="button" class="utility-theme-btn" id="utilityThemeToggle" aria-label="Toggle theme">
+                <svg class="theme-icon icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="theme-icon icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                </svg>
             </button>
+            <!-- AI Manifesto Pill -->
+            <a href="<?= url('journal/ai-manifesto') ?>" class="utility-manifesto-btn" title="AI Manifesto v1.0">
+                <span class="manifesto-hazard-mini">⚡</span>
+                <span class="manifesto-btn-text">MANIFESTO</span>
+            </a>
         </div>
     </div>
 </header>
 
-<!-- Mobile Navigation Drawer Overlay -->
-<div class="hud-mobile-backdrop" id="hudMobileBackdrop" aria-hidden="true"></div>
+<!-- Mobile Drawer Backdrop -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
 
-<!-- Mobile Navigation Off-Canvas Drawer -->
-<nav class="hud-mobile-drawer" id="hudMobileDrawer" aria-label="Mobile Navigation" aria-hidden="true">
-    <div class="drawer-header">
-        <div class="drawer-brand">
-            <span class="hud-brand-symbol">&gt;</span>
-            <span class="hud-brand-text">x64emkei<span class="hud-brand-dot">.</span>dev</span>
+<!-- UNIFIED RESPONSIVE NAVIGATION SIDEBAR & MOBILE DRAWER -->
+<aside class="sidebar" id="sidebar" aria-label="Primary Navigation">
+    <!-- Mobile Drawer Header with Close Button -->
+    <div class="drawer-mobile-bar">
+        <div class="drawer-brand-row">
+            <span class="brand-sym">&gt;</span>
+            <span class="drawer-brand-name">x64emkei<span class="brand-dot">.</span>dev</span>
         </div>
-        <button type="button" class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close navigation menu">
+        <button type="button" class="drawer-close-btn" id="sidebarCloseBtn" aria-label="Close navigation menu">
             &times;
         </button>
     </div>
 
-    <div class="drawer-telemetry-status">
-        <span class="telemetry-dot"></span>
-        <span>SYS.TELEMETRY // 6 CHANNELS ONLINE</span>
-    </div>
-
-    <ul class="drawer-nav-list">
-        <?php foreach ($navItems as $key => $item): 
-            $isHome = ($key === 'home');
-            $isActiveParent = ($activeNav === $key) || 
-                              ($isHome && ($currentUri === '/' || $currentUri === '')) ||
-                              (!$isHome && str_starts_with($currentUri, $item['route']));
-            $hasChildren = !empty($item['children']);
-            $itemRoute = url(ltrim($item['route'], '/'));
-            if ($key === 'admin' && !$isAuthenticated) {
-                $itemRoute = url('admin/login');
-            }
-        ?>
-        <li class="drawer-item <?= $hasChildren ? 'has-accordion' : '' ?> <?= $isActiveParent ? 'is-active-parent' : '' ?>">
-            <div class="drawer-item-row">
-                <a href="<?= $itemRoute ?>" class="drawer-link <?= $isActiveParent ? 'active' : '' ?>">
-                    <span><?= e($item['label']) ?></span>
-                    <?php if ($key === 'admin'): ?>
-                        <span class="hud-admin-pill"><?= $isAuthenticated ? 'AUTH' : 'LOGIN' ?></span>
-                    <?php endif; ?>
-                </a>
-                <?php if ($hasChildren): ?>
-                <button type="button" class="accordion-toggle-btn" aria-label="Expand <?= e($item['label']) ?> sub-menu">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </button>
-                <?php endif; ?>
+    <!-- Desktop Sidebar Brand & Telemetry Header -->
+    <div class="sidebar-brand">
+        <div class="brand-telemetry">
+            <span class="telemetry-live-dot"></span>
+            <span>SYS.ONLINE</span>
+            <div class="techno-equalizer" aria-hidden="true">
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
             </div>
-
-            <?php if ($hasChildren): ?>
-            <ul class="drawer-sub-list <?= $isActiveParent ? 'open' : '' ?>">
-                <?php foreach ($item['children'] as $child): 
-                    $childRoute = url(ltrim($child['route'], '/'));
-                    $isChildActive = ($activeSub === $child['id']) || ($currentUri === $child['route']);
-                ?>
-                <li>
-                    <a href="<?= $childRoute ?>" class="drawer-sub-link <?= $isChildActive ? 'child-active' : '' ?>">
-                        <span class="sub-arrow">&rarr;</span>
-                        <span><?= e($child['label']) ?></span>
-                    </a>
-                </li>
-                <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
-        </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <div class="drawer-footer">
-        <div style="font-size: 0.75rem; color: #64748b; font-family: 'JetBrains Mono', monospace;">
-            &copy; <?= date('Y') ?> Michael Benedict Ordenes
         </div>
+        <a href="<?= url('/') ?>" class="brand-title-link">
+            <h2 class="brand-title">x64emkei<span class="brand-dot">.</span>dev</h2>
+        </a>
+        <span class="brand-subtitle"><?= e($profile['full_name'] ?? "Michael Benedict Ordenes") ?></span>
     </div>
-</nav>
 
-<style>
-/* HUD NAVIGATION DESIGN SYSTEM (Strict adherence to Cyberpunk HUD theme) */
-.master-hud-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: rgba(7, 9, 14, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 229, 255, 0.18);
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
-}
-.hud-nav-container {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 24px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-.hud-brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    font-size: 1.15rem;
-    color: #f8fafc;
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-}
-.hud-brand-symbol { color: #00e5ff; }
-.hud-brand-dot { color: #ff3366; }
-.hud-live-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.65rem;
-    background: rgba(0, 229, 255, 0.08);
-    border: 1px solid rgba(0, 229, 255, 0.25);
-    padding: 2px 6px;
-    border-radius: 3px;
-    color: #00e5ff;
-    letter-spacing: 1px;
-}
-.hud-live-pulse {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #00e5ff;
-    box-shadow: 0 0 8px #00e5ff;
-    animation: livePulse 2s infinite;
-}
-@keyframes livePulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.85); }
-}
-
-/* Desktop Navigation */
-.hud-desktop-nav {
-    display: flex;
-    align-items: center;
-}
-@media (max-width: 1024px) {
-    .hud-desktop-nav { display: none; }
-}
-.hud-nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.hud-nav-item {
-    position: relative;
-}
-.hud-nav-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 4px;
-    border: 1px solid transparent;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.hud-nav-link:hover, .hud-nav-link:focus-visible {
-    color: #00e5ff;
-    background: rgba(0, 229, 255, 0.06);
-    border-color: rgba(0, 229, 255, 0.2);
-    outline: none;
-}
-.hud-nav-link.active, .is-active-parent > .hud-nav-link {
-    color: #00e5ff;
-    background: rgba(0, 229, 255, 0.1);
-    border-color: rgba(0, 229, 255, 0.35);
-    box-shadow: 0 0 12px rgba(0, 229, 255, 0.18);
-}
-.hud-caret {
-    transition: transform 0.2s ease;
-}
-.hud-nav-item:hover .hud-caret, .hud-nav-item:focus-within .hud-caret {
-    transform: rotate(180deg);
-}
-.hud-admin-pill {
-    font-size: 0.65rem;
-    padding: 1px 5px;
-    border-radius: 3px;
-    background: rgba(255, 51, 102, 0.15);
-    border: 1px solid rgba(255, 51, 102, 0.4);
-    color: #ff3366;
-    letter-spacing: 0.5px;
-}
-
-/* Dropdown Menus */
-.hud-dropdown-menu {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    min-width: 240px;
-    background: rgba(14, 18, 26, 0.98);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(0, 229, 255, 0.25);
-    border-radius: 6px;
-    padding: 8px 0;
-    list-style: none;
-    margin: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(6px);
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    pointer-events: none;
-    z-index: 1010;
-}
-.hud-nav-item:hover .hud-dropdown-menu,
-.hud-nav-item:focus-within .hud-dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-.hud-dropdown-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 18px;
-    color: #cbd5e1;
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    transition: all 0.15s ease;
-}
-.dropdown-pip {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: #64748b;
-    transition: all 0.15s ease;
-}
-.hud-dropdown-link:hover, .hud-dropdown-link:focus-visible {
-    background: rgba(0, 229, 255, 0.08);
-    color: #00e5ff;
-    padding-left: 22px;
-    outline: none;
-}
-.hud-dropdown-link:hover .dropdown-pip, .hud-dropdown-link.child-active .dropdown-pip {
-    background: #00e5ff;
-    box-shadow: 0 0 6px #00e5ff;
-}
-.hud-dropdown-link.child-active {
-    color: #00e5ff;
-    font-weight: 700;
-    background: rgba(0, 229, 255, 0.08);
-}
-
-/* Utilities */
-.hud-utilities {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-.hud-manifesto-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    color: #f8fafc;
-    background: rgba(255, 51, 102, 0.1);
-    border: 1px solid rgba(255, 51, 102, 0.35);
-    border-radius: 4px;
-    transition: all 0.2s;
-}
-.hud-manifesto-btn:hover {
-    background: rgba(255, 51, 102, 0.2);
-    border-color: #ff3366;
-    box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
-    color: #fff;
-}
-.manifesto-pill-glow {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #ff3366;
-    box-shadow: 0 0 6px #ff3366;
-}
-
-/* Mobile Hamburger Toggle */
-.hud-mobile-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 44px;
-    height: 44px;
-    padding: 10px;
-    background: rgba(14, 18, 26, 0.8);
-    border: 1px solid rgba(0, 229, 255, 0.25);
-    border-radius: 4px;
-    cursor: pointer;
-    box-sizing: border-box;
-}
-@media (max-width: 1024px) {
-    .hud-mobile-toggle { display: flex; }
-    .hud-manifesto-btn { display: none; }
-}
-.hud-mobile-toggle .bar {
-    width: 100%;
-    height: 2px;
-    background: #00e5ff;
-    border-radius: 1px;
-    transition: all 0.25s ease;
-}
-
-/* Mobile Off-Canvas Drawer */
-.hud-mobile-backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(6px);
-    z-index: 1990;
-}
-.hud-mobile-backdrop.open { display: block; }
-.hud-mobile-drawer {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 85%;
-    max-width: 380px;
-    background: #0b0f17;
-    border-left: 1px solid rgba(0, 229, 255, 0.25);
-    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.85);
-    z-index: 2000;
-    transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-}
-.hud-mobile-drawer.open {
-    transform: translateX(0);
-}
-.drawer-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 20px;
-    border-bottom: 1px solid rgba(0, 229, 255, 0.15);
-}
-.drawer-close-btn {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #cbd5e1;
-    font-size: 1.6rem;
-    line-height: 1;
-    width: 36px;
-    height: 36px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.drawer-close-btn:hover {
-    color: #ff3366;
-    border-color: #ff3366;
-}
-.drawer-telemetry-status {
-    padding: 12px 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: #10b981;
-    background: rgba(16, 185, 129, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.drawer-telemetry-status .telemetry-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 6px #10b981;
-}
-.drawer-nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 16px 12px;
-    flex: 1;
-}
-.drawer-item {
-    margin-bottom: 8px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    background: rgba(14, 18, 26, 0.5);
-    overflow: hidden;
-}
-.drawer-item-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.drawer-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 16px;
-    color: #cbd5e1;
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.92rem;
-    font-weight: 600;
-    flex: 1;
-}
-.drawer-link.active, .drawer-item.is-active-parent > .drawer-item-row > .drawer-link {
-    color: #00e5ff;
-}
-.accordion-toggle-btn {
-    width: 44px;
-    height: 48px;
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-}
-.accordion-toggle-btn.expanded {
-    transform: rotate(180deg);
-    color: #00e5ff;
-}
-.drawer-sub-list {
-    display: none;
-    list-style: none;
-    margin: 0;
-    padding: 6px 0 10px 12px;
-    background: rgba(7, 9, 14, 0.6);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-.drawer-sub-list.open {
-    display: block;
-}
-.drawer-sub-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    min-height: 44px; /* WCAG 2.2 touch target standard */
-    box-sizing: border-box;
-}
-.drawer-sub-link .sub-arrow { color: #00e5ff; font-size: 0.8rem; }
-.drawer-sub-link:hover, .drawer-sub-link.child-active {
-    color: #00e5ff;
-    padding-left: 18px;
-}
-.drawer-footer {
-    padding: 18px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(7, 9, 14, 0.8);
-}
-</style>
-
-<script>
-// Mobile Navigation Drawer Interactive Controller
-(function() {
-    var toggleBtn = document.getElementById('hudMobileToggle');
-    var drawer = document.getElementById('hudMobileDrawer');
-    var backdrop = document.getElementById('hudMobileBackdrop');
-    var closeBtn = document.getElementById('drawerCloseBtn');
-
-    function openDrawer() {
-        if (!drawer || !backdrop) return;
-        drawer.classList.add('open');
-        backdrop.classList.add('open');
-        drawer.setAttribute('aria-hidden', 'false');
-        backdrop.setAttribute('aria-hidden', 'false');
-        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeDrawer() {
-        if (!drawer || !backdrop) return;
-        drawer.classList.remove('open');
-        backdrop.classList.remove('open');
-        drawer.setAttribute('aria-hidden', 'true');
-        backdrop.setAttribute('aria-hidden', 'true');
-        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-    }
-
-    if (toggleBtn) toggleBtn.addEventListener('click', openDrawer);
-    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-    if (backdrop) backdrop.addEventListener('click', closeDrawer);
-
-    // Accordions inside drawer
-    var accordions = document.querySelectorAll('.accordion-toggle-btn');
-    accordions.forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var item = btn.closest('.drawer-item');
-            var subList = item ? item.querySelector('.drawer-sub-list') : null;
-            if (subList) {
-                var isOpen = subList.classList.contains('open');
-                if (isOpen) {
-                    subList.classList.remove('open');
-                    btn.classList.remove('expanded');
-                } else {
-                    subList.classList.add('open');
-                    btn.classList.add('expanded');
+    <!-- Primary Vertical Navigation List (Exact 6 Categories) -->
+    <nav class="sidebar-nav" aria-label="Main Navigation">
+        <ul class="nav-list" role="menubar">
+            <?php foreach ($navItems as $key => $item): 
+                $isHome = ($key === 'home');
+                $isActiveParent = ($activeNav === $key) || 
+                                  ($isHome && ($currentUri === '/' || $currentUri === '')) ||
+                                  (!$isHome && str_starts_with($currentUri, $item['route']));
+                $hasChildren = !empty($item['children']);
+                $itemRoute = url(ltrim($item['route'], '/'));
+                if ($key === 'admin' && !$isAuthenticated) {
+                    $itemRoute = url('admin/login');
                 }
-            }
-        });
-    });
+            ?>
+            <li class="nav-item <?= $hasChildren ? 'has-subitems' : '' ?> <?= $isActiveParent ? 'is-active-parent' : '' ?>" role="none">
+                <div class="nav-link-row">
+                    <a href="<?= $itemRoute ?>" 
+                       class="nav-link <?= $isActiveParent ? 'active' : '' ?>" 
+                       data-section="<?= e($key) ?>"
+                       role="menuitem">
+                        <?php if ($key === 'home'): ?>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                        <?php elseif ($key === 'about'): ?>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="5"/>
+                                <path d="M20 21a8 8 0 0 0-16 0"/>
+                            </svg>
+                        <?php elseif ($key === 'work'): ?>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                        <?php elseif ($key === 'journal'): ?>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                                <path d="M6 6h10"/>
+                                <path d="M6 10h10"/>
+                                <path d="M6 14h6"/>
+                            </svg>
+                        <?php elseif ($key === 'contact'): ?>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                            </svg>
+                        <?php elseif ($key === 'admin'): ?>
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                <path d="M9 17V7h6v10"/>
+                            </svg>
+                        <?php endif; ?>
 
-    // Close drawer on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && drawer && drawer.classList.contains('open')) {
-            closeDrawer();
-        }
-    });
-})();
-</script>
+                        <span class="nav-label"><?= e($item['label']) ?></span>
+
+                        <?php if ($key === 'admin'): ?>
+                            <span class="nav-auth-pill"><?= $isAuthenticated ? 'AUTH' : 'LOGIN' ?></span>
+                        <?php endif; ?>
+                    </a>
+
+                    <?php if ($hasChildren): ?>
+                    <button type="button" 
+                            class="subnav-accordion-toggle <?= $isActiveParent ? 'expanded' : '' ?>" 
+                            aria-label="Expand <?= e($item['label']) ?> child destinations"
+                            aria-expanded="<?= $isActiveParent ? 'true' : 'false' ?>">
+                        <svg class="chevron-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <?php endif; ?>
+                </div>
+
+                <?php if ($hasChildren): ?>
+                <ul class="sidebar-sub-nav <?= $isActiveParent ? 'open' : '' ?>" role="menu">
+                    <?php foreach ($item['children'] as $child): 
+                        $childRoute = url(ltrim($child['route'], '/'));
+                        $isChildActive = ($activeSub === $child['id']) || ($currentUri === $child['route']);
+                    ?>
+                    <li role="none">
+                        <a href="<?= $childRoute ?>" 
+                           class="sidebar-sub-link <?= $isChildActive ? 'child-active' : '' ?>" 
+                           role="menuitem">
+                            <span class="sub-arrow">&rsaquo;</span>
+                            <span><?= e($child['label']) ?></span>
+                        </a>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php endif; ?>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
+
+    <!-- Sidebar Telemetry & Utilities Footer -->
+    <div class="sidebar-footer">
+        <!-- Telemetry Live HUD Clock (Clickable 12/24H toggle) -->
+        <div class="sidebar-telemetry-hud" id="hudClockContainer" title="Local System Time (Click to toggle 12/24H mode)">
+            <span class="hud-clock-label">SYS.TIME</span>
+            <span class="hud-clock-val" id="liveSysClock">--:--:-- --</span>
+        </div>
+
+        <!-- AI Manifesto Trigger Button -->
+        <a href="<?= url('journal/ai-manifesto') ?>" class="btn-manifesto" id="sidebarManifestoBtn" aria-label="Open AI Manifesto">
+            <span class="manifesto-hazard">⚡</span>
+            <span>AI MANIFESTO</span>
+            <span class="manifesto-glitch">v1.0</span>
+        </a>
+
+        <!-- Trust Me Lab Button -->
+        <a href="<?= url('about') ?>" class="btn btn-trust-me sidebar-trust-btn" data-target="about">
+            <span class="trust-hazard">⚠️</span>
+            <span>TRUST ME</span>
+            <span class="trust-glitch">// LAB</span>
+        </a>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light/dark theme">
+            <span class="theme-icon-container">
+                <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                </svg>
+            </span>
+            <span class="theme-label" id="themeLabel">Dark Mode</span>
+        </button>
+
+        <!-- Social Channels -->
+        <div class="social-links">
+            <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            <a href="https://linkedin.com/in/michael-ordenes/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect width="4" height="12" x="2" y="9"/>
+                    <circle cx="4" cy="4" r="2"/>
+                </svg>
+            </a>
+            <a href="mailto:mordenes@acm.org" class="social-btn" aria-label="Email Michael">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+            </a>
+        </div>
+        <p class="copyright-text"><?= e($settings['copyright_text'] ?? "© " . date('Y') . " Michael Benedict Ordenes. Systems Architecture // All telemetry active.") ?></p>
+    </div>
+</aside>

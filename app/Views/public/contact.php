@@ -67,7 +67,8 @@ $pageSubtitle = $subTitles[$activeSub] ?? 'Contact & Communication';
     <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
-    <main class="contact-container">
+    <main class="main-content"><div class="view-wrapper">
+<main class="contact-container">
         <!-- Breadcrumbs -->
         <nav class="hud-breadcrumb" aria-label="Breadcrumb">
             <a href="<?= url('/') ?>">HOME</a>
@@ -211,6 +212,7 @@ $pageSubtitle = $subTitles[$activeSub] ?? 'Contact & Communication';
             </div>
         <?php endif; ?>
     </main>
+    </div></main>
 
     <footer style="border-top: 1px solid rgba(0, 229, 255, 0.15); padding: 30px 24px; text-align: center; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
         &copy; <?= date('Y') ?> Michael Benedict Ordenes (x64emkei). Systems Architecture &bull; All Telemetry Active.

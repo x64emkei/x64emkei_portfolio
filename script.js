@@ -9,11 +9,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
-    // 0. MOBILE SIDEBAR FUNCTIONS (HOISTED)
-    // ==========================================
+    // 0. MOBILE SIDEBAR & DRAWER ENGINE (HOISTED)
     const mobileToggle = document.getElementById('mobileToggle');
     const sidebar = document.getElementById('sidebar');
     const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
 
     function openSidebar() {
         if (sidebar && mobileToggle && sidebarBackdrop) {
@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mobileToggle) {
-        mobileToggle.addEventListener('click', () => {
-            const isOpen = sidebar.classList.contains('open');
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = sidebar && sidebar.classList.contains('open');
             if (isOpen) {
                 closeSidebar();
             } else {
@@ -46,9 +47,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener('click', closeSidebar);
+    }
+
     if (sidebarBackdrop) {
         sidebarBackdrop.addEventListener('click', closeSidebar);
     }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+
+    // Sub-navigation accordion toggles
+    document.querySelectorAll('.subnav-accordion-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isExpanded = btn.classList.contains('expanded');
+            btn.classList.toggle('expanded', !isExpanded);
+            btn.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
+            const subnav = btn.closest('.nav-item')?.querySelector('.sidebar-sub-nav');
+            if (subnav) {
+                subnav.classList.toggle('open', !isExpanded);
+            }
+        });
+    });
 
     // ==========================================
     // 1. COLOR SWEEP TRANSITION & NAVIGATION
@@ -343,13 +369,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply initial theme
     applyTheme(savedTheme);
 
+    const utilityThemeToggle = document.getElementById('utilityThemeToggle');
+    const handleThemeToggle = () => {
+        const isLight = document.body.classList.contains('light-theme');
+        const newTheme = isLight ? 'dark' : 'light';
+        applyTheme(newTheme);
+        localStorage.setItem('portfolio-theme', newTheme);
+    };
+
     if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            const isLight = document.body.classList.contains('light-theme');
-            const newTheme = isLight ? 'dark' : 'light';
-            applyTheme(newTheme);
-            localStorage.setItem('portfolio-theme', newTheme);
-        });
+        themeToggleBtn.addEventListener('click', handleThemeToggle);
+    }
+    if (utilityThemeToggle) {
+        utilityThemeToggle.addEventListener('click', handleThemeToggle);
     }
 
     // ==========================================
