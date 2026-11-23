@@ -593,7 +593,16 @@ class PortfolioDataSeeder
             ['achievements', 'HONORS & RECOGNITIONS', 'ACADEMIC & LEADERSHIP DISTINCTIONS', 'Academic milestones and organizational leadership recognitions.', 1, 8, 'cards', 1],
             ['certifications', 'CERTIFICATIONS & CREDENTIALS', 'VERIFIED SPECIALIZATIONS', 'Certified Six Sigma White Belt & EF SET English C1 Advanced qualifications.', 1, 9, 'cards', 1],
             ['services', 'SERVICES & SPECIALTIES', 'CAPABILITIES & OFFERINGS', 'Web development, homelab virtualization, networking, hardware restoration, and systematic technical problem solving.', 1, 10, 'cards', 1],
-            ['contact', 'INITIALIZE SECURE TRANSMISSION', 'TELEMETRY UPLINK & DIRECT DISPATCH', 'Connect directly via encrypted transmission or explore active communication channels.', 1, 11, 'default', 0],
+            ['laboratory', 'TECHNICAL LABORATORY & EXPERIMENTATION', 'ACTIVE RESEARCH TRACKS & VIRTUALIZATION NODES', 'Hands-on experimentation with bare-metal hypervisors, encrypted mesh networks, and legacy operating systems.', 1, 11, 'cards', 0],
+            ['journal', 'ENGINEERING JOURNAL & PUBLICATIONS', 'TRANSMISSION ARCHIVES & ARCHITECTURAL ESSAYS', 'Technical documentation, systems engineering guides, zero-trust protocols, and architectural positions.', 1, 12, 'stream', 0],
+            ['tutorials', 'TUTORIALS & IMPLEMENTATION GUIDES', 'PRACTICAL ENGINEERING WALKTHROUGHS', 'Step-by-step guides for zero-trust clusters, PHP 8 security architectures, and Linux system management.', 1, 13, 'cards', 0],
+            ['technical-notes', 'TECHNICAL NOTES & SYSTEM DIAGNOSTICS', 'LAB NOTEBOOK & FIELD DIAGNOSTICS', 'Thermal profiling, CORS/CSP policy hardening, low-level memory debugging, and runtime telemetry.', 1, 14, 'list', 0],
+            ['research', 'RESEARCH & ARCHITECTURAL INSIGHTS', 'INVESTIGATION & HARDWARE LONGEVITY', 'Hardware longevity, circular technology, and digital preservation in modern computing.', 1, 15, 'cards', 0],
+            ['ai-manifesto', 'MY AI MANIFESTO', 'A PERSONAL POSITION ON AI, HUMAN SKILL, AND RESPONSIBLE PROGRESS', 'Principles guiding learning, craft, professional development, accountability, and Filipino opportunity.', 1, 16, 'callout', 0],
+            ['contact', 'CONTACT & TECHNICAL CONSULTATION', 'SECURE TELEMETRY CHANNEL & DIRECT DISPATCH', 'Direct inquiry channels for systems engineering, software consultation, homelab architecture, or collaborative initiatives.', 1, 17, 'default', 0],
+            ['information', 'CONTACT INFORMATION & DIRECT CHANNELS', 'OPERATOR TELEMETRY & AVAILABILITY', 'Verified operator email, timezone, and operational availability status.', 1, 18, 'cards', 0],
+            ['inquiry', 'SEND AN INQUIRY', 'SECURE TRANSMISSION DISPATCH FORM', 'Submit inquiries regarding systems architecture, software consulting, or project collaborations.', 1, 19, 'form', 0],
+            ['social', 'VERIFIED SOCIAL TELEMETRY & NETWORKS', 'PUBLIC REPOSITORIES & PROFESSIONAL PROFILES', 'Direct connections through GitHub, LinkedIn, and professional engineering associations.', 1, 20, 'cards', 0],
         ];
 
         $sql = "INSERT INTO `portfolio_sections` (`section_key`, `title`, `subtitle`, `intro_text`, `is_enabled`, `display_order`, `layout_variation`, `hide_if_empty`)

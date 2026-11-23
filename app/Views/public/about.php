@@ -1,5 +1,12 @@
 <?php
 $activeSub = $activeSub ?? 'biography';
+$secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
+$secAbout = $secHelper->getSection('about');
+$secBio = $secHelper->getSection('biography');
+$secEdu = $secHelper->getSection('education');
+$secSkills = $secHelper->getSection('skills');
+$secExp = $secHelper->getSection('experience');
+$secCerts = $secHelper->getSection('certifications');
 ?>
 <!DOCTYPE html>
 <html lang="en">

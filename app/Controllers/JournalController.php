@@ -6,11 +6,46 @@ namespace App\Controllers;
 use App\Models\Article;
 use App\Models\ArticleCategory;
 use App\Models\ArticleTag;
+use App\Models\Profile;
+use App\Models\SiteSetting;
+use App\Models\SocialLink;
+use App\Models\PortfolioSection;
 use App\Services\ViewRenderer;
 use App\Services\HttpException;
 
 class JournalController
 {
+    private function getCommonData(): array
+    {
+        $defaultProfile = [
+            'full_name' => 'Michael Benedict Ordenes',
+            'title' => 'Computer Science Student, IT Enthusiast & Developer',
+            'tagline' => 'Architecting resilient software systems and high-performance applications.',
+            'bio_short' => 'Computer Science student and systems developer.',
+            'bio_full' => '',
+            'avatar_url' => 'images/me_2.png',
+            'cover_url' => 'images/carousel-workspace.jpg',
+            'location' => 'Laguna, Philippines',
+            'availability_status' => 'Available for Systems & Web Engineering',
+            'resume_url' => '#contact',
+            'email' => 'mordenes@acm.org'
+        ];
+
+        try { $profile = Profile::get() ?: $defaultProfile; } catch (\Throwable) { $profile = $defaultProfile; }
+        try { $settings = SiteSetting::getAllKeyed(); } catch (\Throwable) { $settings = []; }
+        try { $socialLinks = SocialLink::getPublished(); } catch (\Throwable) { $socialLinks = []; }
+        try { $sections = PortfolioSection::allKeyed(); } catch (\Throwable) { $sections = []; }
+        try { $manifestoArticle = Article::findBySlug('my-ai-manifesto') ?: $this->getManifestoFallback(); } catch (\Throwable) { $manifestoArticle = $this->getManifestoFallback(); }
+
+        return [
+            'profile' => $profile,
+            'settings' => $settings,
+            'socialLinks' => $socialLinks,
+            'sections' => $sections,
+            'manifestoArticle' => $manifestoArticle,
+            'activeNav' => 'journal'
+        ];
+    }
     public function index(): void
     {
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -44,7 +79,7 @@ class JournalController
         $totalPages = max(1, (int)ceil($total / $perPage));
 
         $renderer = new ViewRenderer();
-        echo $renderer->render('public.journal.index', [
+        $data = array_merge($this->getCommonData(), [
             'articles' => $articles,
             'categories' => $categories,
             'tags' => $tags,
@@ -56,6 +91,7 @@ class JournalController
             'pageTitle' => 'Journal & Telemetry Log // x64emkei.dev',
             'metaDesc' => 'Technical writeups, systems architecture analysis, and software development insights by Michael Benedict Ordenes.'
         ]);
+        echo $renderer->render('public.journal.index', $data);
     }
 
     public function manifesto(): void
@@ -117,7 +153,7 @@ class JournalController
         }
 
         $renderer = new ViewRenderer();
-        echo $renderer->render('public.journal.index', [
+        $data = array_merge($this->getCommonData(), [
             'articles' => $articles,
             'categories' => $categories,
             'tags' => $tags,
@@ -130,6 +166,7 @@ class JournalController
             'pageTitle' => $sectionTitle . ' // Journal',
             'metaDesc' => "Transmissions, research notes, and engineering guides under {$sectionTitle}."
         ]);
+        echo $renderer->render('public.journal.index', $data);
     }
 
     public function show(string $slug): void
@@ -162,13 +199,14 @@ class JournalController
         }
 
         $renderer = new ViewRenderer();
-        echo $renderer->render('public.journal.show', [
+        $data = array_merge($this->getCommonData(), [
             'article' => $article,
             'categories' => $categories,
             'related' => $related,
             'pageTitle' => ($article['seo_title'] ?: $article['title']) . ' // x64emkei.dev',
             'metaDesc' => $article['seo_description'] ?: ($article['excerpt'] ?: substr(strip_tags($article['content']), 0, 160))
         ]);
+        echo $renderer->render('public.journal.show', $data);
     }
 
     private function getManifestoFallback(): array
@@ -204,13 +242,14 @@ class JournalController
         $categories = ArticleCategory::withArticleCount();
 
         $renderer = new ViewRenderer();
-        echo $renderer->render('public.journal.category', [
+        $data = array_merge($this->getCommonData(), [
             'category' => $category,
             'articles' => $articles,
             'categories' => $categories,
             'pageTitle' => "Category: {$category['name']} // Journal",
             'metaDesc' => $category['description'] ?: "Articles categorized under {$category['name']}."
         ]);
+        echo $renderer->render('public.journal.category', $data);
     }
 
     public function tag(string $slug): void
@@ -224,12 +263,13 @@ class JournalController
         $categories = ArticleCategory::withArticleCount();
 
         $renderer = new ViewRenderer();
-        echo $renderer->render('public.journal.tag', [
+        $data = array_merge($this->getCommonData(), [
             'tag' => $tag,
             'articles' => $articles,
             'categories' => $categories,
             'pageTitle' => "Tag: {$tag['name']} // Journal",
             'metaDesc' => "Articles tagged with #{$tag['name']}."
         ]);
+        echo $renderer->render('public.journal.tag', $data);
     }
 }

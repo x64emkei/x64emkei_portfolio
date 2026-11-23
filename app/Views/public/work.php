@@ -1,5 +1,10 @@
 <?php
 $activeSub = $activeSub ?? 'portfolio';
+$secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
+$secPortfolio = $secHelper->getSection('projects');
+$secServices = $secHelper->getSection('services');
+$secLaboratory = $secHelper->getSection('laboratory');
+$secHardware = $secHelper->getSection('hardware');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,10 +59,10 @@ $activeSub = $activeSub ?? 'portfolio';
                 <section id="portfolio" class="content-section" data-section-name="Portfolio and Projects">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
                         <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // 1. PORTFOLIO & SOFTWARE PROJECTS
+                            // <?= e($secPortfolio['title'] ?: '1. PORTFOLIO & SOFTWARE PROJECTS') ?>
                         </h2>
                         <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
-                            ACTIVE TELEMETRY
+                            <?= e($secPortfolio['subtitle'] ?: 'ACTIVE TELEMETRY') ?>
                         </span>
                     </div>
 
@@ -114,13 +119,35 @@ $activeSub = $activeSub ?? 'portfolio';
                 <section id="services" class="content-section" data-section-name="Services" style="margin-top: 40px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
                         <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // 2. PROFESSIONAL & TECHNICAL SERVICES
+                            // <?= e($secServices['title'] ?: '2. PROFESSIONAL & TECHNICAL SERVICES') ?>
                         </h2>
                         <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
-                            SPECIALIZATIONS
+                            <?= e($secServices['subtitle'] ?: 'SPECIALIZATIONS') ?>
                         </span>
                     </div>
 
+                    <?php if (!empty($services)): ?>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <?php foreach ($services as $idx => $svc): ?>
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
+                                [SERVICE // <?= sprintf('%02d', $idx + 1) ?>] <?= strtoupper(e($svc['category'] ?? 'ENGINEERING')) ?>
+                            </div>
+                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+                                <?= e($svc['title']) ?>
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
+                                <?= nl2br(e($svc['description'])) ?>
+                            </p>
+                            <?php if (!empty($svc['features']) || !empty($svc['tagline'])): ?>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                                <strong style="color: #ff3366;">Core Stack:</strong> <?= e($svc['features'] ?: $svc['tagline']) ?>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php else: ?>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
                         <!-- Service 1: Website Development -->
                         <div class="section-box" style="margin-bottom: 0;">
@@ -218,16 +245,17 @@ $activeSub = $activeSub ?? 'portfolio';
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </section>
 
                 <!-- SECTION 3: TECHNICAL LABORATORY -->
                 <section id="laboratory" class="content-section" data-section-name="Technical Laboratory" style="margin-top: 40px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
                         <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // 3. TECHNICAL LABORATORY & EXPERIMENTATION
+                            // <?= e($secLaboratory['title'] ?: '3. TECHNICAL LABORATORY & EXPERIMENTATION') ?>
                         </h2>
                         <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
-                            ACTIVE RESEARCH
+                            <?= e($secLaboratory['subtitle'] ?: 'ACTIVE RESEARCH') ?>
                         </span>
                     </div>
 
@@ -268,13 +296,46 @@ $activeSub = $activeSub ?? 'portfolio';
                 <section id="hardware" class="content-section" data-section-name="Hardware Archive" style="margin-top: 40px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
                         <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // 4. PHYSICAL HARDWARE ARCHIVE
+                            // <?= e($secHardware['title'] ?: '4. PHYSICAL HARDWARE ARCHIVE') ?>
                         </h2>
                         <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
-                            VERIFIED DEVICES
+                            <?= e($secHardware['subtitle'] ?: 'VERIFIED DEVICES') ?>
                         </span>
                     </div>
 
+                    <?php if (!empty($hardwareNodes)): ?>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                        <?php foreach ($hardwareNodes as $hw): ?>
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">
+                                    [OEM: <?= strtoupper(e($hw['oem_brand'] ?? 'FLEET NODE')) ?>]
+                                </span>
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: <?= in_array(strtolower($hw['operational_status'] ?? ''), ['operational', 'restored', 'active'], true) ? '#10b981' : '#00e5ff' ?>;">
+                                    ● <?= strtoupper(e($hw['operational_status'] ?? 'Active')) ?>
+                                </span>
+                            </div>
+                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
+                                <?= e($hw['title']) ?>
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
+                                <?= e($hw['subtitle'] ?? '') ?>
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #00e5ff;">
+                                <?php if (!empty($hw['cpu_spec'])): ?><div><strong>CPU:</strong> <?= e($hw['cpu_spec']) ?></div><?php endif; ?>
+                                <?php if (!empty($hw['ram_spec'])): ?><div><strong>RAM:</strong> <?= e($hw['ram_spec']) ?></div><?php endif; ?>
+                                <?php if (!empty($hw['storage_spec'])): ?><div><strong>Storage:</strong> <?= e($hw['storage_spec']) ?></div><?php endif; ?>
+                                <?php if (!empty($hw['os_spec'])): ?><div><strong>OS:</strong> <?= e($hw['os_spec']) ?></div><?php endif; ?>
+                            </div>
+                            <?php if (!empty($hw['restoration_history'])): ?>
+                            <p style="color: #64748b; font-size: 0.8rem; margin: 8px 0 0 0; font-family: 'JetBrains Mono', monospace;">
+                                Notes: <?= e(substr($hw['restoration_history'], 0, 110)) ?>...
+                            </p>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php else: ?>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
                         <!-- Genuine Hardware Node 1: Sony VAIO Netbook -->
                         <div class="section-box" style="margin-bottom: 0;">
@@ -335,6 +396,7 @@ $activeSub = $activeSub ?? 'portfolio';
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </section>
 
             </div>

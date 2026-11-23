@@ -1,3 +1,12 @@
+<?php
+$secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
+$secJournal = $secHelper->getSection('journal');
+$secBlog = $secHelper->getSection('blog');
+$secTutorials = $secHelper->getSection('tutorials');
+$secNotes = $secHelper->getSection('technical-notes');
+$secResearch = $secHelper->getSection('research');
+$secManifesto = $secHelper->getSection('ai-manifesto');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

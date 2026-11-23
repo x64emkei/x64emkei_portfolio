@@ -1,5 +1,9 @@
 <?php
 $activeSub = $activeSub ?? 'information';
+$secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
+$secInfo = $secHelper->getSection('information');
+$secInquiry = $secHelper->getSection('inquiry');
+$secSocial = $secHelper->getSection('social');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,6 +177,21 @@ $activeSub = $activeSub ?? 'information';
                             Connect directly through verified developer profiles, professional networks, and open-source code repositories.
                         </p>
 
+                        <?php if (!empty($socialLinks)): ?>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                            <?php foreach ($socialLinks as $link): ?>
+                            <a href="<?= e($link['url']) ?>" target="_blank" rel="noopener noreferrer" 
+                               style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,229,255,0.2); padding: 16px 20px; border-radius: 6px; color: #f8fafc; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; transition: all 0.2s;">
+                                <div>
+                                    <div style="color: #00e5ff; font-size: 0.75rem;">// <?= strtoupper(e($link['platform_name'])) ?></div>
+                                    <div style="font-weight: 700; margin-top: 4px;"><?= e($link['platform_name']) ?></div>
+                                    <div style="color: #64748b; font-size: 0.78rem;"><?= e($link['username_handle'] ?? '') ?></div>
+                                </div>
+                                <span style="color: #00e5ff; font-weight: 700;">[OPEN &nearr;]</span>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php else: ?>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
                             <a href="https://github.com/x64_emkei" target="_blank" rel="noopener noreferrer" 
                                style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,229,255,0.2); padding: 16px 20px; border-radius: 6px; color: #f8fafc; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; transition: all 0.2s;">
@@ -194,16 +213,17 @@ $activeSub = $activeSub ?? 'information';
                                 <span style="color: #00e5ff; font-weight: 700;">[OPEN &nearr;]</span>
                             </a>
 
-                            <a href="mailto:mordenes@acm.org" 
+                            <a href="mailto:<?= e($profile['email'] ?? 'mordenes@acm.org') ?>" 
                                style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,51,102,0.3); padding: 16px 20px; border-radius: 6px; color: #f8fafc; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; transition: all 0.2s;">
                                 <div>
                                     <div style="color: #ff3366; font-size: 0.75rem;">// DIRECT INBOX</div>
                                     <div style="font-weight: 700; margin-top: 4px;">ACM Member Email</div>
-                                    <div style="color: #64748b; font-size: 0.78rem;">mordenes@acm.org</div>
+                                    <div style="color: #64748b; font-size: 0.78rem;"><?= e($profile['email'] ?? 'mordenes@acm.org') ?></div>
                                 </div>
                                 <span style="color: #ff3366; font-weight: 700;">[COMPOSE &nearr;]</span>
                             </a>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </section>
             </div>
