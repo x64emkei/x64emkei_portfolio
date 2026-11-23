@@ -84,20 +84,33 @@ class HomeController
         echo $renderer->render('public.layout', $data);
     }
 
-    public function about(): void
+    public function about(?string $sub = null): void
     {
         $data = $this->getCommonData();
         $data['activeNav'] = 'about';
+        $data['activeSub'] = $sub ?? 'biography';
         $renderer = new ViewRenderer();
         echo $renderer->render('public.about', $data);
     }
 
-    public function work(): void
+    public function work(?string $sub = null): void
     {
         $data = $this->getCommonData();
         $data['activeNav'] = 'work';
+        $data['activeSub'] = $sub ?? 'projects';
         $renderer = new ViewRenderer();
         echo $renderer->render('public.work', $data);
+    }
+
+    public function workOrProject(string $slug): void
+    {
+        $knownSubsections = ['projects', 'services', 'laboratory', 'hardware', 'interests'];
+        if (in_array(strtolower($slug), $knownSubsections, true)) {
+            $this->work(strtolower($slug));
+            return;
+        }
+
+        $this->project($slug);
     }
 
     public function contact(): void

@@ -47,6 +47,11 @@ class JournalController
         ]);
     }
 
+    public function manifesto(): void
+    {
+        $this->show('my-ai-manifesto');
+    }
+
     public function show(string $slug): void
     {
         $article = Article::findBySlug($slug);

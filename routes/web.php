@@ -37,16 +37,22 @@ $router = new Router();
 // 1. PUBLIC PRIMARY & CHILD ROUTES
 // ==========================================
 $router->get('/', [HomeController::class, 'index']);
+
+// About & Child Destinations
 $router->get('about', [HomeController::class, 'about']);
 $router->get('about/{sub}', [HomeController::class, 'about']);
 
+// Work / Explore & Child Destinations
 $router->get('work', [HomeController::class, 'work']);
-$router->get('work/projects', [HomeController::class, 'work']);
-$router->get('work/{slug}', [HomeController::class, 'project']);
+$router->get('work/{slug}', [HomeController::class, 'workOrProject']);
+$router->get('explore', [HomeController::class, 'work']);
+$router->get('explore/{slug}', [HomeController::class, 'workOrProject']);
 $router->get('project/{slug}', [HomeController::class, 'project']);
 
 // Journal & Publishing Platform
 $router->get('journal', [JournalController::class, 'index']);
+$router->get('journal/manifesto', [JournalController::class, 'manifesto']);
+$router->get('journal/ai-manifesto', [JournalController::class, 'manifesto']);
 $router->get('journal/category/{slug}', [JournalController::class, 'category']);
 $router->get('journal/tag/{slug}', [JournalController::class, 'tag']);
 $router->get('journal/{slug}', [JournalController::class, 'show']);

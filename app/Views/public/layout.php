@@ -666,6 +666,24 @@ $pythonProjects = array_filter($projects ?? [], fn($p) => stripos($p['category']
 $webdevProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'web') !== false || stripos($p['technologies'] ?? '', 'PHP') !== false || stripos($p['technologies'] ?? '', 'HTML') !== false);
 $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'cpp') !== false || stripos($p['technologies'] ?? '', 'C++') !== false);
 ?>
+                <?php if (empty($projects)): ?>
+                <div style="background: rgba(14, 18, 26, 0.7); border: 1px dashed rgba(0, 229, 255, 0.3); border-radius: 6px; padding: 40px 24px; text-align: center; margin-bottom: 30px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">
+                        // TELEMETRY STATUS: INVENTORY_STAGING
+                    </div>
+                    <h3 style="color: #f8fafc; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0 0 10px 0;">
+                        Project Catalog in Active Preparation
+                    </h3>
+                    <p style="color: #94a3b8; max-width: 650px; margin: 0 auto 20px auto; line-height: 1.6; font-size: 0.95rem;">
+                        Code repositories and production blueprints are currently undergoing telemetry audit and clearance for public release. In the meantime, inspect our live <a href="<?= url('work/hardware') ?>" style="color: #00e5ff;">Hardware Lab Archive</a>, review our <a href="<?= url('work/services') ?>" style="color: #00e5ff;">Engineering Services</a>, or read our latest technical papers in the <a href="<?= url('journal') ?>" style="color: #00e5ff;">Journal</a>.
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                        <a href="<?= url('work/services') ?>" class="btn btn-primary btn-sm" style="text-decoration: none;">View Services &rarr;</a>
+                        <a href="<?= url('work/hardware') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Hardware Lab (6 Nodes) &rarr;</a>
+                        <a href="<?= url('journal/manifesto') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Read AI Manifesto &rarr;</a>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <!-- Filter Controls -->
                 <div class="portfolio-filter-group" role="tablist" aria-label="Portfolio Category Filter">
                     <button class="filter-btn active" data-filter="featured"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#FFB800"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Featured</span></button>
