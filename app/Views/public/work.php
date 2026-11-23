@@ -1,18 +1,40 @@
 <?php
 $activeSub = $activeSub ?? 'projects';
+
+$subTitles = [
+    'projects' => 'Portfolio & Software Projects Matrix',
+    'services' => 'Engineering Services & Technical Specialties',
+    'laboratory' => 'Technical Laboratory & Homelab Infrastructure',
+    'hardware' => 'Retro Hardware Diagnostics & Legacy Archive',
+];
+
+$pageSubtitle = $subTitles[$activeSub] ?? 'Engineering Showcase';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Work, Laboratory & Systems // x64emkei.dev</title>
+    <title><?= e($pageSubtitle) ?> // x64emkei.dev</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
     <style>
-        .work-container { max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px 24px; }
+        .work-container { max-width: 1200px; margin: 0 auto; padding: 30px 24px 80px 24px; }
+        .hud-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+        .hud-breadcrumb a { color: #00e5ff; text-decoration: none; }
+        .hud-breadcrumb a:hover { text-decoration: underline; }
+        .hud-breadcrumb .sep { color: #334155; }
+        .hud-breadcrumb .current { color: #f8fafc; font-weight: 600; }
         .subnav-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); padding-bottom: 16px; }
         .subnav-btn {
             font-family: 'JetBrains Mono', monospace;
@@ -47,43 +69,41 @@ $activeSub = $activeSub ?? 'projects';
     </style>
 </head>
 <body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
-    <header style="border-bottom: 1px solid rgba(0, 229, 255, 0.15); background: rgba(14, 18, 26, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
-            <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px;">
-                x64emkei<span style="color: #ff3366;">.</span>dev
-            </a>
-            <nav style="display: flex; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
-                <a href="<?= url('/') ?>" style="color: #94a3b8; text-decoration: none;">HOME</a>
-                <a href="<?= url('about') ?>" style="color: #94a3b8; text-decoration: none;">ABOUT</a>
-                <a href="<?= url('work') ?>" style="color: #00e5ff; text-decoration: none; font-weight: 600;">EXPLORE</a>
-                <a href="<?= url('journal') ?>" style="color: #94a3b8; text-decoration: none;">JOURNAL</a>
-                <a href="<?= url('contact') ?>" style="color: #94a3b8; text-decoration: none;">CONTACT</a>
-            </nav>
-        </div>
-    </header>
+
+    <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
+    <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
     <main class="work-container">
+        <!-- Breadcrumbs -->
+        <nav class="hud-breadcrumb" aria-label="Breadcrumb">
+            <a href="<?= url('/') ?>">HOME</a>
+            <span class="sep">/</span>
+            <a href="<?= url('work') ?>">WORK</a>
+            <span class="sep">/</span>
+            <span class="current"><?= strtoupper(e($activeSub)) ?></span>
+        </nav>
+
         <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 24px;">
-            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">// ENGINEERING & SYSTEMS REPOSITORY</div>
-            <h1 style="font-size: 2.2rem; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif; color: #f8fafc;">Work, Systems & Laboratory Archive</h1>
+            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">// ENGINEERING & SYSTEMS ARCHIVE</div>
+            <h1 style="font-size: 2.2rem; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif; color: #f8fafc;"><?= e($pageSubtitle) ?></h1>
             <p style="color: #94a3b8; font-size: 1rem; margin: 0; max-width: 780px;">
-                Explore software solutions, virtualization clusters, operational network meshes, and vintage hardware restoration nodes built by Michael Benedict Ordenes.
+                Engineered solutions, virtualization topologies, network overlays, and vintage hardware preservation built and curated by Michael Benedict Ordenes.
             </p>
         </div>
 
-        <!-- Sub-Navigation Navigation Tabs -->
-        <div class="subnav-tabs">
-            <a href="<?= url('work/projects') ?>" class="subnav-btn <?= $activeSub === 'projects' ? 'active' : '' ?>">
-                // PROJECTS MATRIX
+        <!-- Sub-Navigation Navigation Tabs (Child Pages) -->
+        <div class="subnav-tabs" role="tablist">
+            <a href="<?= url('work/projects') ?>" class="subnav-btn <?= $activeSub === 'projects' ? 'active' : '' ?>" role="tab">
+                // PORTFOLIO & PROJECTS
             </a>
-            <a href="<?= url('work/services') ?>" class="subnav-btn <?= $activeSub === 'services' ? 'active' : '' ?>">
-                // SERVICES & SPECIALTIES
+            <a href="<?= url('work/services') ?>" class="subnav-btn <?= $activeSub === 'services' ? 'active' : '' ?>" role="tab">
+                // SERVICES
             </a>
-            <a href="<?= url('work/laboratory') ?>" class="subnav-btn <?= $activeSub === 'laboratory' ? 'active' : '' ?>">
-                // HOMELAB & VIRTUALIZATION
+            <a href="<?= url('work/laboratory') ?>" class="subnav-btn <?= $activeSub === 'laboratory' ? 'active' : '' ?>" role="tab">
+                // TECHNICAL LABORATORY
             </a>
-            <a href="<?= url('work/hardware') ?>" class="subnav-btn <?= $activeSub === 'hardware' ? 'active' : '' ?>">
-                // RETRO HARDWARE LAB (6 NODES)
+            <a href="<?= url('work/hardware') ?>" class="subnav-btn <?= $activeSub === 'hardware' ? 'active' : '' ?>" role="tab">
+                // HARDWARE ARCHIVE (6 NODES)
             </a>
         </div>
 
@@ -98,12 +118,12 @@ $activeSub = $activeSub ?? 'projects';
                         Project Catalog in Preparation
                     </h2>
                     <p style="color: #94a3b8; font-size: 0.95rem; max-width: 620px; margin: 0 auto 24px auto; line-height: 1.6;">
-                        Production dossiers, blueprints, and software repositories are currently undergoing telemetry audit and code review prior to public release. In the meantime, inspect our live <a href="<?= url('work/hardware') ?>" style="color: #00e5ff;">Hardware Lab Archive</a>, review our <a href="<?= url('work/services') ?>" style="color: #00e5ff;">Engineering Services</a>, or read our latest technical papers in the <a href="<?= url('journal') ?>" style="color: #00e5ff;">Journal</a>.
+                        Production dossiers, blueprints, and software repositories are currently undergoing telemetry audit and code review prior to public release. In the meantime, inspect our live <a href="<?= url('work/hardware') ?>" style="color: #00e5ff;">Hardware Archive</a>, review our <a href="<?= url('work/services') ?>" style="color: #00e5ff;">Engineering Services</a>, or read our latest technical papers in the <a href="<?= url('journal') ?>" style="color: #00e5ff;">Journal</a>.
                     </p>
                     <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
                         <a href="<?= url('work/services') ?>" class="subnav-btn" style="color: #00e5ff; border-color: #00e5ff;">Explore Services &rarr;</a>
-                        <a href="<?= url('work/hardware') ?>" class="subnav-btn">View Hardware Nodes &rarr;</a>
-                        <a href="<?= url('contact') ?>" class="subnav-btn">Inquire for Projects &rarr;</a>
+                        <a href="<?= url('work/hardware') ?>" class="subnav-btn">View Hardware Archive &rarr;</a>
+                        <a href="<?= url('contact/inquiry') ?>" class="subnav-btn">Send Project Inquiry &rarr;</a>
                     </div>
                 </div>
             <?php else: ?>
@@ -171,10 +191,10 @@ $activeSub = $activeSub ?? 'projects';
             <!-- Homelab & Virtualization Section -->
             <div class="hud-card">
                 <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">
-                    // ARCHITECTURE // VIRTUALIZATION & HOMELAB INFRASTRUCTURE
+                    // ARCHITECTURE // TECHNICAL LABORATORY & VIRTUALIZATION
                 </div>
                 <h2 style="font-family: 'Space Grotesk', sans-serif; color: #f8fafc; font-size: 1.5rem; margin: 0 0 12px 0;">
-                    24/7 Resilient Virtualization Cluster
+                    24/7 Resilient Virtualization Cluster & Edge Topology
                 </h2>
                 <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.7; margin: 0 0 20px 0;">
                     Operating an internal dedicated hardware homelab utilizing Proxmox VE hypervisors, Debian/Ubuntu container instances, and encrypted Tailscale WireGuard mesh routing for isolated staging, microservices testing, and continuous deployment environments.
@@ -199,10 +219,10 @@ $activeSub = $activeSub ?? 'projects';
             </div>
 
         <?php elseif ($activeSub === 'hardware'): ?>
-            <!-- Retro Hardware Lab Section -->
+            <!-- Retro Hardware Archive Section -->
             <div style="margin-bottom: 24px;">
                 <p style="color: #94a3b8; font-size: 0.95rem; margin: 0 0 20px 0;">
-                    Hands-on hardware diagnostics, BIOS recovery, and preservation across modern and legacy computing architectures.
+                    Hands-on hardware diagnostics, BIOS recovery, and preservation across iconic computing architectures.
                 </p>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
                     <?php foreach ($hardwareNodes as $node): ?>

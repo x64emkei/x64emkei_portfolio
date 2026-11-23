@@ -1,15 +1,57 @@
+<?php
+$activeSub = $activeSub ?? 'information';
+
+$subTitles = [
+    'information' => 'Contact Information & Direct Channels',
+    'inquiry' => 'Send an Inquiry & Technical Consultation',
+    'social' => 'Verified Social Telemetry & Networks',
+];
+
+$pageSubtitle = $subTitles[$activeSub] ?? 'Contact & Communication';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact & Communication Telemetry // x64emkei.dev</title>
+    <title><?= e($pageSubtitle) ?> // x64emkei.dev</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
     <style>
-        .contact-container { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px 24px; }
+        .contact-container { max-width: 1100px; margin: 0 auto; padding: 30px 24px 80px 24px; }
+        .hud-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+        .hud-breadcrumb a { color: #00e5ff; text-decoration: none; }
+        .hud-breadcrumb a:hover { text-decoration: underline; }
+        .hud-breadcrumb .sep { color: #334155; }
+        .hud-breadcrumb .current { color: #f8fafc; font-weight: 600; }
+        .subnav-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); padding-bottom: 16px; }
+        .subnav-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(14, 18, 26, 0.6);
+            transition: all 0.2s;
+        }
+        .subnav-btn:hover, .subnav-btn.active {
+            color: #00e5ff;
+            border-color: #00e5ff;
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        }
         .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 32px; }
         @media (max-width: 768px) {
             .contact-grid { grid-template-columns: 1fr; }
@@ -21,28 +63,39 @@
     </style>
 </head>
 <body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
-    <header style="border-bottom: 1px solid rgba(0, 229, 255, 0.15); background: rgba(14, 18, 26, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
-            <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px;">
-                x64emkei<span style="color: #ff3366;">.</span>dev
-            </a>
-            <nav style="display: flex; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
-                <a href="<?= url('/') ?>" style="color: #94a3b8; text-decoration: none;">HOME</a>
-                <a href="<?= url('about') ?>" style="color: #94a3b8; text-decoration: none;">ABOUT</a>
-                <a href="<?= url('work') ?>" style="color: #94a3b8; text-decoration: none;">EXPLORE</a>
-                <a href="<?= url('journal') ?>" style="color: #94a3b8; text-decoration: none;">JOURNAL</a>
-                <a href="<?= url('contact') ?>" style="color: #00e5ff; text-decoration: none; font-weight: 600;">CONTACT</a>
-            </nav>
-        </div>
-    </header>
+
+    <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
+    <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
     <main class="contact-container">
-        <div style="margin-bottom: 36px; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 24px;">
+        <!-- Breadcrumbs -->
+        <nav class="hud-breadcrumb" aria-label="Breadcrumb">
+            <a href="<?= url('/') ?>">HOME</a>
+            <span class="sep">/</span>
+            <a href="<?= url('contact') ?>">CONTACT</a>
+            <span class="sep">/</span>
+            <span class="current"><?= strtoupper(e($activeSub)) ?></span>
+        </nav>
+
+        <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 24px;">
             <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">// SECURE TELEMETRY CHANNEL</div>
-            <h1 style="font-size: 2.2rem; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif; color: #f8fafc;">Initiate Communication</h1>
+            <h1 style="font-size: 2.2rem; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif; color: #f8fafc;"><?= e($pageSubtitle) ?></h1>
             <p style="color: #94a3b8; font-size: 1rem; margin: 0; max-width: 700px;">
                 Reach out for systems engineering, software consultation, homelab architecture, or collaborative development.
             </p>
+        </div>
+
+        <!-- Sub-Navigation Navigation Tabs (Child Pages) -->
+        <div class="subnav-tabs" role="tablist">
+            <a href="<?= url('contact/information') ?>" class="subnav-btn <?= $activeSub === 'information' ? 'active' : '' ?>" role="tab">
+                // CONTACT INFORMATION
+            </a>
+            <a href="<?= url('contact/inquiry') ?>" class="subnav-btn <?= $activeSub === 'inquiry' ? 'active' : '' ?>" role="tab">
+                // SEND AN INQUIRY
+            </a>
+            <a href="<?= url('contact/social') ?>" class="subnav-btn <?= $activeSub === 'social' ? 'active' : '' ?>" role="tab">
+                // SOCIAL LINKS
+            </a>
         </div>
 
         <?php if (has_flash('success')): ?>
@@ -57,66 +110,53 @@
             </div>
         <?php endif; ?>
 
-        <div class="contact-grid">
-            <!-- Left Info Panel -->
-            <div>
-                <div class="contact-card" style="margin-bottom: 24px;">
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; color: #00e5ff; font-size: 1.3rem; margin: 0 0 16px 0;">
-                        // DIRECT CHANNELS
-                    </h2>
-                    
-                    <div class="info-pill">
-                        <div>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">OPERATOR EMAIL</div>
-                            <div style="color: #f8fafc; font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; margin-top: 2px;">
-                                <a href="mailto:<?= e($profile['email'] ?? 'mordenes@acm.org') ?>" style="color: inherit; text-decoration: none;">
-                                    <?= e($profile['email'] ?? 'mordenes@acm.org') ?>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="info-pill">
-                        <div>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">OPERATIONAL LOCATION</div>
-                            <div style="color: #cbd5e1; font-size: 0.9rem; margin-top: 2px;">
-                                <?= e($profile['location'] ?? 'Laguna, Philippines') ?>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="info-pill">
-                        <div>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">STATUS READOUT</div>
-                            <div style="color: #34d399; font-size: 0.88rem; margin-top: 2px; font-family: 'JetBrains Mono', monospace;">
-                                ● <?= e($profile['availability_status'] ?? 'Available for Systems Engineering') ?>
-                            </div>
+        <?php if ($activeSub === 'information'): ?>
+            <!-- Contact Information Focused Layout -->
+            <div class="contact-card" style="max-width: 700px; margin: 0 auto;">
+                <h2 style="font-family: 'Space Grotesk', sans-serif; color: #00e5ff; font-size: 1.4rem; margin: 0 0 20px 0;">
+                    // DIRECT TELEMETRY CHANNELS
+                </h2>
+                
+                <div class="info-pill">
+                    <div>
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">OPERATOR EMAIL</div>
+                        <div style="color: #f8fafc; font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 1rem; margin-top: 4px;">
+                            <a href="mailto:<?= e($profile['email'] ?? 'mordenes@acm.org') ?>" style="color: inherit; text-decoration: none;">
+                                <?= e($profile['email'] ?? 'mordenes@acm.org') ?>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Social Telemetry Links -->
-                <?php if (!empty($socialLinks)): ?>
-                <div class="contact-card">
-                    <h3 style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.95rem; margin: 0 0 14px 0;">
-                        // VERIFIED SOCIAL TELEMETRY
-                    </h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <?php foreach ($socialLinks as $link): ?>
-                        <a href="<?= e($link['url']) ?>" target="_blank" rel="noopener" style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,229,255,0.15); padding: 10px 14px; border-radius: 4px; color: #f8fafc; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; transition: all 0.2s;">
-                            <span><?= e($link['platform_name']) ?></span>
-                            <span style="color: #00e5ff;">&rarr;</span>
-                        </a>
-                        <?php endforeach; ?>
+                <div class="info-pill">
+                    <div>
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">LOCATION & TIMEZONE</div>
+                        <div style="color: #cbd5e1; font-size: 0.95rem; margin-top: 4px;">
+                            <?= e($profile['location'] ?? 'Laguna, Philippines') ?> (UTC+8 / PHT)
+                        </div>
                     </div>
                 </div>
-                <?php endif; ?>
+
+                <div class="info-pill">
+                    <div>
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">CURRENT OPERATIONAL AVAILABILITY</div>
+                        <div style="color: #34d399; font-size: 0.9rem; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">
+                            ● <?= e($profile['availability_status'] ?? 'Available for Systems & Web Engineering') ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="<?= url('contact/inquiry') ?>" class="subnav-btn" style="color: #00e5ff; border-color: #00e5ff;">Send an Inquiry Form &rarr;</a>
+                    <a href="<?= url('contact/social') ?>" class="subnav-btn">View Social Links &rarr;</a>
+                </div>
             </div>
 
-            <!-- Right Transmission Form -->
-            <div class="contact-card">
-                <h2 style="font-family: 'Space Grotesk', sans-serif; color: #00e5ff; font-size: 1.3rem; margin: 0 0 16px 0;">
-                    // DISPATCH INQUIRY
+        <?php elseif ($activeSub === 'inquiry'): ?>
+            <!-- Send an Inquiry Form Focused Layout -->
+            <div class="contact-card" style="max-width: 800px; margin: 0 auto;">
+                <h2 style="font-family: 'Space Grotesk', sans-serif; color: #00e5ff; font-size: 1.4rem; margin: 0 0 16px 0;">
+                    // DISPATCH SECURE TRANSMISSION
                 </h2>
                 <form method="POST" action="<?= url('contact') ?>">
                     <?= csrf_field() ?>
@@ -145,7 +185,31 @@
                     </button>
                 </form>
             </div>
-        </div>
+
+        <?php elseif ($activeSub === 'social'): ?>
+            <!-- Social Links Focused Layout -->
+            <div class="contact-card" style="max-width: 700px; margin: 0 auto;">
+                <h2 style="font-family: 'Space Grotesk', sans-serif; color: #00e5ff; font-size: 1.4rem; margin: 0 0 16px 0;">
+                    // VERIFIED SOCIAL TELEMETRY & NETWORKS
+                </h2>
+                <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 24px;">
+                    Connect directly through verified developer profiles, professional networks, and open-source code repositories.
+                </p>
+
+                <?php if (empty($socialLinks)): ?>
+                    <p style="color: #64748b;">// NO SOCIAL TELEMETRY LINKS REGISTERED</p>
+                <?php else: ?>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <?php foreach ($socialLinks as $link): ?>
+                        <a href="<?= e($link['url']) ?>" target="_blank" rel="noopener" style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,229,255,0.15); padding: 14px 18px; border-radius: 4px; color: #f8fafc; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; transition: all 0.2s;">
+                            <span style="font-weight: 600;"><?= e($link['platform_name']) ?></span>
+                            <span style="color: #00e5ff;">[OPEN LINK &nearr;]</span>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </main>
 
     <footer style="border-top: 1px solid rgba(0, 229, 255, 0.15); padding: 30px 24px; text-align: center; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">

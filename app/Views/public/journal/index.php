@@ -130,23 +130,38 @@
 </head>
 <body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
 
-    <!-- Top Primary Navigation Bar -->
-    <header style="border-bottom: 1px solid rgba(0, 229, 255, 0.15); background: rgba(14, 18, 26, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
-            <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px;">
-                x64emkei<span style="color: #ff3366;">.</span>dev
-            </a>
-            <nav style="display: flex; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
-                <a href="<?= url('/') ?>" style="color: #94a3b8; text-decoration: none;">HOME</a>
-                <a href="<?= url('about') ?>" style="color: #94a3b8; text-decoration: none;">ABOUT</a>
-                <a href="<?= url('work') ?>" style="color: #94a3b8; text-decoration: none;">WORK</a>
-                <a href="<?= url('journal') ?>" style="color: #00e5ff; text-decoration: none; font-weight: 600;">JOURNAL</a>
-                <a href="<?= url('contact') ?>" style="color: #94a3b8; text-decoration: none;">CONTACT</a>
-            </nav>
-        </div>
-    </header>
+    <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
+    <?php require dirname(__DIR__) . '/partials/header_nav.php'; ?>
 
     <div class="journal-container">
+        <!-- Breadcrumbs -->
+        <nav style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #64748b; margin-bottom: 24px;" aria-label="Breadcrumb">
+            <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none;">HOME</a>
+            <span style="color: #334155;">/</span>
+            <a href="<?= url('journal') ?>" style="color: #00e5ff; text-decoration: none;">JOURNAL</a>
+            <span style="color: #334155;">/</span>
+            <span style="color: #f8fafc; font-weight: 600;"><?= strtoupper(e($activeSection ?? 'ALL TRANSMISSIONS')) ?></span>
+        </nav>
+
+        <!-- Sub-Navigation Navigation Tabs (Child Pages) -->
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); padding-bottom: 16px;" role="tablist">
+            <a href="<?= url('journal/blog') ?>" class="subnav-btn <?= ($activeSection ?? '') === 'blog' || empty($activeSection) ? 'active' : '' ?>" style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; padding: 8px 16px; border-radius: 4px; text-decoration: none; color: <?= ($activeSection ?? '') === 'blog' || empty($activeSection) ? '#00e5ff' : '#94a3b8' ?>; border: 1px solid <?= ($activeSection ?? '') === 'blog' || empty($activeSection) ? '#00e5ff' : 'rgba(255,255,255,0.1)' ?>; background: <?= ($activeSection ?? '') === 'blog' || empty($activeSection) ? 'rgba(0,229,255,0.1)' : 'rgba(14,18,26,0.6)' ?>;">
+                // BLOG
+            </a>
+            <a href="<?= url('journal/tutorials') ?>" class="subnav-btn <?= ($activeSection ?? '') === 'tutorials' ? 'active' : '' ?>" style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; padding: 8px 16px; border-radius: 4px; text-decoration: none; color: <?= ($activeSection ?? '') === 'tutorials' ? '#00e5ff' : '#94a3b8' ?>; border: 1px solid <?= ($activeSection ?? '') === 'tutorials' ? '#00e5ff' : 'rgba(255,255,255,0.1)' ?>; background: <?= ($activeSection ?? '') === 'tutorials' ? 'rgba(0,229,255,0.1)' : 'rgba(14,18,26,0.6)' ?>;">
+                // TUTORIALS & GUIDES
+            </a>
+            <a href="<?= url('journal/technical-notes') ?>" class="subnav-btn <?= ($activeSection ?? '') === 'technical-notes' ? 'active' : '' ?>" style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; padding: 8px 16px; border-radius: 4px; text-decoration: none; color: <?= ($activeSection ?? '') === 'technical-notes' ? '#00e5ff' : '#94a3b8' ?>; border: 1px solid <?= ($activeSection ?? '') === 'technical-notes' ? '#00e5ff' : 'rgba(255,255,255,0.1)' ?>; background: <?= ($activeSection ?? '') === 'technical-notes' ? 'rgba(0,229,255,0.1)' : 'rgba(14,18,26,0.6)' ?>;">
+                // TECHNICAL NOTES
+            </a>
+            <a href="<?= url('journal/research') ?>" class="subnav-btn <?= ($activeSection ?? '') === 'research' ? 'active' : '' ?>" style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; padding: 8px 16px; border-radius: 4px; text-decoration: none; color: <?= ($activeSection ?? '') === 'research' ? '#00e5ff' : '#94a3b8' ?>; border: 1px solid <?= ($activeSection ?? '') === 'research' ? '#00e5ff' : 'rgba(255,255,255,0.1)' ?>; background: <?= ($activeSection ?? '') === 'research' ? 'rgba(0,229,255,0.1)' : 'rgba(14,18,26,0.6)' ?>;">
+                // RESEARCH & INSIGHTS
+            </a>
+            <a href="<?= url('journal/ai-manifesto') ?>" class="subnav-btn <?= ($activeSection ?? '') === 'ai-manifesto' ? 'active' : '' ?>" style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; padding: 8px 16px; border-radius: 4px; text-decoration: none; color: #ff3366; border: 1px solid rgba(255,51,102,0.4); background: rgba(255,51,102,0.1);">
+                // AI MANIFESTO
+            </a>
+        </div>
+
         <!-- Hero Header -->
         <div class="journal-hero">
             <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.82rem; margin-bottom: 8px;">

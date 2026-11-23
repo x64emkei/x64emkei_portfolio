@@ -353,23 +353,20 @@ $currentUser = AuthService::user();
             <span>Systems Telemetry &bull; v2.0-PROD</span>
         </div>
         <ul class="admin-nav">
-            <li><a href="<?= e(url('admin')) ?>" class="<?= (($_SERVER['REQUEST_URI'] ?? '') === url('admin') || str_contains($_SERVER['REQUEST_URI'] ?? '', 'dashboard')) ? 'active' : '' ?>"><span>// DASHBOARD</span></a></li>
-            <li><a href="<?= e(url('admin/articles')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'articles') ? 'active' : '' ?>"><span>// JOURNAL ARTICLES</span></a></li>
-            <li><a href="<?= e(url('admin/sections')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'sections') ? 'active' : '' ?>"><span>// SECTIONS ARCH</span></a></li>
-            <li><a href="<?= e(url('admin/profile')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'profile') ? 'active' : '' ?>"><span>// PROFILE</span></a></li>
-            <li><a href="<?= e(url('admin/projects')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'projects') ? 'active' : '' ?>"><span>// PROJECTS MATRIX</span></a></li>
-            <li><a href="<?= e(url('admin/skills')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'skills') ? 'active' : '' ?>"><span>// SKILLS</span></a></li>
-            <li><a href="<?= e(url('admin/experience')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'experience') ? 'active' : '' ?>"><span>// EXPERIENCE</span></a></li>
-            <li><a href="<?= e(url('admin/education')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'education') ? 'active' : '' ?>"><span>// EDUCATION</span></a></li>
-            <li><a href="<?= e(url('admin/achievements')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'achievements') ? 'active' : '' ?>"><span>// ACHIEVEMENTS</span></a></li>
-            <li><a href="<?= e(url('admin/services')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'services') ? 'active' : '' ?>"><span>// SERVICES</span></a></li>
-            <li><a href="<?= e(url('admin/hardware')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'hardware') ? 'active' : '' ?>"><span>// LAB ARCHIVE</span></a></li>
-            <li><a href="<?= e(url('admin/certifications')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'certifications') ? 'active' : '' ?>"><span>// CERTS</span></a></li>
-            <li><a href="<?= e(url('admin/social')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'social') ? 'active' : '' ?>"><span>// SOCIAL LINKS</span></a></li>
-            <li><a href="<?= e(url('admin/media')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'media') ? 'active' : '' ?>"><span>// MEDIA MANAGER</span></a></li>
-            <li><a href="<?= e(url('admin/messages')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'messages') ? 'active' : '' ?>"><span>// MESSAGES</span></a></li>
-            <li><a href="<?= e(url('admin/users')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'users') ? 'active' : '' ?>"><span>// OPERATORS & RBAC</span></a></li>
-            <li><a href="<?= e(url('admin/settings')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'settings') ? 'active' : '' ?>"><span>// CORE SETTINGS</span></a></li>
+            <li><a href="<?= e(url('admin/dashboard')) ?>" class="<?= (($_SERVER['REQUEST_URI'] ?? '') === url('admin') || str_contains($_SERVER['REQUEST_URI'] ?? '', 'dashboard')) ? 'active' : '' ?>"><span>// DASHBOARD</span></a></li>
+            <li><a href="<?= e(url('admin/content')) ?>" class="<?= (($_SERVER['REQUEST_URI'] ?? '') === url('admin/content')) ? 'active' : '' ?>"><span>// CONTENT MANAGEMENT</span></a></li>
+            <li><a href="<?= e(url('admin/media')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'media') ? 'active' : '' ?>"><span>// MEDIA LIBRARY</span></a></li>
+            <li><a href="<?= e(url('admin/settings')) ?>" class="<?= (($_SERVER['REQUEST_URI'] ?? '') === url('admin/settings')) ? 'active' : '' ?>"><span>// WEBSITE SETTINGS</span></a></li>
+            <li><a href="<?= e(url('admin/settings/navigation')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'settings/navigation') ? 'active' : '' ?>" style="padding-left: 28px; font-size: 0.8rem; color: #94a3b8;"><span>&bull; NAVIGATION ARCH</span></a></li>
+            <li><a href="<?= e(url('admin/system')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'system') ? 'active' : '' ?>"><span>// SYSTEM MANAGEMENT</span></a></li>
+
+            <li style="margin-top: 14px; padding: 6px 14px 2px 14px; font-size: 0.68rem; color: #64748b; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">// DIRECT EDITORS</li>
+            <li><a href="<?= e(url('admin/articles')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'articles') ? 'active' : '' ?>"><span>&rsaquo; Journal Articles</span></a></li>
+            <li><a href="<?= e(url('admin/projects')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'projects') ? 'active' : '' ?>"><span>&rsaquo; Projects Matrix</span></a></li>
+            <li><a href="<?= e(url('admin/hardware')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'hardware') ? 'active' : '' ?>"><span>&rsaquo; Lab Archive</span></a></li>
+            <li><a href="<?= e(url('admin/messages')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'messages') ? 'active' : '' ?>"><span>&rsaquo; Messages</span></a></li>
+            <li><a href="<?= e(url('admin/users')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'users') ? 'active' : '' ?>"><span>&rsaquo; Operators & RBAC</span></a></li>
+
             <li style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
                 <a href="<?= e(url('/')) ?>" target="_blank" style="color: #38bdf8;"><span>&nearr; PUBLIC PORTFOLIO</span></a>
             </li>

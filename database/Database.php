@@ -10,6 +10,7 @@ use RuntimeException;
 final class Database
 {
     private static ?PDO $instance = null;
+    private static bool $connectionFailed = false;
 
     private function __construct() {}
 
@@ -19,9 +20,14 @@ final class Database
             return self::$instance;
         }
 
+        if (self::$connectionFailed && empty($overrideConfig)) {
+            throw new RuntimeException('Database connection previously failed in this cycle.');
+        }
+
         $config = require dirname(__DIR__) . '/config/database.php';
         if (!empty($overrideConfig)) {
             $config = array_merge($config, $overrideConfig);
+            self::$connectionFailed = false;
         }
 
         $hostsToTry = [$config['host']];
@@ -31,12 +37,17 @@ final class Database
             $hostsToTry[] = str_replace('epizy.com', 'infinityfree.com', $config['host']);
         }
 
+        $options = $config['options'] ?? [];
+        if (!isset($options[PDO::ATTR_TIMEOUT])) {
+            $options[PDO::ATTR_TIMEOUT] = 3;
+        }
+
         $lastException = null;
         foreach ($hostsToTry as $host) {
             try {
                 if ($config['driver'] === 'sqlite') {
                     $dsn = 'sqlite:' . $config['sqlite_path'];
-                    $pdo = new PDO($dsn, null, null, $config['options']);
+                    $pdo = new PDO($dsn, null, null, $options);
                     $pdo->exec('PRAGMA foreign_keys = ON;');
                 } else {
                     $dsn = sprintf(
@@ -46,11 +57,12 @@ final class Database
                         $config['database'],
                         $config['charset']
                     );
-                    $pdo = new PDO($dsn, $config['username'], $config['password'], $config['options']);
+                    $pdo = new PDO($dsn, $config['username'], $config['password'], $options);
                 }
 
                 if (empty($overrideConfig)) {
                     self::$instance = $pdo;
+                    self::$connectionFailed = false;
                 }
                 return $pdo;
             } catch (PDOException $e) {
@@ -67,11 +79,13 @@ final class Database
             }
         }
 
+        self::$connectionFailed = true;
         throw new RuntimeException('Database connection failed. Please verify database service status and credentials.');
     }
 
     public static function setConnection(?PDO $pdo): void
     {
         self::$instance = $pdo;
+        self::$connectionFailed = false;
     }
 }

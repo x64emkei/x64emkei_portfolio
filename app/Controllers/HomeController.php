@@ -93,6 +93,31 @@ class HomeController
         echo $renderer->render('public.about', $data);
     }
 
+    public function aboutBiography(): void
+    {
+        $this->about('biography');
+    }
+
+    public function aboutEducation(): void
+    {
+        $this->about('education');
+    }
+
+    public function aboutSkills(): void
+    {
+        $this->about('skills');
+    }
+
+    public function aboutExperience(): void
+    {
+        $this->about('experience');
+    }
+
+    public function aboutCertifications(): void
+    {
+        $this->about('certifications');
+    }
+
     public function work(?string $sub = null): void
     {
         $data = $this->getCommonData();
@@ -100,6 +125,26 @@ class HomeController
         $data['activeSub'] = $sub ?? 'projects';
         $renderer = new ViewRenderer();
         echo $renderer->render('public.work', $data);
+    }
+
+    public function workProjects(): void
+    {
+        $this->work('projects');
+    }
+
+    public function workServices(): void
+    {
+        $this->work('services');
+    }
+
+    public function workLaboratory(): void
+    {
+        $this->work('laboratory');
+    }
+
+    public function workHardware(): void
+    {
+        $this->work('hardware');
     }
 
     public function workOrProject(string $slug): void
@@ -113,12 +158,28 @@ class HomeController
         $this->project($slug);
     }
 
-    public function contact(): void
+    public function contact(?string $sub = null): void
     {
         $data = $this->getCommonData();
         $data['activeNav'] = 'contact';
+        $data['activeSub'] = $sub ?? 'information';
         $renderer = new ViewRenderer();
         echo $renderer->render('public.contact', $data);
+    }
+
+    public function contactInformation(): void
+    {
+        $this->contact('information');
+    }
+
+    public function contactInquiry(): void
+    {
+        $this->contact('inquiry');
+    }
+
+    public function contactSocial(): void
+    {
+        $this->contact('social');
     }
 
     public function project(string $slug): void

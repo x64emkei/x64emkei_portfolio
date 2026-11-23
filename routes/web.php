@@ -36,28 +36,47 @@ $router = new Router();
 // ==========================================
 // 1. PUBLIC PRIMARY & CHILD ROUTES
 // ==========================================
+
+// 1. HOME
 $router->get('/', [HomeController::class, 'index']);
 
-// About & Child Destinations
+// 2. ABOUT & CHILD ROUTES
 $router->get('about', [HomeController::class, 'about']);
+$router->get('about/biography', [HomeController::class, 'aboutBiography']);
+$router->get('about/education', [HomeController::class, 'aboutEducation']);
+$router->get('about/skills', [HomeController::class, 'aboutSkills']);
+$router->get('about/experience', [HomeController::class, 'aboutExperience']);
+$router->get('about/certifications', [HomeController::class, 'aboutCertifications']);
 $router->get('about/{sub}', [HomeController::class, 'about']);
 
-// Work / Explore & Child Destinations
+// 3. WORK & CHILD ROUTES
 $router->get('work', [HomeController::class, 'work']);
+$router->get('work/projects', [HomeController::class, 'workProjects']);
+$router->get('work/services', [HomeController::class, 'workServices']);
+$router->get('work/laboratory', [HomeController::class, 'workLaboratory']);
+$router->get('work/hardware', [HomeController::class, 'workHardware']);
 $router->get('work/{slug}', [HomeController::class, 'workOrProject']);
 $router->get('explore', [HomeController::class, 'work']);
 $router->get('explore/{slug}', [HomeController::class, 'workOrProject']);
 $router->get('project/{slug}', [HomeController::class, 'project']);
 
-// Journal & Publishing Platform
+// 4. JOURNAL & CHILD ROUTES
 $router->get('journal', [JournalController::class, 'index']);
-$router->get('journal/manifesto', [JournalController::class, 'manifesto']);
+$router->get('journal/blog', [JournalController::class, 'blog']);
+$router->get('journal/tutorials', [JournalController::class, 'tutorials']);
+$router->get('journal/technical-notes', [JournalController::class, 'technicalNotes']);
+$router->get('journal/research', [JournalController::class, 'research']);
 $router->get('journal/ai-manifesto', [JournalController::class, 'manifesto']);
+$router->get('journal/manifesto', [JournalController::class, 'manifesto']);
 $router->get('journal/category/{slug}', [JournalController::class, 'category']);
 $router->get('journal/tag/{slug}', [JournalController::class, 'tag']);
 $router->get('journal/{slug}', [JournalController::class, 'show']);
 
+// 5. CONTACT & CHILD ROUTES
 $router->get('contact', [HomeController::class, 'contact']);
+$router->get('contact/information', [HomeController::class, 'contactInformation']);
+$router->get('contact/inquiry', [HomeController::class, 'contactInquiry']);
+$router->get('contact/social', [HomeController::class, 'contactSocial']);
 $router->post('contact', [ContactController::class, 'submit'], [CsrfMiddleware::class]);
 
 $router->get('health', [ApiController::class, 'health']);
@@ -82,6 +101,8 @@ $router->post('admin/logout', [AuthController::class, 'logout'], [CsrfMiddleware
 // ==========================================
 $router->get('admin', [DashboardController::class, 'index'], [AuthMiddleware::class]);
 $router->get('admin/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
+$router->get('admin/content', [DashboardController::class, 'content'], [AuthMiddleware::class]);
+$router->get('admin/system', [DashboardController::class, 'system'], [AuthMiddleware::class]);
 $router->get('admin/system-health', [DashboardController::class, 'systemHealth'], [AuthMiddleware::class]);
 $router->get('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class]);
 $router->post('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class, CsrfMiddleware::class]);
@@ -172,5 +193,8 @@ $router->post('admin/messages/{id}/delete', [MessagesController::class, 'delete'
 // System & SEO Settings
 $router->get('admin/settings', [SettingsController::class, 'index'], [AuthMiddleware::class]);
 $router->post('admin/settings', [SettingsController::class, 'update'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->get('admin/settings/navigation', [SettingsController::class, 'navigation'], [AuthMiddleware::class]);
+$router->post('admin/settings/navigation', [SettingsController::class, 'updateNavigation'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->post('admin/settings/navigation/reset', [SettingsController::class, 'resetNavigation'], [AuthMiddleware::class, CsrfMiddleware::class]);
 
 return $router;

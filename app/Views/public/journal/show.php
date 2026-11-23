@@ -105,22 +105,18 @@
 </head>
 <body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
 
-    <header style="border-bottom: 1px solid rgba(0, 229, 255, 0.15); background: rgba(14, 18, 26, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
-            <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px;">
-                x64emkei<span style="color: #ff3366;">.</span>dev
-            </a>
-            <nav style="display: flex; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
-                <a href="<?= url('/') ?>" style="color: #94a3b8; text-decoration: none;">HOME</a>
-                <a href="<?= url('about') ?>" style="color: #94a3b8; text-decoration: none;">ABOUT</a>
-                <a href="<?= url('work') ?>" style="color: #94a3b8; text-decoration: none;">WORK</a>
-                <a href="<?= url('journal') ?>" style="color: #00e5ff; text-decoration: none; font-weight: 600;">JOURNAL</a>
-                <a href="<?= url('contact') ?>" style="color: #94a3b8; text-decoration: none;">CONTACT</a>
-            </nav>
-        </div>
-    </header>
+    <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
+    <?php require dirname(__DIR__) . '/partials/header_nav.php'; ?>
 
     <main class="reader-container">
+        <!-- Breadcrumbs -->
+        <nav style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #64748b; margin-bottom: 24px;" aria-label="Breadcrumb">
+            <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none;">HOME</a>
+            <span style="color: #334155;">/</span>
+            <a href="<?= url('journal') ?>" style="color: #00e5ff; text-decoration: none;">JOURNAL</a>
+            <span style="color: #334155;">/</span>
+            <span style="color: #f8fafc; font-weight: 600;"><?= strtoupper(e($article['title'])) ?></span>
+        </nav>
         <div style="margin-bottom: 24px;">
             <a href="<?= url('journal') ?>" style="color: #64748b; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
                 &larr; BACK TO TRANSMISSION LOGS

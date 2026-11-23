@@ -105,6 +105,78 @@ class DashboardController
         json_response($health, ($health['status'] === 'OPTIMAL') ? 200 : 503);
     }
 
+    public function content(): void
+    {
+        $counts = [
+            'profile' => \App\Models\Profile::get() ? 1 : 0,
+            'education' => \App\Models\Education::count(),
+            'skills' => \App\Models\Skill::count(),
+            'experience' => \App\Models\Experience::count(),
+            'certifications' => \App\Models\Certification::count(),
+            'achievements' => \App\Models\Achievement::count(),
+            'projects' => \App\Models\Project::count(),
+            'services' => \App\Models\Service::count(),
+            'hardware' => \App\Models\HardwareNode::count(),
+            'articles' => \App\Models\Article::count(),
+            'categories' => \App\Models\ArticleCategory::count(),
+            'messages' => \App\Models\Message::count(),
+            'social' => \App\Models\SocialLink::count(),
+            'sections' => \App\Models\PortfolioSection::count(),
+        ];
+
+        $renderer = new ViewRenderer();
+        echo $renderer->render('admin.content', [
+            'counts' => $counts,
+            'pageTitle' => 'Content Management Architecture'
+        ], 'admin.layout');
+    }
+
+    public function system(): void
+    {
+        $dbStatus = 'OK';
+        $dbDetails = [];
+        try {
+            $pdo = \Database\Database::getConnection();
+            $dbName = $pdo->query('SELECT DATABASE()')->fetchColumn();
+            $tables = $pdo->query('SHOW TABLES')->fetchAll(\PDO::FETCH_COLUMN);
+            $dbDetails = [
+                'status' => 'CONNECTED',
+                'database' => $dbName,
+                'table_count' => count($tables),
+                'tables' => $tables,
+            ];
+        } catch (\Throwable $e) {
+            $dbStatus = 'ERROR';
+            $dbDetails = [
+                'status' => 'DISCONNECTED',
+                'message' => $e->getMessage()
+            ];
+        }
+
+        $extensions = ['pdo', 'pdo_mysql', 'json', 'mbstring', 'openssl', 'session', 'fileinfo'];
+        $extStatus = [];
+        foreach ($extensions as $ext) {
+            $extStatus[$ext] = extension_loaded($ext);
+        }
+
+        $systemInfo = [
+            'php_version' => PHP_VERSION,
+            'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'PHP Server',
+            'database' => $dbDetails,
+            'extensions' => $extStatus,
+            'memory_limit' => ini_get('memory_limit'),
+            'max_execution_time' => ini_get('max_execution_time'),
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'post_max_size' => ini_get('post_max_size'),
+        ];
+
+        $renderer = new ViewRenderer();
+        echo $renderer->render('admin.system', [
+            'systemInfo' => $systemInfo,
+            'pageTitle' => 'System Management & Diagnostics'
+        ], 'admin.layout');
+    }
+
     public function syncDatabase(): void
     {
         try {

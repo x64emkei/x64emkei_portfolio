@@ -51,6 +51,9 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
     <!-- Sidebar Backdrop for Mobile -->
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
+    <!-- Master HUD Primary Navigation (Desktop & Mobile) -->
+    <?php require __DIR__ . '/partials/header_nav.php'; ?>
+
     <!-- Left Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
         <!-- Sidebar Brand / Telemetry -->
@@ -71,8 +74,9 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
 
         <nav class="sidebar-nav" aria-label="Main Navigation">
             <ul class="nav-list">
+                <!-- 1. HOME -->
                 <li class="nav-item">
-                    <a href="#home" class="nav-link active" data-section="home">
+                    <a href="<?= url('/') ?>" class="nav-link active" data-section="home">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                             <polyline points="9 22 9 12 15 12 15 22"/>
@@ -80,44 +84,91 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                         <span>Home</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link" data-section="about">
+
+                <!-- 2. ABOUT -->
+                <li class="nav-item has-subitems">
+                    <a href="<?= url('about') ?>" class="nav-link" data-section="about">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="8" r="5"/>
                             <path d="M20 21a8 8 0 0 0-16 0"/>
                         </svg>
                         <span>About</span>
                     </a>
+                    <ul class="sidebar-sub-nav">
+                        <li><a href="<?= url('about/biography') ?>">Biography</a></li>
+                        <li><a href="<?= url('about/education') ?>">Education</a></li>
+                        <li><a href="<?= url('about/skills') ?>">Skills</a></li>
+                        <li><a href="<?= url('about/experience') ?>">Experience</a></li>
+                        <li><a href="<?= url('about/certifications') ?>">Certifications</a></li>
+                    </ul>
                 </li>
-                <?php if ($secHelper->isVisible('services', $services)): ?>
-                <li class="nav-item">
-                    <a href="#services" class="nav-link" data-section="services">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect width="18" height="18" x="3" y="3" rx="2"/>
-                            <path d="m9 8 6 4-6 4Z"/>
-                        </svg>
-                        <span>Services</span>
-                    </a>
-                </li>
-                <?php endif; ?>
-                <?php if ($secHelper->isVisible('projects', $projects)): ?>
-                <li class="nav-item">
-                    <a href="#portfolio" class="nav-link" data-section="portfolio">
+
+                <!-- 3. WORK -->
+                <li class="nav-item has-subitems">
+                    <a href="<?= url('work') ?>" class="nav-link" data-section="work">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
                             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                         </svg>
-                        <span>Portfolio</span>
+                        <span>Work</span>
                     </a>
+                    <ul class="sidebar-sub-nav">
+                        <li><a href="<?= url('work/projects') ?>">Portfolio & Projects</a></li>
+                        <li><a href="<?= url('work/services') ?>">Services</a></li>
+                        <li><a href="<?= url('work/laboratory') ?>">Laboratory</a></li>
+                        <li><a href="<?= url('work/hardware') ?>">Hardware Archive</a></li>
+                    </ul>
                 </li>
-                <?php endif; ?>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link" data-section="contact">
+
+                <!-- 4. JOURNAL -->
+                <li class="nav-item has-subitems">
+                    <a href="<?= url('journal') ?>" class="nav-link" data-section="journal">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                            <path d="M6 6h10M6 10h10"/>
+                        </svg>
+                        <span>Journal</span>
+                    </a>
+                    <ul class="sidebar-sub-nav">
+                        <li><a href="<?= url('journal/blog') ?>">Blog</a></li>
+                        <li><a href="<?= url('journal/tutorials') ?>">Tutorials & Guides</a></li>
+                        <li><a href="<?= url('journal/technical-notes') ?>">Technical Notes</a></li>
+                        <li><a href="<?= url('journal/research') ?>">Research & Insights</a></li>
+                        <li><a href="<?= url('journal/ai-manifesto') ?>">AI Manifesto</a></li>
+                    </ul>
+                </li>
+
+                <!-- 5. CONTACT -->
+                <li class="nav-item has-subitems">
+                    <a href="<?= url('contact') ?>" class="nav-link" data-section="contact">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                         </svg>
                         <span>Contact</span>
                     </a>
+                    <ul class="sidebar-sub-nav">
+                        <li><a href="<?= url('contact/information') ?>">Contact Information</a></li>
+                        <li><a href="<?= url('contact/inquiry') ?>">Send an Inquiry</a></li>
+                        <li><a href="<?= url('contact/social') ?>">Social Links</a></li>
+                    </ul>
+                </li>
+
+                <!-- 6. ADMIN (PROTECTED) -->
+                <li class="nav-item has-subitems">
+                    <a href="<?= url('admin/dashboard') ?>" class="nav-link" data-section="admin">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2"/>
+                            <path d="M9 17V7h6v10"/>
+                        </svg>
+                        <span>Admin</span>
+                    </a>
+                    <ul class="sidebar-sub-nav">
+                        <li><a href="<?= url('admin/dashboard') ?>">Dashboard</a></li>
+                        <li><a href="<?= url('admin/content') ?>">Content Management</a></li>
+                        <li><a href="<?= url('admin/media') ?>">Media Library</a></li>
+                        <li><a href="<?= url('admin/settings') ?>">Website Settings</a></li>
+                        <li><a href="<?= url('admin/system') ?>">System Management</a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>

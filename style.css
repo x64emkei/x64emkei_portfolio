@@ -6502,4 +6502,9 @@ body.light-theme .hardware-logs-card {
 }
 
 
-
+
+/* SIDEBAR SUB NAVIGATION */
+.sidebar-sub-nav { list-style: none; padding: 4px 0 8px 36px; margin: 0; }
+.sidebar-sub-nav li a { font-size: 0.74rem; color: #64748b; text-decoration: none; display: block; padding: 3px 0; transition: color 0.15s ease; }
+.sidebar-sub-nav li a:hover { color: #00e5ff; }
+

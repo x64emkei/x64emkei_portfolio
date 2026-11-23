@@ -43,4 +43,37 @@ class SettingsController
         flash('success', 'Core settings synchronized.');
         redirect('admin/settings');
     }
+
+    public function navigation(): void
+    {
+        $navigation = \App\Services\NavigationService::getAll();
+        $renderer = new ViewRenderer();
+        echo $renderer->render('admin.settings.navigation', [
+            'navigation' => $navigation,
+            'pageTitle' => 'Primary Navigation Manager'
+        ], 'admin.layout');
+    }
+
+    public function updateNavigation(): void
+    {
+        $navData = $_POST['nav'] ?? [];
+        if (!is_array($navData)) {
+            flash('error', 'Invalid navigation payload submitted.');
+            redirect('admin/settings/navigation');
+            return;
+        }
+
+        \App\Services\NavigationService::save($navData);
+        ActivityLog::record(AuthService::id(), 'NAV_UPDATE', 'Updated website primary and child navigation settings');
+        flash('success', 'Navigation structure and labels updated successfully.');
+        redirect('admin/settings/navigation');
+    }
+
+    public function resetNavigation(): void
+    {
+        \App\Services\NavigationService::resetDefaults();
+        ActivityLog::record(AuthService::id(), 'NAV_RESET', 'Restored default 6-category navigation architecture');
+        flash('success', 'Default 6-category navigation architecture restored.');
+        redirect('admin/settings/navigation');
+    }
 }
