@@ -57,7 +57,71 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link');
     const navTriggers = document.querySelectorAll('.nav-trigger');
     const colorSweepCurtain = document.getElementById('colorSweepCurtain');
+    const pixelDissolveCanvas = document.getElementById('pixelDissolveCanvas');
     const sweepText = document.getElementById('sweepText');
+
+    // ----------------------------------------------------
+    // PIXEL DISSOLVE EFFECT ENGINE
+    // ----------------------------------------------------
+    let pixelAnimFrame = null;
+    const triggerPixelDissolve = (duration = 750, isExiting = false) => {
+        if (!pixelDissolveCanvas) return;
+        const ctx = pixelDissolveCanvas.getContext('2d');
+        if (!ctx) return;
+
+        const rect = pixelDissolveCanvas.getBoundingClientRect();
+        pixelDissolveCanvas.width = rect.width;
+        pixelDissolveCanvas.height = rect.height;
+
+        const pixelSize = Math.max(16, Math.floor(rect.width / 45));
+        const cols = Math.ceil(rect.width / pixelSize);
+        const rows = Math.ceil(rect.height / pixelSize);
+        const total = cols * rows;
+
+        // Shuffle pixel indices for pseudo-random organic matrix dissolve
+        const indices = [];
+        for (let i = 0; i < total; i++) indices.push(i);
+        for (let i = indices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+
+        const startTime = performance.now();
+        if (pixelAnimFrame) cancelAnimationFrame(pixelAnimFrame);
+
+        const renderPixels = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(1, elapsed / duration);
+            ctx.clearRect(0, 0, rect.width, rect.height);
+
+            const countToDraw = isExiting 
+                ? Math.floor((1 - progress) * total) 
+                : Math.floor(progress * total);
+
+            ctx.fillStyle = '#080A0E';
+            for (let i = 0; i < countToDraw; i++) {
+                const idx = indices[i];
+                const x = (idx % cols) * pixelSize;
+                const y = Math.floor(idx / cols) * pixelSize;
+                ctx.fillRect(x, y, pixelSize, pixelSize);
+
+                // Add subtle cyan & neon edge glints on randomly dissolved pixels
+                if (idx % 7 === 0) {
+                    ctx.strokeStyle = 'rgba(0, 229, 255, 0.4)';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(x, y, pixelSize, pixelSize);
+                }
+            }
+
+            if (progress < 1) {
+                pixelAnimFrame = requestAnimationFrame(renderPixels);
+            } else {
+                ctx.clearRect(0, 0, rect.width, rect.height);
+            }
+        };
+
+        pixelAnimFrame = requestAnimationFrame(renderPixels);
+    };
 
     let isProgrammaticScroll = false;
     let isTransitioning = false;
@@ -97,14 +161,16 @@ document.addEventListener('DOMContentLoaded', () => {
         isTransitioning = true;
         colorSweepCurtain.classList.remove('sweep-in', 'sweep-out');
         colorSweepCurtain.classList.add('animating', 'sweep-in');
+        triggerPixelDissolve(340, false);
 
         // Midpoint: screen is fully covered by the color sweep from the right
         setTimeout(() => {
             if (onMidpoint) onMidpoint();
 
-            // Continue sweep moving out to the left
+            // Continue sweep moving out to the left with pixel dissolve reveal
             colorSweepCurtain.classList.remove('sweep-in');
             colorSweepCurtain.classList.add('sweep-out');
+            triggerPixelDissolve(420, true);
 
             setTimeout(() => {
                 colorSweepCurtain.classList.remove('animating', 'sweep-out');

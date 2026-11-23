@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="primary_domain">// PRIMARY HOST DOMAIN</label>
-                <input type="text" id="primary_domain" name="primary_domain" class="form-control" value="<?= e($settings['primary_domain'] ?? 'x64emkei.dpdns.org') ?>" required>
+                <input type="text" id="primary_domain" name="primary_domain" class="form-control" value="<?= e($settings['primary_domain'] ?? 'welcome.x64emkei.dpdns.org') ?>" required>
             </div>
         </div>
 

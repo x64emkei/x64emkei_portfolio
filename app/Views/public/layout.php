@@ -18,8 +18,9 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- High-Tech Color Sweep Screen Transition Curtain -->
+    <!-- High-Tech Color Sweep & Pixel Dissolve Screen Transition Curtain -->
     <div class="color-sweep-curtain" id="colorSweepCurtain" aria-hidden="true">
+        <canvas class="pixel-dissolve-canvas" id="pixelDissolveCanvas"></canvas>
         <div class="sweep-layer sweep-primary"></div>
         <div class="sweep-layer sweep-main">
             <div class="sweep-laser-line"></div>
@@ -162,16 +163,6 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                 </span>
                 <span class="theme-label" id="themeLabel">Dark Mode</span>
             </button>
-
-                            <li class="nav-item">
-                    <a href="<?= url('admin') ?>" class="nav-link" data-section="admin" title="Operator Control Deck">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2">
-                            <rect width="18" height="18" x="3" y="3" rx="2"/>
-                            <path d="m9 12 2 2 4-4"/>
-                        </svg>
-                        <span style="color:#00E5FF;">Control Deck</span>
-                    </a>
-                </li>
 
             <!-- Social Links -->
             <div class="social-links">

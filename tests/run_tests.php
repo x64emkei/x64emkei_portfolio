@@ -263,6 +263,30 @@ it("PortfolioSection and Achievement models operate correctly", function() {
 });
 
 // ----------------------------------------------------
+// 10. Journal & Article Model Test
+// ----------------------------------------------------
+it("Article and Category models support publication and tag syncing", function() {
+    $categories = \App\Models\ArticleCategory::allOrdered();
+    if (empty($categories)) {
+        throw new Exception("Expected seeded article categories.");
+    }
+
+    $articles = \App\Models\Article::getPublished();
+    if (empty($articles)) {
+        throw new Exception("Expected at least one published journal article.");
+    }
+
+    $article = \App\Models\Article::findBySlug('zero-trust-architecture-modern-systems');
+    if (!$article || $article['title'] !== 'Zero-Trust Architecture in Modern Systems') {
+        throw new Exception("Article lookup by slug failed.");
+    }
+
+    if (empty($article['tags'])) {
+        throw new Exception("Article tags pivot failed to load associated tags.");
+    }
+});
+
+// ----------------------------------------------------
 // Summary
 // ----------------------------------------------------
 echo "\n------------------------------------------------------\n";

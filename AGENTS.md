@@ -22,6 +22,9 @@ The project is equipped with specialized local skills located in `.agents/skills
 
 | Skill | Path | Description & Purpose |
 | :--- | :--- | :--- |
+| **fullstack-engineering** | `.agents/skills/fullstack-engineering` | Unified engineering standards integrating PHP 8.0+, PSR-12, PDO, zero-trust security, WCAG 2.2 AA frontend, and technical debt. |
+| **technical-debt** | `.agents/skills/technical-debt` | Technical debt audit, inventory, 42-rule checklist, and effort × impact prioritization matrix. |
+| **performance-optimization** | `.agents/skills/performance-optimization` | Application performance tuning, Core Web Vitals optimization, and bottleneck profiling. |
 | **frontend-design** | `.agents/skills/frontend-design` | Directs aesthetic decisions, color palettes, HUD styling, typography, and distinctive visual polish. |
 | **frontend-skill** | `.agents/skills/frontend-skill` | Frontend implementation specialist for resilient HTML/CSS/JS, responsive layouts, and modern web APIs. |
 | **accessibility** | `.agents/skills/accessibility` | WCAG 2.2 standards, keyboard navigation, high-contrast visibility, and ARIA landmarks for HUD interfaces. |

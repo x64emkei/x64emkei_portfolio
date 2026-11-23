@@ -9,7 +9,7 @@ return [
     'name' => env('APP_NAME', 'x64emkei.dev'),
     'env' => env('APP_ENV', 'production'), // 'development' or 'production'
     'debug' => filter_var(env('APP_DEBUG', false), FILTER_VALIDATE_BOOLEAN),
-    'url' => env('APP_URL', 'https://portfolio.x64emkei.dpdns.org'),
+    'url' => env('APP_URL', 'https://welcome.x64emkei.dpdns.org'),
     'timezone' => 'Asia/Manila',
     'session_name' => 'X64EMKEI_SESSID',
     'session_lifetime' => 86400 * 7, // 7 days

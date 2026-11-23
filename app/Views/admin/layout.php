@@ -286,6 +286,7 @@ $currentUser = AuthService::user();
         </div>
         <ul class="admin-nav">
             <li><a href="<?= e(url('admin')) ?>" class="<?= (($_SERVER['REQUEST_URI'] ?? '') === url('admin') || str_contains($_SERVER['REQUEST_URI'] ?? '', 'dashboard')) ? 'active' : '' ?>"><span>// DASHBOARD</span></a></li>
+            <li><a href="<?= e(url('admin/articles')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'articles') ? 'active' : '' ?>"><span>// JOURNAL ARTICLES</span></a></li>
             <li><a href="<?= e(url('admin/sections')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'sections') ? 'active' : '' ?>"><span>// SECTIONS ARCH</span></a></li>
             <li><a href="<?= e(url('admin/profile')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'profile') ? 'active' : '' ?>"><span>// PROFILE</span></a></li>
             <li><a href="<?= e(url('admin/projects')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'projects') ? 'active' : '' ?>"><span>// PROJECTS MATRIX</span></a></li>
@@ -299,6 +300,7 @@ $currentUser = AuthService::user();
             <li><a href="<?= e(url('admin/social')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'social') ? 'active' : '' ?>"><span>// SOCIAL LINKS</span></a></li>
             <li><a href="<?= e(url('admin/media')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'media') ? 'active' : '' ?>"><span>// MEDIA MANAGER</span></a></li>
             <li><a href="<?= e(url('admin/messages')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'messages') ? 'active' : '' ?>"><span>// MESSAGES</span></a></li>
+            <li><a href="<?= e(url('admin/users')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'users') ? 'active' : '' ?>"><span>// OPERATORS & RBAC</span></a></li>
             <li><a href="<?= e(url('admin/settings')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'settings') ? 'active' : '' ?>"><span>// CORE SETTINGS</span></a></li>
             <li style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
                 <a href="<?= e(url('/')) ?>" target="_blank" style="color: #38bdf8;"><span>&nearr; PUBLIC PORTFOLIO</span></a>
@@ -314,7 +316,7 @@ $currentUser = AuthService::user();
         <header class="admin-topbar">
             <div class="admin-telemetry-badge">
                 <span class="admin-dot"></span>
-                <span>TELEMETRY HOST: <?= e($_SERVER['HTTP_HOST'] ?? 'x64emkei.dpdns.org') ?></span>
+                <span>TELEMETRY HOST: <?= e($_SERVER['HTTP_HOST'] ?? 'welcome.x64emkei.dpdns.org') ?></span>
             </div>
             <div style="font-size: 0.85rem; color: #94a3b8;">
                 OPERATOR: <span style="color: var(--admin-cyan);"><?= e($currentUser['username'] ?? 'Admin') ?></span>

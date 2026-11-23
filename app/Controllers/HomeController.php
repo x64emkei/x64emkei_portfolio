@@ -15,12 +15,13 @@ use App\Models\Service;
 use App\Models\SocialLink;
 use App\Models\SiteSetting;
 use App\Models\PortfolioSection;
+use App\Models\Article;
 use App\Services\ViewRenderer;
 use App\Services\HttpException;
 
 class HomeController
 {
-    public function index(): void
+    private function getCommonData(): array
     {
         $defaultProfile = [
             'full_name' => 'Michael Benedict Ordenes',
@@ -48,13 +49,14 @@ class HomeController
         try { $socialLinks = SocialLink::getPublished(); } catch (\Throwable) { $socialLinks = []; }
         try { $settings = SiteSetting::getAllKeyed(); } catch (\Throwable) { $settings = []; }
         try { $sections = PortfolioSection::allKeyed(); } catch (\Throwable) { $sections = []; }
+        try { $latestArticles = Article::getPublished(3); } catch (\Throwable) { $latestArticles = []; }
 
         $metaTitle = $settings['site_title'] ?? ($profile['full_name'] . ' | ' . $profile['title']);
         $metaDesc = $settings['meta_description'] ?? $profile['tagline'];
         $metaKeywords = $settings['meta_keywords'] ?? 'Michael Benedict Ordenes, x64emkei, developer portfolio';
-        $siteUrl = rtrim($settings['primary_domain'] ?? 'https://x64emkei.dpdns.org', '/');
+        $siteUrl = rtrim($settings['primary_domain'] ?? 'https://welcome.x64emkei.dpdns.org', '/');
 
-        $viewData = [
+        return [
             'profile' => $profile,
             'projects' => $projects,
             'hardwareNodes' => $hardwareNodes,
@@ -67,14 +69,43 @@ class HomeController
             'socialLinks' => $socialLinks,
             'settings' => $settings,
             'sections' => $sections,
+            'latestArticles' => $latestArticles,
             'metaTitle' => $metaTitle,
             'metaDesc' => $metaDesc,
             'metaKeywords' => $metaKeywords,
             'siteUrl' => $siteUrl,
         ];
+    }
 
+    public function index(): void
+    {
+        $data = $this->getCommonData();
         $renderer = new ViewRenderer();
-        echo $renderer->render('public.layout', $viewData);
+        echo $renderer->render('public.layout', $data);
+    }
+
+    public function about(): void
+    {
+        $data = $this->getCommonData();
+        $data['activeNav'] = 'about';
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.about', $data);
+    }
+
+    public function work(): void
+    {
+        $data = $this->getCommonData();
+        $data['activeNav'] = 'work';
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.work', $data);
+    }
+
+    public function contact(): void
+    {
+        $data = $this->getCommonData();
+        $data['activeNav'] = 'contact';
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.contact', $data);
     }
 
     public function project(string $slug): void

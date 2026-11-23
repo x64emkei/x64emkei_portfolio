@@ -6,12 +6,15 @@ declare(strict_types=1);
  */
 
 use App\Controllers\HomeController;
+use App\Controllers\JournalController;
 use App\Controllers\ContactController;
 use App\Controllers\ApiController;
 use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\ProfileController;
 use App\Controllers\Admin\ProjectsController;
+use App\Controllers\Admin\ArticlesController;
+use App\Controllers\Admin\UsersController;
 use App\Controllers\Admin\SkillsController;
 use App\Controllers\Admin\ExperienceController;
 use App\Controllers\Admin\EducationController;
@@ -27,19 +30,33 @@ use App\Controllers\Admin\SettingsController;
 use App\Services\Router;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\CsrfMiddleware;
-use App\Middleware\SecurityHeadersMiddleware;
 
 $router = new Router();
 
 // ==========================================
-// 1. PUBLIC ROUTES
+// 1. PUBLIC PRIMARY & CHILD ROUTES
 // ==========================================
 $router->get('/', [HomeController::class, 'index']);
+$router->get('about', [HomeController::class, 'about']);
+$router->get('about/{sub}', [HomeController::class, 'about']);
+
+$router->get('work', [HomeController::class, 'work']);
+$router->get('work/projects', [HomeController::class, 'work']);
+$router->get('work/{slug}', [HomeController::class, 'project']);
 $router->get('project/{slug}', [HomeController::class, 'project']);
-$router->get('health', [ApiController::class, 'health']);
+
+// Journal & Publishing Platform
+$router->get('journal', [JournalController::class, 'index']);
+$router->get('journal/category/{slug}', [JournalController::class, 'category']);
+$router->get('journal/tag/{slug}', [JournalController::class, 'tag']);
+$router->get('journal/{slug}', [JournalController::class, 'show']);
+
+$router->get('contact', [HomeController::class, 'contact']);
 $router->post('contact', [ContactController::class, 'submit'], [CsrfMiddleware::class]);
 
-// API Endpoints for dynamic client modals & filters
+$router->get('health', [ApiController::class, 'health']);
+
+// API Endpoints for dynamic client telemetry & modals
 $router->get('api/projects', [ApiController::class, 'projects']);
 $router->get('api/project/{slug}', [ApiController::class, 'project']);
 $router->get('api/hardware/{id}', [ApiController::class, 'hardware']);
@@ -55,13 +72,27 @@ $router->get('admin/logout', [AuthController::class, 'logout']);
 $router->post('admin/logout', [AuthController::class, 'logout'], [CsrfMiddleware::class]);
 
 // ==========================================
-// 3. ADMIN DASHBOARD & CMS ROUTES (PROTECTED)
+// 3. ADMIN DASHBOARD & CMS MODULES (PROTECTED)
 // ==========================================
 $router->get('admin', [DashboardController::class, 'index'], [AuthMiddleware::class]);
 $router->get('admin/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
 $router->get('admin/system-health', [DashboardController::class, 'systemHealth'], [AuthMiddleware::class]);
 $router->get('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class]);
 $router->post('admin/database/sync', [DashboardController::class, 'syncDatabase'], [AuthMiddleware::class, CsrfMiddleware::class]);
+
+// Articles (Journal CMS)
+$router->get('admin/articles', [ArticlesController::class, 'index'], [AuthMiddleware::class]);
+$router->get('admin/articles/create', [ArticlesController::class, 'create'], [AuthMiddleware::class]);
+$router->post('admin/articles/create', [ArticlesController::class, 'store'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->get('admin/articles/{id}/edit', [ArticlesController::class, 'edit'], [AuthMiddleware::class]);
+$router->post('admin/articles/{id}/edit', [ArticlesController::class, 'update'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->post('admin/articles/{id}/delete', [ArticlesController::class, 'delete'], [AuthMiddleware::class, CsrfMiddleware::class]);
+
+// User Management & RBAC
+$router->get('admin/users', [UsersController::class, 'index'], [AuthMiddleware::class]);
+$router->post('admin/users', [UsersController::class, 'store'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->post('admin/users/{id}/role', [UsersController::class, 'updateRole'], [AuthMiddleware::class, CsrfMiddleware::class]);
+$router->post('admin/users/{id}/toggle', [UsersController::class, 'toggleStatus'], [AuthMiddleware::class, CsrfMiddleware::class]);
 
 // Portfolio Sections Architecture
 $router->get('admin/sections', [SectionsController::class, 'index'], [AuthMiddleware::class]);

@@ -22,11 +22,13 @@ class PortfolioDataSeeder
         $this->seedSkills($force);
         $this->seedExperiences($force);
         $this->seedEducation($force);
+        $this->seedCertifications($force);
         $this->seedAchievements($force);
         $this->seedServices($force);
         $this->seedSocialLinks($force);
         $this->seedSiteSettings($force);
         $this->seedSections($force);
+        $this->seedManifestoArticle($force);
     }
 
     private function seedProfile(bool $force = false): void
@@ -45,10 +47,10 @@ class PortfolioDataSeeder
         
         $this->pdo->prepare($sql)->execute([
             ':name' => 'Michael Benedict Ordenes',
-            ':title' => 'Computer Science Student, IT Enthusiast & Developer',
-            ':tagline' => 'Architecting resilient software systems, low-level micro-kernels, and high-performance distributed architectures.',
-            ':short' => 'Computer Science scholar and systems engineer focused on high-performance desktop platforms, embedded POS telemetry, computer vision pipelines, and resilient network infrastructures.',
-            ':full' => "I engineer software at the intersection of systems architecture, low-level execution efficiency, and intuitive human-computer interaction. From designing autonomous enterprise point-of-sale engines in modern C# and .NET to experimenting with microkernels in C++20 and training edge neural vision networks in PyTorch, I build systems built to endure.",
+            ':title' => 'Computer Science Student, IT Enthusiast & Systems Builder',
+            ':tagline' => 'Building resilient software architectures, deploying virtualized server homelabs, and experimenting across the boundary of modern edge systems and vintage computing hardware.',
+            ':short' => 'A Computer Science student interested in software development, IT infrastructure, networking, systems administration, and emerging technologies. Enjoys turning ideas into functional projects and experimenting with modern and legacy hardware/software.',
+            ':full' => "Building resilient software architectures, deploying virtualized server homelabs, and experimenting across the boundary of modern edge systems and vintage computing hardware.\n\nPrimary areas of discipline:\n• Software and web development\n• Systems programming and desktop engineering\n• AI / computer vision and automation\n• Homelab, virtualization, and containers\n• Networking, DNS, VPN, and remote access\n• Hardware diagnostics, restoration, and legacy platforms",
             ':avatar' => 'images/me_2.png',
             ':cover' => 'images/carousel-workspace.jpg',
             ':loc' => 'Laguna, Philippines',
@@ -62,446 +64,8 @@ class PortfolioDataSeeder
     {
         if ($force) {
             $this->pdo->exec("DELETE FROM `projects`");
-        } else {
-            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `projects`");
-            if ((int)$stmt->fetchColumn() > 0) return;
         }
-
-        $projects = [
-            [
-                'slug' => 'valkyrie-pos-pro',
-                'code_id' => 'CS.001 // ENTERPRISE_POS',
-                'category' => 'C# 12 / .NET 9',
-                'filter_tag' => 'csharp',
-                'title' => 'Valkyrie POS Pro',
-                'tagline' => 'Autonomous offline retail point-of-sale terminal engine with cryptographic peer sync and scanner abstraction.',
-                'environment' => 'Windows 11 / Embedded POS • .NET 9 Desktop • SQLite WAL',
-                'performance_metric' => '0.8ms transaction write • Sub-10ms peer sync loop',
-                'operational_status' => 'Operational • Simulated Enterprise Stack',
-                'description' => 'A mission-critical Point-of-Sale architecture engineered for zero-downtime retail environments. Features a resilient local write-ahead cryptographic ledger that operates seamlessly when disconnected from WAN and syncs peer-to-peer across LAN terminals using authenticated gRPC channels.',
-                'features' => [
-                    'Local Write-Ahead Transaction Ledger (WAL) guaranteeing atomic state consistency.',
-                    'Peer-to-peer multi-terminal catalog synchronization over LAN with automatic conflict resolution.',
-                    'Direct hardware abstraction layer for ESC/POS thermal printers and barcode scanners.',
-                    'GPU-accelerated WPF touch-first checkout UI rendering fluid 60 FPS transitions.'
-                ],
-                'filename' => 'ValkyrieLedgerEngine.cs',
-                'code' => "public sealed class TransactionLedger : IDisposable\n{\n    private readonly SqliteConnection _db;\n    private readonly Channel<TransactionRecord> _txQueue;\n\n    public async Task<ReceiptTicket> CommitSaleAsync(CartPayload cart, CancellationToken ct)\n    {\n        var hash = CryptoProvider.ComputeSha256(cart.Serialize());\n        using var tx = await _db.BeginTransactionAsync(IsolationLevel.Snapshot, ct);\n        \n        var record = new TransactionRecord(Guid.NewGuid(), cart.TotalCents, hash, DateTime.UtcNow);\n        await _db.ExecuteAsync(\"INSERT INTO LedgerJournal VALUES (@Id, @Amount, @Hash, @Time)\", record, tx);\n        await tx.CommitAsync(ct);\n        \n        _txQueue.Writer.TryWrite(record); // Background peer-sync broadcast\n        return new ReceiptTicket(record.Id, record.Timestamp, cart.Items);\n    }\n}",
-                'tech' => ['C# 12', '.NET 9', 'WPF', 'SQLite', 'gRPC', 'Cryptography'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 1,
-                'featured' => 1
-            ],
-            [
-                'slug' => 'aegis-kernel-microvisor',
-                'code_id' => 'CPP.001 // MICRO_HYPERVISOR',
-                'category' => 'C++20 / Ring-0',
-                'filter_tag' => 'cpp',
-                'title' => 'AegisKernel Microvisor',
-                'tagline' => 'Simulated Type-1 bare-metal microkernel with memory-enclave isolation and sub-microsecond context switching.',
-                'environment' => 'Bare-Metal x86_64 • Custom Bootloader • GDT/IDT Initialization',
-                'performance_metric' => 'Zero syscall overhead • <420ns interrupt handling',
-                'operational_status' => 'Experimental • Systems Architecture Lab',
-                'description' => 'A conceptual lightweight experimental micro-hypervisor designed in modern C++20 and x86_64 assembly. Implements hardware-assisted virtualization hooks, 4-level paging setup, ring-0 to ring-3 protection boundary controllers, and physical page allocation without standard C runtime dependencies.',
-                'features' => [
-                    'Hardware memory paging setup managing 4-level PML4 address translation tables.',
-                    'Custom Global Descriptor Table (GDT) and Interrupt Descriptor Table (IDT) handlers.',
-                    'Lock-free thread context save and restore routine written in inline assembly.',
-                    'Sub-microsecond high-resolution timer interrupt calibration via RDTSC instructions.'
-                ],
-                'filename' => 'AegisPaging.cpp',
-                'code' => "extern \"C\" void SwitchAddressSpace(uint64_t pml4_physical_base) noexcept {\n    asm volatile (\n        \"movq %0, %%cr3\\n\\t\"\n        : \n        : \"r\"(pml4_physical_base)\n        : \"memory\"\n    );\n}\n\nclass VirtualMemoryManager {\npublic:\n    void MapPage(uint64_t virtualAddr, uint64_t physAddr, uint32_t flags) noexcept {\n        uint64_t pml4_idx = (virtualAddr >> 39) & 0x1FF;\n        uint64_t pdpt_idx = (virtualAddr >> 30) & 0x1FF;\n        EnsureTablePresent(pml4_idx, pdpt_idx, flags);\n    }\n};",
-                'tech' => ['C++20', 'x86_64 ASM', 'Memory Paging', 'Ring-0', 'Bare-Metal'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 2,
-                'featured' => 1
-            ],
-            [
-                'slug' => 'neuropulse-vision-ai',
-                'code_id' => 'PY.001 // EDGE_VISION_AI',
-                'category' => 'Python 3.12 / CUDA',
-                'filter_tag' => 'python',
-                'title' => 'NeuroPulse Vision AI',
-                'tagline' => 'Hardware-accelerated edge neural network classifying synthetic telemetry and biometric micro-expressions.',
-                'environment' => 'Ubuntu 24.04 • PyTorch 2.3 • TensorRT • CUDA 12',
-                'performance_metric' => '144 FPS inference • 3.2ms edge tensor latency',
-                'operational_status' => 'Active • Synthetic Neural Testing',
-                'description' => 'A real-time deep learning computer vision pipeline engineered to ingest raw camera frames, extract feature tensors via custom quantized convolutional layers, and detect spatial telemetry vectors at sustained 144 FPS with low GPU thermal headroom.',
-                'features' => [
-                    'FP16 mixed-precision tensor optimization accelerating inference on NVIDIA silicon.',
-                    'Asynchronous frame decoding pipeline eliminating OpenCV thread blocking.',
-                    'Custom loss function prioritizing synthetic spatial alignment and landmark confidence.',
-                    'Real-time WebSocket streaming of detection bounding boxes and confidence heatmaps.'
-                ],
-                'filename' => 'NeuroPulseInference.py',
-                'code' => "import torch\nimport cv2\n\nclass NeuroPulseDetector:\n    def __init__(self, model_weights: str):\n        self.device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n        self.model = torch.jit.load(model_weights).to(self.device).eval()\n        self.stream = torch.cuda.Stream()\n\n    @torch.inference_mode()\n    def process_frame(self, frame_bgr):\n        tensor = torch.from_numpy(frame_bgr).permute(2, 0, 1).unsqueeze(0).to(self.device, non_blocking=True).float() / 255.0\n        with torch.cuda.stream(self.stream):\n            predictions = self.model(tensor)\n            self.stream.synchronize()\n        return predictions.squeeze(0).cpu().numpy()",
-                'tech' => ['Python 3.12', 'PyTorch', 'CUDA', 'TensorRT', 'OpenCV'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 3,
-                'featured' => 1
-            ],
-            [
-                'slug' => 'quantummesh-zero-trust-tunnel',
-                'code_id' => 'SYS.001 // NETWORK_DAEMON',
-                'category' => 'Python / Go / Linux',
-                'filter_tag' => 'systems',
-                'title' => 'QuantumMesh Zero-Trust Tunnel',
-                'tagline' => 'Autonomous mesh routing daemon managing dynamic encrypted WireGuard tunnels and gateway health checks.',
-                'environment' => 'Debian Linux • Systemd Daemon • WireGuard Kernel Module',
-                'performance_metric' => '<5ms failover • Sub-0.1% CPU background footprint',
-                'operational_status' => 'Active • 24/7 Homelab Mesh',
-                'description' => 'An automated network mesh manager running as a persistent daemon. Continuously monitors route latency across multiple WAN and satellite links, orchestrating instantaneous failover between primary WireGuard endpoints and fallback encrypted mesh peers without dropping active socket connections.',
-                'features' => [
-                    'Dynamic ICMP & TCP heartbeat probing across heterogeneous WAN uplinks.',
-                    'Cryptographically authenticated state exchange protocol operating over UDP.',
-                    'Zero-packet-loss route table swapping via netlink socket interfaces.',
-                    'Automated ephemeral key rotation enforcing strict forward secrecy.'
-                ],
-                'filename' => 'MeshDaemon.py',
-                'code' => "import asyncio\nimport subprocess\n\nclass WireGuardMeshController:\n    def __init__(self, interface: str, peer_endpoints: list[str]):\n        self.interface = interface\n        self.peers = peer_endpoints\n\n    async def monitor_peers(self):\n        while True:\n            for peer in self.peers:\n                latency = await self._probe_latency(peer)\n                if latency > 150.0:\n                    await self._switch_route(peer, fallback=True)\n            await asyncio.sleep(2.0)\n\n    async def _probe_latency(self, endpoint: str) -> float:\n        proc = await asyncio.create_subprocess_exec(\"ping\", \"-c\", \"1\", \"-W\", \"1\", endpoint, stdout=asyncio.subprocess.PIPE)\n        await proc.communicate()\n        return 22.4 # milliseconds",
-                'tech' => ['Linux Kernel', 'WireGuard', 'Python AsyncIO', 'Networking', 'Systemd'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 4,
-                'featured' => 1
-            ],
-            [
-                'slug' => 'wasm-cyber-shell',
-                'code_id' => 'WEB.001 // WASM_SHELL',
-                'category' => 'WebAssembly / JS',
-                'filter_tag' => 'web',
-                'title' => 'WASM Cyber Shell',
-                'tagline' => 'In-browser high-tech POSIX terminal emulator compiled to WebAssembly with virtual memory sandbox.',
-                'environment' => 'Browser Runtime • WebAssembly • Vanilla JS Canvas',
-                'performance_metric' => '60 FPS monospace canvas • Zero bundle overhead',
-                'operational_status' => 'Operational • Interactive Web Terminal',
-                'description' => 'An interactive terminal environment running entirely within the client browser. Features custom VT100 escape code decoding, persistent in-memory virtual file systems via IndexedDB, and simulated systems diagnostics.',
-                'features' => [
-                    'Native WebAssembly bytecode execution directly inside web workers.',
-                    'Virtual POSIX file system persisting state across page refreshes via IndexedDB.',
-                    'Complete VT100 ANSI terminal escape sequence parser and rendering pipeline.',
-                    'Custom command interpreter supporting piping, redirection, and environment variables.'
-                ],
-                'filename' => 'WasmTerminalEngine.js',
-                'code' => "export class CyberTerminal {\n    constructor(canvasElement) {\n        this.canvas = canvasElement;\n        this.ctx = canvasElement.getContext('2d');\n        this.cursor = { x: 0, y: 0 };\n    }\n\n    executeCommand(cmd) {\n        const [program, ...args] = cmd.trim().split(/\\s+/);\n        switch(program) {\n            case 'sysinfo': return this.renderDiagnostics();\n            case 'clear': return this.clearScreen();\n            default: return `SYS: Command '\${program}' not found in /bin.`;\n        }\n    }\n}",
-                'tech' => ['WebAssembly', 'JavaScript ES6+', 'HTML5 Canvas', 'IndexedDB'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 5,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'chronostream-tsdb',
-                'code_id' => 'CPP.002 // TIMESERIES_ENGINE',
-                'category' => 'C++20 / Storage',
-                'filter_tag' => 'cpp',
-                'title' => 'ChronoStream TSDB Engine',
-                'tagline' => 'Ultra-dense time-series columnar metrics engine with delta-of-delta floating-point compression.',
-                'environment' => 'Linux x86_64 • C++20 • SIMD AVX2',
-                'performance_metric' => '4.2M samples/sec ingestion • 12:1 compression ratio',
-                'operational_status' => 'Operational • Systems Engine',
-                'description' => 'A custom in-memory columnar time-series storage engine written in modern C++20. Employs Gorilla-style delta-of-delta timestamp encoding and XOR floating-point metric packing to achieve exceptional density.',
-                'features' => [
-                    'Gorilla-style XOR floating-point time series compression.',
-                    'SIMD-vectorized filter queries scanning millions of metrics per second.',
-                    'Zero-copy disk serialization using memory-mapped I/O (mmap).',
-                    'Lock-free ring buffer ingesting concurrent IoT sensor streams.'
-                ],
-                'filename' => 'ChronoBlock.cpp',
-                'code' => "struct MetricSample {\n    uint64_t timestamp_ns;\n    double value;\n};\n\nclass TimeSeriesBlock {\npublic:\n    void AppendSample(const MetricSample& sample) {\n        uint64_t delta = sample.timestamp_ns - last_timestamp_;\n        uint64_t dod = delta - last_delta_;\n        CompressDeltaOfDelta(dod);\n        CompressFloatingPointXor(sample.value);\n    }\n};",
-                'tech' => ['C++20', 'AVX2', 'Time-Series', 'Memory Mapped I/O'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 6,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'omnithread-engine',
-                'code_id' => 'CS.002 // CONCURRENCY_CORE',
-                'category' => 'C# / Concurrency',
-                'filter_tag' => 'csharp',
-                'title' => 'OmniThread Engine',
-                'tagline' => 'Custom task scheduler and priority thread dispatcher with work-stealing algorithms and telemetry hooks.',
-                'environment' => '.NET 8 / 9 Runtime • Multi-core Workstation • High-Load Daemon',
-                'performance_metric' => 'Zero worker thread starvation • Sub-microsecond task dispatch',
-                'operational_status' => 'Operational • Systems Framework',
-                'description' => 'An advanced concurrent runtime scheduler built to manage computational workloads across heterogeneous CPU topologies. Employs work-stealing queues to balance bursty processing loads across available cores, exposing live execution metrics via event counters.',
-                'features' => [
-                    'Work-stealing double-ended queues minimizing lock contention among worker threads.',
-                    'Dynamic thread pool scaling adapting to hardware concurrency and load pressure.',
-                    'Prioritized task pipelines ensuring critical telemetry jobs bypass standard tasks.',
-                    'Integrated EventCounter telemetry exporting CPU utilization and queue depths.'
-                ],
-                'filename' => 'WorkStealingScheduler.cs',
-                'code' => "public sealed class WorkStealingScheduler : TaskScheduler\n{\n    private readonly BlockingCollection<Task>[] _queues;\n\n    protected override void QueueTask(Task task)\n    {\n        int idealCore = Thread.GetCurrentProcessorId() % _queues.Length;\n        if (!_queues[idealCore].TryAdd(task))\n        {\n            _queues[0].Add(task);\n        }\n    }\n}",
-                'tech' => ['C# .NET 8', 'Concurrency', 'Threading', 'Work-Stealing', 'Diagnostics'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 7,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'hyperbus-service-broker',
-                'code_id' => 'CS.003 // DISTRIBUTED_BUS',
-                'category' => 'C# / Microservices',
-                'filter_tag' => 'csharp',
-                'title' => 'HyperBus Service Broker',
-                'tagline' => 'Zero-allocation pub/sub event bus supporting RPC serialization over shared memory and loopback sockets.',
-                'environment' => '.NET 8 / 9 • MemoryMappedFiles • Shared Memory IPC',
-                'performance_metric' => '2.4M msg/s throughput • Zero GC allocation on hot paths',
-                'operational_status' => 'Active • Distributed Core',
-                'description' => 'A lightweight inter-process communication message bus built for local services and microservices. Leverages memory-mapped files and binary zero-copy serialization to achieve ultra-high message throughput without incurring garbage collection pauses.',
-                'features' => [
-                    'Zero-allocation binary message encoding using Span<byte> and Memory<T>.',
-                    'Shared-memory ring buffers enabling instantaneous cross-process data transfers.',
-                    'Topic-based publisher/subscriber model with dead-letter queue recovery.',
-                    'Built-in health watchdog and latency tracking per subscriber channel.'
-                ],
-                'filename' => 'HyperBusChannel.cs',
-                'code' => "public sealed class HyperBusPublisher\n{\n    private readonly MemoryMappedViewAccessor _sharedMem;\n\n    public unsafe void PublishEvent<T>(int topicId, ref T payload) where T : unmanaged\n    {\n        byte* ptr = null;\n        _sharedMem.SafeMemoryMappedViewHandle.AcquirePointer(ref ptr);\n        try {\n            Buffer.MemoryCopy(&payload, ptr + (topicId * 256), sizeof(T), sizeof(T));\n        } finally {\n            _sharedMem.SafeMemoryMappedViewHandle.ReleasePointer();\n        }\n    }\n}",
-                'tech' => ['C#', 'IPC', 'gRPC', 'Zero-Allocation', 'High-Performance'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 8,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'aeroui-fluent-component-kit',
-                'code_id' => 'CS.004 // GPU_UI_KIT',
-                'category' => 'C# / UI Engine',
-                'filter_tag' => 'csharp',
-                'title' => 'AeroUI Fluent Component Kit',
-                'tagline' => 'GPU-accelerated desktop UI control system bringing glassmorphic blur and retrofuturistic HUD styling to WPF.',
-                'environment' => 'Windows 10/11 • WPF Direct3D Interop • Custom XAML Templates',
-                'performance_metric' => '60 FPS compositing • Real-time hardware composition blur',
-                'operational_status' => 'Active • UI/UX Design System',
-                'description' => 'A comprehensive modern design toolkit for enterprise C# Windows desktop software. Integrates Windows DWM composition APIs to render authentic acrylic glassmorphism, glowing cyan/amber telemetry gauges, and responsive vector controls.',
-                'features' => [
-                    'DirectX-accelerated frosted glass backdrop filters rendered inside WPF viewports.',
-                    'High-contrast theme tokens adhering to modern industrial design standards.',
-                    'Custom HUD telemetry dials, linear progress indicators, and hex-grid graphs.',
-                    'Interactive window controls with smooth minimize, maximize, and drag physics.'
-                ],
-                'filename' => 'AeroGlassPanel.cs',
-                'code' => "public class AeroGlassPanel : ContentControl\n{\n    public static readonly DependencyProperty BlurRadiusProperty =\n        DependencyProperty.Register(nameof(BlurRadius), typeof(double), typeof(AeroGlassPanel), new PropertyMetadata(20.0));\n\n    protected override void OnRender(DrawingContext dc)\n    {\n        base.OnRender(dc);\n        dc.DrawRectangle(new SolidColorBrush(Color.FromArgb(180, 14, 18, 26)), null, new Rect(RenderSize));\n    }\n}",
-                'tech' => ['C# WPF', 'DirectX', 'Glassmorphism', 'UI Components', 'Custom XAML'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 9,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'specter-async-deep-scraper',
-                'code_id' => 'PY.003 // DISTRIBUTED_SCRAPER',
-                'category' => 'Python / Scraper',
-                'filter_tag' => 'python',
-                'title' => 'Specter Async Deep Scraper',
-                'tagline' => 'Distributed asynchronous web scraping pipeline with automatic rotating proxy pools and TLS fingerprint spoofing.',
-                'environment' => 'Python 3.12 • AsyncIO • Aiohttp • Redis Distributed Queue',
-                'performance_metric' => '5,000 req/s throughput • Automated CAPTCHA evasion',
-                'operational_status' => 'Active • Data Pipeline',
-                'description' => 'A high-throughput distributed crawling engine designed for large-scale data ingestion. Employs asynchronous coroutine pools, automatic user-agent and JA3 TLS fingerprint spoofing, and Redis-backed state queues to bypass rate limits and anti-bot defenses.',
-                'features' => [
-                    'Asynchronous connection pooling maintaining thousands of active HTTP sessions.',
-                    'Dynamic JA3 TLS fingerprint randomized rotation preventing cloud anti-bot blocks.',
-                    'Distributed deduplication index utilizing Redis bloom filters.',
-                    'Real-time structured HTML extraction with automatic schema inference.'
-                ],
-                'filename' => 'SpecterCrawler.py',
-                'code' => "import aiohttp\nimport asyncio\n\nasync def fetch_worker(queue, session):\n    while not queue.empty():\n        url = await queue.get()\n        try:\n            async with session.get(url, timeout=5) as response:\n                html = await response.text()\n                parse_telemetry_schema(html)\n        finally:\n            queue.task_done()",
-                'tech' => ['Python 3.12', 'AsyncIO', 'Aiohttp', 'Redis', 'Web Scraping'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 10,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'packetsnoop-protocol-sniffer',
-                'code_id' => 'PY.004 // NETSEC_ANALYZER',
-                'category' => 'Python / NetSec',
-                'filter_tag' => 'python',
-                'title' => 'PacketSnoop Protocol Sniffer',
-                'tagline' => 'Raw socket network sniffer performing deep packet inspection, TCP stream reassembly, and TLS handshake decryption.',
-                'environment' => 'Linux / Scapy Core • Raw Socket AF_PACKET • PCAP Parser',
-                'performance_metric' => 'Zero-copy packet capture • Sustained 1Gbps link inspection',
-                'operational_status' => 'Operational • NetSec Testing',
-                'description' => 'A network forensics utility that captures raw Ethernet frames directly from the kernel network stack. Decodes protocol layers from IP down to payload data, reassembles TCP sessions, and identifies suspicious packet bursts or DNS tunneling attempts.',
-                'features' => [
-                    'Kernel-level raw socket packet interception with zero memory duplication.',
-                    'Automatic reassembly of fragmented TCP packets and session stream reconstruction.',
-                    'Heuristic anomaly detector flagging port scan sweeps and rogue DHCP responses.',
-                    'Export engine supporting industry-standard PCAP format and JSON streaming.'
-                ],
-                'filename' => 'PacketSnoopCore.py',
-                'code' => "import socket\nimport struct\n\ndef capture_raw_ethernet():\n    raw_socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))\n    while True:\n        packet_data, _ = raw_socket.recvfrom(65535)\n        eth_header = packet_data[:14]\n        dest_mac, src_mac, proto = struct.unpack(\"!6s6sH\", eth_header)\n        if proto == 0x0800:\n            analyze_ip_payload(packet_data[14:])",
-                'tech' => ['Python 3', 'Raw Sockets', 'Network Security', 'PCAP', 'Protocol Forensics'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 11,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'spectra-3d-audio-visualizer',
-                'code_id' => 'WEB.002 // 3D_AUDIO_GL',
-                'category' => 'WebGL / WebDev',
-                'filter_tag' => 'web',
-                'title' => 'Spectra 3D Audio Visualizer',
-                'tagline' => 'Hardware-accelerated 3D audio frequency visualizer rendering real-time FFT spectrum bars with custom GLSL shaders.',
-                'environment' => 'Three.js • Web Audio API • WebGL 2.0 • GLSL Fragment Shaders',
-                'performance_metric' => '120Hz smooth animations • Low audio latency (<10ms)',
-                'operational_status' => 'Active • Creative Web Tech',
-                'description' => 'A dynamic 3D web graphics application that transforms microphone or audio inputs into an interactive holographic waveform. Computes live Fast Fourier Transform (FFT) frequency bands and feeds them into custom GLSL vertex and fragment shaders for chromatic aberration and neon dispersion.',
-                'features' => [
-                    'Web Audio API AnalyserNode computing 2048-point Fast Fourier Transform (FFT) bins.',
-                    'Custom Three.js shader materials with animated wave displacement and Bloom glows.',
-                    'Interactive camera orbit controls responding to mouse and gyroscope movement.',
-                    'Dynamic palette shifting responding to bass frequency peaks and transients.'
-                ],
-                'filename' => 'SpectraAudioVisualizer.js',
-                'code' => "const audioCtx = new AudioContext();\nconst analyser = audioCtx.createAnalyser();\nanalyser.fftSize = 2048;\nconst freqData = new Uint8Array(analyser.frequencyBinCount);\n\nfunction renderLoop() {\n    requestAnimationFrame(renderLoop);\n    analyser.getByteFrequencyData(freqData);\n    meshMaterial.uniforms.u_frequencies.value = freqData;\n    renderer.render(scene, camera);\n}",
-                'tech' => ['Three.js', 'WebGL', 'Web Audio API', 'GLSL', 'Interactive 3D'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 12,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'nexus-protocol-p2p-chat',
-                'code_id' => 'WEB.003 // P2P_MESSAGING',
-                'category' => 'WebRTC / Sockets',
-                'filter_tag' => 'web',
-                'title' => 'Nexus Protocol P2P Chat',
-                'tagline' => 'End-to-end encrypted peer-to-peer browser messenger with ephemeral rooms, WebRTC data channels, and zero logs.',
-                'environment' => 'WebRTC DataChannels • WebCrypto API • WebSocket Signaling',
-                'performance_metric' => 'P2P sub-20ms latency • AES-GCM-256 cipher encryption',
-                'operational_status' => 'Active • Decentralized Web Lab',
-                'description' => 'A browser-based decentralized communication system. Establishes direct peer-to-peer data pipes between clients using WebRTC without routing message contents through central servers. All messages are encrypted locally using cryptographic keys negotiated via ECDH exchange.',
-                'features' => [
-                    'Direct browser-to-browser WebRTC DataChannel architecture with zero server logging.',
-                    'End-to-end encryption using AES-GCM-256 with ephemeral cryptographic keypairs.',
-                    'Chunked peer-to-peer file transfer engine with checksum verification.',
-                    'Real-time typing presence and room status indicators.'
-                ],
-                'filename' => 'NexusPeerSession.js',
-                'code' => "class PeerSession {\n    constructor() {\n        this.pc = new RTCPeerConnection({ iceServers: [{ urls: \"stun:stun.l.google.com:19302\" }] });\n        this.dataChannel = this.pc.createDataChannel(\"nexus_p2p_channel\");\n        this.dataChannel.onmessage = (e) => this.decryptAndDisplay(e.data);\n    }\n\n    async sendSecureMessage(plainText) {\n        const encrypted = await CryptoEngine.encryptAES(plainText, this.sharedSecret);\n        this.dataChannel.send(encrypted);\n    }\n}",
-                'tech' => ['WebRTC', 'WebCrypto API', 'WebSockets', 'P2P', 'Privacy'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 13,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'glassmorphic-os-dashboard',
-                'code_id' => 'WEB.004 // WEB_OS_DESKTOP',
-                'category' => 'CSS Glass / Vanilla JS',
-                'filter_tag' => 'web',
-                'title' => 'Glassmorphic OS Dashboard',
-                'tagline' => 'Desktop-class responsive web workspace featuring draggable floating windows, minimize trays, and live HUD widgets.',
-                'environment' => 'Vanilla JavaScript • CSS Grid • Hardware Backdrop Blur',
-                'performance_metric' => 'Zero external frameworks • Sub-16ms layout recalculations',
-                'operational_status' => 'Active • Web Interface Lab',
-                'description' => 'An in-browser operating system simulation demonstrating the capabilities of modern CSS Grid and vanilla JavaScript. Features floating window management, window snapping, minimize/maximize physics, dock status indicators, and persistent widget preferences.',
-                'features' => [
-                    'Custom multi-window manager supporting drag, resize, z-index elevation, and minimization.',
-                    'Modular CSS Grid Bento layouts adapting fluidly from 4K displays to mobile screens.',
-                    'State persistence storing window positions and custom settings in LocalStorage.',
-                    'Zero external runtime dependencies ensuring instant page delivery and optimal performance.'
-                ],
-                'filename' => 'WindowManager.js',
-                'code' => "class WindowManager {\n    static bringToFront(winEl) {\n        const topZ = Math.max(...Array.from(document.querySelectorAll(\".os-window\")).map(w => parseInt(w.style.zIndex || 10)));\n        winEl.style.zIndex = topZ + 1;\n    }\n\n    static toggleMinimize(winEl) {\n        winEl.classList.toggle(\"is-minimized\");\n        const isCollapsed = winEl.classList.contains(\"is-minimized\");\n        winEl.querySelector(\".window-body\").style.display = isCollapsed ? \"none\" : \"block\";\n    }\n}",
-                'tech' => ['Vanilla JS', 'CSS Grid', 'Glassmorphism', 'Window Controls', 'Responsive'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 14,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'vortex-8-hardware-emulator',
-                'code_id' => 'CPP.003 // EMULATION_CORE',
-                'category' => 'C++ / Emulation',
-                'filter_tag' => 'cpp',
-                'title' => 'Vortex-8 Hardware Emulator',
-                'tagline' => 'Cycle-accurate virtual CPU emulator featuring opcode disassembler, memory debugger, and 60 FPS video synthesizer.',
-                'environment' => 'C++17 • SDL2 Library • Virtual Machine Core',
-                'performance_metric' => '100% cycle-accurate opcode timing • 60 FPS video sync',
-                'operational_status' => 'Operational • Systems Research',
-                'description' => 'A complete virtual microprocessor and hardware system emulator written in C++17. Faithfully recreates the instruction fetch-decode-execute cycle, 16 8-bit registers, 4KB memory space, timer delays, and monochromatic screen graphics with integrated audio beeper.',
-                'features' => [
-                    'Full implementation of 35 standard CPU opcodes with bitwise flag validation.',
-                    'Integrated interactive disassembly viewer and live memory register hex inspector.',
-                    'Audio tone synthesizer generating accurate square wave sound pulses via SDL2.',
-                    'Cycle-accurate execution loop calibrated with high-resolution CPU clocks.'
-                ],
-                'filename' => 'VortexCpuCore.cpp',
-                'code' => "void VortexCpu::Cycle() {\n    uint16_t opcode = (memory[pc] << 8) | memory[pc + 1];\n    pc += 2;\n    switch (opcode & 0xF000) {\n        case 0xA000: indexRegister = opcode & 0x0FFF; break;\n        case 0x6000: V[(opcode & 0x0F00) >> 8] = opcode & 0x00FF; break;\n        case 0xD000: DrawSprite(V[(opcode & 0x0F00) >> 8], V[(opcode & 0x00F0) >> 4], opcode & 0x000F); break;\n    }\n}",
-                'tech' => ['C++17', 'SDL2', 'Virtual Machine', 'Emulation', 'Computer Architecture'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 15,
-                'featured' => 0
-            ],
-            [
-                'slug' => 'simd-vector-math-engine',
-                'code_id' => 'CPP.004 // SIMD_VECTOR_MATH',
-                'category' => 'C++20 / SIMD',
-                'filter_tag' => 'cpp',
-                'title' => 'SIMD Vector Math Engine',
-                'tagline' => 'Hardware-intrinsics vectorized matrix math library accelerating 4x4 coordinate transformations with AVX2.',
-                'environment' => 'C++20 • AVX2 / FMA Intrinsics • Clang / MSVC',
-                'performance_metric' => '8x throughput increase over scalar math • Zero cache misses',
-                'operational_status' => 'Operational • High-Performance Math',
-                'description' => 'A vectorized mathematics library designed for game engines and physics simulations. Replaces traditional loop-based matrix multiplications and vector normalizations with single-instruction multiple-data (SIMD) hardware intrinsic instructions, processing 4 coordinate sets simultaneously.',
-                'features' => [
-                    'AVX2 and Fused Multiply-Add (FMA) assembly intrinsic implementation.',
-                    'Sub-nanosecond 4x4 matrix multiplication and vector dot product calculations.',
-                    'Cache-aligned memory storage preventing unaligned load penalties.',
-                    'Comprehensive automated test suite benchmarking against standard scalar math routines.'
-                ],
-                'filename' => 'SimdMatrix4x4.hpp',
-                'code' => "#include <immintrin.h>\n\nstruct alignas(32) Mat4x4 {\n    __m256 cols[2];\n\n    static Mat4x4 Multiply(const Mat4x4& a, const Mat4x4& b) noexcept {\n        Mat4x4 result;\n        __m256 row0 = _mm256_load_ps((const float*)&a.cols[0]);\n        __m256 row1 = _mm256_load_ps((const float*)&a.cols[1]);\n        result.cols[0] = _mm256_fmadd_ps(row0, b.cols[0], result.cols[0]);\n        result.cols[1] = _mm256_fmadd_ps(row1, b.cols[1], result.cols[1]);\n        return result;\n    }\n};",
-                'tech' => ['C++20', 'AVX2', 'Intrinsics', 'Linear Algebra', 'High-Performance'],
-                'github' => 'https://github.com/x64_emkei',
-                'demo' => '',
-                'order' => 16,
-                'featured' => 0
-            ]
-        ];
-
-        $sql = "INSERT INTO `projects`
-            (`slug`, `code_id`, `category`, `filter_tag`, `title`, `tagline`, `environment`, `performance_metric`,
-             `operational_status`, `description`, `features_json`, `code_filename`, `code_snippet`,
-             `technologies_json`, `github_url`, `demo_url`, `featured_image`, `display_order`, `is_featured`, `is_published`)
-            VALUES
-            (:slug, :code_id, :category, :filter_tag, :title, :tagline, :env, :perf,
-             :status, :desc, :features, :filename, :code, :tech, :github, :demo, :img, :order, :featured, 1)";
-        
-        $stmt = $this->pdo->prepare($sql);
-        foreach ($projects as $p) {
-            $stmt->execute([
-                ':slug' => $p['slug'],
-                ':code_id' => $p['code_id'],
-                ':category' => $p['category'],
-                ':filter_tag' => $p['filter_tag'],
-                ':title' => $p['title'],
-                ':tagline' => $p['tagline'],
-                ':env' => $p['environment'],
-                ':perf' => $p['performance_metric'],
-                ':status' => $p['operational_status'],
-                ':desc' => $p['description'],
-                ':features' => json_encode($p['features']),
-                ':filename' => $p['filename'],
-                ':code' => $p['code'],
-                ':tech' => json_encode($p['tech']),
-                ':github' => $p['github'],
-                ':demo' => $p['demo'],
-                ':img' => 'images/carousel-retro.jpg',
-                ':order' => $p['order'],
-                ':featured' => $p['featured']
-            ]);
-        }
+        // Projects table is kept empty as specified in catalog: "PROJECT CATALOG (NONE YET)"
     }
 
     private function seedHardwareNodes(bool $force = false): void
@@ -515,58 +79,100 @@ class PortfolioDataSeeder
 
         $nodes = [
             [
-                'node_id' => 'NODE.01 // LAB ARCHIVE',
+                'node_id' => 'NODE.01 // NETBOOK',
                 'tag' => 'PRESERVED',
                 'title' => 'Sony Vaio W-series VPCW115XG',
-                'subtitle' => 'Intel Atom N280 Netbook Platform • Japanese Ultraportable Engineering',
-                'oem' => 'Sony VAIO Corp.',
+                'subtitle' => 'Japanese Ultraportable Engineering • 10.1-inch WXGA Display',
+                'oem' => 'Sony VAIO',
                 'specs' => [
                     'CPU' => 'Intel Atom N280 (1.66 GHz, 1 Core, 2 Threads, 512KB L2)',
-                    'RAM' => '2GB DDR2-667 SO-DIMM',
-                    'Storage' => '64GB Kingston SATA-II SSD (Upgraded from 160GB HDD)',
-                    'Display' => '10.1-inch 1366x768 Fine-Pitch WXGA LED',
-                    'OS' => 'Debian Linux 12 (Bookworm) Minimal CLI with Openbox',
-                    'Purpose' => 'Low-power serial telemetry node & vintage firmware flash programmer'
+                    'Display' => '10.1-inch WXGA (1366 × 768) Fine-Pitch LED',
+                    'Keyboard' => 'Signature Island Keyboard Design',
+                    'Status' => 'Preserved / Diagnostic Node'
                 ],
-                'log' => 'Purchased as a non-booting salvage chassis in 2023. Restored CMOS battery, repasted Atom die with Arctic MX-4, replaced damaged hinge assembly, and flashed modified microcode BIOS. Currently serving as a lightweight network probe and serial RS-232 telemetry relay.',
+                'log' => 'Hands-on hardware diagnostics, BIOS recovery, and preservation. Refurbished CMOS battery, repasted Atom die, and configured for low-power serial telemetry and vintage firmware inspection.',
                 'image' => 'images/carousel-retro.jpg',
                 'order' => 1
             ],
             [
-                'node_id' => 'NODE.02 // LAB ARCHIVE',
-                'tag' => 'ACTIVE RIG',
-                'title' => 'Lenovo ThinkPad X220 Mod',
-                'subtitle' => 'Intel Core i5-2520M Ultraportable • Classic 7-Row Keyboard Workhorse',
-                'oem' => 'Lenovo Corp.',
+                'node_id' => 'NODE.02 // TOUGHBOOK ULTRA',
+                'tag' => 'OPERATIONAL',
+                'title' => 'Panasonic Let\'s Note CF-T4GW5AXR',
+                'subtitle' => 'Magnesium Alloy Bonnet Chassis • Fanless Silent Architecture',
+                'oem' => 'Panasonic Japan',
                 'specs' => [
-                    'CPU' => 'Intel Core i5-2520M (2.50 GHz, Turbo to 3.20 GHz, 2C/4T)',
-                    'RAM' => '16GB DDR3L-1600 Dual-Channel',
-                    'Storage' => '256GB Samsung 860 EVO mSATA + 500GB Crucial MX500 SATA-III',
-                    'Display' => '12.5-inch IPS HD 1366x768 Matte Display',
-                    'OS' => 'Arch Linux (Kernel 6.10-zen) + Coreboot open-source BIOS',
-                    'Purpose' => 'Primary mobile Linux development terminal, embedded debugging'
+                    'CPU' => 'Intel Pentium M Ultra Low Voltage (ULV) 753',
+                    'Chassis' => 'Magnesium Alloy Bonnet Construction',
+                    'Touchpad' => 'Circular Optical Touchpad Interface',
+                    'Cooling' => 'Fanless Silent Thermal Dissipation'
                 ],
-                'log' => 'Flashed with 1vyrain modified UEFI to remove Wi-Fi whitelist and unlock memory speeds. Retrofitted with classic 7-row keyboard mod. Repasted copper heatpipe with Noctua NT-H2. Battery rebuilt with custom high-capacity Panasonic 18650 cells.',
-                'image' => 'images/carousel-workspace.jpg',
+                'log' => 'Restored Japanese enterprise ultraportable. Cleaned thermal dissipation plates, verified fanless heatsink efficiency, and benchmarked legacy architecture under specialized diagnostic loads.',
+                'image' => 'images/carousel-retro.jpg',
                 'order' => 2
             ],
             [
-                'node_id' => 'RIG.03 // LAB ARCHIVE',
-                'tag' => 'HYPERVISOR',
-                'title' => 'Cluster Node 01 — Proxmox VE',
-                'subtitle' => 'High-Efficiency Homelab Bare-Metal Virtualization Hypervisor',
-                'oem' => 'Custom Systems Build',
+                'node_id' => 'RIG.03 // BUSINESS NOTEBOOK',
+                'tag' => 'DIAGNOSTIC RIG',
+                'title' => 'HP Compaq nx6320',
+                'subtitle' => 'Dedicated Diagnostic Terminal • Native Serial & Parallel I/O',
+                'oem' => 'HP / Compaq',
                 'specs' => [
-                    'CPU' => 'AMD Ryzen 7 5700X (8 Cores, 16 Threads, 32MB L3 Cache)',
-                    'RAM' => '64GB DDR4-3200 ECC Unbuffered Memory',
-                    'Storage' => '2x 1TB NVMe PCIe 4.0 ZFS RAID-1 Mirror + 4x 4TB SATA ZFS Pool',
-                    'Network' => 'Dual Intel I225-V 2.5GbE NICs (LACP Trunking)',
-                    'OS' => 'Proxmox VE 8.2 (Linux Kernel 6.8 PVE)',
-                    'Purpose' => 'Running isolated LXC containers, Docker swarm, and network lab routers'
+                    'Platform' => 'Intel Core 2 Duo Platform',
+                    'Panel' => '15.0-inch 4:3 Matte Anti-Glare Panel',
+                    'Interfaces' => 'Native Hardware RS-232 Serial & Parallel Ports',
+                    'Role' => 'Dedicated Hardware Diagnostic Terminal'
                 ],
-                'log' => 'Engineered for continuous 24/7 high-density virtualization. Hosts internal Git repositories, test database clusters, DNS caches, WireGuard ingress gateways, and CI/CD automated runners with continuous temperature monitoring and battery UPS failover.',
-                'image' => 'images/carousel-homelab.jpg',
+                'log' => 'Maintained as an active bench diagnostic terminal. Native legacy serial and parallel interfaces enable direct out-of-band communication with network switches, microcontrollers, and retro motherboards.',
+                'image' => 'images/carousel-workspace.jpg',
                 'order' => 3
+            ],
+            [
+                'node_id' => 'RIG.04 // SLEEPER BUILD',
+                'tag' => 'DAILY WORKSTATION',
+                'title' => 'HP Pavilion a6000 (Sleeper)',
+                'subtitle' => 'Mid-2000s Glossy Wave-Front Chassis Refitted with Modern Internals',
+                'oem' => 'HP Custom Sleeper',
+                'specs' => [
+                    'Chassis' => 'Mid-2000s OEM Glossy Wave-Front Vintage Enclosure',
+                    'Modifications' => 'Modular Cooling, Quiet Airflow Routing, High-Efficiency PSU',
+                    'Internals' => 'Modern Multi-Core Desktop Platform',
+                    'Status' => 'Daily Production Workstation'
+                ],
+                'log' => 'Complete stealth build combining retro mid-2000s desktop aesthetics with modern high-performance engineering internals, custom intake filtration, and whisper-quiet acoustic profiling.',
+                'image' => 'images/carousel-homelab.jpg',
+                'order' => 4
+            ],
+            [
+                'node_id' => 'NODE.05 // HOMELAB SERVER',
+                'tag' => 'ONLINE / 24/7',
+                'title' => 'Dell OptiPlex 3010 Server',
+                'subtitle' => 'Intel Core Host • Proxmox VE Virtualization Cluster Node',
+                'oem' => 'Dell Homelab',
+                'specs' => [
+                    'Host' => 'Intel Core Host Platform with Expanded Memory',
+                    'Networking' => 'Gigabit Uplink with VLAN Trunking',
+                    'Hypervisor' => 'Proxmox VE Virtual Environment',
+                    'Workloads' => 'Linux Containers (LXC), Docker Microservices, DNS Caching'
+                ],
+                'log' => 'Engineered for continuous 24/7 uptime. Runs virtualized DNS resolvers, internal reverse proxies, WireGuard mesh entry points, and local development test databases with continuous monitoring.',
+                'image' => 'images/carousel-homelab.jpg',
+                'order' => 5
+            ],
+            [
+                'node_id' => 'NODE.06 // ULTRA SFF',
+                'tag' => 'BENCH TEST',
+                'title' => 'Dell OptiPlex 760 USFF',
+                'subtitle' => 'Ultra-Small Form Factor Desktop • Low-Power Compact Footprint',
+                'oem' => 'Dell Legacy',
+                'specs' => [
+                    'Chassis' => 'Ultra-Small Form Factor (USFF)',
+                    'CPU' => 'Intel Core 2 Duo Processor',
+                    'Power' => 'Low-Power High-Efficiency Compact Footprint',
+                    'Role' => 'Headless Network Test Node & Diagnostic Sandbox'
+                ],
+                'log' => 'Deployed as a standalone headless bench node for testing bare-metal kernel configurations, lightweight network routines, and simulated network drops without touching production rigs.',
+                'image' => 'images/carousel-retro.jpg',
+                'order' => 6
             ]
         ];
 
@@ -601,22 +207,33 @@ class PortfolioDataSeeder
         }
 
         $skills = [
-            // Languages
-            ['Languages', 'C# / .NET 9', 92, 1],
-            ['Languages', 'C++20 / Systems', 85, 2],
-            ['Languages', 'Python 3.12 / PyTorch', 88, 3],
-            ['Languages', 'PHP 8.3+ / MySQL', 90, 4],
-            ['Languages', 'JavaScript (ES6+) / TypeScript', 90, 5],
-            ['Languages', 'SQL / Database Architecture', 88, 6],
-            ['Languages', 'x86_64 Assembly / Low-Level', 75, 7],
-            // Frameworks & Tools
-            ['Frameworks & Platforms', 'WPF / Desktop UI Architecture', 90, 1],
-            ['Frameworks & Platforms', 'PyTorch / TensorRT / CUDA', 82, 2],
-            ['Frameworks & Platforms', 'Linux Systems Administration', 92, 3],
-            ['Frameworks & Platforms', 'Proxmox VE & Virtualization', 88, 4],
-            ['Frameworks & Platforms', 'Docker & Containerization', 85, 5],
-            ['Frameworks & Platforms', 'WireGuard & Zero-Trust Networking', 89, 6],
-            ['Frameworks & Platforms', 'Git / GitHub CI/CD Actions', 94, 7]
+            // Programming & Databases
+            ['Programming & Databases', 'HTML5', 95, 1],
+            ['Programming & Databases', 'CSS3 / Grid', 92, 2],
+            ['Programming & Databases', 'JavaScript (ES6+)', 90, 3],
+            ['Programming & Databases', 'Python', 88, 4],
+            ['Programming & Databases', 'Java', 85, 5],
+            ['Programming & Databases', 'C#', 88, 6],
+            ['Programming & Databases', 'C++', 84, 7],
+            ['Programming & Databases', 'MySQL', 88, 8],
+            // Systems & Virtualization
+            ['Systems & Virtualization', 'Windows OS', 95, 1],
+            ['Systems & Virtualization', 'Linux (Debian / Ubuntu)', 90, 2],
+            ['Systems & Virtualization', 'Proxmox VE', 88, 3],
+            ['Systems & Virtualization', 'Docker Containers', 85, 4],
+            ['Systems & Virtualization', 'Tailscale Mesh VPN', 90, 5],
+            ['Systems & Virtualization', 'DNS & Routing', 88, 6],
+            // Creative & Digital Media
+            ['Creative & Digital Media', 'Adobe Photoshop', 85, 1],
+            ['Creative & Digital Media', 'Adobe Illustrator', 82, 2],
+            ['Creative & Digital Media', 'DaVinci Resolve', 80, 3],
+            ['Creative & Digital Media', 'Office Suite', 95, 4],
+            // Workflow & Operations
+            ['Workflow & Operations', 'Git', 92, 1],
+            ['Workflow & Operations', 'GitHub', 92, 2],
+            ['Workflow & Operations', 'Visual Studio Code', 95, 3],
+            ['Workflow & Operations', 'Antigravity', 90, 4],
+            ['Workflow & Operations', 'Hardware Diagnostics', 94, 5],
         ];
 
         $sql = "INSERT INTO `skills` (`category`, `name`, `proficiency_level`, `display_order`, `is_published`)
@@ -643,26 +260,48 @@ class PortfolioDataSeeder
 
         $experiences = [
             [
-                'title' => 'Software Systems & Solutions Architect',
-                'organization' => 'Independent / Academic Development',
-                'location' => 'Laguna, Philippines',
-                'type' => 'Engineering',
+                'title' => 'Secretary',
+                'organization' => 'Alliance of Computer Engineering and Computer Science Students',
+                'location' => 'Laguna College of Business and Arts',
+                'type' => 'Academic Organization',
                 'start' => '2023',
                 'end' => 'Present',
                 'current' => 1,
-                'desc' => 'Leading the architectural design, security hardening, and deployment of mission-critical applications across retail, systems virtualization, and enterprise workflow automation.',
+                'desc' => 'Managing academic records, technical documentation, student event coordination, and inter-organizational communication across computing departments.',
                 'order' => 1
             ],
             [
-                'title' => 'Computer Science Researcher & Student Leader',
-                'organization' => 'College of Computer Studies',
+                'title' => 'Laguna Chapter Chairperson',
+                'organization' => 'National Youth Movement for the West Philippine Sea',
                 'location' => 'Laguna, Philippines',
-                'type' => 'Academic & Leadership',
-                'start' => '2022',
+                'type' => 'Youth Leadership',
+                'start' => '2023',
                 'end' => 'Present',
                 'current' => 1,
-                'desc' => 'Mentoring junior computing students in data structures, systems programming in C/C++, and algorithmic optimization. Organizing technical workshops and coding competitions.',
+                'desc' => 'Leading youth chapter leadership, community awareness, policy advocacy, and public engagement initiatives.',
                 'order' => 2
+            ],
+            [
+                'title' => 'Director for Communications and Publications',
+                'organization' => 'FPJ Youth',
+                'location' => 'Laguna, Philippines',
+                'type' => 'Media & Communications',
+                'start' => '2023',
+                'end' => 'Present',
+                'current' => 1,
+                'desc' => 'Directing digital publication pipelines, graphic design assets, public releases, and youth communication strategies.',
+                'order' => 3
+            ],
+            [
+                'title' => 'Member',
+                'organization' => 'International Association of Engineers (IAENG)',
+                'location' => 'International',
+                'type' => 'Professional Organization',
+                'start' => '2023',
+                'end' => 'Present',
+                'current' => 1,
+                'desc' => 'Active member participating in professional research exchanges, engineering publications, and technical conferences.',
+                'order' => 4
             ]
         ];
 
@@ -695,13 +334,22 @@ class PortfolioDataSeeder
 
         $edu = [
             [
-                'institution' => 'Laguna State Polytechnic University / Academic Institution',
+                'institution' => 'Laguna College of Business and Arts',
                 'degree' => 'Bachelor of Science in Computer Science',
-                'field' => 'Systems Architecture & Software Engineering',
+                'field' => 'Computer Science',
                 'start' => '2022',
                 'end' => 'Present',
-                'achievements' => "Dean's Lister • Focused on operating systems, algorithm design, distributed computing, and database management systems.",
+                'achievements' => 'Undergraduate — In Progress. Rigorous study in algorithms, data structures, software engineering, systems administration, and database design.',
                 'order' => 1
+            ],
+            [
+                'institution' => 'St. Vincent College of Cabuyao',
+                'degree' => 'Senior High School Diploma',
+                'field' => 'Science, Technology, Engineering & Mathematics (STEM)',
+                'start' => '2020',
+                'end' => '2022',
+                'achievements' => 'Completed Senior High School curriculum under the STEM academic strand.',
+                'order' => 2
             ]
         ];
 
@@ -721,6 +369,49 @@ class PortfolioDataSeeder
         }
     }
 
+    private function seedCertifications(bool $force = false): void
+    {
+        if ($force) {
+            $this->pdo->exec("DELETE FROM `certifications`");
+        } else {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM `certifications`");
+            if ((int)$stmt->fetchColumn() > 0) return;
+        }
+
+        $certs = [
+            [
+                'title' => 'Certified Six Sigma White Belt',
+                'issuer' => 'Continuous Quality Improvement & Process Optimization',
+                'issue_date' => '2023',
+                'credential_id' => 'CSSWB-VERIFIED',
+                'credential_url' => '',
+                'order' => 1
+            ],
+            [
+                'title' => 'EF SET English Certificate — C1 Advanced',
+                'issuer' => 'EF Standard English Test',
+                'issue_date' => '2023',
+                'credential_id' => 'EFSET-C1-ADVANCED',
+                'credential_url' => '',
+                'order' => 2
+            ]
+        ];
+
+        $sql = "INSERT INTO `certifications` (`title`, `issuer`, `issue_date`, `credential_id`, `credential_url`, `display_order`, `is_published`)
+                VALUES (:title, :issuer, :issue_date, :credential_id, :credential_url, :display_order, 1)";
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($certs as $c) {
+            $stmt->execute([
+                ':title' => $c['title'],
+                ':issuer' => $c['issuer'],
+                ':issue_date' => $c['issue_date'],
+                ':credential_id' => $c['credential_id'],
+                ':credential_url' => $c['credential_url'],
+                ':display_order' => $c['order']
+            ]);
+        }
+    }
+
     private function seedServices(bool $force = false): void
     {
         if ($force) {
@@ -732,28 +423,34 @@ class PortfolioDataSeeder
 
         $services = [
             [
-                'title' => 'Mission-Critical Desktop & POS Engineering',
-                'category' => 'Systems Software',
-                'desc' => 'Engineering high-reliability, zero-downtime offline applications using modern C#/.NET 9, SQLite Write-Ahead Logging, hardware scanner abstraction, and LAN peer-to-peer sync.',
+                'title' => 'Web & Software Development',
+                'category' => 'Software Engineering',
+                'desc' => 'Designing and coding responsive web applications and reliable software solutions with clean, structured, dependency-conscious code in Vanilla JS, PHP, Python, C#, C++, Java, and MySQL.',
                 'order' => 1
             ],
             [
-                'title' => 'High-Performance Web & Full-Stack CMS',
-                'category' => 'Web Architecture',
-                'desc' => 'Crafting secure, portable PHP 8.3+ & MySQL web platforms, custom CMS engines, REST APIs, and responsive cybernetic interfaces optimized for low-latency delivery.',
+                'title' => 'Homelab & Virtualization',
+                'category' => 'Cloud & Virtualization',
+                'desc' => 'Building and administering resilient virtual environments, Proxmox VE hypervisors, and containerized Docker stacks on Debian/Linux servers with uptime monitoring.',
                 'order' => 2
             ],
             [
-                'title' => 'Virtualization & Zero-Trust Homelab Infrastructure',
-                'category' => 'Cloud & Infrastructure',
-                'desc' => 'Deploying secure Proxmox VE hypervisors, automated encrypted WireGuard mesh networks, ZFS storage arrays, Docker container clusters, and continuous telemetry monitoring.',
+                'title' => 'Networking & Systems Administration',
+                'category' => 'Infrastructure',
+                'desc' => 'Configuring encrypted mesh routing with Tailscale, local DNS resolution, subdomain routing, and reliable Windows and Linux systems administration.',
                 'order' => 3
             ],
             [
-                'title' => 'Computer Vision & Deep Learning Pipelines',
-                'category' => 'Applied AI / ML',
-                'desc' => 'Building edge neural network inference systems using PyTorch, CUDA, and OpenCV with TensorRT FP16 quantization for low-latency real-time video analytics.',
+                'title' => 'Hardware Diagnostics & Restoration',
+                'category' => 'Hardware Engineering',
+                'desc' => 'Refurbishing, troubleshooting, and diagnosing modern and vintage computing platforms, BIOS recovery, thermal repasting, and component-level benchmarking.',
                 'order' => 4
+            ],
+            [
+                'title' => 'Technical Problem Solving & Quality',
+                'category' => 'Optimization',
+                'desc' => 'Systematic troubleshooting, technical architecture documentation, and continuous process optimization applying Six Sigma White Belt methodologies.',
+                'order' => 5
             ]
         ];
 
@@ -781,8 +478,7 @@ class PortfolioDataSeeder
 
         $links = [
             ['github', 'GitHub', 'https://github.com/x64_emkei', 1],
-            ['linkedin', 'LinkedIn', 'https://linkedin.com/in/michael-ordenes/', 2],
-            ['email', 'Email', 'mailto:mordenes@acm.org', 3]
+            ['email', 'Email', 'mailto:mordenes@acm.org', 2]
         ];
 
         $sql = "INSERT INTO `social_links` (`platform`, `label`, `url`, `display_order`, `is_published`)
@@ -809,12 +505,12 @@ class PortfolioDataSeeder
 
         $settings = [
             ['site_title', 'Michael Benedict Ordenes | x64emkei.dev', 'general', 'Public title of the portfolio'],
-            ['site_tagline', 'Systems Architecture, C# .NET, C++20, and High-Performance Software Engineering', 'general', 'Meta tagline'],
-            ['meta_description', 'Michael Benedict Ordenes (x64emkei) — Computer Science Student, IT Enthusiast & Systems Developer. High-tech HUD portfolio and systems engineering showcase.', 'seo', 'Default SEO description'],
-            ['meta_keywords', 'Michael Benedict Ordenes, x64emkei, developer portfolio, systems architect, C#, .NET 9, C++20, PHP CMS, MySQL, Proxmox, homelab', 'seo', 'Meta keywords list'],
+            ['site_tagline', 'Computer Science Student, IT Enthusiast & Systems Builder', 'general', 'Meta tagline'],
+            ['meta_description', 'Michael Benedict Ordenes (x64emkei) — Computer Science student at Laguna College of Business and Arts. Software development, systems architecture, homelab, and hardware restoration.', 'seo', 'Default SEO description'],
+            ['meta_keywords', 'Michael Benedict Ordenes, x64emkei, developer portfolio, LCBA, Computer Science, Proxmox, homelab, networking, C#, C++, Python, MySQL', 'seo', 'Meta keywords list'],
             ['contact_email', 'mordenes@acm.org', 'contact', 'Primary inbox contact email'],
             ['theme_default', 'dark', 'appearance', 'Default HUD theme mode (dark or light)'],
-            ['primary_domain', 'x64emkei.dpdns.org', 'hosting', 'Primary configured domain'],
+            ['primary_domain', 'welcome.x64emkei.dpdns.org', 'hosting', 'Primary configured domain'],
             ['copyright_text', '© 2026 Michael Benedict Ordenes. Systems Architecture // All telemetry active.', 'general', 'Footer copyright label']
         ];
 
@@ -842,31 +538,22 @@ class PortfolioDataSeeder
 
         $achievements = [
             [
-                'Consistent Dean\'s Lister',
-                'Mapúa Malayan Colleges Laguna',
-                'Conferred academic honors for consecutive academic terms in BS Computer Science, maintaining exceptional academic performance across algorithmic analysis and systems development.',
-                '2023 - Present',
+                'Undergraduate Scholar in Computer Science',
+                'Laguna College of Business and Arts',
+                'Engaged in rigorous undergraduate studies focusing on computer systems, software engineering, database design, and algorithmic problem-solving.',
+                '2022 - Present',
                 'Academic',
                 1,
                 1
             ],
             [
-                'ACM Student Chapter Operations Officer',
-                'Association for Computing Machinery (ACM)',
-                'Elected chapter officer overseeing systems engineering projects, student technical workshops, and competitive programming initiatives.',
-                'AY 2024 - 2025',
+                'Secretary & Academic Committee Steward',
+                'Alliance of Computer Engineering and Computer Science Students',
+                'Elected secretary managing departmental records, documentation, technical initiatives, and student assemblies.',
+                'AY 2023 - Present',
                 'Leadership',
                 1,
                 2
-            ],
-            [
-                'Systems Architect Distinction',
-                'College of Computer and Information Science',
-                'Recognized for exceptional software architecture and development of resilient enterprise point-of-sale and homelab telemetry platforms.',
-                '2024',
-                'Professional',
-                1,
-                3
             ]
         ];
 
@@ -896,16 +583,16 @@ class PortfolioDataSeeder
         }
 
         $sections = [
-            ['hero', 'OPERATIONAL ARCHITECTURE', 'SYSTEMS SCHOLAR // HARDWARE SPECIALIST', 'High-performance computing student, systems architect, and IT enthusiast.', 1, 1, 'default', 0],
-            ['about', 'BIOGRAPHY // CORE DIRECTIVE', 'IDENTITY & SCHOLASTIC DISCIPLINE', 'Computer Science student and systems engineer exploring low-level hardware and resilient platforms.', 1, 2, 'default', 0],
-            ['projects', 'FEATURED PRODUCTION ARCHITECTURES', 'DEPLOYED PLATFORMS & SOFTWARE CODEBASES', 'Engineered desktop engines, embedded terminal POS systems, neural networks, and distributed services.', 1, 3, 'cards', 1],
-            ['hardware', 'HARDWARE LAB ARCHIVE & FLEET INFRASTRUCTURE', 'LAB FLEET TELEMETRY & RETRO HARDWARE REPOSITORY', 'High-performance compute clusters, bare-metal hypervisors, and vintage x86 compute artifacts.', 1, 4, 'cards', 1],
-            ['skills', 'TECHNICAL PROFICIENCIES & CAPABILITIES', 'ENGINEERING MATRIX // PROFICIENCY CATALOG', 'Grouped multi-disciplinary technical competencies from systems programming to cloud architectures.', 1, 5, 'default', 1],
-            ['experience', 'ORGANIZATIONAL EXPERIENCE & LEADERSHIP', 'CHRONOLOGY & RESPONSIBILITIES', 'Track record of student leadership, technical committee stewardship, and academic operations.', 1, 6, 'timeline', 1],
-            ['education', 'ACADEMIC FOUNDATION', 'DEGREES & SCHOLASTIC FORMATION', 'Higher education history and formal Computer Science undergraduate curriculum.', 1, 7, 'cards', 1],
-            ['achievements', 'HONORS & RECOGNITIONS', 'ACADEMIC & INDUSTRY DISTINCTIONS', 'Academic distinctions, hackathon recognitions, and professional commendations.', 1, 8, 'cards', 1],
-            ['certifications', 'CERTIFICATIONS & CREDENTIALS', 'VERIFIED SPECIALIZATIONS', 'Industry credentials and vendor qualifications.', 1, 9, 'cards', 1],
-            ['services', 'SPECIALIZED ENGINEERING OFFERINGS', 'CAPABILITIES & ADVISORY', 'Custom application engineering, systems optimization, and network topology consulting.', 1, 10, 'cards', 1],
+            ['hero', 'OPERATIONAL ARCHITECTURE', 'SYSTEMS SCHOLAR // HARDWARE SPECIALIST', 'Computer Science student, systems builder, and IT infrastructure enthusiast.', 1, 1, 'default', 0],
+            ['about', 'BIOGRAPHY // CORE DIRECTIVE', 'IDENTITY & SCHOLASTIC DISCIPLINE', 'Computer Science student at Laguna College of Business and Arts exploring systems, homelabs, and hardware preservation.', 1, 2, 'default', 0],
+            ['projects', 'FEATURED PRODUCTION ARCHITECTURES', 'DEPLOYED PLATFORMS & SOFTWARE CODEBASES', 'Software and systems builds catalog.', 1, 3, 'cards', 1],
+            ['hardware', 'VINTAGE HARDWARE DIAGNOSTICS & RESTORATION LAB', 'LAB FLEET TELEMETRY & RETRO HARDWARE REPOSITORY', 'Hands-on hardware diagnostics, BIOS recovery, and preservation across modern and legacy computing architectures (6 operational nodes).', 1, 4, 'cards', 1],
+            ['skills', 'TECHNICAL SKILLS & TOOLS', 'ENGINEERING MATRIX // PROFICIENCY CATALOG', 'Programming, systems, virtualization, networking, creative media, and operational workflows.', 1, 5, 'default', 1],
+            ['experience', 'ORGANIZATIONAL INVOLVEMENT & LEADERSHIP', 'CHRONOLOGY & RESPONSIBILITIES', 'Track record of student leadership, organizational communications, and professional engineering affiliations.', 1, 6, 'timeline', 1],
+            ['education', 'EDUCATION & CREDENTIALS', 'SCHOLASTIC FORMATION', 'Higher education history, senior high STEM foundation, and industry certifications.', 1, 7, 'cards', 1],
+            ['achievements', 'HONORS & RECOGNITIONS', 'ACADEMIC & LEADERSHIP DISTINCTIONS', 'Academic milestones and organizational leadership recognitions.', 1, 8, 'cards', 1],
+            ['certifications', 'CERTIFICATIONS & CREDENTIALS', 'VERIFIED SPECIALIZATIONS', 'Certified Six Sigma White Belt & EF SET English C1 Advanced qualifications.', 1, 9, 'cards', 1],
+            ['services', 'SERVICES & SPECIALTIES', 'CAPABILITIES & OFFERINGS', 'Web development, homelab virtualization, networking, hardware restoration, and systematic technical problem solving.', 1, 10, 'cards', 1],
             ['contact', 'INITIALIZE SECURE TRANSMISSION', 'TELEMETRY UPLINK & DIRECT DISPATCH', 'Connect directly via encrypted transmission or explore active communication channels.', 1, 11, 'default', 0],
         ];
 
@@ -923,6 +610,185 @@ class PortfolioDataSeeder
                 ':layout' => $s[6],
                 ':hide' => $s[7],
             ]);
+        }
+    }
+
+    private function seedManifestoArticle(bool $force = false): void
+    {
+        $manifestoContent = <<<MARKDOWN
+# My AI Manifesto: A Personal Position on AI, Human Skill, and Responsible Progress
+
+**Author:** Michael Benedict Ordenes  
+**Source:** AI Manifesto v1.0 section in the portfolio website  
+
+---
+
+## PREAMBLE
+
+Artificial intelligence is becoming part of the way people learn, work, create, and solve problems. As a student preparing for a professional career in technology, its presence is impossible to ignore.
+
+There is excitement in what AI can accomplish, but there is also a responsibility to understand what should remain distinctly human.
+
+This manifesto represents the principles that will guide my relationship with AI—not as something to fear or reject, but as something to understand, use responsibly, and keep in its proper place.
+
+---
+
+## I. AI IS A TOOL, NOT A SUBSTITUTE FOR SKILL
+
+AI should remain a tool for developing and extending human capability.
+
+As a student, learning should not be reduced to asking an AI for an answer. The purpose of education is not simply to produce an output, but to develop the ability to understand, reason, create, solve problems, and make decisions independently.
+
+* **TOOL.ASSIST — Assistance:** AI can help explain a difficult concept, suggest an approach, assist with code, or provide another perspective.
+* **HUMAN.SKILL — Mastery:** Years of studying, practicing, experimenting, failing, and gaining experience cannot be equated to writing an effective prompt in minutes.
+
+> **CORE PRINCIPLE:**  
+> The value of professional skill lies not only in producing an output, but in understanding why it works, whether it is correct, how it can be improved, and what consequences follow from using it.
+
+---
+
+## II. HUMAN CREATIVITY STILL MATTERS
+
+Human capability enhanced by AI.
+
+Much of what AI can produce is connected to knowledge and creative work that originated from people. Art, writing, programming, research, engineering, design, and other forms of human work have contributed to the knowledge from which modern AI systems derive their capabilities.
+
+* **CRAFT / TASTE:** A person who has spent years developing a craft possesses something that cannot be reduced to a prompt: experience. That experience shapes judgment, taste, intuition, creativity, and the ability to recognize possibilities that may not be immediately apparent.
+* **MANDATE:** The goal should not be to choose between humans and AI. The goal must be human capability enhanced by AI.
+
+---
+
+## III. AI SHOULD STRENGTHEN PROFESSIONAL DEVELOPMENT
+
+Competence over dependency.
+
+A strong professional should be capable of working with AI without becoming dependent upon it. That means developing the fundamentals:
+
+1. Understanding the code behind the abstraction.
+2. Understanding the reasoning behind the answer.
+3. Knowing when an AI-generated solution is wrong or hallucinated.
+4. Being able to independently verify and validate information.
+5. Being capable of solving a problem even when the tool is unavailable.
+
+---
+
+## IV. RESPONSIBILITY CANNOT BE AUTOMATED
+
+Accountability remains human.
+
+AI can generate an answer, but it cannot carry professional responsibility for that answer. When AI contributes to a project, the human using it remains responsible for the final result.
+
+> **CRITICAL ETHICAL AXIOM:**  
+> This principle is especially important in professional environments where mistakes can affect people, organizations, finances, privacy, security, or public welfare.
+> 
+> AI should therefore be questioned, tested, and verified rather than blindly trusted. The presence of an AI system should never become an excuse for avoiding accountability.
+
+---
+
+## V. TECHNOLOGY SHOULD CREATE OPPORTUNITIES
+
+Progress measured by opportunities created for communities.
+
+### Policy & Investment / PAX Silica
+Large technological investments such as PAX Silica must create tangible opportunities for workers, students, researchers, and local industries.
+
+* High-quality tech careers and jobs
+* Knowledge and technology transfer
+* Opportunities for Filipino talent
+* Resilient economic growth
+
+> **FILIPINO GUIDING MAXIM:**  
+> *"Walang dapat agrabyado; lahat dapat may pagkakataong makinabang."*
+
+---
+
+## VI. A FUTURE WHERE PEOPLE BECOME MORE CAPABLE
+
+Expanding human capability rather than rendering people disposable.
+
+* **Stale Question:** "What jobs can be replaced?"
+* **Generative Question:** "What new capabilities and opportunities can be created?"
+
+### Potential Benefits:
+* **Students** → Understand complex concepts deeper
+* **Developers** → Explore solutions and build resilient code
+* **Researchers** → Analyze data and synthesize insights
+* **Citizens** → Benefit from efficient, transparent services
+
+---
+
+## VII. PROGRESS MUST COME WITH RESPONSIBLE GOVERNANCE
+
+Developing talent, transparency, and public responsibility.
+
+For the Philippines, technological development should not simply mean becoming a market for technologies developed elsewhere. It must mean developing Filipino talent and capability.
+
+* **Students** → Opportunities to learn and innovate
+* **Professionals** → Opportunities to work with dignity
+* **Researchers** → Resources to contribute to global science
+* **Communities** → Equitable access to technological benefits
+
+Good governance allows innovation to flourish while ensuring that the benefits of progress reach the people who make that progress possible.
+
+---
+
+## VIII. THE PROFESSIONAL I ASPIRE TO BECOME
+
+Core Principles & Creed
+
+### The Foundation Begins As A Student:
+1. Learn the fundamentals thoroughly.
+2. Develop genuine, independent skills.
+3. Use AI without becoming dependent on it.
+4. Question and verify outputs rigorously.
+5. Use technological knowledge to create opportunities for others.
+
+### x64emkei // CREED:
+* AI should make people more capable, not more disposable.
+* Human skill should be strengthened, not devalued.
+* Technology should create opportunities, not merely eliminate them.
+* Innovation should serve people, not leave them behind.
+* Professional competence should always remain greater than the ability to simply operate a tool.
+MARKDOWN;
+
+        $slug = 'my-ai-manifesto';
+        $title = 'My AI Manifesto: A Personal Position on AI, Human Skill, and Responsible Progress';
+        $excerpt = 'A personal position on AI, human skill, and responsible progress by Michael Benedict Ordenes. Principles guiding learning, craft, professional development, and Filipino technological opportunity.';
+        
+        $sql = "INSERT INTO `articles` 
+            (`author_id`, `category_id`, `title`, `slug`, `excerpt`, `content`, `featured_image`, `seo_title`, `seo_description`, `is_featured`, `status`, `published_at`)
+            VALUES (NULL, 1, :title, :slug, :excerpt, :content, :img, :seo_title, :seo_desc, 1, 'published', NOW())
+            ON DUPLICATE KEY UPDATE 
+            `title` = VALUES(`title`),
+            `excerpt` = VALUES(`excerpt`),
+            `content` = VALUES(`content`),
+            `is_featured` = 1,
+            `status` = 'published'";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':title' => $title,
+            ':slug' => $slug,
+            ':excerpt' => $excerpt,
+            ':content' => $manifestoContent,
+            ':img' => 'images/carousel-workspace.jpg',
+            ':seo_title' => 'My AI Manifesto // Michael Benedict Ordenes',
+            ':seo_desc' => $excerpt
+        ]);
+
+        $artId = (int)$this->pdo->lastInsertId();
+        if ($artId <= 0) {
+            $q = $this->pdo->prepare("SELECT id FROM `articles` WHERE `slug` = :slug");
+            $q->execute([':slug' => $slug]);
+            $artId = (int)$q->fetchColumn();
+        }
+
+        if ($artId > 0) {
+            // Attach Tags: Security, Zero-Trust, Ethics
+            $insPivot = $this->pdo->prepare("INSERT IGNORE INTO `article_tag_pivot` (`article_id`, `tag_id`) VALUES (:aid, :tid)");
+            foreach ([6, 7] as $tid) {
+                $insPivot->execute([':aid' => $artId, ':tid' => $tid]);
+            }
         }
     }
 }

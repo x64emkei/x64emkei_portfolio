@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "skills": {
+    "technical-debt": {
+      "source": "AsyrafHussin/agent-skills",
+      "commit": "1aa0ff717c10309226c9e678f00873976450fd76",
+      "sourceType": "github",
+      "skillPath": "skills/technical-debt/SKILL.md",
+      "computedHash": "d6b4ea1e9637f1b264eac020b10ec7c1e93b606dca97e36d018cb531e1d2f238"
+    }
+  }
+}
