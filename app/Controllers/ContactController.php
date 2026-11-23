@@ -24,7 +24,7 @@ class ContactController
                 json_response(['success' => false, 'error' => $msg], 429);
             }
             flash('error', $msg);
-            redirect('/#contact');
+            redirect('/contact#inquiry');
         }
 
         // Honeypot spam defense
@@ -34,7 +34,7 @@ class ContactController
                 json_response(['success' => true, 'message' => 'Telemetry transmission acknowledged.']);
             }
             flash('success', 'Telemetry transmission received.');
-            redirect('/#contact');
+            redirect('/contact#inquiry');
         }
 
         $name = trim((string)($_POST['name'] ?? ''));
@@ -60,7 +60,7 @@ class ContactController
             }
             flash('error', implode(' ', $errors));
             set_old_input($_POST);
-            redirect('/#contact');
+            redirect('/contact#inquiry');
         }
 
         $limiter->hit($rateKey, 3600);
@@ -82,7 +82,7 @@ class ContactController
         }
 
         flash('success', 'Telemetry transmission received. I will acknowledge your signal shortly!');
-        redirect('/#contact');
+        redirect('/contact#inquiry');
     }
 
     private function isAjax(): bool

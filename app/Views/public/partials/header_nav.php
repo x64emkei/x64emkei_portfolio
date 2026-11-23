@@ -169,6 +169,7 @@ $activeSub = $activeSub ?? '';
                     <li role="none">
                         <a href="<?= $childRoute ?>" 
                            class="sidebar-sub-link <?= $isChildActive ? 'child-active' : '' ?>" 
+                           data-target-section="<?= e($child['id']) ?>"
                            role="menuitem">
                             <span class="sub-arrow">&rsaquo;</span>
                             <span><?= e($child['label']) ?></span>

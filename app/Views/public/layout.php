@@ -966,6 +966,9 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                     </div>
                 </div>
             </section>
+
+            <!-- UNIFIED PROFESSIONAL FOOTER -->
+            <?php require __DIR__ . '/partials/footer.php'; ?>
         </div>
     </main>
 

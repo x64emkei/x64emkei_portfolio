@@ -257,10 +257,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sidebar navigation clicks
     navLinks.forEach((link) => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
             const section = link.getAttribute('data-section');
-            navigateToSection(section, true);
-            closeSidebar();
+            const href = link.getAttribute('href');
+            const targetSection = section ? document.getElementById(section) : null;
+
+            // If on SPA page (e.g. home with .page-view) and target exists
+            if (targetSection && document.querySelector('.page-view')) {
+                e.preventDefault();
+                navigateToSection(section, true);
+                closeSidebar();
+            } else if (href && href !== '#' && !href.startsWith('javascript:')) {
+                const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+                const linkUrl = new URL(link.href, window.location.origin);
+                const targetPath = linkUrl.pathname.replace(/\/$/, '') || '/';
+
+                if (currentPath === targetPath) {
+                    // Already on target page: toggle accordion and scroll to top
+                    e.preventDefault();
+                    const parentItem = link.closest('.nav-item');
+                    const subnav = parentItem?.querySelector('.sidebar-sub-nav');
+                    const toggleBtn = parentItem?.querySelector('.subnav-accordion-toggle');
+                    if (subnav) {
+                        const isOpen = subnav.classList.contains('open');
+                        subnav.classList.toggle('open', !isOpen);
+                        if (toggleBtn) {
+                            toggleBtn.classList.toggle('expanded', !isOpen);
+                            toggleBtn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+                        }
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    closeSidebar();
+                } else {
+                    // Let standard navigation load the page
+                    closeSidebar();
+                }
+            }
         });
     });
 
@@ -464,25 +495,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const updateClock = () => {
             const now = new Date();
-            const hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
+            try {
+                const options = {
+                    timeZone: 'Asia/Manila',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: !is24Hour
+                };
+                const timeStr = new Intl.DateTimeFormat('en-US', options).format(now);
+                liveClockEl.textContent = `${timeStr} PHT`;
 
-            if (is24Hour) {
-                const h24 = String(hours).padStart(2, '0');
-                liveClockEl.textContent = `${h24}:${minutes}:${seconds}`;
-            } else {
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                const h12 = String(hours % 12 || 12).padStart(2, '0');
-                liveClockEl.textContent = `${h12}:${minutes}:${seconds} ${ampm}`;
-            }
-
-            const hudContainer = liveClockEl.closest('.sidebar-telemetry-hud');
-            if (hudContainer) {
-                hudContainer.setAttribute(
-                    'title',
-                    `Local System Time (${is24Hour ? '24H' : '12H'} mode • Click to switch) — ${now.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}`
-                );
+                const hudContainer = liveClockEl.closest('.sidebar-telemetry-hud');
+                if (hudContainer) {
+                    const dateOptions = {
+                        timeZone: 'Asia/Manila',
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    };
+                    const dateStr = new Intl.DateTimeFormat('en-US', dateOptions).format(now);
+                    hudContainer.setAttribute(
+                        'title',
+                        `Philippine Standard Time (PST / UTC+8 / Asia/Manila) • ${is24Hour ? '24H' : '12H'} Mode • ${dateStr}`
+                    );
+                }
+            } catch (err) {
+                const hours = (now.getUTCHours() + 8) % 24;
+                const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+                const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+                if (is24Hour) {
+                    liveClockEl.textContent = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} PHT`;
+                } else {
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    const h12 = String(hours % 12 || 12).padStart(2, '0');
+                    liveClockEl.textContent = `${h12}:${minutes}:${seconds} ${ampm} PHT`;
+                }
             }
         };
 
@@ -495,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateClock();
-        setInterval(updateClock, 500);
+        setInterval(updateClock, 1000);
     }
 
     // ==========================================
@@ -1855,5 +1904,122 @@ The principles should not.
     }
 
     initHeroSplitReveal();
+
+    // ==========================================
+    // UNIFIED SECTION ANCHOR SCROLL & HIGHLIGHT ENGINE
+    // ==========================================
+    const highlightSection = (targetElement) => {
+        if (!targetElement) return;
+        targetElement.classList.remove('section-highlight');
+        void targetElement.offsetWidth; // Force reflow
+        targetElement.classList.add('section-highlight');
+        setTimeout(() => {
+            targetElement.classList.remove('section-highlight');
+        }, 2600);
+    };
+
+    const scrollToAndHighlightSection = (sectionId, updateHash = true) => {
+        if (!sectionId) return false;
+        const cleanId = sectionId.replace('#', '');
+        const targetElement = document.getElementById(cleanId);
+        if (!targetElement) return false;
+
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        highlightSection(targetElement);
+
+        // Update active subnav link
+        document.querySelectorAll('.sidebar-sub-link, .subnav-btn, .section-anchor-link').forEach(btn => {
+            const target = btn.getAttribute('data-target-section') || btn.getAttribute('href')?.split('#')[1];
+            if (target === cleanId) {
+                btn.classList.add('child-active', 'active');
+            } else if (btn.classList.contains('sidebar-sub-link') || btn.classList.contains('section-anchor-link')) {
+                btn.classList.remove('child-active', 'active');
+            }
+        });
+
+        // Ensure parent accordion is open
+        const activeChildLink = document.querySelector(`.sidebar-sub-link[data-target-section="${cleanId}"]`);
+        if (activeChildLink) {
+            const parentSubNav = activeChildLink.closest('.sidebar-sub-nav');
+            if (parentSubNav) {
+                parentSubNav.classList.add('open');
+                const toggleBtn = parentSubNav.closest('.nav-item')?.querySelector('.subnav-accordion-toggle');
+                if (toggleBtn) {
+                    toggleBtn.classList.add('expanded');
+                    toggleBtn.setAttribute('aria-expanded', 'true');
+                }
+            }
+        }
+
+        if (updateHash && window.location.hash !== `#${cleanId}`) {
+            history.pushState(null, '', `#${cleanId}`);
+        }
+
+        return true;
+    };
+
+    // Intercept clicks on child links, tab anchors, and hash links
+    document.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a[href*="#"], .section-anchor-link, .sidebar-sub-link');
+        if (!anchor) return;
+
+        const href = anchor.getAttribute('href');
+        if (!href || href === '#' || href.startsWith('javascript:')) return;
+
+        const hashIndex = href.indexOf('#');
+        if (hashIndex === -1) return;
+
+        const hash = href.slice(hashIndex + 1);
+        const linkPath = href.slice(0, hashIndex);
+        const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+        const targetUrl = new URL(anchor.href, window.location.origin);
+        const targetPath = targetUrl.pathname.replace(/\/$/, '') || '/';
+
+        // Check if target is on the current page
+        if (targetPath === currentPath || linkPath === '' || linkPath === currentPath) {
+            const targetEl = document.getElementById(hash);
+            if (targetEl) {
+                e.preventDefault();
+                scrollToAndHighlightSection(hash, true);
+                closeSidebar();
+            }
+        }
+    });
+
+    // Check hash on initial page load
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.replace('#', '');
+            setTimeout(() => {
+                scrollToAndHighlightSection(hash, false);
+            }, 300);
+        }
+    });
+
+    // IntersectionObserver to update active child link during continuous reading/scrolling
+    const contentSections = document.querySelectorAll('.content-section[id]');
+    if (contentSections.length > 0 && 'IntersectionObserver' in window) {
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const secId = entry.target.id;
+                    document.querySelectorAll('.sidebar-sub-link, .subnav-btn, .section-anchor-link').forEach(btn => {
+                        const target = btn.getAttribute('data-target-section') || btn.getAttribute('href')?.split('#')[1];
+                        if (target === secId) {
+                            btn.classList.add('child-active', 'active');
+                        } else if (btn.classList.contains('sidebar-sub-link') || btn.classList.contains('section-anchor-link')) {
+                            btn.classList.remove('child-active', 'active');
+                        }
+                    });
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '-20% 0px -60% 0px',
+            threshold: 0
+        });
+
+        contentSections.forEach(section => sectionObserver.observe(section));
+    }
 });
 

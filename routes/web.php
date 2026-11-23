@@ -79,6 +79,12 @@ $router->get('contact/inquiry', [HomeController::class, 'contactInquiry']);
 $router->get('contact/social', [HomeController::class, 'contactSocial']);
 $router->post('contact', [ContactController::class, 'submit'], [CsrfMiddleware::class]);
 
+// 6. LEGAL, ACCESSIBILITY & SITEMAP ROUTES
+$router->get('privacy', [HomeController::class, 'privacy']);
+$router->get('terms', [HomeController::class, 'terms']);
+$router->get('accessibility', [HomeController::class, 'accessibility']);
+$router->get('sitemap', [HomeController::class, 'sitemap']);
+
 $router->get('health', [ApiController::class, 'health']);
 
 // API Endpoints for dynamic client telemetry & modals

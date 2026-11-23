@@ -57,7 +57,13 @@ $publicRoutes = [
     '/contact/inquiry',
     '/contact/inquiry/',
     '/contact/social',
-    '/contact/social/'
+    '/contact/social/',
+
+    // 6. LEGAL & FOOTER COMPLIANCE
+    '/privacy',
+    '/terms',
+    '/accessibility',
+    '/sitemap'
 ];
 
 echo "\n======================================================\n";

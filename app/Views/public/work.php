@@ -1,225 +1,348 @@
 <?php
-$activeSub = $activeSub ?? 'projects';
-
-$subTitles = [
-    'projects' => 'Portfolio & Software Projects Matrix',
-    'services' => 'Engineering Services & Technical Specialties',
-    'laboratory' => 'Technical Laboratory & Homelab Infrastructure',
-    'hardware' => 'Retro Hardware Diagnostics & Legacy Archive',
-];
-
-$pageSubtitle = $subTitles[$activeSub] ?? 'Engineering Showcase';
+$activeSub = $activeSub ?? 'portfolio';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= e($pageSubtitle) ?> // x64emkei.dev</title>
+    <title>Work, Services & Technical Laboratory // Michael Benedict Ordenes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
-    
 </head>
 <body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
 
     <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
-    <main class="main-content"><div class="view-wrapper">
-<div class="work-container">
-        <!-- Breadcrumbs -->
-        <nav class="hud-breadcrumb" aria-label="Breadcrumb">
-            <a href="<?= url('/') ?>">HOME</a>
-            <span class="sep">/</span>
-            <a href="<?= url('work') ?>">WORK</a>
-            <span class="sep">/</span>
-            <span class="current"><?= strtoupper(e($activeSub)) ?></span>
-        </nav>
+    <main class="main-content">
+        <div class="view-wrapper">
+            <div class="work-container" data-initial-section="<?= e($activeSub) ?>">
+                <!-- Breadcrumbs -->
+                <nav class="hud-breadcrumb" aria-label="Breadcrumb">
+                    <a href="<?= url('/') ?>">HOME</a>
+                    <span class="sep">/</span>
+                    <a href="<?= url('work') ?>">WORK</a>
+                    <span class="sep">/</span>
+                    <span class="current" id="breadcrumbActiveSection">PROJECTS & SERVICES</span>
+                </nav>
 
-        <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 24px;">
-            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">// ENGINEERING & SYSTEMS ARCHIVE</div>
-            <h1 style="font-size: 2.2rem; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif; color: #f8fafc;"><?= e($pageSubtitle) ?></h1>
-            <p style="color: #94a3b8; font-size: 1rem; margin: 0; max-width: 780px;">
-                Engineered solutions, virtualization topologies, network overlays, and vintage hardware preservation built and curated by Michael Benedict Ordenes.
-            </p>
-        </div>
-
-        <!-- Sub-Navigation Navigation Tabs (Child Pages) -->
-        <div class="subnav-tabs" role="tablist">
-            <a href="<?= url('work/projects') ?>" class="subnav-btn <?= $activeSub === 'projects' ? 'active' : '' ?>" role="tab">
-                // PORTFOLIO & PROJECTS
-            </a>
-            <a href="<?= url('work/services') ?>" class="subnav-btn <?= $activeSub === 'services' ? 'active' : '' ?>" role="tab">
-                // SERVICES
-            </a>
-            <a href="<?= url('work/laboratory') ?>" class="subnav-btn <?= $activeSub === 'laboratory' ? 'active' : '' ?>" role="tab">
-                // TECHNICAL LABORATORY
-            </a>
-            <a href="<?= url('work/hardware') ?>" class="subnav-btn <?= $activeSub === 'hardware' ? 'active' : '' ?>" role="tab">
-                // HARDWARE ARCHIVE (6 NODES)
-            </a>
-        </div>
-
-        <?php if ($activeSub === 'projects'): ?>
-            <!-- Projects Section -->
-            <?php if (empty($projects)): ?>
-                <div class="hud-card" style="text-align: center; padding: 48px 24px; border-style: dashed; border-color: rgba(0, 229, 255, 0.3);">
-                    <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 12px;">
-                        [SYS.STATUS: INVENTORY_STAGING // ACTIVE REPOSITORY COMPILATION]
+                <!-- Page Header -->
+                <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 24px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ff3366; letter-spacing: 1px; margin-bottom: 8px;">
+                        // ENGINEERING PORTFOLIO, CAPABILITIES & ARCHIVE
                     </div>
-                    <h2 style="font-family: 'Space Grotesk', sans-serif; color: #f8fafc; font-size: 1.6rem; margin: 0 0 12px 0;">
-                        Project Catalog in Preparation
-                    </h2>
-                    <p style="color: #94a3b8; font-size: 0.95rem; max-width: 620px; margin: 0 auto 24px auto; line-height: 1.6;">
-                        Production dossiers, blueprints, and software repositories are currently undergoing telemetry audit and code review prior to public release. In the meantime, inspect our live <a href="<?= url('work/hardware') ?>" style="color: #00e5ff;">Hardware Archive</a>, review our <a href="<?= url('work/services') ?>" style="color: #00e5ff;">Engineering Services</a>, or read our latest technical papers in the <a href="<?= url('journal') ?>" style="color: #00e5ff;">Journal</a>.
+                    <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; color: #f8fafc; margin: 0 0 10px 0;">
+                        Engineering Work & Technical Catalog
+                    </h1>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                        Software projects, professional services, virtualization laboratories, and physical computing archives engineered with reliability in mind.
                     </p>
-                    <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-                        <a href="<?= url('work/services') ?>" class="subnav-btn" style="color: #00e5ff; border-color: #00e5ff;">Explore Services &rarr;</a>
-                        <a href="<?= url('work/hardware') ?>" class="subnav-btn">View Hardware Archive &rarr;</a>
-                        <a href="<?= url('contact/inquiry') ?>" class="subnav-btn">Send Project Inquiry &rarr;</a>
-                    </div>
                 </div>
-            <?php else: ?>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
-                    <?php foreach ($projects as $proj): ?>
-                    <div class="hud-card">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff; background: rgba(0, 229, 255, 0.1); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2);">
-                                <?= e($proj['category'] ?? 'Software') ?>
-                            </span>
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">
-                                ● <?= e($proj['operational_status'] ?? 'Operational') ?>
-                            </span>
-                        </div>
-                        <h2 style="font-size: 1.35rem; margin: 0 0 8px 0; color: #f8fafc;">
-                            <a href="<?= url('project/' . $proj['slug']) ?>" style="color: inherit; text-decoration: none;">
-                                <?= e($proj['title']) ?>
-                            </a>
+
+                <!-- Subnav Tabs (Anchor Jumps) -->
+                <div class="subnav-tabs" role="tablist" aria-label="Work sections">
+                    <a href="#portfolio" class="subnav-btn nav-anchor-link" data-target="portfolio">Portfolio & Projects</a>
+                    <a href="#services" class="subnav-btn nav-anchor-link" data-target="services">Services</a>
+                    <a href="#laboratory" class="subnav-btn nav-anchor-link" data-target="laboratory">Technical Laboratory</a>
+                    <a href="#hardware" class="subnav-btn nav-anchor-link" data-target="hardware">Hardware Archive</a>
+                </div>
+
+                <!-- SECTION 1: PORTFOLIO & PROJECTS -->
+                <section id="portfolio" class="content-section" data-section-name="Portfolio and Projects">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
+                            // 1. PORTFOLIO & SOFTWARE PROJECTS
                         </h2>
-                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin: 0 0 16px 0;">
-                            <?= e($proj['tagline']) ?>
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
-                            <a href="<?= url('project/' . $proj['slug']) ?>" style="color: #00e5ff; text-decoration: none; font-weight: 600;">
-                                VIEW DOSSIER &rarr;
-                            </a>
-                        </div>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
+                            ACTIVE TELEMETRY
+                        </span>
                     </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
 
-        <?php elseif ($activeSub === 'services'): ?>
-            <!-- Services Section -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
-                <?php foreach ($services as $srv): ?>
-                <div class="hud-card">
-                    <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.8rem; margin-bottom: 8px;">
-                        // SPECIALTY // <?= strtoupper(e($srv['icon'] ?? 'SRV')) ?>
-                    </div>
-                    <h2 style="font-size: 1.3rem; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif; color: #f8fafc;">
-                        <?= e($srv['title']) ?>
-                    </h2>
-                    <p style="color: #94a3b8; font-size: 0.92rem; line-height: 1.6; margin: 0 0 16px 0;">
-                        <?= e($srv['description']) ?>
-                    </p>
-                    <?php 
-                    $caps = is_string($srv['capabilities_json'] ?? null) ? json_decode($srv['capabilities_json'], true) : ($srv['capabilities_json'] ?? []);
-                    if (!empty($caps) && is_array($caps)):
-                    ?>
-                    <div style="border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 12px;">
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366; margin-bottom: 8px;">CAPABILITIES:</div>
-                        <ul style="margin: 0; padding-left: 18px; color: #cbd5e1; font-size: 0.85rem; line-height: 1.6;">
-                            <?php foreach ($caps as $cap): ?>
-                            <li><?= e($cap) ?></li>
+                    <?php if (empty($projects)): ?>
+                        <!-- Polished, Authentic Empty State as Directed by Master Prompt -->
+                        <div class="section-box" style="text-align: center; padding: 48px 24px; border: 1px dashed rgba(0, 229, 255, 0.25);">
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ffb800; margin-bottom: 12px; letter-spacing: 1px;">
+                                [CATALOG STATUS: STAGING & DOCUMENTATION IN PROGRESS]
+                            </div>
+                            <h3 style="font-family: 'Space Grotesk', sans-serif; color: #f8fafc; font-size: 1.5rem; margin: 0 0 12px 0;">
+                                Projects are currently being developed and documented.
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.95rem; max-width: 620px; margin: 0 auto 24px auto; line-height: 1.6;">
+                                Production dossiers, blueprints, and codebases are currently undergoing code review and documentation before public release. Check back for future updates. In the meantime, inspect our verified <strong>Technical Laboratory</strong>, physical <strong>Hardware Archive</strong>, or available <strong>Services</strong> below.
+                            </p>
+                            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                                <a href="#services" class="subnav-btn nav-anchor-link" style="color: #00e5ff; border-color: #00e5ff;">Explore Services &darr;</a>
+                                <a href="#laboratory" class="subnav-btn nav-anchor-link">Inspect Tech Lab &darr;</a>
+                                <a href="#hardware" class="subnav-btn nav-anchor-link">View Hardware Archive &darr;</a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 30px;">
+                            <?php foreach ($projects as $proj): ?>
+                            <div class="hud-panel" style="margin-bottom: 0;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff; background: rgba(0, 229, 255, 0.1); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2);">
+                                        <?= e($proj['category'] ?? 'Software Application') ?>
+                                    </span>
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">
+                                        ● <?= e($proj['operational_status'] ?? 'Active') ?>
+                                    </span>
+                                </div>
+                                <h3 style="font-size: 1.3rem; margin: 0 0 8px 0; color: #f8fafc; font-family: 'Space Grotesk', sans-serif;">
+                                    <a href="<?= url('project/' . $proj['slug']) ?>" style="color: inherit; text-decoration: none;">
+                                        <?= e($proj['title']) ?>
+                                    </a>
+                                </h3>
+                                <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin: 0 0 16px 0;">
+                                    <?= e($proj['tagline']) ?>
+                                </p>
+                                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
+                                    <a href="<?= url('project/' . $proj['slug']) ?>" style="color: #00e5ff; text-decoration: none; font-weight: 600;">
+                                        VIEW DOSSIER &rarr;
+                                    </a>
+                                </div>
+                            </div>
                             <?php endforeach; ?>
-                        </ul>
-                    </div>
+                        </div>
                     <?php endif; ?>
-                </div>
-                <?php endforeach; ?>
-            </div>
+                </section>
 
-        <?php elseif ($activeSub === 'laboratory'): ?>
-            <!-- Homelab & Virtualization Section -->
-            <div class="hud-card">
-                <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">
-                    // ARCHITECTURE // TECHNICAL LABORATORY & VIRTUALIZATION
-                </div>
-                <h2 style="font-family: 'Space Grotesk', sans-serif; color: #f8fafc; font-size: 1.5rem; margin: 0 0 12px 0;">
-                    24/7 Resilient Virtualization Cluster & Edge Topology
-                </h2>
-                <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.7; margin: 0 0 20px 0;">
-                    Operating an internal dedicated hardware homelab utilizing Proxmox VE hypervisors, Debian/Ubuntu container instances, and encrypted Tailscale WireGuard mesh routing for isolated staging, microservices testing, and continuous deployment environments.
-                </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px;">
-                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 4px; padding: 16px;">
-                        <div style="color: #00e5ff; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">HYPERVISOR</div>
-                        <div style="font-weight: 700; color: #f8fafc; margin-top: 4px;">Proxmox VE 8.x</div>
-                        <div style="color: #94a3b8; font-size: 0.82rem; margin-top: 6px;">Bare-metal hypervisor cluster hosting isolated staging servers and test environments.</div>
+                <!-- SECTION 2: SERVICES -->
+                <section id="services" class="content-section" data-section-name="Services" style="margin-top: 40px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
+                            // 2. PROFESSIONAL & TECHNICAL SERVICES
+                        </h2>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
+                            SPECIALIZATIONS
+                        </span>
                     </div>
-                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 4px; padding: 16px;">
-                        <div style="color: #00e5ff; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">MESH OVERLAY</div>
-                        <div style="font-weight: 700; color: #f8fafc; margin-top: 4px;">Tailscale WireGuard Mesh</div>
-                        <div style="color: #94a3b8; font-size: 0.82rem; margin-top: 6px;">Zero-trust peer-to-peer encrypted mesh VPN interconnecting test rigs and nodes securely.</div>
-                    </div>
-                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 4px; padding: 16px;">
-                        <div style="color: #00e5ff; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">CONTAINERIZATION</div>
-                        <div style="font-weight: 700; color: #f8fafc; margin-top: 4px;">Docker & LXC Stacks</div>
-                        <div style="color: #94a3b8; font-size: 0.82rem; margin-top: 6px;">Microservice workloads, database engines, telemetry scrapers, and local reverse proxies.</div>
-                    </div>
-                </div>
-            </div>
 
-        <?php elseif ($activeSub === 'hardware'): ?>
-            <!-- Retro Hardware Archive Section -->
-            <div style="margin-bottom: 24px;">
-                <p style="color: #94a3b8; font-size: 0.95rem; margin: 0 0 20px 0;">
-                    Hands-on hardware diagnostics, BIOS recovery, and preservation across iconic computing architectures.
-                </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
-                    <?php foreach ($hardwareNodes as $node): ?>
-                    <div class="hud-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff; background: rgba(0, 229, 255, 0.1); padding: 2px 8px; border-radius: 3px;">
-                                <?= e($node['node_id'] ?? 'NODE') ?>
-                            </span>
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">
-                                ● <?= e($node['status_label'] ?? 'Operational') ?>
-                            </span>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <!-- Service 1: Website Development -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
+                                [SERVICE // 01] WEB DEVELOPMENT
+                            </div>
+                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Custom Website & Web App Development
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
+                                Design and implementation of responsive, accessible, and fast websites. Built using pure HTML5, modern CSS3, and modular JavaScript without heavy bloat.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                                <strong style="color: #ff3366;">Core Stack:</strong> Vanilla JS, CSS3 Grid/Flexbox, PHP 8+, Responsive UI
+                            </div>
                         </div>
-                        <h3 style="font-size: 1.15rem; margin: 0 0 6px 0; color: #f8fafc; font-family: 'Space Grotesk', sans-serif;">
-                            <?= e($node['name']) ?>
-                        </h3>
-                        <div style="color: #ff3366; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; margin-bottom: 10px;">
-                            <?= e($node['brand_label'] ?? '') ?> &bull; <?= e($node['category'] ?? 'Hardware') ?>
-                        </div>
-                        <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
-                            <?= e($node['description']) ?>
-                        </p>
-                        <?php if (!empty($node['specs_json'])): 
-                            $specs = is_string($node['specs_json']) ? json_decode($node['specs_json'], true) : $node['specs_json'];
-                            if (is_array($specs)):
-                        ?>
-                        <div style="background: rgba(0,0,0,0.3); border-radius: 4px; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #cbd5e1;">
-                            <?php foreach ($specs as $k => $v): ?>
-                            <div><strong style="color: #00e5ff;"><?= e(strtoupper($k)) ?>:</strong> <?= e($v) ?></div>
-                            <?php endforeach; ?>
-                        </div>
-                        <?php endif; endif; ?>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
-    </div></main>
 
-    <footer style="border-top: 1px solid rgba(0, 229, 255, 0.15); padding: 30px 24px; text-align: center; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
-        &copy; <?= date('Y') ?> Michael Benedict Ordenes (x64emkei). Systems Architecture &bull; All Telemetry Active.
-    </footer>
+                        <!-- Service 2: PHP & Database Applications -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
+                                [SERVICE // 02] BACKEND & DATABASE
+                            </div>
+                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+                                PHP & Relational Database Applications
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
+                                Backend architectures, custom CMS engines, RESTful endpoints, and relational schema modeling with PDO prepared statements and security defenses.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                                <strong style="color: #ff3366;">Core Stack:</strong> PHP 8.2+, MySQL / MariaDB, PDO, CSRF/XSS Defense
+                            </div>
+                        </div>
+
+                        <!-- Service 3: System Administration & Linux Setup -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
+                                [SERVICE // 03] INFRASTRUCTURE
+                            </div>
+                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Linux Administration & Server Setup
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
+                                Operating system provisioning, security hardening, automated backups, SSH key management, and package maintenance for Debian and Ubuntu servers.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                                <strong style="color: #ff3366;">Core Stack:</strong> Debian, Ubuntu Server, Bash Shell, Systemd, UFW
+                            </div>
+                        </div>
+
+                        <!-- Service 4: Homelab & Network Configuration -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
+                                [SERVICE // 04] VIRTUALIZATION
+                            </div>
+                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Homelab & Virtualization Configuration
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
+                                Setting up isolated virtual machines and containers using Proxmox VE, containerizing services with Docker, and establishing secure mesh VPNs via Tailscale.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                                <strong style="color: #ff3366;">Core Stack:</strong> Proxmox VE, Docker, Tailscale, Portainer, Reverse Proxies
+                            </div>
+                        </div>
+
+                        <!-- Service 5: Computer & Hardware Diagnostics -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
+                                [SERVICE // 05] HARDWARE SUPPORT
+                            </div>
+                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Computer & Hardware Diagnostics
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
+                                Component testing, thermal repasting, RAM/SSD upgrades, BIOS diagnostics, and restoration of legacy computing devices and laptops.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                                <strong style="color: #ff3366;">Specialty:</strong> Hardware Troubleshooting, Thermal Management, Legacy Laptops
+                            </div>
+                        </div>
+
+                        <!-- Service 6: Technical Consultation -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
+                                [SERVICE // 06] ADVISORY
+                            </div>
+                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Technical Consultation & Architecture Review
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
+                                Codebase reviews, accessibility audits (WCAG 2.2), technology stack recommendations, and database normalization advisory for small applications.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+                                <strong style="color: #ff3366;">Inquiries:</strong> <a href="<?= url('contact#inquiry') ?>" style="color: #00e5ff;">Submit Project Consultation Form &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 3: TECHNICAL LABORATORY -->
+                <section id="laboratory" class="content-section" data-section-name="Technical Laboratory" style="margin-top: 40px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
+                            // 3. TECHNICAL LABORATORY & EXPERIMENTATION
+                        </h2>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
+                            ACTIVE RESEARCH
+                        </span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <h3 style="color: #ff3366; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin: 0 0 8px 0;">
+                                Homelab & Virtualization Nodes
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 10px 0;">
+                                Investigating bare-metal hypervisors with Proxmox VE, evaluating resource overcommit benchmarks on low-power Intel/AMD nodes, and managing LXC microservices.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">[ACTIVE LAB TRACK: LAB-NODE-01]</div>
+                        </div>
+
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <h3 style="color: #ff3366; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin: 0 0 8px 0;">
+                                Encrypted Mesh Networks
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 10px 0;">
+                                Configuring peer-to-peer WireGuard overlays with Tailscale, testing subnet routing throughput, and benchmarking latency across dynamic residential networks.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">[ACTIVE LAB TRACK: NET-MESH-02]</div>
+                        </div>
+
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <h3 style="color: #ff3366; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin: 0 0 8px 0;">
+                                Legacy Computing & OS Preservation
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 10px 0;">
+                                Preserving 32-bit x86 netbook platforms, testing lightweight Linux kernels (Debian minimal, Alpine) on Intel Atom architecture, and thermal optimization.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">[ACTIVE LAB TRACK: HW-RESTORE-03]</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 4: HARDWARE ARCHIVE -->
+                <section id="hardware" class="content-section" data-section-name="Hardware Archive" style="margin-top: 40px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
+                            // 4. PHYSICAL HARDWARE ARCHIVE
+                        </h2>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
+                            VERIFIED DEVICES
+                        </span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                        <!-- Genuine Hardware Node 1: Sony VAIO Netbook -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">[OEM: SONY VAIO]</span>
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">● RESTORED</span>
+                            </div>
+                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Sony Vaio W-Series VPCW115XG
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
+                                Intel Atom N280 Netbook Platform &bull; Japanese Ultraportable Engineering. Preserved as a lightweight terminal testing node and diagnostic platform.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #00e5ff;">
+                                <div><strong>CPU:</strong> Intel Atom N280 @ 1.66 GHz (1C/2T)</div>
+                                <div><strong>RAM:</strong> 2 GB DDR2 SDRAM</div>
+                                <div><strong>Storage:</strong> 250 GB SATA HDD</div>
+                                <div><strong>OS:</strong> Debian GNU/Linux 32-bit &amp; Windows XP SP3</div>
+                            </div>
+                        </div>
+
+                        <!-- Genuine Hardware Node 2: Homelab Server Node -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">[CUSTOM NODE]</span>
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">● OPERATIONAL</span>
+                            </div>
+                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Proxmox Homelab Microserver Node
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
+                                Multi-purpose virtualization node dedicated to self-hosted development environments, local MariaDB test instances, and Docker containers.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #ff3366;">
+                                <div><strong>Hypervisor:</strong> Proxmox Virtual Environment 8</div>
+                                <div><strong>Networking:</strong> Tailscale Mesh Overlay + Gigabit LAN</div>
+                                <div><strong>Services:</strong> Docker, MariaDB Test DB, Nginx Reverse Proxy</div>
+                                <div><strong>Storage:</strong> High-endurance NVMe + SATA Storage Pools</div>
+                            </div>
+                        </div>
+
+                        <!-- Genuine Hardware Node 3: Primary Development Rig -->
+                        <div class="section-box" style="margin-bottom: 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">[WORKSTATION]</span>
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">● ONLINE</span>
+                            </div>
+                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
+                                Primary Engineering Workstation
+                            </h3>
+                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
+                                High-performance development rig configured for rapid C++, PHP, and frontend compilation with multi-display diagnostics.
+                            </p>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #ffb800;">
+                                <div><strong>Environment:</strong> Windows 11 Pro + WSL2 (Debian Linux)</div>
+                                <div><strong>Tooling:</strong> VS Code, Antigravity IDE, Git, XAMPP, Docker</div>
+                                <div><strong>Role:</strong> Primary Software Architecture &amp; Client Telemetry</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        <!-- Website Footer Component -->
+        <?php require __DIR__ . '/partials/footer.php'; ?>
+    </main>
+
     <script src="<?= asset('script.js') ?>"></script>
 </body>
 </html>

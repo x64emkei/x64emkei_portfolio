@@ -166,6 +166,33 @@ if (!function_exists('slugify')) {
     }
 }
 
+if (!function_exists('formatPhtDate')) {
+    /**
+     * Format a date/time explicitly in Philippine Standard Time (GMT+8 / Asia/Manila)
+     * e.g. "November 24, 2026, 9:30 PM PHT"
+     */
+    function formatPhtDate(string|int|\DateTimeInterface|null $date, bool $includeTime = true): string
+    {
+        if (!$date) {
+            return 'N/A';
+        }
+        try {
+            $tz = new \DateTimeZone('Asia/Manila');
+            if (is_numeric($date)) {
+                $dt = new \DateTime('@' . $date);
+                $dt->setTimezone($tz);
+            } elseif ($date instanceof \DateTimeInterface) {
+                $dt = (new \DateTime($date->format('Y-m-d H:i:s'), $date->getTimezone()))->setTimezone($tz);
+            } else {
+                $dt = new \DateTime((string)$date, $tz);
+            }
+            return $dt->format($includeTime ? 'F j, Y, g:i A \P\H\T' : 'F j, Y');
+        } catch (\Throwable) {
+            return (string)$date;
+        }
+    }
+}
+
 if (!function_exists('client_ip')) {
     function client_ip(): string
     {

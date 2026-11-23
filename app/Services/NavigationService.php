@@ -25,11 +25,11 @@ class NavigationService
                 'route' => '/about',
                 'enabled' => true,
                 'children' => [
-                    ['id' => 'biography', 'label' => 'Biography', 'route' => '/about/biography', 'enabled' => true],
-                    ['id' => 'education', 'label' => 'Education', 'route' => '/about/education', 'enabled' => true],
-                    ['id' => 'skills', 'label' => 'Skills', 'route' => '/about/skills', 'enabled' => true],
-                    ['id' => 'experience', 'label' => 'Experience & Affiliations', 'route' => '/about/experience', 'enabled' => true],
-                    ['id' => 'certifications', 'label' => 'Certifications & Achievements', 'route' => '/about/certifications', 'enabled' => true],
+                    ['id' => 'biography', 'label' => 'Biography', 'route' => '/about#biography', 'enabled' => true],
+                    ['id' => 'education', 'label' => 'Education', 'route' => '/about#education', 'enabled' => true],
+                    ['id' => 'skills', 'label' => 'Skills', 'route' => '/about#skills', 'enabled' => true],
+                    ['id' => 'experience', 'label' => 'Experience & Affiliations', 'route' => '/about#experience', 'enabled' => true],
+                    ['id' => 'certifications', 'label' => 'Certifications & Achievements', 'route' => '/about#certifications', 'enabled' => true],
                 ]
             ],
             'work' => [
@@ -38,10 +38,10 @@ class NavigationService
                 'route' => '/work',
                 'enabled' => true,
                 'children' => [
-                    ['id' => 'projects', 'label' => 'Portfolio & Projects', 'route' => '/work/projects', 'enabled' => true],
-                    ['id' => 'services', 'label' => 'Services', 'route' => '/work/services', 'enabled' => true],
-                    ['id' => 'laboratory', 'label' => 'Technical Laboratory', 'route' => '/work/laboratory', 'enabled' => true],
-                    ['id' => 'hardware', 'label' => 'Hardware Archive', 'route' => '/work/hardware', 'enabled' => true],
+                    ['id' => 'portfolio', 'label' => 'Portfolio & Projects', 'route' => '/work#portfolio', 'enabled' => true],
+                    ['id' => 'services', 'label' => 'Services', 'route' => '/work#services', 'enabled' => true],
+                    ['id' => 'laboratory', 'label' => 'Technical Laboratory', 'route' => '/work#laboratory', 'enabled' => true],
+                    ['id' => 'hardware', 'label' => 'Hardware Archive', 'route' => '/work#hardware', 'enabled' => true],
                 ]
             ],
             'journal' => [
@@ -50,11 +50,11 @@ class NavigationService
                 'route' => '/journal',
                 'enabled' => true,
                 'children' => [
-                    ['id' => 'blog', 'label' => 'Blog', 'route' => '/journal/blog', 'enabled' => true],
-                    ['id' => 'tutorials', 'label' => 'Tutorials & Guides', 'route' => '/journal/tutorials', 'enabled' => true],
-                    ['id' => 'technical-notes', 'label' => 'Technical Notes', 'route' => '/journal/technical-notes', 'enabled' => true],
-                    ['id' => 'research', 'label' => 'Research & Insights', 'route' => '/journal/research', 'enabled' => true],
-                    ['id' => 'ai-manifesto', 'label' => 'AI Manifesto', 'route' => '/journal/ai-manifesto', 'enabled' => true],
+                    ['id' => 'blog', 'label' => 'Blog', 'route' => '/journal#blog', 'enabled' => true],
+                    ['id' => 'tutorials', 'label' => 'Tutorials & Guides', 'route' => '/journal#tutorials', 'enabled' => true],
+                    ['id' => 'technical-notes', 'label' => 'Technical Notes', 'route' => '/journal#technical-notes', 'enabled' => true],
+                    ['id' => 'research', 'label' => 'Research & Insights', 'route' => '/journal#research', 'enabled' => true],
+                    ['id' => 'ai-manifesto', 'label' => 'AI Manifesto', 'route' => '/journal#ai-manifesto', 'enabled' => true],
                 ]
             ],
             'contact' => [
@@ -63,9 +63,9 @@ class NavigationService
                 'route' => '/contact',
                 'enabled' => true,
                 'children' => [
-                    ['id' => 'information', 'label' => 'Contact Information', 'route' => '/contact/information', 'enabled' => true],
-                    ['id' => 'inquiry', 'label' => 'Send an Inquiry', 'route' => '/contact/inquiry', 'enabled' => true],
-                    ['id' => 'social', 'label' => 'Social Links', 'route' => '/contact/social', 'enabled' => true],
+                    ['id' => 'information', 'label' => 'Contact Information', 'route' => '/contact#information', 'enabled' => true],
+                    ['id' => 'inquiry', 'label' => 'Send an Inquiry', 'route' => '/contact#inquiry', 'enabled' => true],
+                    ['id' => 'social', 'label' => 'Social Links', 'route' => '/contact#social', 'enabled' => true],
                 ]
             ],
             'admin' => [
@@ -142,17 +142,12 @@ class NavigationService
         $publicNav = [];
 
         foreach ($all as $key => $item) {
-            if (empty($item['enabled'])) {
+            // Strictly exclude admin and protected items from the public navigation sidebar
+            if ($key === 'admin' || !empty($item['is_protected']) || empty($item['enabled'])) {
                 continue;
             }
 
-            // Exclude protected admin children from public display unless authenticated
-            if (!empty($item['is_protected'])) {
-                $item['children'] = [];
-            } else {
-                $item['children'] = array_values(array_filter($item['children'] ?? [], fn($c) => !empty($c['enabled'])));
-            }
-
+            $item['children'] = array_values(array_filter($item['children'] ?? [], fn($c) => !empty($c['enabled'])));
             $publicNav[$key] = $item;
         }
 

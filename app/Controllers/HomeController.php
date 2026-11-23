@@ -194,4 +194,40 @@ class HomeController
             'project' => $project
         ]);
     }
+
+    public function privacy(): void
+    {
+        $data = $this->getCommonData();
+        $data['activeNav'] = 'privacy';
+        $data['legalType'] = 'privacy';
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.legal', $data);
+    }
+
+    public function terms(): void
+    {
+        $data = $this->getCommonData();
+        $data['activeNav'] = 'terms';
+        $data['legalType'] = 'terms';
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.legal', $data);
+    }
+
+    public function accessibility(): void
+    {
+        $data = $this->getCommonData();
+        $data['activeNav'] = 'accessibility';
+        $data['legalType'] = 'accessibility';
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.legal', $data);
+    }
+
+    public function sitemap(): void
+    {
+        $data = $this->getCommonData();
+        $data['activeNav'] = 'sitemap';
+        $data['legalType'] = 'sitemap';
+        $renderer = new ViewRenderer();
+        echo $renderer->render('public.legal', $data);
+    }
 }
