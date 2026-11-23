@@ -275,11 +275,79 @@ $currentUser = AuthService::user();
         }
         .status-active { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid #10b981; }
         .status-draft { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid #f59e0b; }
+
+        /* ==========================================================================
+           RESPONSIVE MOBILE / TABLET CMS COMPATIBILITY (ui-ux-pro-max standards)
+           ========================================================================== */
+        .admin-mobile-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid var(--admin-border);
+            color: var(--admin-cyan);
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            align-items: center;
+            gap: 8px;
+        }
+        .admin-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 90;
+        }
+
+        @media (max-width: 900px) {
+            body.admin-body {
+                flex-direction: column;
+            }
+            .admin-sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 280px;
+                transform: translateX(-100%);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 100;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.7);
+            }
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+            .admin-backdrop.active {
+                display: block;
+            }
+            .admin-mobile-toggle {
+                display: inline-flex;
+            }
+            .admin-topbar {
+                padding: 0 16px;
+                gap: 12px;
+            }
+            .admin-content {
+                padding: 20px 16px;
+            }
+            .admin-card {
+                padding: 16px;
+                overflow-x: auto;
+            }
+            .admin-table {
+                min-width: 600px;
+            }
+        }
     </style>
 </head>
 <body class="admin-body">
+    <!-- Mobile Drawer Backdrop -->
+    <div class="admin-backdrop" id="adminBackdrop" onclick="toggleAdminDrawer()"></div>
+
     <!-- Sidebar -->
-    <aside class="admin-sidebar">
+    <aside class="admin-sidebar" id="adminSidebar">
         <div class="admin-brand">
             <h2>X64EMKEI // CMS</h2>
             <span>Systems Telemetry &bull; v2.0-PROD</span>
@@ -314,9 +382,19 @@ $currentUser = AuthService::user();
     <!-- Main View -->
     <div class="admin-main">
         <header class="admin-topbar">
-            <div class="admin-telemetry-badge">
-                <span class="admin-dot"></span>
-                <span>TELEMETRY HOST: <?= e($_SERVER['HTTP_HOST'] ?? 'welcome.x64emkei.dpdns.org') ?></span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button type="button" class="admin-mobile-toggle" onclick="toggleAdminDrawer()" aria-label="Toggle navigation menu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <span>MENU</span>
+                </button>
+                <div class="admin-telemetry-badge">
+                    <span class="admin-dot"></span>
+                    <span>HOST: <?= e($_SERVER['HTTP_HOST'] ?? 'welcome.x64emkei.dpdns.org') ?></span>
+                </div>
             </div>
             <div style="font-size: 0.85rem; color: #94a3b8;">
                 OPERATOR: <span style="color: var(--admin-cyan);"><?= e($currentUser['username'] ?? 'Admin') ?></span>
@@ -340,5 +418,23 @@ $currentUser = AuthService::user();
             <?= $content ?? '' ?>
         </main>
     </div>
+
+    <script>
+        function toggleAdminDrawer() {
+            var sidebar = document.getElementById('adminSidebar');
+            var backdrop = document.getElementById('adminBackdrop');
+            if (!sidebar || !backdrop) return;
+            var isOpen = sidebar.classList.contains('open');
+            if (isOpen) {
+                sidebar.classList.remove('open');
+                backdrop.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.add('open');
+                backdrop.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+    </script>
 </body>
 </html>
