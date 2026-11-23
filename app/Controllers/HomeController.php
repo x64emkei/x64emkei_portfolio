@@ -36,34 +36,18 @@ class HomeController
             'email' => 'mordenes@acm.org'
         ];
 
-        try {
-            $profile = Profile::get() ?: $defaultProfile;
-            $projects = Project::getPublished();
-            $hardwareNodes = HardwareNode::getPublished();
-            $skillsGrouped = Skill::getPublishedGrouped();
-            $experiences = Experience::getPublished();
-            $education = Education::getPublished();
-            $certifications = Certification::getPublished();
-            $achievements = Achievement::getPublished();
-            $services = Service::getPublished();
-            $socialLinks = SocialLink::getPublished();
-            $settings = SiteSetting::getAllKeyed();
-            $sections = PortfolioSection::allKeyed();
-        } catch (\Throwable $e) {
-            // Graceful fallback to default offline telemetry
-            $profile = $defaultProfile;
-            $projects = [];
-            $hardwareNodes = [];
-            $skillsGrouped = [];
-            $experiences = [];
-            $education = [];
-            $certifications = [];
-            $achievements = [];
-            $services = [];
-            $socialLinks = [];
-            $settings = [];
-            $sections = [];
-        }
+        try { $profile = Profile::get() ?: $defaultProfile; } catch (\Throwable) { $profile = $defaultProfile; }
+        try { $projects = Project::getPublished(); } catch (\Throwable) { $projects = []; }
+        try { $hardwareNodes = HardwareNode::getPublished(); } catch (\Throwable) { $hardwareNodes = []; }
+        try { $skillsGrouped = Skill::getPublishedGrouped(); } catch (\Throwable) { $skillsGrouped = []; }
+        try { $experiences = Experience::getPublished(); } catch (\Throwable) { $experiences = []; }
+        try { $education = Education::getPublished(); } catch (\Throwable) { $education = []; }
+        try { $certifications = Certification::getPublished(); } catch (\Throwable) { $certifications = []; }
+        try { $achievements = Achievement::getPublished(); } catch (\Throwable) { $achievements = []; }
+        try { $services = Service::getPublished(); } catch (\Throwable) { $services = []; }
+        try { $socialLinks = SocialLink::getPublished(); } catch (\Throwable) { $socialLinks = []; }
+        try { $settings = SiteSetting::getAllKeyed(); } catch (\Throwable) { $settings = []; }
+        try { $sections = PortfolioSection::allKeyed(); } catch (\Throwable) { $sections = []; }
 
         $metaTitle = $settings['site_title'] ?? ($profile['full_name'] . ' | ' . $profile['title']);
         $metaDesc = $settings['meta_description'] ?? $profile['tagline'];

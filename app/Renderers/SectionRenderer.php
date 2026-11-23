@@ -11,7 +11,15 @@ class SectionRenderer
 
     public function __construct(array $sections = [])
     {
-        $this->sections = !empty($sections) ? $sections : PortfolioSection::allKeyed();
+        if (!empty($sections)) {
+            $this->sections = $sections;
+        } else {
+            try {
+                $this->sections = PortfolioSection::allKeyed();
+            } catch (\Throwable $e) {
+                $this->sections = [];
+            }
+        }
     }
 
     public function isVisible(string $key, $data = null): bool
