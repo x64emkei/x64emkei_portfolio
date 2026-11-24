@@ -336,14 +336,14 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                         <h3 class="bento-heading"><?= e($secHelper->getSection('achievements')['title'] ?? 'Honors & Distinctions') ?></h3>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px;">
                             <?php foreach ($achievements as $ach): ?>
-                            <div class="edu-cert-card" style="background: rgba(14, 18, 26, 0.7); padding: 14px; border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 6px;">
+                            <div class="edu-cert-card" style="background: rgba(14, 18, 26, 0.7); padding: 14px; border: 1px solid var(--border); border-radius: 6px;">
                                 <span class="edu-cert-bullet"></span>
                                 <div class="edu-cert-info">
                                     <span class="edu-cert-name" style="font-size: 0.9rem; color: #f8fafc;"><?= e($ach['title']) ?></span>
-                                    <span class="edu-cert-desc" style="color: var(--color-cyan); font-size: 0.75rem; display: block; margin: 3px 0;"><?= e($ach['issuer']) ?> &bull; <?= e($ach['award_date']) ?></span>
+                                    <span class="edu-cert-desc" style="color: var(--primary); font-size: 0.75rem; display: block; margin: 3px 0;"><?= e($ach['issuer']) ?> &bull; <?= e($ach['award_date']) ?></span>
                                     <p style="font-size: 0.78rem; color: #94a3b8; margin: 4px 0 0 0;"><?= e($ach['description']) ?></p>
                                     <?php if (!empty($ach['verification_url'])): ?>
-                                        <a href="<?= e($ach['verification_url']) ?>" target="_blank" style="color: var(--color-cyan); font-size: 0.72rem; text-decoration: underline; margin-top: 4px; display: inline-block;">[VERIFY &nearr;]</a>
+                                        <a href="<?= e($ach['verification_url']) ?>" target="_blank" style="color: var(--primary); font-size: 0.72rem; text-decoration: underline; margin-top: 4px; display: inline-block;">[VERIFY &nearr;]</a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -521,15 +521,15 @@ $webdevProjects = array_filter($projects ?? [], fn($p) => stripos($p['category']
 $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'cpp') !== false || stripos($p['technologies'] ?? '', 'C++') !== false);
 ?>
                 <?php if (empty($projects)): ?>
-                <div style="background: rgba(14, 18, 26, 0.7); border: 1px dashed rgba(0, 229, 255, 0.3); border-radius: 6px; padding: 40px 24px; text-align: center; margin-bottom: 30px;">
-                    <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.85rem; margin-bottom: 8px;">
+                <div style="background: rgba(14, 18, 26, 0.7); border: 1px dashed var(--primary); border-radius: 6px; padding: 40px 24px; text-align: center; margin-bottom: 30px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; color: var(--primary); font-size: 0.85rem; margin-bottom: 8px;">
                         // TELEMETRY STATUS: INVENTORY_STAGING
                     </div>
                     <h3 style="color: #f8fafc; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0 0 10px 0;">
                         Project Catalog in Active Preparation
                     </h3>
                     <p style="color: #94a3b8; max-width: 650px; margin: 0 auto 20px auto; line-height: 1.6; font-size: 0.95rem;">
-                        Code repositories and production blueprints are currently undergoing telemetry audit and clearance for public release. In the meantime, inspect our live <a href="<?= url('work/hardware') ?>" style="color: #00e5ff;">Hardware Lab Archive</a>, review our <a href="<?= url('work/services') ?>" style="color: #00e5ff;">Engineering Services</a>, or read our latest technical papers in the <a href="<?= url('journal') ?>" style="color: #00e5ff;">Journal</a>.
+                        Code repositories and production blueprints are currently undergoing telemetry audit and clearance for public release. In the meantime, inspect our live <a href="<?= url('work/hardware') ?>" style="color: var(--primary);">Hardware Lab Archive</a>, review our <a href="<?= url('work/services') ?>" style="color: var(--primary);">Engineering Services</a>, or read our latest technical papers in the <a href="<?= url('journal') ?>" style="color: var(--primary);">Journal</a>.
                     </p>
                     <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
                         <a href="<?= url('work/services') ?>" class="btn btn-primary btn-sm" style="text-decoration: none;">View Services &rarr;</a>
@@ -543,8 +543,8 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                     <button class="filter-btn active" data-filter="featured"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#FFB800"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Featured</span></button>
                     <button class="filter-btn" data-filter="csharp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg><span>C# (.NET)</span></button>
                     <button class="filter-btn" data-filter="python"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg><span>Python</span></button>
-                    <button class="filter-btn" data-filter="webdev"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg><span>WebDev</span></button>
-                    <button class="filter-btn" data-filter="cpp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg><span>C++</span></button>
+                    <button class="filter-btn" data-filter="webdev"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#FF2A2A" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg><span>WebDev</span></button>
+                    <button class="filter-btn" data-filter="cpp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00599C" stroke-width="1.8" fill="rgba(0, 89, 156, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00599C" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00599C" stroke-width="1.3" stroke-linecap="round"/></svg><span>C++</span></button>
                     <button class="filter-btn" data-filter="all"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>All Projects</span></button>
                 </div>
 

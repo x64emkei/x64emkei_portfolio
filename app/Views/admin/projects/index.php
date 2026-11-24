@@ -23,7 +23,7 @@
                         <b><?= e($proj['title']) ?></b><br>
                         <span style="font-size: 0.75rem; color: #64748b;"><?= e(substr($proj['tagline'], 0, 70)) ?>...</span>
                     </td>
-                    <td><span class="status-pill" style="border: 1px solid rgba(0,229,255,0.3);"><?= e($proj['category']) ?></span></td>
+                    <td><span class="status-pill" style="border: 1px solid rgba(255,42,42,0.3);"><?= e($proj['category']) ?></span></td>
                     <td style="font-size: 0.78rem;"><?= e($proj['performance_metric'] ?: $proj['operational_status']) ?></td>
                     <td>
                         <?php if ($proj['is_published']): ?>

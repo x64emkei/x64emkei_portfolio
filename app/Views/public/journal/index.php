@@ -52,8 +52,8 @@ $activeSub = $activeSub ?? 'blog';
                 <!-- SECTION 1: BLOG & ARTICLES -->
                 <section id="blog" class="content-section" data-section-name="Blog and Articles" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
-                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
-                            // 01. BLOG &amp; TECHNICAL ARTICLES
+                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 01.</span>BLOG &amp; TECHNICAL ARTICLES
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                             SYSTEM ARCHITECTURES
@@ -66,9 +66,9 @@ $activeSub = $activeSub ?? 'blog';
                                 <span class="tag-rec-dot"></span>
                                 <span>DISPATCHES // STAGING</span>
                             </div>
-                            <h3 class="bento-heading">Articles &amp; Field Notes are currently being authored</h3>
-                            <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto 18px auto; line-height: 1.6;">
-                                In-depth explorations of modern PHP backend design, server virtualization architectures, and zero-trust mesh networking.
+                            <h3 class="bento-heading">No Published Dispatches Yet</h3>
+                            <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto; line-height: 1.6;">
+                                Field notes, kernel diagnostics, and systems architecture analyses are currently undergoing editorial clearance prior to public release.
                             </p>
                         </div>
                     <?php else: ?>
@@ -93,7 +93,7 @@ $activeSub = $activeSub ?? 'blog';
                                     <?= e($art['excerpt'] ?? '') ?>
                                 </p>
                                 <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px; font-family: var(--font-mono); font-size: var(--font-size-xs);">
-                                    <a href="<?= url('journal/' . $art['slug']) ?>" style="color: var(--accent-cyan); text-decoration: none; font-weight: 600;">
+                                    <a href="<?= url('journal/' . $art['slug']) ?>" style="color: var(--primary); text-decoration: none; font-weight: 600;">
                                         READ DISPATCH &rarr;
                                     </a>
                                     <span style="color: var(--text-muted);">
@@ -109,102 +109,69 @@ $activeSub = $activeSub ?? 'blog';
                 <!-- SECTION 2: TUTORIALS -->
                 <section id="tutorials" class="content-section" data-section-name="Tutorials" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
-                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
-                            // 02. TUTORIALS &amp; ENGINEERING GUIDES
+                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 02.</span>TUTORIALS &amp; ENGINEERING GUIDES
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                             STEP-BY-STEP LAB PROTOCOLS
                         </span>
                     </div>
 
-                    <div class="about-bento-grid">
-                        <div class="bento-card" style="grid-column: span 6;">
-                            <div class="bento-tag">
-                                <span class="tag-rec-dot"></span>
-                                <span>TUTORIAL // HYPERVISOR</span>
-                            </div>
-                            <h3 class="bento-heading">Proxmox VE 8.x Automated Cluster Provisioning</h3>
-                            <p style="color: var(--text-secondary); font-size: var(--font-size-sm); line-height: 1.6;">
-                                Configuring SDN network interfaces, ZFS mirror storage datasets, and cloud-init templated Debian LXCs for staging workflows.
-                            </p>
-                            <div class="skills-badge-list" style="margin-top: 12px;">
-                                <span class="skill-badge skill-badge-highlight">Guide</span>
-                                <span class="skill-badge">Proxmox</span>
-                                <span class="skill-badge">LXC / ZFS</span>
-                            </div>
+                    <div class="bento-card" style="text-align: center; padding: 40px 24px;">
+                        <div class="bento-tag" style="justify-content: center; margin-bottom: 12px;">
+                            <span class="tag-rec-dot"></span>
+                            <span>TUTORIALS // STAGING</span>
                         </div>
-
-                        <div class="bento-card" style="grid-column: span 6;">
-                            <div class="bento-tag">
-                                <span class="tag-rec-dot"></span>
-                                <span>TUTORIAL // ENCRYPTED MESH</span>
-                            </div>
-                            <h3 class="bento-heading">Zero-Trust Mesh Networking with Tailscale &amp; Docker</h3>
-                            <p style="color: var(--text-secondary); font-size: var(--font-size-sm); line-height: 1.6;">
-                                Establishing secure encrypted tunnels, MagicDNS routing, and isolated container ingress without exposed port forwarding.
-                            </p>
-                            <div class="skills-badge-list" style="margin-top: 12px;">
-                                <span class="skill-badge skill-badge-highlight">Guide</span>
-                                <span class="skill-badge">WireGuard</span>
-                                <span class="skill-badge">Tailscale</span>
-                            </div>
-                        </div>
+                        <h3 class="bento-heading">Engineering Guides In Staging</h3>
+                        <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto; line-height: 1.6;">
+                            Step-by-step documentation for hypervisor provisioning, containerization workflows, and secure network configuration will be published upon lab verification.
+                        </p>
                     </div>
                 </section>
 
                 <!-- SECTION 3: TECHNICAL NOTES -->
                 <section id="technical-notes" class="content-section" data-section-name="Technical Notes" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
-                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
-                            // 03. TECHNICAL NOTES &amp; DIAGNOSTICS
+                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 03.</span>TECHNICAL NOTES &amp; DIAGNOSTICS
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                             SYSTEM LOGS &amp; SNIPPETS
                         </span>
                     </div>
 
-                    <div class="bento-card">
-                        <div class="bento-tag">
+                    <div class="bento-card" style="text-align: center; padding: 40px 24px;">
+                        <div class="bento-tag" style="justify-content: center; margin-bottom: 12px;">
                             <span class="tag-rec-dot"></span>
-                            <span>FIELD NOTES // ARCHITECTURE</span>
+                            <span>DIAGNOSTICS // ARCHIVE</span>
                         </div>
-                        <h3 class="bento-heading">Defensive PHP 8.2 Architectural Patterns</h3>
-                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm); line-height: 1.6;">
-                            Analyzing pure PDO prepared statement parametrization, immutable request context, strict type enforcement, and zero-runtime dependency rendering pipelines.
+                        <h3 class="bento-heading">No Field Notes Published Yet</h3>
+                        <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto; line-height: 1.6;">
+                            Technical diagnostic logs, hardware configuration snippets, and benchmark telemetry will appear here as field audits are completed.
                         </p>
-                        <div class="skills-badge-list" style="margin-top: 12px;">
-                            <span class="skill-badge">PHP 8.2</span>
-                            <span class="skill-badge">Zero-Trust Security</span>
-                            <span class="skill-badge">PDO Transactions</span>
-                        </div>
                     </div>
                 </section>
 
                 <!-- SECTION 4: RESEARCH & INSIGHTS -->
                 <section id="research" class="content-section" data-section-name="Research" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
-                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
-                            // 04. RESEARCH &amp; HARDWARE INVESTIGATIONS
+                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 04.</span>RESEARCH &amp; HARDWARE INVESTIGATIONS
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                             COMPUTING PRESERVATION
                         </span>
                     </div>
 
-                    <div class="bento-card">
-                        <div class="bento-tag">
+                    <div class="bento-card" style="text-align: center; padding: 40px 24px;">
+                        <div class="bento-tag" style="justify-content: center; margin-bottom: 12px;">
                             <span class="tag-rec-dot"></span>
-                            <span>RESEARCH // VINTAGE SILICON</span>
+                            <span>RESEARCH // ARCHIVE</span>
                         </div>
-                        <h3 class="bento-heading">Thermal &amp; Microcode Analysis on Ultraportable x86 Silicon</h3>
-                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm); line-height: 1.6;">
-                            Comparative study of thermal dissipation and modern lightweight Linux distributions across Intel Atom N280, Pentium M ULV 753, and Core 2 Duo legacy architectures.
+                        <h3 class="bento-heading">Hardware Investigations Pending</h3>
+                        <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto; line-height: 1.6;">
+                            Preservation analyses, vintage silicon benchmarking, and architectural performance profiling documentation are currently in preparation.
                         </p>
-                        <div class="skills-badge-list" style="margin-top: 12px;">
-                            <span class="skill-badge">Hardware Diagnostics</span>
-                            <span class="skill-badge">Silicon Preservation</span>
-                            <span class="skill-badge">Debian Minimal</span>
-                        </div>
                     </div>
                 </section>
 

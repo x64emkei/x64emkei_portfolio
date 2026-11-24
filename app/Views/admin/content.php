@@ -8,7 +8,7 @@
 
     <!-- ABOUT SECTION MANAGEMENT -->
     <div class="admin-card">
-        <div class="admin-card-header" style="border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 12px; margin-bottom: 18px;">
+        <div class="admin-card-header" style="border-bottom: 1px solid var(--admin-border); padding-bottom: 12px; margin-bottom: 18px;">
             <div style="display: flex; align-items: center; gap: 10px;">
                 <span style="font-size: 1.2rem; color: var(--admin-cyan);">&#128100;</span>
                 <h3 class="admin-card-title" style="margin: 0;">01 // ABOUT DESTINATIONS</h3>

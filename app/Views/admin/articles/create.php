@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div style="display: flex; gap: 24px; align-items: center; margin-bottom: 24px; padding: 16px; background: rgba(0, 229, 255, 0.03); border: 1px solid var(--admin-border); border-radius: 4px;">
+    <div style="display: flex; gap: 24px; align-items: center; margin-bottom: 24px; padding: 16px; background: rgba(255, 42, 42, 0.04); border: 1px solid var(--admin-border); border-radius: 4px;">
         <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label" for="status">PUBLICATION STATUS</label>
             <select id="status" name="status" class="form-control" style="width: 160px;">

@@ -17,11 +17,12 @@ $currentUser = AuthService::user();
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
     <style>
         :root {
-            --admin-bg: #07090e;
-            --admin-surface: #0e121a;
-            --admin-card: rgba(18, 24, 38, 0.7);
-            --admin-border: rgba(0, 229, 255, 0.2);
-            --admin-cyan: #00e5ff;
+            --admin-bg: #06080A;
+            --admin-surface: #0C0E12;
+            --admin-card: rgba(18, 24, 38, 0.85);
+            --admin-border: rgba(255, 42, 42, 0.25);
+            --admin-cyan: #FF2A2A;
+            --admin-primary: #FF2A2A;
             --admin-magenta: #ff3366;
             --admin-green: #10b981;
             --admin-amber: #f59e0b;
@@ -80,9 +81,9 @@ $currentUser = AuthService::user();
             transition: all 0.2s ease;
         }
         .admin-nav a:hover, .admin-nav a.active {
-            color: var(--admin-cyan);
-            background: rgba(0, 229, 255, 0.08);
-            border-left-color: var(--admin-cyan);
+            color: var(--admin-primary);
+            background: rgba(255, 42, 42, 0.1);
+            border-left-color: var(--admin-primary);
         }
         .admin-badge {
             background: var(--admin-magenta);
@@ -185,7 +186,7 @@ $currentUser = AuthService::user();
             width: 100%;
             padding: 10px 14px;
             background: rgba(7, 9, 14, 0.8);
-            border: 1px solid rgba(0, 229, 255, 0.25);
+            border: 1px solid rgba(255, 42, 42, 0.25);
             color: #f8fafc;
             font-family: inherit;
             font-size: 0.88rem;
@@ -195,8 +196,8 @@ $currentUser = AuthService::user();
         }
         .form-control:focus {
             outline: none;
-            border-color: var(--admin-cyan);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+            border-color: var(--admin-primary);
+            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
         }
         textarea.form-control {
             min-height: 100px;
@@ -219,11 +220,12 @@ $currentUser = AuthService::user();
             transition: all 0.2s;
         }
         .btn-admin-cyan {
-            background: var(--admin-cyan);
-            color: #07090e;
+            background: var(--admin-primary);
+            color: #ffffff;
+            border: 1px solid var(--admin-primary);
         }
         .btn-admin-cyan:hover {
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            box-shadow: 3px 3px 0px #000000;
             transform: translateY(-1px);
         }
         .btn-admin-danger {
@@ -264,7 +266,7 @@ $currentUser = AuthService::user();
             color: #cbd5e1;
         }
         .admin-table tr:hover td {
-            background: rgba(0, 229, 255, 0.02);
+            background: rgba(255, 42, 42, 0.03);
         }
         .status-pill {
             display: inline-block;

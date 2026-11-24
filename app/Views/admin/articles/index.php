@@ -35,7 +35,7 @@
                         <div style="font-size: 0.72rem; color: #64748b; margin-top: 2px;">/journal/<?= e($art['slug']) ?></div>
                     </td>
                     <td>
-                        <span style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(0, 229, 255, 0.1); color: var(--admin-cyan); border: 1px solid rgba(0, 229, 255, 0.2);">
+                        <span style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255, 42, 42, 0.1); color: var(--admin-primary); border: 1px solid rgba(255, 42, 42, 0.25);">
                             <?= e($art['category_name'] ?? 'Uncategorized') ?>
                         </span>
                     </td>

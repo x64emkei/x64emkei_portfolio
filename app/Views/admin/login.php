@@ -3,31 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYS.AUTH // Operator Login</title>
+    <title>SYS.AUTH // Operator Login &bull; x64emkei</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= asset('style.css') ?>">
     <style>
         body {
-            background-color: #07090e;
-            color: #00e5ff;
+            background-color: #06080A;
+            color: #f8fafc;
             font-family: 'JetBrains Mono', monospace;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background-image: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 60%);
+            background-image: 
+                linear-gradient(rgba(255, 42, 42, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 42, 42, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
         }
         .login-box {
-            background: #0e121a;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 6px;
+            background: #0C0E12;
+            border: 1px solid rgba(255, 42, 42, 0.35);
+            border-top: 2px solid var(--primary);
+            border-radius: 4px;
             padding: 36px;
             width: 100%;
             max-width: 420px;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
+            box-shadow: 4px 4px 0px #000000;
             box-sizing: border-box;
+            position: relative;
+        }
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #FF2A2A, transparent);
         }
         .login-header {
             text-align: center;
@@ -37,7 +52,8 @@
             font-size: 1.3rem;
             margin: 0 0 8px 0;
             letter-spacing: 2px;
-            color: #00e5ff;
+            color: var(--primary);
+            font-family: 'Space Grotesk', sans-serif;
         }
         .login-header p {
             color: #64748b;
@@ -57,25 +73,26 @@
         input {
             width: 100%;
             padding: 12px 14px;
-            background: #07090e;
-            border: 1px solid rgba(0, 229, 255, 0.25);
+            background: #06080A;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
             font-family: inherit;
             font-size: 0.9rem;
             border-radius: 4px;
             box-sizing: border-box;
+            transition: border-color 0.2s;
         }
         input:focus {
             outline: none;
-            border-color: #00e5ff;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+            border-color: var(--primary);
+            box-shadow: 2px 2px 0px #000000;
         }
         .btn-submit {
             width: 100%;
             padding: 12px;
-            background: #00e5ff;
-            border: none;
-            color: #07090e;
+            background: var(--primary);
+            border: 1px solid var(--primary);
+            color: #ffffff;
             font-family: inherit;
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -83,15 +100,17 @@
             cursor: pointer;
             border-radius: 4px;
             margin-top: 10px;
+            box-shadow: 3px 3px 0px #000000;
             transition: all 0.2s;
         }
         .btn-submit:hover {
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
             transform: translateY(-1px);
+            box-shadow: 4px 4px 0px #000000;
+            background: #ff4545;
         }
         .alert {
-            background: rgba(255, 51, 102, 0.1);
-            border: 1px solid #ff3366;
+            background: rgba(255, 42, 42, 0.1);
+            border: 1px solid var(--primary);
             color: #ff6b8b;
             padding: 10px 14px;
             font-size: 0.8rem;
@@ -99,9 +118,9 @@
             margin-bottom: 20px;
         }
         .alert-info {
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid #00e5ff;
-            color: #00e5ff;
+            background: rgba(255, 42, 42, 0.08);
+            border: 1px solid var(--primary);
+            color: #f8fafc;
         }
         .back-link {
             text-align: center;
@@ -113,7 +132,7 @@
             text-decoration: none;
         }
         .back-link a:hover {
-            color: #00e5ff;
+            color: var(--primary);
         }
     </style>
 </head>

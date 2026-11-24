@@ -397,6 +397,38 @@ $secHardware = $secHelper->getSection('hardware');
                                     <span class="retro-oem-tag">Custom Lab</span>
                                 </div>
                             </div>
+
+                            <!-- Machine 5: Dell OptiPlex 3010 Server -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.05</span>
+                                    <span class="retro-form-tag">Homelab Server</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Dell OptiPlex 3010 Homelab Server</div>
+                                    <div class="retro-machine-desc">Bare-metal hypervisor cluster running Linux containers, isolated microservices, and local network diagnostics.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>24/7 Server</span>
+                                    <span class="retro-oem-tag">Dell OptiPlex</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 6: Dell OptiPlex 760 USFF -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.06</span>
+                                    <span class="retro-form-tag">USFF Desktop</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Dell OptiPlex 760 USFF</div>
+                                    <div class="retro-machine-desc">Ultra-small form factor diagnostic node, legacy firmware flashing, and auxiliary network monitoring console.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Auxiliary Node</span>
+                                    <span class="retro-oem-tag">Dell OptiPlex</span>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </section>

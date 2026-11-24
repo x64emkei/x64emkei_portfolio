@@ -21,9 +21,9 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
-<body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
+<body>
 
-    <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
+    <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
     <main class="main-content">
@@ -35,63 +35,82 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
                     <span class="sep">/</span>
                     <a href="<?= url($legalType) ?>"><?= strtoupper(e($legalType)) ?></a>
                     <span class="sep">/</span>
-                    <span class="current">LEGAL & COMPLIANCE</span>
+                    <span class="current">LEGAL &amp; COMPLIANCE</span>
                 </nav>
 
-                <!-- Page Header -->
-                <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 24px;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ff3366; letter-spacing: 1px; margin-bottom: 8px;">
-                        // TELEMETRY & COMPLIANCE SPECIFICATION
-                    </div>
-                    <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; color: #f8fafc; margin: 0 0 10px 0;">
-                        <?= e($pageTitle) ?>
-                    </h1>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                        Standardized legal documentation, accessibility audit standards, and transparent telemetry disclosures for the X64EMKEI platform.
-                    </p>
+                <!-- Section Watermark & Header -->
+                <div class="section-watermark-num">06</div>
+                <div class="section-header">
+                    <span class="section-subtitle">// TELEMETRY &amp; COMPLIANCE SPECIFICATION</span>
+                    <h2 class="section-title"><?= e($pageTitle) ?></h2>
+                    <div class="section-divider"></div>
                 </div>
 
                 <!-- Subnav Tabs -->
-                <div class="subnav-tabs">
-                    <a href="<?= url('privacy') ?>" class="subnav-btn <?= $legalType === 'privacy' ? 'active' : '' ?>">Privacy Policy</a>
-                    <a href="<?= url('terms') ?>" class="subnav-btn <?= $legalType === 'terms' ? 'active' : '' ?>">Terms of Use</a>
-                    <a href="<?= url('accessibility') ?>" class="subnav-btn <?= $legalType === 'accessibility' ? 'active' : '' ?>">Accessibility (WCAG 2.2)</a>
-                    <a href="<?= url('sitemap') ?>" class="subnav-btn <?= $legalType === 'sitemap' ? 'active' : '' ?>">HTML Sitemap</a>
+                <div class="subnav-tabs" role="tablist">
+                    <a href="<?= url('privacy') ?>" class="subnav-btn <?= $legalType === 'privacy' ? 'active' : '' ?>">01. Privacy Policy</a>
+                    <a href="<?= url('terms') ?>" class="subnav-btn <?= $legalType === 'terms' ? 'active' : '' ?>">02. Terms of Use</a>
+                    <a href="<?= url('accessibility') ?>" class="subnav-btn <?= $legalType === 'accessibility' ? 'active' : '' ?>">03. Accessibility (WCAG 2.2)</a>
+                    <a href="<?= url('sitemap') ?>" class="subnav-btn <?= $legalType === 'sitemap' ? 'active' : '' ?>">04. HTML Sitemap</a>
                 </div>
 
                 <?php if ($legalType === 'privacy'): ?>
-                <div class="section-box">
-                    <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; margin-top: 0;">// 1. DATA PRIVACY & TRANSMISSION PRINCIPLES</h2>
-                    <p style="color: #cbd5e1; line-height: 1.7; font-size: 0.95rem;">
-                        The X64EMKEI digital platform operates on a zero-tracking, privacy-first architecture. We do not sell, monetize, or harvest personal user profiles. Any information submitted through the contact inquiry form is transmitted securely via HTTPS and stored in encrypted databases solely for direct professional correspondence.
+                <div class="bento-card" style="padding: 32px 28px; margin-bottom: 40px;">
+                    <div class="bento-tag">
+                        <span class="tag-rec-dot" style="background: var(--primary);"></span>
+                        <span>PRIVACY POLICY // TELEMETRY DIRECTIVE</span>
+                    </div>
+                    <h3 class="bento-heading" style="color: var(--text-primary); margin: 12px 0 10px 0;">
+                        <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 1.</span>DATA PRIVACY &amp; TRANSMISSION PRINCIPLES
+                    </h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7; font-size: var(--font-size-base); margin-bottom: 24px;">
+                        The X64EMKEI digital platform operates on a zero-tracking, privacy-first architecture. We do not sell, monetize, or harvest personal user profiles. Any information submitted through the contact inquiry form is transmitted securely via HTTPS and processed solely for direct professional correspondence.
                     </p>
-                    <h3 style="color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; margin: 20px 0 10px 0;">// TELEMETRY LOGS & HTTP HEADERS</h3>
-                    <p style="color: #94a3b8; line-height: 1.6; font-size: 0.92rem;">
+                    <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 10px 0;">
+                        // TELEMETRY LOGS &amp; HTTP HEADERS
+                    </h4>
+                    <p style="color: var(--text-muted); line-height: 1.6; font-size: var(--font-size-sm); margin: 0;">
                         Standard web server access logs record HTTP request headers, timestamps (recorded in Philippine Standard Time, UTC+8), IP addresses, and response status codes strictly for rate-limiting, bot mitigation, and defensive cybersecurity operations. Logs are rotated periodically and purged.
                     </p>
                 </div>
 
                 <?php elseif ($legalType === 'terms'): ?>
-                <div class="section-box">
-                    <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; margin-top: 0;">// 1. CODE USAGE & INTELLECTUAL PROPERTY</h2>
-                    <p style="color: #cbd5e1; line-height: 1.7; font-size: 0.95rem;">
+                <div class="bento-card" style="padding: 32px 28px; margin-bottom: 40px;">
+                    <div class="bento-tag">
+                        <span class="tag-rec-dot" style="background: var(--primary);"></span>
+                        <span>TERMS OF USE // CODE DISCLAIMER</span>
+                    </div>
+                    <h3 class="bento-heading" style="color: var(--text-primary); margin: 12px 0 10px 0;">
+                        <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 1.</span>CODE USAGE &amp; INTELLECTUAL PROPERTY
+                    </h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7; font-size: var(--font-size-base); margin-bottom: 24px;">
                         All original technical articles, tutorials, source code snippets, and blueprints published on this website are authored by <strong>Michael Benedict Ordenes</strong> unless explicitly cited otherwise. Open-source code repositories linked from this portfolio are governed by their respective licenses (e.g., MIT, Apache 2.0, or GPLv3).
                     </p>
-                    <h3 style="color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; margin: 20px 0 10px 0;">// TECHNICAL DISCLAIMER</h3>
-                    <p style="color: #94a3b8; line-height: 1.6; font-size: 0.92rem;">
+                    <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 10px 0;">
+                        // TECHNICAL DISCLAIMER
+                    </h4>
+                    <p style="color: var(--text-muted); line-height: 1.6; font-size: var(--font-size-sm); margin: 0;">
                         Technical documentation, hardware restoration guides, and network configuration tutorials are provided for educational and research purposes. System operators assume full responsibility when replicating homelab setups, firmware flashes, or virtualization configurations.
                     </p>
                 </div>
 
                 <?php elseif ($legalType === 'accessibility'): ?>
-                <div class="section-box">
-                    <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; margin-top: 0;">// 1. ACCESSIBILITY COMMITMENT (WCAG 2.2 AA)</h2>
-                    <p style="color: #cbd5e1; line-height: 1.7; font-size: 0.95rem;">
+                <div class="bento-card" style="padding: 32px 28px; margin-bottom: 40px;">
+                    <div class="bento-tag">
+                        <span class="tag-rec-dot" style="background: var(--primary);"></span>
+                        <span>ACCESSIBILITY // WCAG 2.2 AA CONFORMANCE</span>
+                    </div>
+                    <h3 class="bento-heading" style="color: var(--text-primary); margin: 12px 0 10px 0;">
+                        <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 1.</span>ACCESSIBILITY COMMITMENT (WCAG 2.2 AA)
+                    </h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7; font-size: var(--font-size-base); margin-bottom: 24px;">
                         X64EMKEI is committed to digital inclusivity and accessible engineering. Our HUD interface is designed to meet or exceed <strong>WCAG 2.2 Level AA</strong> requirements across all viewports.
                     </p>
-                    <h3 style="color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; margin: 20px 0 10px 0;">// ACCESSIBILITY IMPLEMENTATIONS</h3>
-                    <ul style="color: #94a3b8; line-height: 1.8; font-size: 0.92rem; padding-left: 20px;">
-                        <li><strong>Visible Keyboard Focus Rings:</strong> High-contrast cyan outline (<code>2px solid #00E5FF</code>) on all interactive controls.</li>
+                    <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">
+                        // ACCESSIBILITY IMPLEMENTATIONS
+                    </h4>
+                    <ul style="color: var(--text-secondary); line-height: 1.8; font-size: var(--font-size-sm); padding-left: 20px; margin: 0;">
+                        <li><strong>Visible Keyboard Focus Rings:</strong> High-contrast crimson outline (<code>2px solid var(--primary)</code>) on all interactive controls.</li>
                         <li><strong>Reduced Motion Compliance:</strong> Complete fallback under <code>prefers-reduced-motion: reduce</code>, disabling transitions and laser animations.</li>
                         <li><strong>Touch-Friendly Targets:</strong> Minimum interactive target area of 44&times;44px on mobile devices.</li>
                         <li><strong>Contrast Ratio:</strong> Standard text contrast exceeds 4.5:1 ratio on both Dark and Light theme surfaces.</li>
@@ -100,43 +119,49 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
                 </div>
 
                 <?php elseif ($legalType === 'sitemap'): ?>
-                <div class="section-box">
-                    <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; margin-top: 0;">// COMPLETE PLATFORM SITEMAP</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 20px;">
-                        <div style="background: rgba(0,0,0,0.3); padding: 18px; border-radius: 4px; border-left: 3px solid #00e5ff;">
-                            <h3 style="color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 1rem; margin-top: 0;">// 1. HOME & PROFILE</h3>
-                            <ul style="list-style: none; padding: 0; line-height: 1.8; font-size: 0.88rem;">
-                                <li><a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none;">&rsaquo; Homepage & Telemetry</a></li>
-                                <li><a href="<?= url('/#featured') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Featured Programs</a></li>
+                <div class="bento-card" style="padding: 32px 28px; margin-bottom: 40px;">
+                    <div class="bento-tag">
+                        <span class="tag-rec-dot" style="background: var(--primary);"></span>
+                        <span>ARCHITECTURE // COMPLETE SITEMAP</span>
+                    </div>
+                    <h3 class="bento-heading" style="color: var(--text-primary); margin: 12px 0 16px 0;">
+                        <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 1.</span>COMPLETE PLATFORM SITEMAP
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+                        <div class="bento-card" style="padding: 20px; background: rgba(9, 11, 16, 0.8); border-left: 3px solid var(--primary);">
+                            <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">// 1. HOME &amp; PROFILE</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: var(--font-size-sm);">
+                                <li><a href="<?= url('/') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; Homepage &amp; Telemetry</a></li>
+                                <li><a href="<?= url('/#featured') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Featured Programs</a></li>
                             </ul>
                         </div>
-                        <div style="background: rgba(0,0,0,0.3); padding: 18px; border-radius: 4px; border-left: 3px solid #ff3366;">
-                            <h3 style="color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 1rem; margin-top: 0;">// 2. ABOUT DOSSIER</h3>
-                            <ul style="list-style: none; padding: 0; line-height: 1.8; font-size: 0.88rem;">
-                                <li><a href="<?= url('about#biography') ?>" style="color: #00e5ff; text-decoration: none;">&rsaquo; Biography & Focus</a></li>
-                                <li><a href="<?= url('about#education') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Education History</a></li>
-                                <li><a href="<?= url('about#skills') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Technical Proficiencies</a></li>
-                                <li><a href="<?= url('about#experience') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Experience & Roles</a></li>
-                                <li><a href="<?= url('about#certifications') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Certifications & Honors</a></li>
+                        <div class="bento-card" style="padding: 20px; background: rgba(9, 11, 16, 0.8); border-left: 3px solid var(--primary);">
+                            <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">// 2. ABOUT DOSSIER</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: var(--font-size-sm);">
+                                <li><a href="<?= url('about#biography') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; Biography &amp; Focus</a></li>
+                                <li><a href="<?= url('about#education') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Education History</a></li>
+                                <li><a href="<?= url('about#skills') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Technical Proficiencies</a></li>
+                                <li><a href="<?= url('about#experience') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Experience &amp; Roles</a></li>
+                                <li><a href="<?= url('about#certifications') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Certifications &amp; Honors</a></li>
                             </ul>
                         </div>
-                        <div style="background: rgba(0,0,0,0.3); padding: 18px; border-radius: 4px; border-left: 3px solid #ffb800;">
-                            <h3 style="color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 1rem; margin-top: 0;">// 3. WORK & LABS</h3>
-                            <ul style="list-style: none; padding: 0; line-height: 1.8; font-size: 0.88rem;">
-                                <li><a href="<?= url('work#portfolio') ?>" style="color: #00e5ff; text-decoration: none;">&rsaquo; Portfolio & Projects</a></li>
-                                <li><a href="<?= url('work#services') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Engineering Services</a></li>
-                                <li><a href="<?= url('work#laboratory') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Technical Laboratory</a></li>
-                                <li><a href="<?= url('work#hardware') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Hardware Archive</a></li>
+                        <div class="bento-card" style="padding: 20px; background: rgba(9, 11, 16, 0.8); border-left: 3px solid var(--accent-amber);">
+                            <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">// 3. WORK &amp; LABS</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: var(--font-size-sm);">
+                                <li><a href="<?= url('work#portfolio') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; Portfolio &amp; Projects</a></li>
+                                <li><a href="<?= url('work#services') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Engineering Services</a></li>
+                                <li><a href="<?= url('work#laboratory') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Technical Laboratory</a></li>
+                                <li><a href="<?= url('work#hardware') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Hardware Archive</a></li>
                             </ul>
                         </div>
-                        <div style="background: rgba(0,0,0,0.3); padding: 18px; border-radius: 4px; border-left: 3px solid #10b981;">
-                            <h3 style="color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 1rem; margin-top: 0;">// 4. JOURNAL</h3>
-                            <ul style="list-style: none; padding: 0; line-height: 1.8; font-size: 0.88rem;">
-                                <li><a href="<?= url('journal#blog') ?>" style="color: #00e5ff; text-decoration: none;">&rsaquo; Blog Transmissions</a></li>
-                                <li><a href="<?= url('journal#tutorials') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Tutorials & Guides</a></li>
-                                <li><a href="<?= url('journal#technical-notes') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Technical Notes</a></li>
-                                <li><a href="<?= url('journal#research') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; Research Papers</a></li>
-                                <li><a href="<?= url('journal#ai-manifesto') ?>" style="color: #94a3b8; text-decoration: none;">&rsaquo; AI Manifesto v1.0</a></li>
+                        <div class="bento-card" style="padding: 20px; background: rgba(9, 11, 16, 0.8); border-left: 3px solid var(--accent-green);">
+                            <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">// 4. JOURNAL</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: var(--font-size-sm);">
+                                <li><a href="<?= url('journal#blog') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; Blog Transmissions</a></li>
+                                <li><a href="<?= url('journal#tutorials') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Tutorials &amp; Guides</a></li>
+                                <li><a href="<?= url('journal#technical-notes') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Technical Notes</a></li>
+                                <li><a href="<?= url('journal#research') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Research Papers</a></li>
+                                <li><a href="<?= url('journal#ai-manifesto') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; AI Manifesto v1.0</a></li>
                             </ul>
                         </div>
                     </div>

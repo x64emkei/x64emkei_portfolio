@@ -10,7 +10,7 @@
     <style>
         body {
             background-color: #07090e;
-            color: #00e5ff;
+            color: #f8fafc;
             font-family: 'JetBrains Mono', monospace;
             display: flex;
             align-items: center;
@@ -58,7 +58,7 @@
             width: 100%;
             padding: 12px 14px;
             background: #07090e;
-            border: 1px solid rgba(0, 229, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
             font-family: inherit;
             font-size: 0.9rem;

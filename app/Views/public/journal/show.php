@@ -4,175 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= e($metaDesc ?? '') ?>">
-    <title><?= e($pageTitle ?? 'Article // x64emkei.dev') ?></title>
+    <title><?= e($pageTitle ?? 'Dispatch // x64emkei.dev') ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
-    <style>
-        .reader-container {
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 40px 24px 80px 24px;
-        }
-        .reader-header {
-            margin-bottom: 36px;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            padding-bottom: 24px;
-        }
-        .reader-badge {
-            display: inline-block;
-            font-size: 0.78rem;
-            font-family: 'JetBrains Mono', monospace;
-            padding: 3px 10px;
-            border-radius: 4px;
-            background: rgba(0, 229, 255, 0.1);
-            color: #00e5ff;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            margin-bottom: 14px;
-            text-decoration: none;
-        }
-        .reader-title {
-            font-size: 2.3rem;
-            line-height: 1.25;
-            color: #f8fafc;
-            margin: 0 0 16px 0;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-        .reader-meta {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            color: #64748b;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-        }
-        .reader-body {
-            color: #cbd5e1;
-            font-size: 1.05rem;
-            line-height: 1.75;
-            font-family: 'Outfit', sans-serif;
-        }
-        .reader-body h2 {
-            color: #00e5ff;
-            font-size: 1.5rem;
-            margin: 36px 0 16px 0;
-            font-family: 'Space Grotesk', sans-serif;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
-            padding-bottom: 8px;
-        }
-        .reader-body h3 {
-            color: #38bdf8;
-            font-size: 1.2rem;
-            margin: 28px 0 12px 0;
-        }
-        .reader-body p {
-            margin-bottom: 20px;
-        }
-        .reader-body code {
-            font-family: 'JetBrains Mono', monospace;
-            background: rgba(0, 229, 255, 0.08);
-            color: #00e5ff;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-        .reader-body pre {
-            background: #0e121a;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            padding: 16px;
-            border-radius: 6px;
-            overflow-x: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.88rem;
-            color: #e2e8f0;
-            margin: 24px 0;
-        }
-        .reader-body pre code {
-            background: transparent;
-            padding: 0;
-            color: inherit;
-        }
-        .reader-body blockquote {
-            border-left: 3px solid #00e5ff;
-            background: rgba(0, 229, 255, 0.03);
-            margin: 24px 0;
-            padding: 14px 20px;
-            color: #94a3b8;
-            font-style: italic;
-        }
-    </style>
 </head>
-<body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
+<body>
 
-    <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
+    <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require dirname(__DIR__) . '/partials/header_nav.php'; ?>
 
-    <main class="main-content"><div class="view-wrapper">
-<main class="reader-container">
-        <!-- Breadcrumbs -->
-        <nav style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #64748b; margin-bottom: 24px;" aria-label="Breadcrumb">
-            <a href="<?= url('/') ?>" style="color: #00e5ff; text-decoration: none;">HOME</a>
-            <span style="color: #334155;">/</span>
-            <a href="<?= url('journal') ?>" style="color: #00e5ff; text-decoration: none;">JOURNAL</a>
-            <span style="color: #334155;">/</span>
-            <span style="color: #f8fafc; font-weight: 600;"><?= strtoupper(e($article['title'])) ?></span>
-        </nav>
-        <div style="margin-bottom: 24px;">
-            <a href="<?= url('journal') ?>" style="color: #64748b; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
-                &larr; BACK TO TRANSMISSION LOGS
-            </a>
-        </div>
+    <main class="main-content">
+        <div class="view-wrapper">
+            <div class="page-container">
+                <!-- Breadcrumbs -->
+                <nav class="hud-breadcrumb" aria-label="Breadcrumb">
+                    <a href="<?= url('/') ?>">HOME</a>
+                    <span class="sep">/</span>
+                    <a href="<?= url('journal') ?>">JOURNAL</a>
+                    <span class="sep">/</span>
+                    <span class="current"><?= strtoupper(e($article['title'])) ?></span>
+                </nav>
 
-        <article class="reader-header">
-            <?php if (!empty($article['category_name'])): ?>
-                <a href="<?= url('journal/category/' . $article['category_slug']) ?>" class="reader-badge">
-                    <?= e($article['category_name']) ?>
-                </a>
-            <?php endif; ?>
+                <div style="margin-bottom: 24px;">
+                    <a href="<?= url('journal') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">
+                        &larr; // BACK TO FIELD NOTES
+                    </a>
+                </div>
 
-            <h1 class="reader-title"><?= e($article['title']) ?></h1>
+                <!-- Section Watermark & Header -->
+                <div class="section-watermark-num">03</div>
+                <div class="section-header">
+                    <span class="section-subtitle">// FIELD DISPATCH &bull; <?= strtoupper(e($article['category_name'] ?? 'ENGINEERING LOG')) ?></span>
+                    <h2 class="section-title"><?= e($article['title']) ?></h2>
+                    <div class="section-divider"></div>
+                </div>
 
-            <div class="reader-meta">
-                <span>📅 Published <?= e(date('F j, Y', strtotime($article['published_at'] ?? $article['created_at']))) ?></span>
-                <span>👤 By <?= e($article['author_name'] ?? 'x64emkei') ?></span>
-                <?php if (!empty($article['tags'])): ?>
-                    <span>🏷️ <?= e(implode(', ', array_column($article['tags'], 'name'))) ?></span>
-                <?php endif; ?>
+                <!-- Article Container -->
+                <article class="bento-card" style="padding: 36px 32px; margin-bottom: 40px;">
+                    <div class="bento-tag" style="margin-bottom: 20px;">
+                        <span class="tag-rec-dot" style="background: var(--primary);"></span>
+                        <span><?= strtoupper(e($article['category_name'] ?? 'DISPATCH')) ?></span>
+                        <div class="win-controls">
+                            <span class="win-btn">_</span>
+                            <span class="win-btn win-close">&times;</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; align-items: center; font-family: var(--font-mono); font-size: var(--font-size-xs); color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 28px; flex-wrap: wrap;">
+                        <span>DATE: <?= e(date('Y.m.d', strtotime($article['published_at'] ?? $article['created_at']))) ?></span>
+                        <span>AUTHOR: <span style="color: var(--text-primary);"><?= e($article['author_name'] ?? 'Michael Benedict Ordenes') ?></span></span>
+                        <?php if (!empty($article['tags'])): ?>
+                            <span>TAGS: <span style="color: var(--primary);"><?= is_array($article['tags']) ? (is_string(reset($article['tags'])) ? implode(', ', $article['tags']) : implode(', ', array_column($article['tags'], 'name'))) : e($article['tags']) ?></span></span>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if (!empty($article['featured_image'])): ?>
+                    <div style="margin-bottom: 30px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border);">
+                        <img src="<?= e(asset($article['featured_image'])) ?>" alt="<?= e($article['title']) ?>" style="width: 100%; max-height: 440px; object-fit: cover; display: block;">
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="article-prose" style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; font-family: var(--font-body);">
+                        <?= nl2br(e($article['content'])) ?>
+                    </div>
+
+                    <?php if (!empty($related)): ?>
+                    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border);">
+                        <h3 class="bento-heading" style="font-size: var(--font-size-base); color: var(--primary); margin: 0 0 16px 0;">
+                            // RELATED DISPATCHES
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                            <?php foreach ($related as $rel): ?>
+                            <a href="<?= url('journal/' . $rel['slug']) ?>" class="bento-card" style="padding: 18px; text-decoration: none; color: inherit; display: block;">
+                                <div style="font-size: var(--font-size-2xs); color: var(--primary); font-family: var(--font-mono); margin-bottom: 6px;"><?= e($rel['category_name'] ?? 'Dispatch') ?></div>
+                                <div style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); line-height: 1.4;"><?= e($rel['title']) ?></div>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </article>
+
             </div>
-        </article>
-
-        <?php if (!empty($article['featured_image'])): ?>
-        <div style="margin-bottom: 30px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(0, 229, 255, 0.2);">
-            <img src="<?= e($article['featured_image']) ?>" alt="<?= e($article['title']) ?>" style="width: 100%; max-height: 400px; object-fit: cover; display: block;">
         </div>
-        <?php endif; ?>
+        <!-- Website Footer Component -->
+        <?php require dirname(__DIR__) . '/partials/footer.php'; ?>
+    </main>
 
-        <div class="reader-body">
-            <?= nl2br($article['content']) ?>
-        </div>
-
-        <?php if (!empty($related)): ?>
-        <section style="margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(0, 229, 255, 0.15);">
-            <h3 style="color: #00e5ff; font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; margin-bottom: 20px;">
-                // RELATED TRANSMISSIONS
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-                <?php foreach ($related as $rel): ?>
-                <a href="<?= url('journal/' . $rel['slug']) ?>" style="display: block; padding: 16px; background: rgba(14, 18, 26, 0.6); border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 4px; text-decoration: none; color: inherit;">
-                    <div style="font-size: 0.75rem; color: #00e5ff; font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;"><?= e($rel['category_name'] ?? 'Journal') ?></div>
-                    <div style="font-size: 0.95rem; font-weight: 600; color: #f8fafc; line-height: 1.3;"><?= e($rel['title']) ?></div>
-                </a>
-                <?php endforeach; ?>
-            </div>
-        </section>
-        <?php endif; ?>
-    </div>
-    </div></main>
-
-    <footer style="border-top: 1px solid rgba(0, 229, 255, 0.15); padding: 30px 24px; text-align: center; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
-        &copy; <?= date('Y') ?> Michael Benedict Ordenes (x64emkei). Systems Architecture &bull; All Telemetry Active.
-    </footer>
     <script src="<?= asset('script.js') ?>"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@
             </thead>
             <tbody>
                 <?php foreach ($messages as $msg): ?>
-                    <tr style="<?= !$msg['is_read'] ? 'background: rgba(0,229,255,0.03);' : '' ?>">
+                    <tr style="<?= !$msg['is_read'] ? 'background: rgba(255,42,42,0.04);' : '' ?>">
                         <td>
                             <?php if (!$msg['is_read']): ?>
                                 <span class="status-pill" style="background: rgba(255,51,102,0.2); color: #ff3366; border: 1px solid #ff3366;">NEW</span>

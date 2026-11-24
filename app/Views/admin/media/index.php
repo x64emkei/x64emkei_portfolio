@@ -7,7 +7,7 @@
     </div>
 
     <!-- Upload Box -->
-    <form action="<?= e(url('admin/media/upload')) ?>" method="POST" enctype="multipart/form-data" style="margin-bottom: 24px; padding: 18px; border: 1px dashed var(--admin-border); border-radius: 4px; background: rgba(0,229,255,0.02);">
+    <form action="<?= e(url('admin/media/upload')) ?>" method="POST" enctype="multipart/form-data" style="margin-bottom: 24px; padding: 18px; border: 1px dashed var(--admin-border); border-radius: 4px; background: rgba(255,42,42,0.02);">
         <?= csrf_field() ?>
         <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 14px; align-items: end;">
             <div class="form-group" style="margin-bottom: 0;">
