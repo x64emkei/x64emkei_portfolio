@@ -11,101 +11,104 @@ $secHardware = $secHelper->getSection('hardware');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work, Services & Technical Laboratory // Michael Benedict Ordenes</title>
+    <title>Work, Services &amp; Technical Laboratory // <?= e($profile['full_name'] ?? 'Michael Benedict Ordenes') ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
-<body style="background: #07090e; color: #e2e8f0; font-family: 'Outfit', sans-serif; margin: 0;">
+<body>
 
-    <!-- MASTER HUD PRIMARY NAVIGATION COMPONENT -->
+    <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
     <main class="main-content">
         <div class="view-wrapper">
-            <div class="work-container" data-initial-section="<?= e($activeSub) ?>">
+            <div class="page-container" data-initial-section="<?= e($activeSub) ?>">
                 <!-- Breadcrumbs -->
                 <nav class="hud-breadcrumb" aria-label="Breadcrumb">
                     <a href="<?= url('/') ?>">HOME</a>
                     <span class="sep">/</span>
                     <a href="<?= url('work') ?>">WORK</a>
                     <span class="sep">/</span>
-                    <span class="current" id="breadcrumbActiveSection">PROJECTS & SERVICES</span>
+                    <span class="current" id="breadcrumbActiveSection">PROJECTS &amp; SERVICES</span>
                 </nav>
 
-                <!-- Page Header -->
-                <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(0, 229, 255, 0.2); padding-bottom: 24px;">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ff3366; letter-spacing: 1px; margin-bottom: 8px;">
-                        // ENGINEERING PORTFOLIO, CAPABILITIES & ARCHIVE
-                    </div>
-                    <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; color: #f8fafc; margin: 0 0 10px 0;">
-                        Engineering Work & Technical Catalog
-                    </h1>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.6;">
-                        Software projects, professional services, virtualization laboratories, and physical computing archives engineered with reliability in mind.
-                    </p>
+                <!-- Section Watermark & Header -->
+                <div class="section-watermark-num">02</div>
+                <div class="section-header">
+                    <span class="section-subtitle">// ENGINEERING PORTFOLIO, CAPABILITIES &amp; ARCHIVE</span>
+                    <h2 class="section-title"><?= e($secPortfolio['title'] ?: 'Work &amp; Technical Catalog') ?></h2>
+                    <div class="section-divider"></div>
                 </div>
 
                 <!-- Subnav Tabs (Anchor Jumps) -->
                 <div class="subnav-tabs" role="tablist" aria-label="Work sections">
-                    <a href="#portfolio" class="subnav-btn nav-anchor-link" data-target="portfolio">Portfolio & Projects</a>
-                    <a href="#services" class="subnav-btn nav-anchor-link" data-target="services">Services</a>
-                    <a href="#laboratory" class="subnav-btn nav-anchor-link" data-target="laboratory">Technical Laboratory</a>
-                    <a href="#hardware" class="subnav-btn nav-anchor-link" data-target="hardware">Hardware Archive</a>
+                    <a href="#portfolio" class="subnav-btn section-anchor-link active" data-target-section="portfolio" role="tab">Portfolio &amp; Projects</a>
+                    <a href="#services" class="subnav-btn section-anchor-link" data-target-section="services" role="tab">Services &amp; Specialties</a>
+                    <a href="#laboratory" class="subnav-btn section-anchor-link" data-target-section="laboratory" role="tab">Technical Laboratory</a>
+                    <a href="#hardware" class="subnav-btn section-anchor-link" data-target-section="hardware" role="tab">Hardware Archive</a>
                 </div>
 
                 <!-- SECTION 1: PORTFOLIO & PROJECTS -->
-                <section id="portfolio" class="content-section" data-section-name="Portfolio and Projects">
-                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
-                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // <?= e($secPortfolio['title'] ?: '1. PORTFOLIO & SOFTWARE PROJECTS') ?>
-                        </h2>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
+                <section id="portfolio" class="content-section" data-section-name="Portfolio and Projects" style="margin-bottom: 48px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
+                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
+                            // <?= e($secPortfolio['title'] ?: 'PORTFOLIO &amp; SOFTWARE PROJECTS') ?>
+                        </h3>
+                        <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                             <?= e($secPortfolio['subtitle'] ?: 'ACTIVE TELEMETRY') ?>
                         </span>
                     </div>
 
                     <?php if (empty($projects)): ?>
-                        <!-- Polished, Authentic Empty State as Directed by Master Prompt -->
-                        <div class="section-box" style="text-align: center; padding: 48px 24px; border: 1px dashed rgba(0, 229, 255, 0.25);">
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #ffb800; margin-bottom: 12px; letter-spacing: 1px;">
-                                [CATALOG STATUS: STAGING & DOCUMENTATION IN PROGRESS]
+                        <!-- Authentic Cybernetic Staging State -->
+                        <div class="program-card program-card-wip" style="padding: 36px 28px; text-align: center;">
+                            <div class="program-card-header" style="justify-content: center; margin-bottom: 12px;">
+                                <div class="program-badge badge-wip">
+                                    <span class="badge-dot-amber"></span>
+                                    <span>CATALOG STATUS: STAGING &amp; DOCUMENTATION</span>
+                                </div>
                             </div>
-                            <h3 style="font-family: 'Space Grotesk', sans-serif; color: #f8fafc; font-size: 1.5rem; margin: 0 0 12px 0;">
-                                Projects are currently being developed and documented.
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.95rem; max-width: 620px; margin: 0 auto 24px auto; line-height: 1.6;">
-                                Production dossiers, blueprints, and codebases are currently undergoing code review and documentation before public release. Check back for future updates. In the meantime, inspect our verified <strong>Technical Laboratory</strong>, physical <strong>Hardware Archive</strong>, or available <strong>Services</strong> below.
+                            <h3 class="bento-heading" style="margin: 0 0 12px 0;">Projects are currently undergoing documentation &amp; verification</h3>
+                            <p style="color: var(--text-secondary); font-size: var(--font-size-base); max-width: 650px; margin: 0 auto 24px auto; line-height: 1.6;">
+                                Production dossiers, source code repositories, and engineering blueprints are being packaged for public showcase. In the meantime, explore our verified <strong>Technical Laboratory</strong>, <strong>Hardware Archive</strong>, or active <strong>Services</strong> below.
                             </p>
-                            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-                                <a href="#services" class="subnav-btn nav-anchor-link" style="color: #00e5ff; border-color: #00e5ff;">Explore Services &darr;</a>
-                                <a href="#laboratory" class="subnav-btn nav-anchor-link">Inspect Tech Lab &darr;</a>
-                                <a href="#hardware" class="subnav-btn nav-anchor-link">View Hardware Archive &darr;</a>
+                            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                                <a href="#services" class="btn btn-primary section-anchor-link" data-target-section="services" style="text-decoration: none;">
+                                    <span>Explore Services &darr;</span>
+                                </a>
+                                <a href="#laboratory" class="btn btn-outline section-anchor-link" data-target-section="laboratory" style="text-decoration: none;">
+                                    <span>Inspect Tech Lab &darr;</span>
+                                </a>
+                                <a href="#hardware" class="btn btn-outline section-anchor-link" data-target-section="hardware" style="text-decoration: none;">
+                                    <span>Hardware Archive &darr;</span>
+                                </a>
                             </div>
                         </div>
                     <?php else: ?>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 30px;">
+                        <div class="featured-programs-grid">
                             <?php foreach ($projects as $proj): ?>
-                            <div class="hud-panel" style="margin-bottom: 0;">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff; background: rgba(0, 229, 255, 0.1); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2);">
-                                        <?= e($proj['category'] ?? 'Software Application') ?>
+                            <div class="program-card">
+                                <div class="program-card-header">
+                                    <span class="program-badge">
+                                        <span class="badge-dot"></span>
+                                        <span><?= e($proj['category'] ?? 'SOFTWARE') ?></span>
                                     </span>
-                                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">
+                                    <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--accent-green);">
                                         ● <?= e($proj['operational_status'] ?? 'Active') ?>
                                     </span>
                                 </div>
-                                <h3 style="font-size: 1.3rem; margin: 0 0 8px 0; color: #f8fafc; font-family: 'Space Grotesk', sans-serif;">
+                                <h3 class="program-title" style="margin: 12px 0 8px 0;">
                                     <a href="<?= url('project/' . $proj['slug']) ?>" style="color: inherit; text-decoration: none;">
                                         <?= e($proj['title']) ?>
                                     </a>
                                 </h3>
-                                <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin: 0 0 16px 0;">
+                                <p class="program-desc" style="color: var(--text-secondary); margin-bottom: 16px;">
                                     <?= e($proj['tagline']) ?>
                                 </p>
-                                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">
-                                    <a href="<?= url('project/' . $proj['slug']) ?>" style="color: #00e5ff; text-decoration: none; font-weight: 600;">
+                                <div class="program-card-footer" style="margin-top: auto; border-top: 1px solid var(--border); padding-top: 12px;">
+                                    <a href="<?= url('project/' . $proj['slug']) ?>" style="color: var(--accent-cyan); font-family: var(--font-mono); font-size: var(--font-size-xs); text-decoration: none; font-weight: 600;">
                                         VIEW DOSSIER &rarr;
                                     </a>
                                 </div>
@@ -115,288 +118,287 @@ $secHardware = $secHelper->getSection('hardware');
                     <?php endif; ?>
                 </section>
 
-                <!-- SECTION 2: SERVICES -->
-                <section id="services" class="content-section" data-section-name="Services" style="margin-top: 40px;">
-                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
-                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // <?= e($secServices['title'] ?: '2. PROFESSIONAL & TECHNICAL SERVICES') ?>
-                        </h2>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
-                            <?= e($secServices['subtitle'] ?: 'SPECIALIZATIONS') ?>
+                <!-- SECTION 2: SERVICES & SPECIALTIES -->
+                <section id="services" class="content-section" data-section-name="Services" style="margin-bottom: 48px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
+                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
+                            // <?= e($secServices['title'] ?: 'SERVICES &amp; SPECIALTIES') ?>
+                        </h3>
+                        <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
+                            <?= e($secServices['subtitle'] ?: 'WHAT I DO') ?>
                         </span>
                     </div>
 
-                    <?php if (!empty($services)): ?>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                        <?php foreach ($services as $idx => $svc): ?>
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
-                                [SERVICE // <?= sprintf('%02d', $idx + 1) ?>] <?= strtoupper(e($svc['category'] ?? 'ENGINEERING')) ?>
+                    <div class="services-grid">
+                        <?php if (!empty($services)): ?>
+                            <?php foreach ($services as $idx => $svc): ?>
+                            <div class="service-card <?= ($idx === 0) ? 'service-card-red' : '' ?>">
+                                <div class="service-num"><?= sprintf('%02d', $idx + 1) ?></div>
+                                <div class="service-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                    </svg>
+                                </div>
+                                <h3 class="service-title"><?= e($svc['title']) ?></h3>
+                                <p class="service-desc"><?= nl2br(e($svc['description'])) ?></p>
+                                <?php if (!empty($svc['features']) || !empty($svc['tagline'])): ?>
+                                <ul class="service-features">
+                                    <li><?= e($svc['features'] ?: $svc['tagline']) ?></li>
+                                </ul>
+                                <?php endif; ?>
                             </div>
-                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
-                                <?= e($svc['title']) ?>
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
-                                <?= nl2br(e($svc['description'])) ?>
-                            </p>
-                            <?php if (!empty($svc['features']) || !empty($svc['tagline'])): ?>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                                <strong style="color: #ff3366;">Core Stack:</strong> <?= e($svc['features'] ?: $svc['tagline']) ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <!-- Authentic Preset Service 1 (Span 7) -->
+                            <div class="service-card service-card-red">
+                                <div class="service-num">01</div>
+                                <div class="service-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                    </svg>
+                                </div>
+                                <h3 class="service-title">Modern Web &amp; Systems Engineering</h3>
+                                <p class="service-desc">
+                                    Building performant, responsive web applications and backend systems utilizing modern PHP 8.2+, pure HTML5/CSS3, and vanilla JavaScript without unnecessary runtime overhead.
+                                </p>
+                                <ul class="service-features">
+                                    <li>Custom CMS Architectures &amp; RESTful APIs</li>
+                                    <li>Accessible (WCAG 2.2 AA) Responsive Design</li>
+                                    <li>High-performance Relational Schema Modeling</li>
+                                    <li>Defensive Security (CSRF, XSS, SQLi Shielding)</li>
+                                </ul>
                             </div>
-                            <?php endif; ?>
-                        </div>
-                        <?php endforeach; ?>
+
+                            <!-- Authentic Preset Service 2 (Span 5) -->
+                            <div class="service-card">
+                                <div class="service-num">02</div>
+                                <div class="service-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                                        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                        <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                        <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                                    </svg>
+                                </div>
+                                <h3 class="service-title">Linux Server &amp; Cloud Infra</h3>
+                                <p class="service-desc">
+                                    Debian and Ubuntu server provisioning, security hardening, automated backup scheduling, SSH public key infrastructures, and system service monitoring.
+                                </p>
+                                <ul class="service-features">
+                                    <li>Debian/Ubuntu Server Hardening</li>
+                                    <li>Firewall Configuration (UFW &amp; iptables)</li>
+                                    <li>Automated Task Automation &amp; Cron Workflows</li>
+                                </ul>
+                            </div>
+
+                            <!-- Authentic Preset Service 3 (Span 4) -->
+                            <div class="service-card">
+                                <div class="service-num">03</div>
+                                <div class="service-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <h3 class="service-title">Virtualization &amp; Homelab</h3>
+                                <p class="service-desc">
+                                    Proxmox VE hypervisor clustering, Docker containerization, LXC segmentation, and Tailscale mesh VPN deployment for secure encrypted access.
+                                </p>
+                                <ul class="service-features">
+                                    <li>Proxmox VE &amp; Docker Stacks</li>
+                                    <li>Tailscale Mesh Network Overlays</li>
+                                    <li>Local Self-Hosted Microservices</li>
+                                </ul>
+                            </div>
+
+                            <!-- Authentic Preset Service 4 (Span 4) -->
+                            <div class="service-card">
+                                <div class="service-num">04</div>
+                                <div class="service-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                        <line x1="9" y1="9" x2="15" y2="15"/>
+                                        <line x1="15" y1="9" x2="9" y2="15"/>
+                                    </svg>
+                                </div>
+                                <h3 class="service-title">Hardware Diagnostics &amp; Repair</h3>
+                                <p class="service-desc">
+                                    Bench diagnostics, thermal management repasting, memory upgrades, BIOS recovery, and preservation of legacy computing hardware.
+                                </p>
+                                <ul class="service-features">
+                                    <li>Component Testing &amp; Diagnostics</li>
+                                    <li>Thermal Repasting &amp; Fan Replacement</li>
+                                    <li>Retro Computing Restoration</li>
+                                </ul>
+                            </div>
+
+                            <!-- Authentic Preset Service 5 (Span 4) -->
+                            <div class="service-card">
+                                <div class="service-num">05</div>
+                                <div class="service-icon-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 14 14"></polyline>
+                                    </svg>
+                                </div>
+                                <h3 class="service-title">Technical Review &amp; Advisory</h3>
+                                <p class="service-desc">
+                                    Consultation on software architecture, code quality auditing, database normalization, and technical documentation writing.
+                                </p>
+                                <ul class="service-features">
+                                    <li>Code Reviews &amp; Refactoring Guidance</li>
+                                    <li>Security &amp; Performance Auditing</li>
+                                    <li>Technical Dossier &amp; Specs Drafting</li>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                    <?php else: ?>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                        <!-- Service 1: Website Development -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
-                                [SERVICE // 01] WEB DEVELOPMENT
-                            </div>
-                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Custom Website & Web App Development
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
-                                Design and implementation of responsive, accessible, and fast websites. Built using pure HTML5, modern CSS3, and modular JavaScript without heavy bloat.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                                <strong style="color: #ff3366;">Core Stack:</strong> Vanilla JS, CSS3 Grid/Flexbox, PHP 8+, Responsive UI
-                            </div>
-                        </div>
-
-                        <!-- Service 2: PHP & Database Applications -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
-                                [SERVICE // 02] BACKEND & DATABASE
-                            </div>
-                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
-                                PHP & Relational Database Applications
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
-                                Backend architectures, custom CMS engines, RESTful endpoints, and relational schema modeling with PDO prepared statements and security defenses.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                                <strong style="color: #ff3366;">Core Stack:</strong> PHP 8.2+, MySQL / MariaDB, PDO, CSRF/XSS Defense
-                            </div>
-                        </div>
-
-                        <!-- Service 3: System Administration & Linux Setup -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
-                                [SERVICE // 03] INFRASTRUCTURE
-                            </div>
-                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Linux Administration & Server Setup
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
-                                Operating system provisioning, security hardening, automated backups, SSH key management, and package maintenance for Debian and Ubuntu servers.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                                <strong style="color: #ff3366;">Core Stack:</strong> Debian, Ubuntu Server, Bash Shell, Systemd, UFW
-                            </div>
-                        </div>
-
-                        <!-- Service 4: Homelab & Network Configuration -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
-                                [SERVICE // 04] VIRTUALIZATION
-                            </div>
-                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Homelab & Virtualization Configuration
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
-                                Setting up isolated virtual machines and containers using Proxmox VE, containerizing services with Docker, and establishing secure mesh VPNs via Tailscale.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                                <strong style="color: #ff3366;">Core Stack:</strong> Proxmox VE, Docker, Tailscale, Portainer, Reverse Proxies
-                            </div>
-                        </div>
-
-                        <!-- Service 5: Computer & Hardware Diagnostics -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
-                                [SERVICE // 05] HARDWARE SUPPORT
-                            </div>
-                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Computer & Hardware Diagnostics
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
-                                Component testing, thermal repasting, RAM/SSD upgrades, BIOS diagnostics, and restoration of legacy computing devices and laptops.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                                <strong style="color: #ff3366;">Specialty:</strong> Hardware Troubleshooting, Thermal Management, Legacy Laptops
-                            </div>
-                        </div>
-
-                        <!-- Service 6: Technical Consultation -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="font-family: 'JetBrains Mono', monospace; color: #00e5ff; font-size: 0.78rem; margin-bottom: 8px;">
-                                [SERVICE // 06] ADVISORY
-                            </div>
-                            <h3 style="font-size: 1.25rem; color: #f8fafc; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Technical Consultation & Architecture Review
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 14px 0;">
-                                Codebase reviews, accessibility audits (WCAG 2.2), technology stack recommendations, and database normalization advisory for small applications.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
-                                <strong style="color: #ff3366;">Inquiries:</strong> <a href="<?= url('contact#inquiry') ?>" style="color: #00e5ff;">Submit Project Consultation Form &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endif; ?>
                 </section>
 
                 <!-- SECTION 3: TECHNICAL LABORATORY -->
-                <section id="laboratory" class="content-section" data-section-name="Technical Laboratory" style="margin-top: 40px;">
-                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
-                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // <?= e($secLaboratory['title'] ?: '3. TECHNICAL LABORATORY & EXPERIMENTATION') ?>
-                        </h2>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
-                            <?= e($secLaboratory['subtitle'] ?: 'ACTIVE RESEARCH') ?>
+                <section id="laboratory" class="content-section" data-section-name="Technical Laboratory" style="margin-bottom: 48px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
+                        <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
+                            // TECHNICAL LABORATORY &amp; INFRASTRUCTURE
+                        </h3>
+                        <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--accent-green);">
+                            ACTIVE MESH: TAILSCALE // PROXMOX VE
                         </span>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <h3 style="color: #ff3366; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin: 0 0 8px 0;">
-                                Homelab & Virtualization Nodes
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 10px 0;">
-                                Investigating bare-metal hypervisors with Proxmox VE, evaluating resource overcommit benchmarks on low-power Intel/AMD nodes, and managing LXC microservices.
+                    <div class="about-bento-grid">
+                        <div class="bento-card" style="grid-column: span 6;">
+                            <div class="bento-tag">
+                                <span class="tag-rec-dot"></span>
+                                <span>HYPERVISOR // PROXMOX CLUSTER</span>
+                            </div>
+                            <h3 class="bento-heading">Virtualized Compute Cluster</h3>
+                            <p style="color: var(--text-secondary); font-size: var(--font-size-sm); line-height: 1.6;">
+                                Dedicated homelab infrastructure hosting containerized staging environments, local database instances, and automated telemetry testing nodes under isolated VLAN boundaries.
                             </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">[ACTIVE LAB TRACK: LAB-NODE-01]</div>
+                            <div class="skills-badge-list" style="margin-top: 12px;">
+                                <span class="skill-badge skill-badge-highlight">Proxmox VE 8.x</span>
+                                <span class="skill-badge">Debian 12 Bookworm</span>
+                                <span class="skill-badge">ZFS Mirror Pool</span>
+                            </div>
                         </div>
 
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <h3 style="color: #ff3366; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin: 0 0 8px 0;">
-                                Encrypted Mesh Networks
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 10px 0;">
-                                Configuring peer-to-peer WireGuard overlays with Tailscale, testing subnet routing throughput, and benchmarking latency across dynamic residential networks.
+                        <div class="bento-card" style="grid-column: span 6;">
+                            <div class="bento-tag">
+                                <span class="tag-rec-dot"></span>
+                                <span>NETWORKING // ENCRYPTED MESH</span>
+                            </div>
+                            <h3 class="bento-heading">Secure Tailscale Mesh</h3>
+                            <p style="color: var(--text-secondary); font-size: var(--font-size-sm); line-height: 1.6;">
+                                Zero-trust WireGuard mesh overlay interconnecting remote terminals, staging containers, and mobile diagnostic stations without exposing public ports.
                             </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">[ACTIVE LAB TRACK: NET-MESH-02]</div>
-                        </div>
-
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <h3 style="color: #ff3366; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin: 0 0 8px 0;">
-                                Legacy Computing & OS Preservation
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0 0 10px 0;">
-                                Preserving 32-bit x86 netbook platforms, testing lightweight Linux kernels (Debian minimal, Alpine) on Intel Atom architecture, and thermal optimization.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">[ACTIVE LAB TRACK: HW-RESTORE-03]</div>
+                            <div class="skills-badge-list" style="margin-top: 12px;">
+                                <span class="skill-badge">Tailscale WireGuard</span>
+                                <span class="skill-badge">MagicDNS Routing</span>
+                                <span class="skill-badge">ACL Access Rules</span>
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- SECTION 4: HARDWARE ARCHIVE -->
-                <section id="hardware" class="content-section" data-section-name="Hardware Archive" style="margin-top: 40px;">
-                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
-                        <h2 style="color: #00e5ff; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0;">
-                            // <?= e($secHardware['title'] ?: '4. PHYSICAL HARDWARE ARCHIVE') ?>
-                        </h2>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #64748b;">
-                            <?= e($secHardware['subtitle'] ?: 'VERIFIED DEVICES') ?>
-                        </span>
-                    </div>
-
-                    <?php if (!empty($hardwareNodes)): ?>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
-                        <?php foreach ($hardwareNodes as $hw): ?>
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">
-                                    [OEM: <?= strtoupper(e($hw['oem_brand'] ?? 'FLEET NODE')) ?>]
-                                </span>
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: <?= in_array(strtolower($hw['operational_status'] ?? ''), ['operational', 'restored', 'active'], true) ? '#10b981' : '#00e5ff' ?>;">
-                                    ● <?= strtoupper(e($hw['operational_status'] ?? 'Active')) ?>
-                                </span>
-                            </div>
-                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
-                                <?= e($hw['title']) ?>
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
-                                <?= e($hw['subtitle'] ?? '') ?>
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #00e5ff;">
-                                <?php if (!empty($hw['cpu_spec'])): ?><div><strong>CPU:</strong> <?= e($hw['cpu_spec']) ?></div><?php endif; ?>
-                                <?php if (!empty($hw['ram_spec'])): ?><div><strong>RAM:</strong> <?= e($hw['ram_spec']) ?></div><?php endif; ?>
-                                <?php if (!empty($hw['storage_spec'])): ?><div><strong>Storage:</strong> <?= e($hw['storage_spec']) ?></div><?php endif; ?>
-                                <?php if (!empty($hw['os_spec'])): ?><div><strong>OS:</strong> <?= e($hw['os_spec']) ?></div><?php endif; ?>
-                            </div>
-                            <?php if (!empty($hw['restoration_history'])): ?>
-                            <p style="color: #64748b; font-size: 0.8rem; margin: 8px 0 0 0; font-family: 'JetBrains Mono', monospace;">
-                                Notes: <?= e(substr($hw['restoration_history'], 0, 110)) ?>...
-                            </p>
-                            <?php endif; ?>
+                <section id="hardware" class="content-section" data-section-name="Hardware Archive" style="margin-bottom: 48px;">
+                    <div class="retro-header-row" style="margin-bottom: 18px;">
+                        <div class="bento-tag">
+                            <span class="tag-rec-dot"></span>
+                            <span>RETRO HARDWARE LAB // LEGACY ARCHIVE</span>
                         </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php else: ?>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
-                        <!-- Genuine Hardware Node 1: Sony VAIO Netbook -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">[OEM: SONY VAIO]</span>
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">● RESTORED</span>
-                            </div>
-                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Sony Vaio W-Series VPCW115XG
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
-                                Intel Atom N280 Netbook Platform &bull; Japanese Ultraportable Engineering. Preserved as a lightweight terminal testing node and diagnostic platform.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #00e5ff;">
-                                <div><strong>CPU:</strong> Intel Atom N280 @ 1.66 GHz (1C/2T)</div>
-                                <div><strong>RAM:</strong> 2 GB DDR2 SDRAM</div>
-                                <div><strong>Storage:</strong> 250 GB SATA HDD</div>
-                                <div><strong>OS:</strong> Debian GNU/Linux 32-bit &amp; Windows XP SP3</div>
-                            </div>
-                        </div>
-
-                        <!-- Genuine Hardware Node 2: Homelab Server Node -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">[CUSTOM NODE]</span>
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00e5ff;">● OPERATIONAL</span>
-                            </div>
-                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Proxmox Homelab Microserver Node
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
-                                Multi-purpose virtualization node dedicated to self-hosted development environments, local MariaDB test instances, and Docker containers.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #ff3366;">
-                                <div><strong>Hypervisor:</strong> Proxmox Virtual Environment 8</div>
-                                <div><strong>Networking:</strong> Tailscale Mesh Overlay + Gigabit LAN</div>
-                                <div><strong>Services:</strong> Docker, MariaDB Test DB, Nginx Reverse Proxy</div>
-                                <div><strong>Storage:</strong> High-endurance NVMe + SATA Storage Pools</div>
-                            </div>
-                        </div>
-
-                        <!-- Genuine Hardware Node 3: Primary Development Rig -->
-                        <div class="section-box" style="margin-bottom: 0;">
-                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #ff3366;">[WORKSTATION]</span>
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #10b981;">● ONLINE</span>
-                            </div>
-                            <h3 style="font-size: 1.2rem; color: #f8fafc; margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif;">
-                                Primary Engineering Workstation
-                            </h3>
-                            <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px 0;">
-                                High-performance development rig configured for rapid C++, PHP, and frontend compilation with multi-display diagnostics.
-                            </p>
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #cbd5e1; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; border-left: 2px solid #ffb800;">
-                                <div><strong>Environment:</strong> Windows 11 Pro + WSL2 (Debian Linux)</div>
-                                <div><strong>Tooling:</strong> VS Code, Antigravity IDE, Git, XAMPP, Docker</div>
-                                <div><strong>Role:</strong> Primary Software Architecture &amp; Client Telemetry</div>
-                            </div>
+                        <div class="retro-indicator">
+                            <span class="indicator-pulse-dot"></span>
+                            <span>Operational Nodes</span>
                         </div>
                     </div>
-                    <?php endif; ?>
+
+                    <div class="retro-machine-grid">
+                        <?php if (!empty($hardwareNodes)): ?>
+                            <?php foreach ($hardwareNodes as $idx => $node): ?>
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.<?= sprintf('%02d', $idx + 1) ?></span>
+                                    <span class="retro-form-tag"><?= e($node['architecture'] ?? 'Hardware') ?></span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name"><?= e($node['name']) ?></div>
+                                    <div class="retro-machine-desc"><?= e($node['specs'] ?? $node['description'] ?? '') ?></div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span><?= e($node['operational_status'] ?? 'Operational') ?></span>
+                                    <span class="retro-oem-tag"><?= e($node['category'] ?? 'Laboratory') ?></span>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <!-- Machine 1: Sony Vaio W-series -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.01</span>
+                                    <span class="retro-form-tag">Netbook</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Sony Vaio W-series VPCW115XG</div>
+                                    <div class="retro-machine-desc">Intel Atom N280, 10.1&quot; WXGA (1366&times;768), island keyboard design. Classic Japanese ultraportable engineering.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Preserved</span>
+                                    <span class="retro-oem-tag">Sony VAIO</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 2: Panasonic Lets Note -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.02</span>
+                                    <span class="retro-form-tag">Toughbook Ultra</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">Panasonic Let's Note CF-T4GW5AXR</div>
+                                    <div class="retro-machine-desc">Intel Pentium M ULV 753, magnesium alloy bonnet chassis, circular optical touchpad, fanless silent architecture.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Operational</span>
+                                    <span class="retro-oem-tag">Panasonic Japan</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 3: HP Compaq nx6320 -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">RIG.03</span>
+                                    <span class="retro-form-tag">Business Notebook</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">HP Compaq nx6320</div>
+                                    <div class="retro-machine-desc">Intel Core 2 Duo platform, 15.0&quot; 4:3 matte panel, legacy serial &amp; parallel I/O, dedicated hardware diagnostic terminal.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Diagnostic Rig</span>
+                                    <span class="retro-oem-tag">HP / Compaq</span>
+                                </div>
+                            </div>
+
+                            <!-- Machine 4: HP Pavilion a6000 -->
+                            <div class="retro-machine-card">
+                                <div class="retro-card-top">
+                                    <span class="retro-sys-id">NODE.04</span>
+                                    <span class="retro-form-tag">Mid-Tower Sleeper</span>
+                                </div>
+                                <div class="retro-machine-content">
+                                    <div class="retro-machine-name">HP Pavilion a6000 Sleeper Build</div>
+                                    <div class="retro-machine-desc">Modernized internal chassis with active cooling, SSD cache storage array, and dedicated staging server node.</div>
+                                </div>
+                                <div class="retro-status-bar">
+                                    <span class="retro-status-active"><span class="retro-status-dot"></span>Active Build</span>
+                                    <span class="retro-oem-tag">Custom Lab</span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </section>
 
             </div>

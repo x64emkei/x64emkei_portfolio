@@ -4114,7 +4114,7 @@ body.light-theme .bento-channel-item {
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 767px) {
     .mobile-toggle {
         display: flex;
     }
@@ -6913,11 +6913,11 @@ body.light-theme .sidebar-sub-link.child-active {
 }
 
 /* ==========================================================================
-   RESPONSIVE MEDIA QUERIES (1024px BREAKPOINT SPECIFICATION)
+   RESPONSIVE MEDIA QUERIES (DESKTOP & TABLET >= 768px, MOBILE < 768px)
    ========================================================================== */
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
     :root {
-        --sidebar-width: 250px;
+        --sidebar-width: 270px;
     }
 
     .top-utility-bar {
@@ -6929,7 +6929,7 @@ body.light-theme .sidebar-sub-link.child-active {
         top: 0;
         left: 0;
         bottom: 0;
-        width: 250px;
+        width: 270px;
         transform: translateX(0) !important;
         display: flex;
         z-index: 1000;
@@ -6944,13 +6944,13 @@ body.light-theme .sidebar-sub-link.child-active {
     }
 
     .main-content {
-        margin-left: 250px;
-        width: calc(100% - 250px);
+        margin-left: 270px;
+        width: calc(100% - 270px);
         padding-top: 0;
     }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
     :root {
         --sidebar-width: 0px;
     }

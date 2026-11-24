@@ -61,6 +61,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Clean up drawer state if viewport expands to tablet or desktop (>= 768px)
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768 && sidebar && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+
+    // Touch swipe left to close off-canvas drawer
+    let touchStartX = 0;
+    if (sidebar) {
+        sidebar.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+
+        sidebar.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            if (touchStartX - touchEndX > 60 && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        }, { passive: true });
+    }
+
     // Sub-navigation accordion toggles
     document.querySelectorAll('.subnav-accordion-toggle').forEach(btn => {
         btn.addEventListener('click', (e) => {
