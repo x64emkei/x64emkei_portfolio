@@ -933,23 +933,23 @@ The principles should not.
     });
 
     // Touch swipe gestures for mobile carousel
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
+    let manifestoTouchStartX = 0;
+    let manifestoTouchStartY = 0;
+    let manifestoTouchEndX = 0;
+    let manifestoTouchEndY = 0;
 
     if (manifestoModalBody) {
         manifestoModalBody.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
+            manifestoTouchStartX = e.changedTouches[0].screenX;
+            manifestoTouchStartY = e.changedTouches[0].screenY;
         }, { passive: true });
 
         manifestoModalBody.addEventListener('touchend', (e) => {
             if (manifestoModal && manifestoModal.classList.contains('full-read-mode')) return;
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-            const diffX = touchStartX - touchEndX;
-            const diffY = touchStartY - touchEndY;
+            manifestoTouchEndX = e.changedTouches[0].screenX;
+            manifestoTouchEndY = e.changedTouches[0].screenY;
+            const diffX = manifestoTouchStartX - manifestoTouchEndX;
+            const diffY = manifestoTouchStartY - manifestoTouchEndY;
 
             if (Math.abs(diffX) > 55 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
                 if (diffX > 0 && currentSlide < totalSlides - 1) {
@@ -1570,12 +1570,43 @@ The principles should not.
         return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#FF4545" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>';
     }
 
-    function openProjectModal(projectId) {
+    let lastModalTrigger = null;
+
+    function openModal(backdrop, initialFocus, trigger = null) {
+        if (!backdrop) return;
+        lastModalTrigger = trigger || document.activeElement;
+        backdrop.classList.add('active');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-locked');
+        window.requestAnimationFrame(() => initialFocus?.focus());
+    }
+
+    function closeModal(backdrop) {
+        if (!backdrop) return;
+        backdrop.classList.remove('active');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-locked');
+        if (lastModalTrigger instanceof HTMLElement) {
+            lastModalTrigger.focus();
+        }
+        lastModalTrigger = null;
+    }
+
+    function setIconAndText(container, icon, label) {
+        if (!container) return;
+        container.replaceChildren();
+        container.insertAdjacentHTML('beforeend', icon);
+        const text = document.createElement('span');
+        text.textContent = label;
+        container.appendChild(text);
+    }
+
+    function openProjectModal(projectId, trigger = null) {
         const data = PROJECTS_DB[projectId];
         if (!data || !projectModalBackdrop) return;
 
         if (modalProjectId) modalProjectId.textContent = data.id;
-        if (modalProjectCategory) modalProjectCategory.innerHTML = `${getTechSvgIcon(data.category)}<span>${data.category}</span>`;
+        setIconAndText(modalProjectCategory, getTechSvgIcon(data.category), data.category);
         if (modalProjectTitle) modalProjectTitle.textContent = data.title;
         if (modalProjectTagline) modalProjectTagline.textContent = data.tagline;
         if (modalProjectEnv) modalProjectEnv.textContent = data.env;
@@ -1601,21 +1632,21 @@ The principles should not.
             data.tech.forEach(t => {
                 const pill = document.createElement('span');
                 pill.className = 'skill-badge';
-                const iconSvg = getTechSvgIcon(t);
-                pill.innerHTML = `${iconSvg}<span>${t}</span>`;
+                pill.insertAdjacentHTML('beforeend', getTechSvgIcon(t));
+                const label = document.createElement('span');
+                label.textContent = t;
+                pill.appendChild(label);
                 modalProjectTechPills.appendChild(pill);
             });
         }
 
         if (copyCodeText) copyCodeText.textContent = 'Copy Snippet';
-        projectModalBackdrop.classList.add('active');
-        projectModalBackdrop.setAttribute('aria-hidden', 'false');
+        openModal(projectModalBackdrop, projectModalCloseBtn, trigger);
     }
 
     function closeProjectModal() {
         if (!projectModalBackdrop) return;
-        projectModalBackdrop.classList.remove('active');
-        projectModalBackdrop.setAttribute('aria-hidden', 'true');
+        closeModal(projectModalBackdrop);
     }
 
     // Attach click events to project cards & inspect buttons
@@ -1623,17 +1654,29 @@ The principles should not.
         const projectId = card.getAttribute('data-project-id');
         const inspectBtn = card.querySelector('.btn-inspect-project');
 
+        if (projectId) {
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', `Inspect ${card.querySelector('.program-title')?.textContent?.trim() || 'project'} details`);
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openProjectModal(projectId, card);
+                }
+            });
+        }
+
         if (inspectBtn && projectId) {
             inspectBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                openProjectModal(projectId);
+                openProjectModal(projectId, inspectBtn);
             });
         }
 
         if (projectId) {
             card.addEventListener('click', (e) => {
                 if (e.target.closest('a') || e.target.closest('.btn-inspect-project')) return;
-                openProjectModal(projectId);
+                openProjectModal(projectId, card);
             });
         }
     });
@@ -1776,7 +1819,7 @@ The principles should not.
         }
     ];
 
-    function openHardwareModal(index) {
+    function openHardwareModal(index, trigger = null) {
         const node = HARDWARE_DB[index];
         if (!node || !hardwareModalBackdrop) return;
 
@@ -1792,31 +1835,41 @@ The principles should not.
             node.specs.forEach(s => {
                 const cell = document.createElement('div');
                 cell.className = 'hw-matrix-cell';
-                cell.innerHTML = `
-                    <span class="hw-matrix-label">${s.label}</span>
-                    <span class="hw-matrix-val">${s.val}</span>
-                `;
+                const label = document.createElement('span');
+                label.className = 'hw-matrix-label';
+                label.textContent = s.label;
+                const value = document.createElement('span');
+                value.className = 'hw-matrix-val';
+                value.textContent = s.val;
+                cell.append(label, value);
                 modalHwSpecsMatrix.appendChild(cell);
             });
         }
 
-        hardwareModalBackdrop.classList.add('active');
-        hardwareModalBackdrop.setAttribute('aria-hidden', 'false');
+        openModal(hardwareModalBackdrop, hardwareModalCloseBtn, trigger);
     }
 
     function closeHardwareModal() {
         if (!hardwareModalBackdrop) return;
-        hardwareModalBackdrop.classList.remove('active');
-        hardwareModalBackdrop.setAttribute('aria-hidden', 'true');
+        closeModal(hardwareModalBackdrop);
     }
 
     // Attach click events to vintage hardware cards
     const retroCards = document.querySelectorAll('.retro-machine-card');
     retroCards.forEach((card, idx) => {
         card.style.cursor = 'pointer';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `Inspect ${card.querySelector('.retro-machine-title')?.textContent?.trim() || 'hardware'} telemetry`);
         card.setAttribute('title', 'Click to inspect vintage hardware telemetry & restoration log');
         card.addEventListener('click', () => {
-            openHardwareModal(idx);
+            openHardwareModal(idx, card);
+        });
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openHardwareModal(idx, card);
+            }
         });
     });
 

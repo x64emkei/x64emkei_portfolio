@@ -18,6 +18,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
 <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
     <!-- High-Tech Color Sweep & Pixel Dissolve Screen Transition Curtain -->
     <div class="color-sweep-curtain" id="colorSweepCurtain" aria-hidden="true">
         <canvas class="pixel-dissolve-canvas" id="pixelDissolveCanvas"></canvas>
@@ -45,7 +46,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
     <!-- Main Content Area -->
-    <main class="main-content">
+    <main class="main-content" id="mainContent" tabindex="-1">
         <div class="view-wrapper">
             
             <!-- ================= HOME SECTION VIEW ================= -->
@@ -1511,8 +1512,8 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
     </div>
 
         <script>
-        window.__SERVER_PROJECTS__ = <?= json_encode($projects ?? []) ?>;
-        window.__SERVER_HARDWARE__ = <?= json_encode($hardwareNodes ?? []) ?>;
+        window.__SERVER_PROJECTS__ = <?= json_encode($projects ?? [], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;
+        window.__SERVER_HARDWARE__ = <?= json_encode($hardwareNodes ?? [], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;
     </script>
     <!-- Main Logic -->
     <script src="<?= asset('script.js') ?>"></script>

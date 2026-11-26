@@ -7067,6 +7067,30 @@ select:focus-visible,
     outline-offset: var(--focus-ring-offset) !important;
 }
 
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 10000;
+    padding: 10px 14px;
+    background: var(--primary);
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    transform: translateY(-180%);
+    transition: transform 0.18s ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+body.modal-locked {
+    overflow: hidden;
+}
+
 /* --------------------------------------------------------------------------
    2. STANDARDIZED HUD BREADCRUMBS
    -------------------------------------------------------------------------- */

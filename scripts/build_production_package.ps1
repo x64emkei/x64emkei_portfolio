@@ -45,7 +45,6 @@ $copyFiles = @(
     "style.css",
     "script.js",
     ".htaccess",
-    ".env.example",
     "composer.json"
 )
 

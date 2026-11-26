@@ -30,11 +30,37 @@ x64emkei_portfolio.zip
 !/storage/uploads/.htaccess
 /storage/*.sqlite
 
-# Environment Configuration & Secrets
+# Environment Configuration & Secrets (NEVER commit)
 .env
-.env.local
-.env.*.local
+.env.*
 !.env.example
+config.local.php
+ftp.config.php
+secrets/
+private/
+credentials/
+
+# Key / certificate files
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+
+# SQL dump files (may contain sensitive data)
+*.sql
+*.dump
+!database/migrations/*.sql
+!database/schema.sql
+!database/seed.sql
+!database/schema_dump.sql
+
+# Log files
+*.log
+logs/
+
+# Backups
+*.backup
 
 # Composer & Node Dependencies
 /vendor/
@@ -45,3 +71,14 @@ dist/
 # Deployment packages
 /deploy/*.zip
 /deploy/htdocs/
+
+# Diagnostic & probe scripts (sensitive — excluded from repo)
+scripts/check_ftp*.php
+scripts/ftp_probe.php
+scripts/probe_*.php
+scripts/audit_remote*.php
+scripts/upload_welcome*.php
+scripts/quick_upload*.php
+scripts/check_articles.php
+scripts/test_pdo.php
+scripts/upload_mobile_admin.php
