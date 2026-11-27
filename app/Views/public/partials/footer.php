@@ -13,7 +13,7 @@ $currentYear = date('Y');
                     <span class="footer-brand-name">x64emkei<span class="brand-dot">.</span>dev</span>
                 </div>
                 <p class="footer-brand-desc">
-                    Personal welcome platform and systems engineering portfolio of <strong>Michael Benedict Ordenes</strong>. Computer Science student, IT enthusiast, and systems developer focused on robust architectures, modern PHP/MariaDB backends, and homelab infrastructure.
+                    Portfolio of <strong>Michael Benedict Ordenes</strong>, a Computer Science student interested in software, computer systems, and homelab projects.
                 </p>
                 <div class="footer-telemetry-pill" title="Official Application Timezone: Asia/Manila (GMT+8)">
                     <span class="pht-dot"></span>
@@ -86,7 +86,7 @@ $currentYear = date('Y');
             <!-- Col 6: Administration (Subtle & Secondary) -->
             <div class="footer-col footer-col-admin">
                 <h4 class="footer-col-title">// ADMINISTRATION</h4>
-                <p class="footer-admin-note">Authorized system operator and CMS access portal.</p>
+                <p class="footer-admin-note">Manage website content.</p>
                 <a href="<?= url('admin/login') ?>" class="footer-admin-link" aria-label="CMS Admin Login">
                     <svg class="admin-lock-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                         <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
@@ -104,7 +104,7 @@ $currentYear = date('Y');
         <!-- Footer Bottom Bar -->
         <div class="footer-bottom">
             <p class="footer-copyright">
-                &copy; <?= $currentYear ?> Michael Benedict Ordenes (x64emkei). Systems Architecture &bull; All Telemetry Active.
+                &copy; <?= $currentYear ?> Michael Benedict Ordenes (x64emkei).
             </p>
             <div class="footer-sub-telemetry">
                 <span>PHT: <?= date('Y-m-d') ?> (GMT+8)</span>

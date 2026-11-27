@@ -90,7 +90,7 @@
             </div>
             <a href="<?= e(url('/journal')) ?>" target="_blank" rel="noopener noreferrer" class="btn-admin btn-admin-outline" style="font-size: 0.72rem; padding: 4px 10px;">VIEW PUBLIC &nearr;</a>
         </div>
-        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Publish articles, tutorials, research notes, and AI principles.</p>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Publish articles, guides, notes, and AI principles.</p>
 
         <div class="layout-auto-grid" style="gap: 14px;">
             <a href="<?= e(url('admin/articles')) ?>" style="text-decoration: none; display: block; background: rgba(7, 9, 14, 0.6); border: 1px solid var(--admin-border); padding: 16px; border-radius: 4px; transition: border-color 0.2s;">

@@ -105,22 +105,22 @@ class JournalController
 
     public function blog(): void
     {
-        $this->filterSection('blog', 'Blog & Technical Articles');
+        $this->filterSection('blog', 'Articles');
     }
 
     public function tutorials(): void
     {
-        $this->filterSection('tutorials', 'Tutorials & Engineering Guides');
+        $this->filterSection('tutorials', 'Guides');
     }
 
     public function technicalNotes(): void
     {
-        $this->filterSection('technical-notes', 'Technical Notes & System Diagnostics');
+        $this->filterSection('technical-notes', 'Notes');
     }
 
     public function research(): void
     {
-        $this->filterSection('research', 'Research, Architecture & Insights');
+        $this->filterSection('research', 'Research');
     }
 
     private function filterSection(string $type, string $sectionTitle): void
@@ -165,7 +165,7 @@ class JournalController
             'totalPages' => 1,
             'totalArticles' => count($articles),
             'pageTitle' => $sectionTitle . ' // Journal',
-            'metaDesc' => "Articles, research notes, and engineering guides under {$sectionTitle}."
+            'metaDesc' => "Articles, guides, and notes about {$sectionTitle}."
         ]);
         echo $renderer->render('public.journal.index', $data);
     }

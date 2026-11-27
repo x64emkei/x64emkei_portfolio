@@ -36,28 +36,28 @@ $activeSub = $activeSub ?? 'blog';
                 <!-- Section Watermark & Header -->
                 <div class="section-watermark-num">03</div>
                 <div class="section-header">
-                    <span class="section-subtitle">// ARTICLES, SYSTEM DESIGN &amp; GUIDES</span>
-                    <h2 class="section-title"><?= e($secJournal['title'] ?: 'Journal &amp; Telemetry Log') ?></h2>
+                    <span class="section-subtitle">ARTICLES AND IDEAS</span>
+                    <h2 class="section-title"><?= e($secJournal['title'] ?: 'Journal') ?></h2>
                     <div class="section-divider"></div>
                 </div>
 
                 <!-- Subnav Tabs -->
-                <div class="subnav-tabs" role="tablist" aria-label="Journal sections">
-                    <a href="#blog" class="subnav-btn section-anchor-link active" data-target-section="blog" role="tab">01. Blog &amp; Articles</a>
-                    <a href="#tutorials" class="subnav-btn section-anchor-link" data-target-section="tutorials" role="tab">02. Tutorials</a>
-                    <a href="#technical-notes" class="subnav-btn section-anchor-link" data-target-section="technical-notes" role="tab">03. Technical Notes</a>
-                    <a href="#research" class="subnav-btn section-anchor-link" data-target-section="research" role="tab">04. Research</a>
-                    <a href="#ai-manifesto" class="subnav-btn section-anchor-link" data-target-section="ai-manifesto" role="tab" style="color: var(--primary); border-color: var(--primary);">05. AI Manifesto</a>
+                <div class="subnav-tabs" aria-label="Journal sections">
+                    <a href="#blog" class="subnav-btn section-anchor-link active" data-target-section="blog">Articles</a>
+                    <a href="#tutorials" class="subnav-btn section-anchor-link" data-target-section="tutorials">Guides</a>
+                    <a href="#technical-notes" class="subnav-btn section-anchor-link" data-target-section="technical-notes">Notes</a>
+                    <a href="#research" class="subnav-btn section-anchor-link" data-target-section="research">Research</a>
+                    <a href="#ai-manifesto" class="subnav-btn section-anchor-link" data-target-section="ai-manifesto" style="color: var(--primary); border-color: var(--primary);">AI Principles</a>
                 </div>
 
                 <!-- SECTION 1: BLOG & ARTICLES -->
                 <section id="blog" class="content-section" data-section-name="Blog and Articles" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
                         <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
-                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 01.</span>BLOG &amp; TECHNICAL ARTICLES
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">//</span>ARTICLES
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
-                            SYSTEM DESIGN
+                            LATEST POSTS
                         </span>
                     </div>
 
@@ -111,10 +111,10 @@ $activeSub = $activeSub ?? 'blog';
                 <section id="tutorials" class="content-section" data-section-name="Tutorials" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
                         <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
-                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 02.</span>TUTORIALS &amp; GUIDES
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">//</span>GUIDES
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
-                            STEP-BY-STEP LAB PROTOCOLS
+                            HOW TO
                         </span>
                     </div>
 
@@ -123,9 +123,9 @@ $activeSub = $activeSub ?? 'blog';
                             <span class="tag-rec-dot"></span>
                             <span>TUTORIALS // STAGING</span>
                         </div>
-                        <h3 class="bento-heading">Engineering Guides In Staging</h3>
+                        <h3 class="bento-heading">Guides are being prepared</h3>
                         <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto; line-height: 1.6;">
-                            Step-by-step documentation for hypervisor provisioning, containerization workflows, and secure network configuration will be published upon lab verification.
+                            Practical guides will appear here when they are ready to share.
                         </p>
                     </div>
                 </section>
@@ -134,7 +134,7 @@ $activeSub = $activeSub ?? 'blog';
                 <section id="technical-notes" class="content-section" data-section-name="Technical Notes" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
                         <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
-                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 03.</span>TECHNICAL NOTES
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">//</span>NOTES
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                             NOTES &amp; CODE
@@ -157,7 +157,7 @@ $activeSub = $activeSub ?? 'blog';
                 <section id="research" class="content-section" data-section-name="Research" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
                         <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--text-primary);">
-                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 04.</span>RESEARCH &amp; HARDWARE INVESTIGATIONS
+                            <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">//</span>RESEARCH
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                             COMPUTING PRESERVATION
@@ -181,7 +181,7 @@ $activeSub = $activeSub ?? 'blog';
                     <div class="bento-card" style="border: 2px solid var(--primary); background: linear-gradient(145deg, rgba(255, 42, 42, 0.08) 0%, rgba(9, 11, 16, 0.95) 100%); padding: 32px 28px;">
                         <div class="bento-tag">
                             <span class="tag-rec-dot" style="background: var(--primary);"></span>
-                            <span>FEATURED ARTICLE // ETHICS &amp; RESPONSIBLE USE</span>
+                            <span>FEATURED ARTICLE // AI PRINCIPLES</span>
                             <div class="win-controls">
                                 <span class="win-btn">_</span>
                                 <span class="win-btn win-close">&times;</span>
@@ -198,7 +198,7 @@ $activeSub = $activeSub ?? 'blog';
                                 <span>Read Full Article &rarr;</span>
                             </a>
                             <a href="<?= url('contact#inquiry') ?>" class="btn btn-outline" style="text-decoration: none;">
-                                <span>Discuss with Operator</span>
+                                <span>Get in touch</span>
                             </a>
                         </div>
                     </div>

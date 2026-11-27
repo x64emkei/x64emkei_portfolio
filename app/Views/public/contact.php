@@ -75,7 +75,7 @@ $secContact = $secHelper->getSection('contact');
                                 </div>
                                 <h3 class="bento-heading">Let&rsquo;s discuss systems, code, or homelab architecture.</h3>
                                 <p class="contact-text">
-                                    Have an interesting project, engineering proposal, or academic inquiry? Feel free to send a transmission.
+                                    Have a project idea, question, or opportunity to discuss? Send a message.
                                 </p>
 
                                 <div class="contact-info-list">
