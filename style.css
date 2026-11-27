@@ -8025,6 +8025,173 @@ code {
     }
 }
 
+/* Mobile reading mode: flatten content surfaces into an editorial flow.
+   Desktop keeps the original glass cards; narrow screens use spacing and
+   rules to separate content without forcing every item into a tall panel. */
+@media (max-width: 700px) {
+    .bento-card,
+    .stat-card,
+    .program-card,
+    .retro-machine-card,
+    .service-card,
+    .glass-card,
+    .edu-entry-card,
+    .edu-cert-card,
+    .contact-channels-card,
+    .dichotomy-card,
+    .pillar-card,
+    .manifesto-alert-panel,
+    .manifesto-silica-card,
+    .manifesto-filipino-maxim-card,
+    .question-box,
+    .flow-card,
+    .manifesto-creed-box,
+    .manifesto-core-callout,
+    .manifesto-highlight-banner,
+    .manifesto-verdict-box,
+    .manifesto-craft-panel,
+    .manifesto-grand-quote,
+    .manifesto-stakeholder-matrix,
+    .manifesto-anchored-axiom,
+    .hardware-logs-card,
+    .about-bio-card,
+    .about-skills-card,
+    .project-card,
+    .article-card,
+    .admin-card {
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        overflow: visible !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .bento-card,
+    .service-card,
+    .program-card,
+    .retro-machine-card,
+    .project-card,
+    .article-card,
+    .admin-card {
+        min-height: 0 !important;
+        padding: var(--space-5) 0 !important;
+        border-bottom: 1px solid var(--border) !important;
+    }
+
+    .stat-card,
+    .edu-entry-card,
+    .edu-cert-card,
+    .contact-channels-card,
+    .dichotomy-card,
+    .pillar-card,
+    .manifesto-alert-panel,
+    .manifesto-silica-card,
+    .manifesto-filipino-maxim-card,
+    .question-box,
+    .flow-card,
+    .manifesto-creed-box,
+    .manifesto-core-callout,
+    .manifesto-highlight-banner,
+    .manifesto-verdict-box,
+    .manifesto-craft-panel,
+    .manifesto-grand-quote,
+    .manifesto-stakeholder-matrix,
+    .manifesto-anchored-axiom,
+    .hardware-logs-card,
+    .about-bio-card,
+    .about-skills-card {
+        padding: var(--space-4) 0 !important;
+    }
+
+    .program-card-sm {
+        min-height: 0 !important;
+        border-top: 0 !important;
+    }
+
+    .bento-card::before,
+    .bento-card::after,
+    .stat-card::before,
+    .stat-card::after,
+    .program-card::before,
+    .program-card::after,
+    .retro-machine-card::before,
+    .retro-machine-card::after,
+    .service-card::before,
+    .service-card::after,
+    .glass-card::before,
+    .glass-card::after,
+    .admin-card::before,
+    .admin-card::after {
+        display: none !important;
+    }
+
+    .bento-card:last-child,
+    .service-card:last-child,
+    .program-card:last-child,
+    .retro-machine-card:last-child,
+    .project-card:last-child,
+    .article-card:last-child,
+    .admin-card:last-child,
+    .stats-grid > .stat-card:last-child,
+    .edu-container > .edu-entry-card:last-child,
+    .edu-cert-section > .edu-cert-card:last-child {
+        border-bottom: 0 !important;
+    }
+
+    .about-bento-grid > .bento-card:first-child,
+    .services-grid > .service-card:first-child,
+    .featured-programs-grid > .program-card:first-child,
+    .programs-grid-sm > .program-card:first-child,
+    .portfolio-grid > .project-card:first-child,
+    .contact-bento-grid > .bento-card:first-child,
+    .journal-grid > .article-card:first-child,
+    .admin-content > .admin-card:first-child {
+        padding-top: 0 !important;
+    }
+
+    .content-section > div[style*="justify-content: space-between"],
+    #blog article > div:first-child {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    #blog article > div:first-child > * {
+        min-width: 0;
+    }
+
+    #ai-manifesto > .bento-card {
+        border-top: 2px solid var(--primary) !important;
+        border-bottom: 0 !important;
+        padding-top: var(--space-6) !important;
+    }
+
+    .admin-card {
+        border-bottom-color: var(--admin-border) !important;
+    }
+
+    .admin-card > .admin-card-header {
+        margin-bottom: var(--space-4) !important;
+        padding-bottom: var(--space-3) !important;
+        border-bottom: 1px solid var(--admin-border) !important;
+    }
+
+    .stats-grid {
+        gap: 0 !important;
+    }
+
+    .stats-grid > .stat-card {
+        padding-block: var(--space-3) !important;
+    }
+
+    .project-content {
+        padding-inline: 0 !important;
+    }
+}
+
 /* Markdown article content and CMS editor guidance */
 .article-prose > :first-child {
     margin-top: 0;
