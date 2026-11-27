@@ -1,7 +1,7 @@
 <div style="margin-bottom: 24px;">
-    <a href="<?= url('admin/articles') ?>" style="color: #64748b; text-decoration: none; font-size: 0.8rem;">&larr; BACK TO JOURNAL REGISTRY</a>
-    <h1 style="color: var(--admin-cyan); margin: 8px 0 4px 0; font-size: 1.3rem;">EDIT TRANSMISSION // <?= e($article['title']) ?></h1>
-    <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Modify telemetry article parameters, content, or publication schedule.</p>
+    <a href="<?= url('admin/articles') ?>" style="color: #64748b; text-decoration: none; font-size: 0.8rem;">&larr; BACK TO ARTICLES</a>
+    <h1 style="color: var(--admin-cyan); margin: 8px 0 4px 0; font-size: 1.3rem;">EDIT ARTICLE // <?= e($article['title']) ?></h1>
+    <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Update the article and its Markdown content, metadata, or publication status.</p>
 </div>
 
 <form method="POST" action="<?= url('admin/articles/' . $article['id'] . '/edit') ?>" class="admin-card" style="max-width: 900px;">
@@ -36,8 +36,9 @@
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="content">ARTICLE CONTENT (MARKDOWN OR HTML) *</label>
-        <textarea id="content" name="content" class="form-control" rows="14" required><?= e($article['content'] ?? '') ?></textarea>
+        <label class="form-label" for="content">ARTICLE CONTENT (MARKDOWN) *</label>
+        <textarea id="content" name="content" class="form-control markdown-editor" rows="18" required><?= e($article['content'] ?? '') ?></textarea>
+        <p class="markdown-help">Markdown supported: headings, bold, italic, links, lists, quotes, horizontal rules, inline code, and fenced code blocks.</p>
     </div>
 
     <div class="layout-form-grid" style="gap: 16px;">
@@ -82,6 +83,6 @@
 
     <div style="display: flex; justify-content: flex-end; gap: 12px;">
         <a href="<?= url('admin/articles') ?>" class="admin-btn admin-btn-secondary">CANCEL</a>
-        <button type="submit" class="admin-btn admin-btn-primary">UPDATE TRANSMISSION</button>
+        <button type="submit" class="admin-btn admin-btn-primary">UPDATE ARTICLE</button>
     </div>
 </form>

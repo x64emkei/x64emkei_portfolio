@@ -12,6 +12,7 @@ use App\Models\SocialLink;
 use App\Models\PortfolioSection;
 use App\Services\ViewRenderer;
 use App\Services\HttpException;
+use App\Services\MarkdownRenderer;
 
 class JournalController
 {
@@ -35,7 +36,7 @@ class JournalController
         try { $settings = SiteSetting::getAllKeyed(); } catch (\Throwable) { $settings = []; }
         try { $socialLinks = SocialLink::getPublished(); } catch (\Throwable) { $socialLinks = []; }
         try { $sections = PortfolioSection::allKeyed(); } catch (\Throwable) { $sections = []; }
-        try { $manifestoArticle = Article::findBySlug('my-ai-manifesto') ?: $this->getManifestoFallback(); } catch (\Throwable) { $manifestoArticle = $this->getManifestoFallback(); }
+        try { $manifestoArticle = Article::getManifesto() ?: self::getManifestoFallback(); } catch (\Throwable) { $manifestoArticle = self::getManifestoFallback(); }
 
         return [
             'profile' => $profile,
@@ -91,7 +92,7 @@ class JournalController
             'currentPage' => $page,
             'totalPages' => $totalPages,
             'totalArticles' => $total,
-            'pageTitle' => 'Journal & Telemetry Log // x64emkei.dev',
+            'pageTitle' => 'Journal & Articles // x64emkei.dev',
             'metaDesc' => 'Technical writeups, systems architecture analysis, and software development insights by Michael Benedict Ordenes.'
         ]);
         echo $renderer->render('public.journal.index', $data);
@@ -164,7 +165,7 @@ class JournalController
             'totalPages' => 1,
             'totalArticles' => count($articles),
             'pageTitle' => $sectionTitle . ' // Journal',
-            'metaDesc' => "Transmissions, research notes, and engineering guides under {$sectionTitle}."
+            'metaDesc' => "Articles, research notes, and engineering guides under {$sectionTitle}."
         ]);
         echo $renderer->render('public.journal.index', $data);
     }
@@ -182,7 +183,7 @@ class JournalController
         }
 
         if (!$article && ($slug === 'my-ai-manifesto' || $slug === 'ai-manifesto')) {
-            $article = $this->getManifestoFallback();
+            $article = self::getManifestoFallback();
         }
 
         if (!$article || (($article['status'] ?? 'published') !== 'published' && !isset($_SESSION['user_id']))) {
@@ -201,6 +202,7 @@ class JournalController
         $renderer = new ViewRenderer();
         $data = array_merge($this->getCommonData(), [
             'article' => $article,
+            'articleContentHtml' => MarkdownRenderer::render((string)($article['content'] ?? '')),
             'categories' => $categories,
             'related' => $related,
             'pageTitle' => ($article['seo_title'] ?: $article['title']) . ' // x64emkei.dev',
@@ -209,7 +211,7 @@ class JournalController
         echo $renderer->render('public.journal.show', $data);
     }
 
-    private function getManifestoFallback(): array
+    public static function getManifestoFallback(): array
     {
         return [
             'id' => 1,

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SYS.INIT // Primary Administrator Setup</title>
+    <link rel="stylesheet" href="<?= asset('style.css') ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -20,13 +21,15 @@
             background-image: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 60%);
         }
         .setup-box {
-            background: #0e121a;
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            border-radius: 6px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius-lg);
             padding: 36px;
             width: 100%;
             max-width: 480px;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+            box-shadow: var(--glass-shadow);
             box-sizing: border-box;
         }
         .setup-header {
@@ -57,12 +60,12 @@
         input {
             width: 100%;
             padding: 12px 14px;
-            background: #07090e;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
             color: #fff;
             font-family: inherit;
             font-size: 0.9rem;
-            border-radius: 4px;
+            border-radius: var(--card-radius-sm);
             box-sizing: border-box;
         }
         input:focus {
@@ -103,7 +106,7 @@
 <body>
     <div class="setup-box">
         <div class="setup-header">
-            <h1>SYS.INITIALIZE // OPERATOR #1</h1>
+            <h1>INITIAL SETUP</h1>
             <p>Configure the initial primary administrator account for this installation. No default credentials are pre-packaged.</p>
         </div>
 
@@ -114,7 +117,7 @@
         <form action="<?= e(url('admin/setup')) ?>" method="POST">
             <?= csrf_field() ?>
             <div class="form-group">
-                <label for="username">// OPERATOR USERNAME</label>
+                <label for="username">// USERNAME</label>
                 <input type="text" id="username" name="username" value="<?= old('username', 'x64emkei') ?>" required autofocus>
             </div>
             <div class="form-group">

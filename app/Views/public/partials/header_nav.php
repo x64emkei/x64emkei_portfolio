@@ -45,9 +45,9 @@ $activeSub = $activeSub ?? '';
                 </svg>
             </button>
             <!-- AI Manifesto Pill -->
-            <a href="<?= url('journal/ai-manifesto') ?>" class="utility-manifesto-btn" title="AI Manifesto v1.0">
+            <a href="<?= url('journal/ai-manifesto') ?>" class="utility-manifesto-btn" title="AI Principles">
                 <span class="manifesto-hazard-mini">⚡</span>
-                <span class="manifesto-btn-text">MANIFESTO</span>
+                <span class="manifesto-btn-text">AI PRINCIPLES</span>
             </a>
         </div>
     </div>
@@ -185,16 +185,16 @@ $activeSub = $activeSub ?? '';
 
     <!-- Sidebar Telemetry & Utilities Footer -->
     <div class="sidebar-footer">
-        <!-- Telemetry Live HUD Clock (Clickable 12/24H toggle) -->
+        <!-- Live clock with 12/24-hour toggle -->
         <div class="sidebar-telemetry-hud" id="hudClockContainer" title="Local System Time (Click to toggle 12/24H mode)">
             <span class="hud-clock-label">SYS.TIME</span>
             <span class="hud-clock-val" id="liveSysClock">--:--:-- --</span>
         </div>
 
         <!-- AI Manifesto Trigger Button -->
-        <a href="<?= url('journal/ai-manifesto') ?>" class="btn-manifesto" id="sidebarManifestoBtn" aria-label="Open AI Manifesto">
+        <a href="<?= url('journal/ai-manifesto') ?>" class="btn-manifesto" id="sidebarManifestoBtn" aria-label="Open AI Principles">
             <span class="manifesto-hazard">⚡</span>
-            <span>AI MANIFESTO</span>
+            <span>AI PRINCIPLES</span>
             <span class="manifesto-glitch">v1.0</span>
         </a>
 

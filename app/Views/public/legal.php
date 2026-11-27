@@ -22,11 +22,12 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
 <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
 
     <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent" tabindex="-1">
         <div class="view-wrapper">
             <div class="page-container">
                 <!-- Breadcrumbs -->
@@ -41,7 +42,7 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
                 <!-- Section Watermark & Header -->
                 <div class="section-watermark-num">06</div>
                 <div class="section-header">
-                    <span class="section-subtitle">// TELEMETRY &amp; COMPLIANCE SPECIFICATION</span>
+                    <span class="section-subtitle">// PRIVACY &amp; SITE TERMS</span>
                     <h2 class="section-title"><?= e($pageTitle) ?></h2>
                     <div class="section-divider"></div>
                 </div>
@@ -58,16 +59,16 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
                 <div class="bento-card" style="padding: 32px 28px; margin-bottom: 40px;">
                     <div class="bento-tag">
                         <span class="tag-rec-dot" style="background: var(--primary);"></span>
-                        <span>PRIVACY POLICY // TELEMETRY DIRECTIVE</span>
+                        <span>PRIVACY POLICY</span>
                     </div>
                     <h3 class="bento-heading" style="color: var(--text-primary); margin: 12px 0 10px 0;">
-                        <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 1.</span>DATA PRIVACY &amp; TRANSMISSION PRINCIPLES
+                        <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 1.</span>DATA PRIVACY PRINCIPLES
                     </h3>
                     <p style="color: var(--text-secondary); line-height: 1.7; font-size: var(--font-size-base); margin-bottom: 24px;">
                         The X64EMKEI digital platform operates on a zero-tracking, privacy-first architecture. We do not sell, monetize, or harvest personal user profiles. Any information submitted through the contact inquiry form is transmitted securely via HTTPS and processed solely for direct professional correspondence.
                     </p>
                     <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 10px 0;">
-                        // TELEMETRY LOGS &amp; HTTP HEADERS
+                        // LOGS &amp; HTTP HEADERS
                     </h4>
                     <p style="color: var(--text-muted); line-height: 1.6; font-size: var(--font-size-sm); margin: 0;">
                         Standard web server access logs record HTTP request headers, timestamps (recorded in Philippine Standard Time, UTC+8), IP addresses, and response status codes strictly for rate-limiting, bot mitigation, and defensive cybersecurity operations. Logs are rotated periodically and purged.
@@ -122,7 +123,7 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
                 <div class="bento-card" style="padding: 32px 28px; margin-bottom: 40px;">
                     <div class="bento-tag">
                         <span class="tag-rec-dot" style="background: var(--primary);"></span>
-                        <span>ARCHITECTURE // COMPLETE SITEMAP</span>
+                        <span>SITE MAP</span>
                     </div>
                     <h3 class="bento-heading" style="color: var(--text-primary); margin: 12px 0 16px 0;">
                         <span style="color: var(--primary); font-family: var(--font-mono); margin-right: 6px;">// 1.</span>COMPLETE PLATFORM SITEMAP
@@ -136,7 +137,7 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
                             </ul>
                         </div>
                         <div class="bento-card" style="padding: 20px; background: rgba(9, 11, 16, 0.8); border-left: 3px solid var(--primary);">
-                            <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">// 2. ABOUT DOSSIER</h4>
+                            <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">// 2. ABOUT</h4>
                             <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: var(--font-size-sm);">
                                 <li><a href="<?= url('about#biography') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; Biography &amp; Focus</a></li>
                                 <li><a href="<?= url('about#education') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Education History</a></li>
@@ -157,11 +158,11 @@ $pageTitle = $titles[$legalType] ?? 'Website Information';
                         <div class="bento-card" style="padding: 20px; background: rgba(9, 11, 16, 0.8); border-left: 3px solid var(--accent-green);">
                             <h4 style="color: var(--text-primary); font-family: var(--font-mono); font-size: var(--font-size-sm); margin: 0 0 12px 0;">// 4. JOURNAL</h4>
                             <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: var(--font-size-sm);">
-                                <li><a href="<?= url('journal#blog') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; Blog Transmissions</a></li>
+                                <li><a href="<?= url('journal#blog') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; Blog Articles</a></li>
                                 <li><a href="<?= url('journal#tutorials') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Tutorials &amp; Guides</a></li>
                                 <li><a href="<?= url('journal#technical-notes') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Technical Notes</a></li>
                                 <li><a href="<?= url('journal#research') ?>" style="color: var(--text-muted); text-decoration: none;">&rsaquo; Research Papers</a></li>
-                                <li><a href="<?= url('journal#ai-manifesto') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; AI Manifesto v1.0</a></li>
+                                <li><a href="<?= url('journal/ai-manifesto') ?>" style="color: var(--primary); text-decoration: none;">&rsaquo; AI Principles</a></li>
                             </ul>
                         </div>
                     </div>

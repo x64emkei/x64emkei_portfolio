@@ -1,9 +1,9 @@
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
     <div>
-        <h1 style="color: var(--admin-cyan); margin: 0 0 4px 0; font-size: 1.3rem;">JOURNAL // TRANSMISSION REGISTRY</h1>
+        <h1 style="color: var(--admin-cyan); margin: 0 0 4px 0; font-size: 1.3rem;">JOURNAL // ARTICLES</h1>
         <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Manage articles, technical writeups, publication statuses, and tags.</p>
     </div>
-    <a href="<?= url('admin/articles/create') ?>" class="admin-btn admin-btn-primary">+ NEW TRANSMISSION</a>
+    <a href="<?= url('admin/articles/create') ?>" class="admin-btn admin-btn-primary">+ NEW ARTICLE</a>
 </div>
 
 <div class="admin-card">
@@ -23,7 +23,7 @@
             <?php if (empty($articles)): ?>
             <tr>
                 <td colspan="7" style="text-align: center; color: #64748b; padding: 32px;">
-                    No journal articles logged in repository. Click "+ NEW TRANSMISSION" to publish an article.
+                    No journal articles have been added yet. Click "+ NEW ARTICLE" to publish one.
                 </td>
             </tr>
             <?php else: ?>
@@ -53,11 +53,11 @@
                         <?= e($art['published_at'] ?? $art['created_at']) ?>
                     </td>
                     <td style="text-align: right; white-space: nowrap;">
-                        <a href="<?= url('journal/' . $art['slug']) ?>" target="_blank" class="admin-btn admin-btn-secondary" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 4px;">VIEW</a>
+                        <a href="<?= url('journal/' . $art['slug']) ?>" target="_blank" rel="noopener noreferrer" class="admin-btn admin-btn-secondary" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 4px;">VIEW</a>
                         <a href="<?= url('admin/articles/' . $art['id'] . '/edit') ?>" class="admin-btn admin-btn-secondary" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 4px;">EDIT</a>
-                        <form method="POST" action="<?= url('admin/articles/' . $art['id'] . '/delete') ?>" style="display: inline;" onsubmit="return confirm('Purge transmission dossier #<?= e((string)$art['id']) ?>? This action is permanent.');">
+                            <form method="POST" action="<?= url('admin/articles/' . $art['id'] . '/delete') ?>" style="display: inline;" onsubmit="return confirm('Delete article #<?= e((string)$art['id']) ?>? This action is permanent.');">
                             <?= csrf_field() ?>
-                            <button type="submit" class="admin-btn admin-btn-danger" style="padding: 4px 8px; font-size: 0.75rem;">PURGE</button>
+                            <button type="submit" class="admin-btn admin-btn-danger" style="padding: 4px 8px; font-size: 0.75rem;">DELETE</button>
                         </form>
                     </td>
                 </tr>

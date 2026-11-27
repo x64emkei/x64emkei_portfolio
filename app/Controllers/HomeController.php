@@ -50,6 +50,7 @@ class HomeController
         try { $settings = SiteSetting::getAllKeyed(); } catch (\Throwable) { $settings = []; }
         try { $sections = PortfolioSection::allKeyed(); } catch (\Throwable) { $sections = []; }
         try { $latestArticles = Article::getPublished(3); } catch (\Throwable) { $latestArticles = []; }
+        try { $manifestoArticle = Article::getManifesto() ?: JournalController::getManifestoFallback(); } catch (\Throwable) { $manifestoArticle = JournalController::getManifestoFallback(); }
 
         $metaTitle = $settings['site_title'] ?? ($profile['full_name'] . ' | ' . $profile['title']);
         $metaDesc = $settings['meta_description'] ?? $profile['tagline'];
@@ -70,6 +71,7 @@ class HomeController
             'settings' => $settings,
             'sections' => $sections,
             'latestArticles' => $latestArticles,
+            'manifestoArticle' => $manifestoArticle,
             'metaTitle' => $metaTitle,
             'metaDesc' => $metaDesc,
             'metaKeywords' => $metaKeywords,

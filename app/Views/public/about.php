@@ -20,11 +20,12 @@ $secCerts = $secHelper->getSection('certifications');
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
 <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
 
     <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent" tabindex="-1">
         <div class="view-wrapper">
             <div class="page-container" data-initial-section="<?= e($activeSub) ?>">
                 <!-- Breadcrumbs -->
@@ -33,13 +34,13 @@ $secCerts = $secHelper->getSection('certifications');
                     <span class="sep">/</span>
                     <a href="<?= url('about') ?>">ABOUT</a>
                     <span class="sep">/</span>
-                    <span class="current" id="breadcrumbActiveSection">DOSSIER</span>
+                    <span class="current" id="breadcrumbActiveSection">PROFILE</span>
                 </nav>
 
                 <!-- Authentic Section Header with Watermark -->
                 <div class="section-watermark-num">01</div>
                 <div class="section-header">
-                    <span class="section-subtitle">// OPERATOR PROFILE &amp; QUALIFICATIONS</span>
+                    <span class="section-subtitle">// PROFILE &amp; QUALIFICATIONS</span>
                     <h2 class="section-title"><?= e($secAbout['title'] ?: 'About Me // Dossier') ?></h2>
                     <div class="section-divider"></div>
                 </div>
@@ -88,7 +89,7 @@ $secCerts = $secHelper->getSection('certifications');
                                     </a>
                                     <a href="<?= url('journal/ai-manifesto') ?>" class="btn btn-outline" style="text-decoration: none;">
                                         <span class="btn-live-pip"></span>
-                                        <span>AI Manifesto v1.0</span>
+                                        <span><?= e($manifestoArticle['title'] ?? 'AI Principles') ?></span>
                                         <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
                                             <polyline points="12 5 19 12 12 19"></polyline>
@@ -100,7 +101,7 @@ $secCerts = $secHelper->getSection('certifications');
                                 <img src="<?= asset($profile['avatar_url'] ?: 'images/me_2.png') ?>" alt="<?= e($profile['full_name']) ?>" class="bio-flush-photo" loading="lazy">
                                 <div class="bio-photo-telemetry">
                                     <span class="tag-pulse"></span>
-                                    <span class="bio-photo-label">x64emkei // OPERATOR</span>
+                                    <span class="bio-photo-label">x64emkei // PROFILE</span>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +183,7 @@ $secCerts = $secHelper->getSection('certifications');
                         <div class="featured-header-row">
                             <div class="bento-tag featured-tag">
                                 <span class="tag-rec-dot"></span>
-                                <span>SYSTEM ARSENAL // TECH STACK</span>
+                                <span>TECHNOLOGY STACK</span>
                             </div>
                             <div class="featured-indicator">
                                 <span class="indicator-pulse-dot"></span>

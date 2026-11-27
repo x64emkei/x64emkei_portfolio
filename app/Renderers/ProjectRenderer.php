@@ -20,14 +20,19 @@ class ProjectRenderer
             $title = htmlspecialchars($proj['title']);
             $slug = htmlspecialchars($proj['slug']);
             $category = htmlspecialchars(strtoupper($proj['category']));
-            $status = htmlspecialchars(strtoupper($proj['status']));
-            $desc = htmlspecialchars($proj['short_description']);
-            $thumb = htmlspecialchars($proj['thumbnail_url'] ?: 'images/cyber-bg.jpg');
+            $status = htmlspecialchars(strtoupper((string)($proj['operational_status'] ?? '')));
+            $desc = htmlspecialchars($proj['tagline'] ?? $proj['description'] ?? '');
+            $thumb = htmlspecialchars($proj['featured_image'] ?? '');
+            $statusOverlay = $status !== '' ? '<div class="project-status-overlay">' . $status . '</div>' : '';
+            $thumbMarkup = $thumb !== ''
+                ? '<div class="project-card-image-wrap"><img src="' . $thumb . '" alt="' . $title . '" loading="lazy" class="project-thumb">' . $statusOverlay . '</div>'
+                : '<div class="project-card-image-wrap project-card-image-empty" aria-hidden="true">' . $statusOverlay . '</div>';
             $detailUrl = htmlspecialchars(url('project/' . $slug));
-            $demoUrl = !empty($proj['demo_url']) ? '<a href="' . htmlspecialchars($proj['demo_url']) . '" target="_blank" class="project-link">// DEMO</a>' : '';
-            $repoUrl = !empty($proj['repo_url']) ? '<a href="' . htmlspecialchars($proj['repo_url']) . '" target="_blank" class="project-link">// CODE</a>' : '';
+            $demoUrl = !empty($proj['demo_url']) ? '<a href="' . htmlspecialchars($proj['demo_url']) . '" target="_blank" rel="noopener noreferrer" class="project-link">// DEMO</a>' : '';
+            $repoUrl = !empty($proj['github_url']) ? '<a href="' . htmlspecialchars($proj['github_url']) . '" target="_blank" rel="noopener noreferrer" class="project-link">// CODE</a>' : '';
 
-            $techs = is_array($proj['technologies']) ? $proj['technologies'] : explode(',', (string)($proj['technologies'] ?? ''));
+            $techs = json_decode((string)($proj['technologies_json'] ?? '[]'), true);
+            $techs = is_array($techs) ? $techs : [];
             $tagsHtml = '';
             foreach ($techs as $t) {
                 $t = trim($t);
@@ -37,10 +42,7 @@ class ProjectRenderer
 
             $cardsHtml .= <<<HTML
             <article class="project-card" data-category="{$category}">
-                <div class="project-card-image-wrap">
-                    <img src="{$thumb}" alt="{$title}" loading="lazy" class="project-thumb">
-                    <div class="project-status-overlay">{$status}</div>
-                </div>
+                {$thumbMarkup}
                 <div class="project-card-content">
                     <span class="project-category">// {$category}</span>
                     <h3 class="project-title"><a href="{$detailUrl}">{$title}</a></h3>

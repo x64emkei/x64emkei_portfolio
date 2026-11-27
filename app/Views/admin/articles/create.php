@@ -1,7 +1,7 @@
 <div style="margin-bottom: 24px;">
-    <a href="<?= url('admin/articles') ?>" style="color: #64748b; text-decoration: none; font-size: 0.8rem;">&larr; BACK TO JOURNAL REGISTRY</a>
-    <h1 style="color: var(--admin-cyan); margin: 8px 0 4px 0; font-size: 1.3rem;">DRAFT NEW TRANSMISSION</h1>
-    <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Author technical documentation, architecture deep dives, or telemetry writeups.</p>
+    <a href="<?= url('admin/articles') ?>" style="color: #64748b; text-decoration: none; font-size: 0.8rem;">&larr; BACK TO ARTICLES</a>
+    <h1 style="color: var(--admin-cyan); margin: 8px 0 4px 0; font-size: 1.3rem;">CREATE ARTICLE</h1>
+    <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Write a technical article using Markdown. The published page will format the headings, lists, links, quotes, and code for you.</p>
 </div>
 
 <form method="POST" action="<?= url('admin/articles/create') ?>" class="admin-card" style="max-width: 900px;">
@@ -34,8 +34,9 @@
     </div>
 
     <div class="form-group">
-        <label class="form-label" for="content">ARTICLE CONTENT (MARKDOWN OR HTML) *</label>
-        <textarea id="content" name="content" class="form-control" rows="14" required placeholder="Write markdown or semantic HTML article text here..."></textarea>
+        <label class="form-label" for="content">ARTICLE CONTENT (MARKDOWN) *</label>
+        <textarea id="content" name="content" class="form-control markdown-editor" rows="18" required placeholder="# Article title\n\nWrite your article here.\n\n- Add lists\n- Add **bold text**\n- Add [links](https://example.com)\n\n```php\necho 'Hello';\n```"></textarea>
+        <p class="markdown-help">Markdown supported: headings, bold, italic, links, lists, quotes, horizontal rules, inline code, and fenced code blocks.</p>
     </div>
 
     <div class="layout-form-grid" style="gap: 16px;">

@@ -1,5 +1,7 @@
 <?php
 $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
+$manifestoMarkdown = (string)($manifestoArticle['content'] ?? '');
+$manifestoTitle = (string)($manifestoArticle['title'] ?? 'AI Principles');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +89,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 </a>
                                 <button class="btn btn-manifesto-hero" id="heroManifestoBtn">
                                     <span class="manifesto-hero-dot"></span>
-                                    <span>AI Manifesto</span>
+                                    <span>AI Principles</span>
                                     <span class="manifesto-hero-badge">READ</span>
                                 </button>
                             </div>
@@ -121,8 +123,8 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 </div>
                                 <div class="stat-card">
                                     <div class="stat-header-row">
-                                        <span class="stat-badge stat-badge-hw">SYS.ARCHIVE</span>
-                                        <span class="stat-tag-mini"><?= count($hardwareNodes ?? []) ?> NODES</span>
+                                        <span class="stat-badge stat-badge-hw">HARDWARE</span>
+                                        <span class="stat-tag-mini"><?= count($hardwareNodes ?? []) ?> DEVICES</span>
                                     </div>
                                     <span class="stat-number">Hardware</span>
                                     <span class="stat-label">Restoration & Legacy Platforms</span>
@@ -140,7 +142,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                      loading="eager">
                                 <div class="hero-panel-hud" aria-hidden="true">
                                     <span class="hud-pip"></span>
-                                    <span class="hud-text">OPERATOR // x64emkei</span>
+                                    <span class="hud-text">PROFILE // x64emkei</span>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +182,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 <div class="bio-card-actions">
                                     <button class="btn btn-outline" id="aboutManifestoBtn" type="button">
                                         <span class="btn-live-pip"></span>
-                                        <span>AI Manifesto v1.0</span>
+                                        <span><?= e($manifestoTitle) ?></span>
                                         <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
                                             <polyline points="12 5 19 12 12 19"></polyline>
@@ -192,7 +194,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 <img src="<?= e(asset($profile['avatar_url'] ?: "images/me_2.png")) ?>" alt="<?= e($profile['full_name'] ?? "Michael Benedict Ordenes") ?>" class="bio-flush-photo" loading="lazy">
                                 <div class="bio-photo-telemetry">
                                     <span class="tag-pulse"></span>
-                                    <span class="bio-photo-label">x64emkei // OPERATOR</span>
+                                    <span class="bio-photo-label">x64emkei // PROFILE</span>
                                 </div>
                             </div>
                         </div>
@@ -249,7 +251,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                             <span class="edu-cert-name"><?= e($cert['title']) ?></span>
                                             <span class="edu-cert-desc"><?= e($cert['issuer']) ?> &bull; <?= e($cert['issue_date']) ?></span>
                                             <?php if (!empty($cert['credential_url'])): ?>
-                                                <a href="<?= e($cert['credential_url']) ?>" target="_blank" style="color: var(--color-cyan); font-size: 0.72rem; text-decoration: underline;">[VERIFY &nearr;]</a>
+                                                <a href="<?= e($cert['credential_url']) ?>" target="_blank" rel="noopener noreferrer" style="color: var(--color-cyan); font-size: 0.72rem; text-decoration: underline;">[VERIFY &nearr;]</a>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -264,7 +266,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                         <div class="featured-header-row">
                             <div class="bento-tag featured-tag">
                                 <span class="tag-rec-dot"></span>
-                                <span>SYSTEM ARSENAL // TECH STACK</span>
+                                <span>TECHNOLOGY STACK</span>
                             </div>
                             <div class="featured-indicator">
                                 <span class="indicator-pulse-dot"></span>
@@ -344,7 +346,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                     <span class="edu-cert-desc" style="color: var(--primary); font-size: 0.75rem; display: block; margin: 3px 0;"><?= e($ach['issuer']) ?> &bull; <?= e($ach['award_date']) ?></span>
                                     <p style="font-size: 0.78rem; color: #94a3b8; margin: 4px 0 0 0;"><?= e($ach['description']) ?></p>
                                     <?php if (!empty($ach['verification_url'])): ?>
-                                        <a href="<?= e($ach['verification_url']) ?>" target="_blank" style="color: var(--primary); font-size: 0.72rem; text-decoration: underline; margin-top: 4px; display: inline-block;">[VERIFY &nearr;]</a>
+                                        <a href="<?= e($ach['verification_url']) ?>" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-size: 0.72rem; text-decoration: underline; margin-top: 4px; display: inline-block;">[VERIFY &nearr;]</a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -358,17 +360,36 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                         <div class="retro-header-row">
                             <div class="bento-tag">
                                 <span class="tag-rec-dot"></span>
-                                <span>RETRO HARDWARE LAB // LEGACY ARCHIVE</span>
+                                <span>HARDWARE LAB // ARCHIVE</span>
                             </div>
                             <div class="retro-indicator">
                                 <span class="indicator-pulse-dot"></span>
-                                <span>6 Operational Nodes</span>
+                                <span><?= count($hardwareNodes ?? []) ?> Available Devices</span>
                             </div>
                         </div>
                         <h3 class="bento-heading">Vintage Hardware Diagnostics & Restoration Lab</h3>
                         <p class="retro-subtitle">Hands-on hardware diagnostics, BIOS recovery, and preservation across iconic architectures.</p>
 
                         <div class="retro-machine-grid">
+                            <?php if (!empty($hardwareNodes)): ?>
+                                <?php foreach ($hardwareNodes as $idx => $node): ?>
+                                    <div class="retro-machine-card">
+                                        <div class="retro-card-top">
+                                            <span class="retro-sys-id">DEVICE <?= sprintf('%02d', $idx + 1) ?></span>
+                                            <span class="retro-form-tag"><?= e($node['architecture'] ?? 'Hardware') ?></span>
+                                        </div>
+                                        <div class="retro-machine-content">
+                                            <div class="retro-machine-name"><?= e($node['name'] ?? '') ?></div>
+                                            <div class="retro-machine-desc"><?= e($node['specs'] ?? $node['description'] ?? '') ?></div>
+                                        </div>
+                                        <div class="retro-status-bar">
+                                            <span class="retro-status-active"><span class="retro-status-dot"></span><?= e($node['operational_status'] ?? '') ?></span>
+                                            <span class="retro-oem-tag"><?= e($node['category'] ?? '') ?></span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?php if (false): ?>
                             <!-- Machine 1: Sony Vaio W-series VPCW115XG -->
                             <div class="retro-machine-card">
                                 <div class="retro-card-top">
@@ -465,6 +486,10 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
+                        <?php if (empty($hardwareNodes)): ?>
+                            <div class="hud-empty-telemetry">// NO HARDWARE DEVICES PUBLISHED</div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -515,27 +540,45 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                 </div>
 
                 <?php
-$featuredProjects = array_filter($projects ?? [], fn($p) => !empty($p['is_featured']));
-$csharpProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'csharp') !== false || stripos($p['technologies'] ?? '', 'C#') !== false);
-$pythonProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'python') !== false || stripos($p['technologies'] ?? '', 'Python') !== false);
-$webdevProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'web') !== false || stripos($p['technologies'] ?? '', 'PHP') !== false || stripos($p['technologies'] ?? '', 'HTML') !== false);
-$cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ?? '', 'cpp') !== false || stripos($p['technologies'] ?? '', 'C++') !== false);
+$displayProjects = array_map(static function (array $project): array {
+    $technologies = $project['technologies'] ?? null;
+    if (!is_array($technologies)) {
+        $technologies = json_decode((string)($project['technologies_json'] ?? $technologies ?? '[]'), true);
+    }
+    if (!is_array($technologies)) {
+        $technologies = [];
+    }
+    $technologies = array_values(array_filter(array_map(static fn($technology): string => trim((string)$technology), $technologies), static fn(string $technology): bool => $technology !== ''));
+
+    return array_merge($project, [
+        'short_description' => (string)($project['tagline'] ?? $project['description'] ?? ''),
+        'technologies' => $technologies,
+        'technologies_text' => implode(' ', $technologies),
+        'status' => (string)($project['operational_status'] ?? $project['status'] ?? ''),
+    ]);
+}, array_values(array_filter($projects ?? [], 'is_array')));
+
+$featuredProjects = array_filter($displayProjects, fn($p) => !empty($p['is_featured']));
+$csharpProjects = array_filter($displayProjects, fn($p) => stripos($p['category'] ?? '', 'csharp') !== false || stripos($p['technologies_text'] ?? '', 'C#') !== false);
+$pythonProjects = array_filter($displayProjects, fn($p) => stripos($p['category'] ?? '', 'python') !== false || stripos($p['technologies_text'] ?? '', 'Python') !== false);
+$webdevProjects = array_filter($displayProjects, fn($p) => stripos($p['category'] ?? '', 'web') !== false || stripos($p['technologies_text'] ?? '', 'PHP') !== false || stripos($p['technologies_text'] ?? '', 'HTML') !== false);
+$cppProjects = array_filter($displayProjects, fn($p) => stripos($p['category'] ?? '', 'cpp') !== false || stripos($p['technologies_text'] ?? '', 'C++') !== false);
 ?>
                 <?php if (empty($projects)): ?>
                 <div style="background: rgba(14, 18, 26, 0.7); border: 1px dashed var(--primary); border-radius: 6px; padding: 40px 24px; text-align: center; margin-bottom: 30px;">
                     <div style="font-family: 'JetBrains Mono', monospace; color: var(--primary); font-size: 0.85rem; margin-bottom: 8px;">
-                        // TELEMETRY STATUS: INVENTORY_STAGING
+                        // STATUS: INVENTORY STAGING
                     </div>
                     <h3 style="color: #f8fafc; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0 0 10px 0;">
                         Project Catalog in Active Preparation
                     </h3>
                     <p style="color: #94a3b8; max-width: 650px; margin: 0 auto 20px auto; line-height: 1.6; font-size: 0.95rem;">
-                        Code repositories and production blueprints are currently undergoing telemetry audit and clearance for public release. In the meantime, inspect our live <a href="<?= url('work/hardware') ?>" style="color: var(--primary);">Hardware Lab Archive</a>, review our <a href="<?= url('work/services') ?>" style="color: var(--primary);">Engineering Services</a>, or read our latest technical papers in the <a href="<?= url('journal') ?>" style="color: var(--primary);">Journal</a>.
+                        Code repositories and project details are being prepared for public release. In the meantime, explore the <a href="<?= url('work/hardware') ?>" style="color: var(--primary);">Hardware Lab</a>, review our <a href="<?= url('work/services') ?>" style="color: var(--primary);">Engineering Services</a>, or read the latest articles in the <a href="<?= url('journal') ?>" style="color: var(--primary);">Journal</a>.
                     </p>
                     <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
                         <a href="<?= url('work/services') ?>" class="btn btn-primary btn-sm" style="text-decoration: none;">View Services &rarr;</a>
-                        <a href="<?= url('work/hardware') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Hardware Lab (6 Nodes) &rarr;</a>
-                        <a href="<?= url('journal/manifesto') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Read AI Manifesto &rarr;</a>
+                        <a href="<?= url('work/hardware') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Hardware Lab (<?= count($hardwareNodes ?? []) ?> Devices) &rarr;</a>
+                        <a href="<?= url('journal/ai-manifesto') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">Read AI Principles &rarr;</a>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -543,9 +586,9 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                 <div class="portfolio-filter-group" role="tablist" aria-label="Portfolio Category Filter">
                     <button class="filter-btn active" data-filter="featured"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#FFB800"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Featured</span></button>
                     <button class="filter-btn" data-filter="csharp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg><span>C# (.NET)</span></button>
-                    <button class="filter-btn" data-filter="python"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg><span>Python</span></button>
+                    <button class="filter-btn" data-filter="python"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#FF5252"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFB800"/></svg><span>Python</span></button>
                     <button class="filter-btn" data-filter="webdev"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#FF2A2A" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg><span>WebDev</span></button>
-                    <button class="filter-btn" data-filter="cpp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00599C" stroke-width="1.8" fill="rgba(0, 89, 156, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00599C" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00599C" stroke-width="1.3" stroke-linecap="round"/></svg><span>C++</span></button>
+                    <button class="filter-btn" data-filter="cpp"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#FF5252" stroke-width="1.8" fill="rgba(255, 82, 82, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#FF5252" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#FF5252" stroke-width="1.3" stroke-linecap="round"/></svg><span>C++</span></button>
                     <button class="filter-btn" data-filter="all"><svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>All Projects</span></button>
                 </div>
 
@@ -554,8 +597,8 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                 <div class="portfolio-subsection featured-programs-section" data-section-category="featured">
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
-                            <span class="subsection-badge-tag">// FLAGSHIP SYSTEMS ARCHIVE</span>
-                            <span class="subsection-counter">6 FEATURED BUILDS</span>
+                            <span class="subsection-badge-tag">// FEATURED PROJECTS</span>
+                            <span class="subsection-counter"><?= count($featuredProjects) ?> PROJECTS</span>
                         </div>
                         <h3 class="portfolio-subsection-title">Featured Flagship Applications</h3>
                         <p class="portfolio-subsection-desc">Selected high-impact software systems demonstrating low-level kernel routines, real-time edge intelligence, and distributed architectures.</p>
@@ -600,7 +643,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                             <?php endforeach; ?>
                         <?php else: ?>
                             <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
-                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
+                                // NO PROJECTS AVAILABLE IN THIS CATEGORY
                             </div>
                         <?php endif; ?>
                     </div>
@@ -611,7 +654,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
                             <span class="subsection-badge-tag">// ENTERPRISE .NET PLATFORMS</span>
-                            <span class="subsection-counter"><?= count($csharpProjects) ?> COMMITTED BUILDS</span>
+                            <span class="subsection-counter"><?= count($csharpProjects) ?> PROJECTS</span>
                         </div>
                         <h3 class="portfolio-subsection-title">C# &bull; Systems & Desktop Engineering</h3>
                         <p class="portfolio-subsection-desc">High-performance Windows enterprise clients, autonomous POS retail engines, and hardware driver telemetry bridges.</p>
@@ -654,7 +697,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                             <?php endforeach; ?>
                         <?php else: ?>
                             <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
-                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
+                                // NO PROJECTS AVAILABLE IN THIS CATEGORY
                             </div>
                         <?php endif; ?>
                     </div>
@@ -665,9 +708,9 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
                             <span class="subsection-badge-tag">// AI & DISTRIBUTED DATA ENGINES</span>
-                            <span class="subsection-counter"><?= count($pythonProjects) ?> ACTIVE DEPLOYS</span>
+                            <span class="subsection-counter"><?= count($pythonProjects) ?> PROJECTS</span>
                         </div>
-                        <h3 class="portfolio-subsection-title">Python &bull; AI, Automation & Network Daemons</h3>
+                        <h3 class="portfolio-subsection-title">Python &bull; AI, Automation &amp; Network Tools</h3>
                         <p class="portfolio-subsection-desc">High-throughput asynchronous scraping daemons, PyTorch computer vision networks, and distributed messaging bots.</p>
                     </div>
                     <div class="featured-programs-grid programs-grid-sm">
@@ -708,7 +751,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                             <?php endforeach; ?>
                         <?php else: ?>
                             <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
-                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
+                                // NO PROJECTS AVAILABLE IN THIS CATEGORY
                             </div>
                         <?php endif; ?>
                     </div>
@@ -762,7 +805,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                             <?php endforeach; ?>
                         <?php else: ?>
                             <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
-                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
+                                // NO PROJECTS AVAILABLE IN THIS CATEGORY
                             </div>
                         <?php endif; ?>
                     </div>
@@ -772,8 +815,8 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                 <div class="portfolio-subsection is-filtered-out" data-section-category="cpp">
                     <div class="portfolio-subsection-header">
                         <div class="subsection-meta-row">
-                            <span class="subsection-badge-tag">// KERNEL ARCHITECTURE & HARDWARE</span>
-                            <span class="subsection-counter"><?= count($cppProjects) ?> SYSTEM BUILDS</span>
+                            <span class="subsection-badge-tag">// SYSTEMS &amp; HARDWARE</span>
+                            <span class="subsection-counter"><?= count($cppProjects) ?> PROJECTS</span>
                         </div>
                         <h3 class="portfolio-subsection-title">C++ &bull; Low-Level Hardware & Systems Architecture</h3>
                         <p class="portfolio-subsection-desc">Bare-metal microkernels, lock-free time-series metric loggers, and Direct3D rendering subsystems.</p>
@@ -816,7 +859,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                             <?php endforeach; ?>
                         <?php else: ?>
                             <div style="grid-column: 1/-1; padding: 20px; text-align: center; color: #64748b;">
-                                // NO TELEMETRY COMMITTED TO THIS ARCHIVE CATEGORY
+                                // NO PROJECTS AVAILABLE IN THIS CATEGORY
                             </div>
                         <?php endif; ?>
                     </div>
@@ -891,7 +934,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                     <div class="bento-card contact-channels-card">
                         <div class="bento-tag">
                             <span class="tag-rec-dot"></span>
-                            <span>SEND MESSAGE // DISPATCH</span>
+                            <span>SEND MESSAGE</span>
                             <div class="win-controls">
                                 <span class="win-btn">_</span>
                                 <span class="win-btn win-close">&times;</span>
@@ -995,7 +1038,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
             <div class="manifesto-modal-header">
                 <div class="manifesto-header-meta">
                     <span class="manifesto-live-pip"></span>
-                    <span class="manifesto-header-id">SYS.DOC // AI_MANIFESTO_V1.0</span>
+                    <span class="manifesto-header-id">ARTICLE // AI PRINCIPLES</span>
                     <span class="manifesto-header-tag">ETHICS & SKILL</span>
                 </div>
                 <div class="manifesto-header-controls">
@@ -1056,7 +1099,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                         <div class="slide-inner">
                             <div class="slide-header">
                                 <span class="slide-hud-tag">// PREAMBLE</span>
-                                <h3 class="slide-main-title">My AI Manifesto</h3>
+                                <h3 class="slide-main-title"><?= e($manifestoTitle) ?></h3>
                                 <p class="slide-subtitle">A Personal Position on AI, Human Skill, and Responsible Progress</p>
                                 <div class="slide-divider"></div>
                             </div>
@@ -1386,6 +1429,9 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
                     <button class="carousel-nav-arrow-btn" id="nextSlideBtn" aria-label="Next Slide">Next &rarr;</button>
                 </div>
                 <div class="manifesto-footer-actions">
+                    <a class="manifesto-action-btn" href="<?= url('journal/ai-manifesto') ?>">
+                        <span>Read Full Article</span>
+                    </a>
                     <button class="manifesto-action-btn" id="copyManifestoBtn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
@@ -1398,7 +1444,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
         </div>
     </div>
     <!-- =========================================================================
-         INTERACTIVE MODAL WINDOW: PROJECT ARCHITECTURE & CODE INSPECTOR
+         INTERACTIVE MODAL WINDOW: PROJECT DETAILS
          ========================================================================= -->
     <div class="project-modal-backdrop" id="projectModalBackdrop" aria-hidden="true">
         <div class="project-modal-container" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
@@ -1406,7 +1452,7 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
             <div class="project-modal-header">
                 <div class="project-modal-meta">
                     <span class="modal-pulse-pip"></span>
-                    <span class="modal-code-id" id="modalProjectId">PROJECT.INSPECTOR // ARCHITECTURE</span>
+                    <span class="modal-code-id" id="modalProjectId">PROJECT DETAILS</span>
                     <span class="modal-category-tag" id="modalProjectCategory">C# .NET</span>
                 </div>
                 <div class="modal-header-actions">
@@ -1417,33 +1463,33 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
             <!-- Modal Body -->
             <div class="project-modal-body">
                 <div class="project-modal-hero">
-                    <h3 class="project-modal-title" id="modalProjectTitle">Project Title</h3>
-                    <p class="project-modal-tagline" id="modalProjectTagline">Architecture overview and system purpose.</p>
+                    <h3 class="project-modal-title" id="modalProjectTitle">No project selected</h3>
+                    <p class="project-modal-tagline" id="modalProjectTagline">Select a published project to inspect its record.</p>
                 </div>
 
                 <div class="project-modal-specs-grid">
                     <div class="project-spec-item">
                         <span class="project-spec-label">Platform / Target</span>
-                        <span class="project-spec-value" id="modalProjectEnv">Proxmox VE &bull; Linux</span>
+                        <span class="project-spec-value" id="modalProjectEnv">Not provided</span>
                     </div>
                     <div class="project-spec-item">
                         <span class="project-spec-label">Execution Profile</span>
-                        <span class="project-spec-value" id="modalProjectPerf">Sub-millisecond &bull; Low Memory Footprint</span>
+                        <span class="project-spec-value" id="modalProjectPerf">Not provided</span>
                     </div>
                     <div class="project-spec-item">
                         <span class="project-spec-label">Deployment Status</span>
-                        <span class="project-spec-value modal-status-active" id="modalProjectStatus">Active &bull; Operational</span>
+                        <span class="project-spec-value modal-status-active" id="modalProjectStatus">Not provided</span>
                     </div>
                 </div>
 
                 <div class="project-modal-content-stack">
                     <div class="modal-section-block">
-                        <h4 class="modal-block-heading">// ARCHITECTURAL SPECIFICATION</h4>
+                        <h4 class="modal-block-heading">// PROJECT DESCRIPTION</h4>
                         <p class="modal-block-text" id="modalProjectDesc">Detailed technical breakdown.</p>
                     </div>
 
                     <div class="modal-section-block">
-                        <h4 class="modal-block-heading">// KEY SYSTEM CAPABILITIES</h4>
+                        <h4 class="modal-block-heading">// KEY FEATURES</h4>
                         <ul class="modal-features-list" id="modalProjectFeatures">
                             <!-- Populated dynamically via JS -->
                         </ul>
@@ -1451,13 +1497,13 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
 
                     <div class="modal-section-block">
                         <div class="code-block-header">
-                            <span class="code-file-tag" id="modalCodeFileName">Architecture.cs</span>
+                            <span class="code-file-tag" id="modalCodeFileName">No code file attached</span>
                             <button class="btn-copy-code" id="btnCopyProjectCode" type="button">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                                 <span id="copyCodeText">Copy Snippet</span>
                             </button>
                         </div>
-                        <pre class="modal-code-viewer"><code id="modalProjectCode">// Code goes here</code></pre>
+                        <pre class="modal-code-viewer"><code id="modalProjectCode">No code snippet attached.</code></pre>
                     </div>
                 </div>
             </div>
@@ -1479,34 +1525,34 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
     </div>
 
     <!-- =========================================================================
-         INTERACTIVE MODAL WINDOW: VINTAGE HARDWARE NODE TELEMETRY INSPECTOR
+         INTERACTIVE MODAL WINDOW: HARDWARE DETAILS
          ========================================================================= -->
     <div class="hardware-modal-backdrop" id="hardwareModalBackdrop" aria-hidden="true">
         <div class="hardware-modal-container" id="hardwareModal" role="dialog" aria-modal="true" aria-labelledby="modalHwTitle">
             <div class="hardware-modal-header">
                 <div class="hardware-modal-meta">
                     <span class="modal-pulse-pip"></span>
-                    <span class="modal-code-id" id="modalHwNodeId">NODE.01 // LAB ARCHIVE</span>
+                    <span class="modal-code-id" id="modalHwNodeId">DEVICE DETAILS</span>
                     <span class="modal-category-tag" id="modalHwTag">PRESERVED</span>
                 </div>
                 <button class="hardware-modal-close-btn" id="hardwareModalCloseBtn" aria-label="Close Hardware Inspector">&times;</button>
             </div>
             <div class="hardware-modal-body">
                 <div class="hardware-modal-hero">
-                    <h3 class="hardware-modal-title" id="modalHwTitle">Sony Vaio W-series VPCW115XG</h3>
-                    <p class="hardware-modal-subtitle" id="modalHwSubtitle">Intel Atom N280 Netbook Platform &bull; Japanese Ultraportable Engineering</p>
+                    <h3 class="hardware-modal-title" id="modalHwTitle">No hardware node selected</h3>
+                    <p class="hardware-modal-subtitle" id="modalHwSubtitle">Select a published hardware record to view its details.</p>
                 </div>
                 <div class="hardware-specs-matrix" id="modalHwSpecsMatrix">
                     <!-- Populated dynamically via JS -->
                 </div>
                 <div class="hardware-logs-card">
-                    <h4 class="modal-block-heading">// RESTORATION HISTORY & LAB DIAGNOSTICS</h4>
-                    <p class="modal-block-text" id="modalHwLog">Restoration history notes.</p>
+                    <h4 class="modal-block-heading">// RESTORATION NOTES</h4>
+                    <p class="modal-block-text" id="modalHwLog">No restoration notes attached.</p>
                 </div>
             </div>
             <div class="hardware-modal-footer">
-                <span class="hardware-oem-tag" id="modalHwOem">OEM: Sony VAIO Corp.</span>
-                <button class="btn btn-primary" id="hardwareModalCloseActionBtn" type="button">Close Telemetry</button>
+                <span class="hardware-oem-tag" id="modalHwOem">OEM: Not provided</span>
+                <button class="btn btn-primary" id="hardwareModalCloseActionBtn" type="button">Close</button>
             </div>
         </div>
     </div>
@@ -1516,6 +1562,10 @@ $cppProjects = array_filter($projects ?? [], fn($p) => stripos($p['category'] ??
         window.__SERVER_HARDWARE__ = <?= json_encode($hardwareNodes ?? [], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;
     </script>
     <!-- Main Logic -->
+    <script>
+        window.__MANIFESTO_MARKDOWN__ = <?= json_encode($manifestoMarkdown, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;
+        window.__MANIFESTO_TITLE__ = <?= json_encode($manifestoTitle, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>;
+    </script>
     <script src="<?= asset('script.js') ?>"></script>
 </body>
 </html>

@@ -39,7 +39,7 @@ class ArticlesController
         echo $renderer->render('admin.articles.create', [
             'categories' => $categories,
             'tags' => $tags,
-            'pageTitle' => 'Draft New Transmission // Journal'
+            'pageTitle' => 'Create Article // Journal'
         ], 'admin.layout');
     }
 
@@ -105,8 +105,8 @@ class ArticlesController
             Article::syncTags($articleId, $tagIds);
         }
 
-        ActivityLog::record('article_create', "Authored article dossier: {$title}", $userId);
-        flash('success', "Article '{$title}' successfully registered in journal registry.");
+        ActivityLog::record('article_create', "Created article: {$title}", $userId);
+        flash('success', "Article '{$title}' was created successfully.");
         redirect('admin/articles');
     }
 
@@ -128,7 +128,7 @@ class ArticlesController
             'categories' => $categories,
             'tags' => $tags,
             'articleTagNames' => $articleTagNames,
-            'pageTitle' => "Edit Transmission // {$article['title']}"
+            'pageTitle' => "Edit Article // {$article['title']}"
         ], 'admin.layout');
     }
 
@@ -210,7 +210,7 @@ class ArticlesController
         if ($article) {
             Article::delete((int)$id);
             ActivityLog::record('article_delete', "Deleted article #{$id}: {$article['title']}", AuthService::id());
-            flash('success', "Article transmission successfully purged.");
+            flash('success', "Article deleted successfully.");
         }
         redirect('admin/articles');
     }

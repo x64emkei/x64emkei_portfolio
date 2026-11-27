@@ -51,7 +51,7 @@
         </div>
 
         <button type="submit" class="btn-admin btn-admin-cyan" style="margin-top: 10px;">
-            &#128190; COMMIT CORE SYSTEM CONFIGURATION
+            &#128190; SAVE SETTINGS
         </button>
     </form>
 </div>

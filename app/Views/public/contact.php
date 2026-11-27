@@ -15,11 +15,12 @@ $secContact = $secHelper->getSection('contact');
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
 <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
 
     <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent" tabindex="-1">
         <div class="view-wrapper">
             <div class="page-container" data-initial-section="<?= e($activeSub) ?>">
                 <!-- Breadcrumbs -->
@@ -34,7 +35,7 @@ $secContact = $secHelper->getSection('contact');
                 <!-- Section Watermark & Header -->
                 <div class="section-watermark-num">04</div>
                 <div class="section-header">
-                    <span class="section-subtitle">// SECURE TELEMETRY CHANNEL</span>
+                    <span class="section-subtitle">// CONTACT &amp; SECURITY</span>
                     <h2 class="section-title"><?= e($secContact['title'] ?: 'Contact &amp; Consultation') ?></h2>
                     <div class="section-divider"></div>
                 </div>
@@ -66,7 +67,7 @@ $secContact = $secHelper->getSection('contact');
                             <div class="contact-card-text">
                                 <div class="bento-tag">
                                     <span class="tag-rec-dot"></span>
-                                    <span>COMMS // DIRECT CHANNELS</span>
+                                    <span>CONTACT // DIRECT LINKS</span>
                                     <div class="win-controls">
                                         <span class="win-btn">_</span>
                                         <span class="win-btn win-close">&times;</span>
@@ -112,7 +113,7 @@ $secContact = $secHelper->getSection('contact');
                                 <img src="<?= asset($profile['avatar_url'] ?: 'images/me_2.png') ?>" alt="<?= e($profile['full_name']) ?>" class="contact-flush-photo" loading="lazy">
                                 <div class="contact-photo-telemetry">
                                     <span class="tag-pulse"></span>
-                                    <span class="contact-photo-label">TELEMETRY // READY</span>
+                            <span class="contact-photo-label">AVAILABLE FOR CONTACT</span>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +123,7 @@ $secContact = $secHelper->getSection('contact');
                     <section id="inquiry" class="content-section bento-card contact-form-card" data-section-name="inquiry" style="grid-column: span 5;">
                         <div class="bento-tag">
                             <span class="tag-rec-dot"></span>
-                            <span>TRANSMISSION // DISPATCH FORM</span>
+                            <span>CONTACT FORM</span>
                             <div class="win-controls">
                                 <span class="win-btn">_</span>
                                 <span class="win-btn win-close">&times;</span>
@@ -135,21 +136,21 @@ $secContact = $secHelper->getSection('contact');
 
                             <div class="form-group" style="margin-bottom: 16px;">
                                 <label for="name" style="display: block; font-family: var(--font-mono); font-size: var(--font-size-xs); color: var(--text-secondary); margin-bottom: 6px;">
-                                    // OPERATOR NAME
+                                    // YOUR NAME
                                 </label>
                                 <input type="text" id="name" name="name" required class="input-terminal" style="width: 100%; box-sizing: border-box; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-primary); padding: 10px 14px; border-radius: var(--radius-xs); font-family: var(--font-mono); font-size: var(--font-size-sm);" placeholder="e.g. John Doe">
                             </div>
 
                             <div class="form-group" style="margin-bottom: 16px;">
                                 <label for="email" style="display: block; font-family: var(--font-mono); font-size: var(--font-size-xs); color: var(--text-secondary); margin-bottom: 6px;">
-                                    // REPLY TRANSMISSION CHANNEL (EMAIL)
+                                    // EMAIL ADDRESS
                                 </label>
                                 <input type="email" id="email" name="email" required class="input-terminal" style="width: 100%; box-sizing: border-box; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-primary); padding: 10px 14px; border-radius: var(--radius-xs); font-family: var(--font-mono); font-size: var(--font-size-sm);" placeholder="name@domain.com">
                             </div>
 
                             <div class="form-group" style="margin-bottom: 16px;">
                                 <label for="subject" style="display: block; font-family: var(--font-mono); font-size: var(--font-size-xs); color: var(--text-secondary); margin-bottom: 6px;">
-                                    // TRANSMISSION SUBJECT
+                                    // SUBJECT
                                 </label>
                                 <input type="text" id="subject" name="subject" class="input-terminal" style="width: 100%; box-sizing: border-box; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-primary); padding: 10px 14px; border-radius: var(--radius-xs); font-family: var(--font-mono); font-size: var(--font-size-sm);" placeholder="Project consultation / Technical inquiry">
                             </div>
@@ -171,7 +172,7 @@ $secContact = $secHelper->getSection('contact');
                         </form>
                     </section>
 
-                    <!-- SECTION 03: SOCIAL & ENCRYPTED CHANNELS (Span 12) -->
+                    <!-- SECTION 03: SOCIAL LINKS (Span 12) -->
                     <section id="social" class="content-section bento-card contact-channels-card" data-section-name="social" style="grid-column: span 12;">
                         <div class="bento-tag">
                             <span class="tag-rec-dot"></span>

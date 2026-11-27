@@ -54,7 +54,7 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" class="btn-admin btn-admin-cyan" style="width: 100%;">+ COMMIT ACHIEVEMENT</button>
+            <button type="submit" class="btn-admin btn-admin-cyan" style="width: 100%;">+ ADD ACHIEVEMENT</button>
         </form>
     </div>
 
@@ -89,7 +89,7 @@
                                 <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; padding: 1px 6px; font-size: 0.65rem; border-radius: 2px; margin-left: 6px;">FEATURED</span>
                             <?php endif; ?>
                             <?php if (!empty($ach['verification_url'])): ?>
-                                <br><a href="<?= e($ach['verification_url']) ?>" target="_blank" style="color: var(--admin-cyan); font-size: 0.75rem;">[VERIFY &nearr;]</a>
+                                <br><a href="<?= e($ach['verification_url']) ?>" target="_blank" rel="noopener noreferrer" style="color: var(--admin-cyan); font-size: 0.75rem;">[VERIFY &nearr;]</a>
                             <?php endif; ?>
                         </td>
                         <td>

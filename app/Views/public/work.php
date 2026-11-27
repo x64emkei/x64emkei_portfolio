@@ -18,11 +18,12 @@ $secHardware = $secHelper->getSection('hardware');
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
 <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
 
     <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require __DIR__ . '/partials/header_nav.php'; ?>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent" tabindex="-1">
         <div class="view-wrapper">
             <div class="page-container" data-initial-section="<?= e($activeSub) ?>">
                 <!-- Breadcrumbs -->
@@ -37,7 +38,7 @@ $secHardware = $secHelper->getSection('hardware');
                 <!-- Section Watermark & Header -->
                 <div class="section-watermark-num">02</div>
                 <div class="section-header">
-                    <span class="section-subtitle">// ENGINEERING PORTFOLIO, CAPABILITIES &amp; ARCHIVE</span>
+                    <span class="section-subtitle">// PROJECTS, SERVICES &amp; ARCHIVE</span>
                     <h2 class="section-title"><?= e($secPortfolio['title'] ?: 'Work &amp; Technical Catalog') ?></h2>
                     <div class="section-divider"></div>
                 </div>
@@ -57,7 +58,7 @@ $secHardware = $secHelper->getSection('hardware');
                             // <?= e($secPortfolio['title'] ?: 'PORTFOLIO &amp; SOFTWARE PROJECTS') ?>
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
-                            <?= e($secPortfolio['subtitle'] ?: 'ACTIVE TELEMETRY') ?>
+                            <?= e($secPortfolio['subtitle'] ?: 'CURRENT PROJECTS') ?>
                         </span>
                     </div>
 
@@ -67,7 +68,7 @@ $secHardware = $secHelper->getSection('hardware');
                             <div class="program-card-header" style="justify-content: center; margin-bottom: 12px;">
                                 <div class="program-badge badge-wip">
                                     <span class="badge-dot-amber"></span>
-                                    <span>CATALOG STATUS: STAGING &amp; DOCUMENTATION</span>
+                                    <span>STATUS: PROJECT DETAILS IN PROGRESS</span>
                                 </div>
                             </div>
                             <h3 class="bento-heading" style="margin: 0 0 12px 0;">Projects are currently undergoing documentation &amp; verification</h3>
@@ -109,7 +110,7 @@ $secHardware = $secHelper->getSection('hardware');
                                 </p>
                                 <div class="program-card-footer" style="margin-top: auto; border-top: 1px solid var(--border); padding-top: 12px;">
                                     <a href="<?= url('project/' . $proj['slug']) ?>" style="color: var(--accent-cyan); font-family: var(--font-mono); font-size: var(--font-size-xs); text-decoration: none; font-weight: 600;">
-                                        VIEW DOSSIER &rarr;
+                                        VIEW PROJECT &rarr;
                                     </a>
                                 </div>
                             </div>
@@ -260,10 +261,10 @@ $secHardware = $secHelper->getSection('hardware');
                 <section id="laboratory" class="content-section" data-section-name="Technical Laboratory" style="margin-bottom: 48px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px;">
                         <h3 class="bento-heading" style="margin: 0; font-size: var(--font-size-lg); color: var(--accent-cyan);">
-                            // TECHNICAL LABORATORY &amp; INFRASTRUCTURE
+                            // TECHNICAL LAB &amp; INFRASTRUCTURE
                         </h3>
                         <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--accent-green);">
-                            ACTIVE MESH: TAILSCALE // PROXMOX VE
+                            NETWORK: TAILSCALE // PROXMOX VE
                         </span>
                     </div>
 
@@ -307,7 +308,7 @@ $secHardware = $secHelper->getSection('hardware');
                     <div class="retro-header-row" style="margin-bottom: 18px;">
                         <div class="bento-tag">
                             <span class="tag-rec-dot"></span>
-                            <span>RETRO HARDWARE LAB // LEGACY ARCHIVE</span>
+                                    <span>HARDWARE LAB // ARCHIVE</span>
                         </div>
                         <div class="retro-indicator">
                             <span class="indicator-pulse-dot"></span>
@@ -320,7 +321,7 @@ $secHardware = $secHelper->getSection('hardware');
                             <?php foreach ($hardwareNodes as $idx => $node): ?>
                             <div class="retro-machine-card">
                                 <div class="retro-card-top">
-                                    <span class="retro-sys-id">NODE.<?= sprintf('%02d', $idx + 1) ?></span>
+                                    <span class="retro-sys-id">DEVICE <?= sprintf('%02d', $idx + 1) ?></span>
                                     <span class="retro-form-tag"><?= e($node['architecture'] ?? 'Hardware') ?></span>
                                 </div>
                                 <div class="retro-machine-content">
@@ -334,6 +335,7 @@ $secHardware = $secHelper->getSection('hardware');
                             </div>
                             <?php endforeach; ?>
                         <?php else: ?>
+                            <?php if (false): ?>
                             <!-- Machine 1: Sony Vaio W-series -->
                             <div class="retro-machine-card">
                                 <div class="retro-card-top">
@@ -429,6 +431,7 @@ $secHardware = $secHelper->getSection('hardware');
                                     <span class="retro-oem-tag">Dell OptiPlex</span>
                                 </div>
                             </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </section>

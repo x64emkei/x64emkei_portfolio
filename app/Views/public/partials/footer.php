@@ -38,10 +38,10 @@ $currentYear = date('Y');
                 <h4 class="footer-col-title">// RESOURCES</h4>
                 <ul class="footer-links">
                     <li><a href="<?= url('work#portfolio') ?>">Portfolio & Projects</a></li>
-                    <li><a href="<?= url('work#laboratory') ?>">Technical Laboratory</a></li>
+                    <li><a href="<?= url('work#laboratory') ?>">Technical Lab</a></li>
                     <li><a href="<?= url('work#hardware') ?>">Hardware Archive</a></li>
                     <li><a href="<?= url('journal#tutorials') ?>">Tutorials & Guides</a></li>
-                    <li><a href="<?= url('journal#ai-manifesto') ?>">AI Manifesto v1.0</a></li>
+                    <li><a href="<?= url('journal#ai-manifesto') ?>">AI Principles</a></li>
                 </ul>
             </div>
 

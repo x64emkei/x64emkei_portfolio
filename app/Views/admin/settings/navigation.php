@@ -1,6 +1,6 @@
 <div style="margin-bottom: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
     <div>
-        <h1 style="color: var(--admin-cyan); margin: 0 0 6px 0; font-size: 1.4rem;">PRIMARY NAVIGATION ARCHITECTURE MANAGER</h1>
+        <h1 style="color: var(--admin-cyan); margin: 0 0 6px 0; font-size: 1.4rem;">PRIMARY NAVIGATION</h1>
         <p style="color: #64748b; margin: 0; font-size: 0.85rem;">Enforce and customize the 6 mandatory primary categories and child route destinations.</p>
     </div>
     <form action="<?= e(url('admin/settings/navigation/reset')) ?>" method="POST" onsubmit="return confirm('Restore default 6-destination architecture?');">

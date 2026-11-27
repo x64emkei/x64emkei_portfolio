@@ -14,11 +14,12 @@ $pageDescription = isset($category) ? ($category['description'] ?? '') : "Archiv
     <link rel="stylesheet" href="<?= asset('style.css') ?>">
 </head>
 <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
 
     <!-- Unified HUD Navigation (Utility Bar + Sidebar Rail + Mobile Drawer) -->
     <?php require dirname(__DIR__) . '/partials/header_nav.php'; ?>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent" tabindex="-1">
         <div class="view-wrapper">
             <div class="page-container">
                 <!-- Breadcrumbs -->
@@ -32,14 +33,14 @@ $pageDescription = isset($category) ? ($category['description'] ?? '') : "Archiv
 
                 <div style="margin-bottom: 24px;">
                     <a href="<?= url('journal') ?>" class="btn btn-outline btn-sm" style="text-decoration: none;">
-                        &larr; // ALL DISPATCHES
+                        &larr; // ALL ARTICLES
                     </a>
                 </div>
 
                 <!-- Section Watermark & Header -->
                 <div class="section-watermark-num">03</div>
                 <div class="section-header">
-                    <span class="section-subtitle">// ARCHIVE TELEMETRY &bull; FILTERED INDEX</span>
+                    <span class="section-subtitle">// FILTERED ARTICLES</span>
                     <h2 class="section-title"><?= e($pageHeading) ?></h2>
                     <div class="section-divider"></div>
                 </div>
@@ -56,7 +57,7 @@ $pageDescription = isset($category) ? ($category['description'] ?? '') : "Archiv
                     <div class="bento-card" style="text-align: center; padding: 48px 24px; margin-bottom: 40px;">
                         <div class="bento-tag" style="justify-content: center; margin-bottom: 12px;">
                             <span class="tag-rec-dot"></span>
-                            <span>ARCHIVE // EMPTY</span>
+                            <span>NO ARTICLES FOUND</span>
                         </div>
                         <h3 class="bento-heading">No Published Dispatches In This Index</h3>
                         <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto; line-height: 1.6;">
@@ -70,7 +71,7 @@ $pageDescription = isset($category) ? ($category['description'] ?? '') : "Archiv
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                                 <span class="bento-tag" style="margin-bottom: 0;">
                                     <span class="tag-rec-dot"></span>
-                                    <span><?= strtoupper(e($art['category'] ?? 'DISPATCH')) ?></span>
+                                    <span><?= strtoupper(e($art['category'] ?? 'ARTICLE')) ?></span>
                                 </span>
                                 <span style="font-family: var(--font-mono); font-size: var(--font-size-2xs); color: var(--text-muted);">
                                     <?= e($art['published_at'] ? date('Y.m.d', strtotime($art['published_at'])) : '') ?>
@@ -86,7 +87,7 @@ $pageDescription = isset($category) ? ($category['description'] ?? '') : "Archiv
                             </p>
                             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px; font-family: var(--font-mono); font-size: var(--font-size-xs);">
                                 <a href="<?= url('journal/' . $art['slug']) ?>" style="color: var(--primary); text-decoration: none; font-weight: 600;">
-                                    READ DISPATCH &rarr;
+                                    READ ARTICLE &rarr;
                                 </a>
                                 <span style="color: var(--text-muted);">
                                     <?= e($art['author_name'] ?? 'x64emkei') ?>

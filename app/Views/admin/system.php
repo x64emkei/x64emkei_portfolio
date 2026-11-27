@@ -19,7 +19,7 @@
         <form method="POST" action="<?= e(url('admin/database/sync')) ?>" onsubmit="return confirm('Synchronize database schema and portfolio datasets now?');">
             <?= csrf_field() ?>
             <button type="submit" class="btn-admin btn-admin-cyan">
-                &#x21bb; RUN DATABASE & DATASET SYNC
+                &#x21bb; RUN DATABASE SYNC
             </button>
         </form>
     </div>

@@ -36,7 +36,7 @@
                             <input type="text" name="title" class="form-control" value="<?= e($sec['title']) ?>" required>
                         </div>
                         <div>
-                            <label class="form-label">SUBTITLE / TELEMETRY BADGE</label>
+                            <label class="form-label">SUBTITLE / STATUS LABEL</label>
                             <input type="text" name="subtitle" class="form-control" value="<?= e($sec['subtitle'] ?? '') ?>" placeholder="e.g. CORE SYSTEMS // ARCHIVE">
                         </div>
                         <div>

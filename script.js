@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Add subtle cyan & neon edge glints on randomly dissolved pixels
                 if (idx % 7 === 0) {
-                    ctx.strokeStyle = 'rgba(0, 229, 255, 0.4)';
+                    ctx.strokeStyle = 'rgba(255, 82, 82, 0.4)';
                     ctx.lineWidth = 1;
                     ctx.strokeRect(x, y, pixelSize, pixelSize);
                 }
@@ -619,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'VIII. Aspirations & Creed'
     ];
 
-    const fullManifestoText = `# MY AI MANIFESTO
+    const legacyManifestoText = `# MY AI MANIFESTO
 ### A Personal Position on AI, Human Skill, and Responsible Progress
 
 Artificial intelligence is becoming part of the way people learn, work, create, and solve problems. As a student preparing for a professional career in technology, its presence is impossible to ignore.
@@ -786,6 +786,11 @@ The principles should not.
 > Technology should create opportunities, not merely eliminate them.
 > Innovation should serve people, not leave them behind.
 > And professional competence should always remain greater than the ability to simply operate a tool.`;
+
+    // The published Markdown article is the canonical source for copy actions.
+    const fullManifestoText = (typeof window !== 'undefined' && typeof window.__MANIFESTO_MARKDOWN__ === 'string' && window.__MANIFESTO_MARKDOWN__.trim() !== '')
+        ? window.__MANIFESTO_MARKDOWN__
+        : legacyManifestoText;
 
     let currentSlide = 0;
     const totalSlides = manifestoSlides.length; // 9
@@ -1198,8 +1203,9 @@ The principles should not.
     const modalCodeFileName = document.getElementById('modalCodeFileName');
     const modalProjectCode = document.getElementById('modalProjectCode');
     const modalProjectTechPills = document.getElementById('modalProjectTechPills');
+    const modalProjectGithubLink = document.getElementById('modalProjectGithubLink');
 
-    const PROJECTS_DB = (typeof window !== 'undefined' && window.__SERVER_PROJECTS__) ? window.__SERVER_PROJECTS__ : {
+    const PROJECTS_DB = (typeof window !== 'undefined' && Array.isArray(window.__SERVER_PROJECTS__)) ? window.__SERVER_PROJECTS__ : {}; /*
         valkyriepos: {
             id: 'CS.001 // ENTERPRISE_POS',
             category: 'C# 12 / .NET 9',
@@ -1504,6 +1510,45 @@ The principles should not.
             code: '#include <immintrin.h>\n\nstruct alignas(32) Mat4x4 {\n    __m256 cols[2];\n\n    static Mat4x4 Multiply(const Mat4x4& a, const Mat4x4& b) noexcept {\n        Mat4x4 result;\n        __m256 row0 = _mm256_load_ps((const float*)&a.cols[0]);\n        __m256 row1 = _mm256_load_ps((const float*)&a.cols[1]);\n        result.cols[0] = _mm256_fmadd_ps(row0, b.cols[0], result.cols[0]);\n        result.cols[1] = _mm256_fmadd_ps(row1, b.cols[1], result.cols[1]);\n        return result;\n    }\n};',
             tech: ['C++20', 'AVX2', 'Intrinsics', 'Linear Algebra', 'High-Performance']
         }
+    }; */
+
+    const normalizeProjectRecord = (project) => {
+        if (!project || typeof project !== 'object') return null;
+
+        const parseList = (value) => {
+            if (Array.isArray(value)) return value.filter(Boolean).map(String);
+            try {
+                const parsed = JSON.parse(value || '[]');
+                return Array.isArray(parsed) ? parsed.filter(Boolean).map(String) : [];
+            } catch (error) {
+                return [];
+            }
+        };
+
+        const normalized = {
+            id: project.code_id || project.id || '',
+            category: project.category || '',
+            title: project.title || '',
+            tagline: project.tagline || project.description || '',
+            env: project.environment || '',
+            perf: project.performance_metric || '',
+            status: project.operational_status || '',
+            desc: project.description || project.tagline || '',
+            features: parseList(project.features || project.features_json),
+            fileName: project.code_filename || '',
+            code: project.code_snippet || '',
+            tech: parseList(project.technologies || project.technologies_json),
+            githubUrl: project.github_url || ''
+        };
+
+        return normalized.title ? normalized : null;
+    };
+
+    const getProjectRecord = (projectId) => {
+        const raw = Array.isArray(PROJECTS_DB)
+            ? PROJECTS_DB.find((project) => String(project.slug || project.id) === String(projectId))
+            : PROJECTS_DB[projectId];
+        return normalizeProjectRecord(raw);
     };
 
     // Open Project Inspector Modal
@@ -1516,10 +1561,10 @@ The principles should not.
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#A855F7" stroke-width="1.8" fill="rgba(168, 85, 247, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9.5v5M16.5 9.5v5M13 11h4.5M13 13h4.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round"/></svg>';
         }
         if (n.includes('c++')) {
-            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#00A4EF" stroke-width="1.8" fill="rgba(0, 164, 239, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#00A4EF" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#00E5FF" stroke-width="1.3" stroke-linecap="round"/></svg>';
+            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2z" stroke="#FF5252" stroke-width="1.8" fill="rgba(255, 82, 82, 0.15)"/><path d="M9.5 8.8c-.9 0-1.8.8-1.8 2.7s.9 2.7 1.8 2.7c.6 0 1.1-.3 1.4-.7" stroke="#FF5252" stroke-width="1.8" stroke-linecap="round"/><path d="M13 12h2.5M14.2 10.7v2.6M17 12h2.5M18.2 10.7v2.6" stroke="#FFB800" stroke-width="1.3" stroke-linecap="round"/></svg>';
         }
         if (n.includes('python')) {
-            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#387EB8"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/></svg>';
+            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 .9-5 2.6v2.2h5.1v.7H4.7C3 7.5 2 9.2 2 11.8c0 2.5 1.1 4.2 2.7 4.2h1.6v-2.3c0-1.8 1.5-3.3 3.3-3.3h5.2c1.4 0 2.6-1.1 2.6-2.5V4.6C17.4 3 15.3 2 11.9 2zm-1.8 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z" fill="#FF5252"/><path d="M12.1 22c3.1 0 5-.9 5-2.6v-2.2H12v-.7h7.3c1.7 0 2.7-1.7 2.7-4.3 0-2.5-1.1-4.2-2.7-4.2h-1.6v2.3c0 1.8-1.5 3.3-3.3 3.3H8.7c-1.4 0-2.6 1.1-2.6 2.5v3.3c0 1.6 2.1 2.6 6 2.6zm1.8-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFB800"/></svg><span>Python</span>';
         }
         if (n.includes('wasm') || n.includes('webassembly')) {
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><rect width="20" height="20" x="2" y="2" rx="3" fill="#654FF0"/><path d="M5 8.5l2.5 7L10 8.5l2.5 7L15 8.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 12l2 3.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/></svg>';
@@ -1534,10 +1579,10 @@ The principles should not.
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 2l1.6 18.5L12 23l7.4-2.5L21 2H3z" fill="#1572B6"/><path d="M12 3.7v17.4l5.9-2 1.4-15.4H12z" fill="#33A9DC"/><path d="M12 7.7H7.7l.3 3.3H12v-3.3zm0 5.6H9.7l.2 2.3 2.1.6v-2.9z" fill="#EBEBEB"/><path d="M12 7.7h4.3l-.4 4.5h-3.9v3.3l-2.1-.6-.1-1.5H8.3l.3 3.2 3.4.9 3.4-.9.4-4.8.1-1.3.3-3.6H12v.7z" fill="#FFFFFF"/></svg>';
         }
         if (n.includes('wpf') || n.includes('windows') || n.includes('directx')) {
-            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#0078D4"><path d="M3 4.2l7.5-1v8.3H3V4.2zm0 8.3h7.5v8.3L3 19.8v-7.3zm8.5-9.4L21 2v9.5h-9.5V3.1zm0 9.4H21V22l-9.5-1.3v-8.2z"/></svg>';
+            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="#FF5252"><path d="M3 4.2l7.5-1v8.3H3V4.2zm0 8.3h7.5v8.3L3 19.8v-7.3zm8.5-9.4L21 2v9.5h-9.5V3.1zm0 9.4H21V22l-9.5-1.3v-8.2z"/></svg>';
         }
         if (n.includes('sqlite') || n.includes('mysql') || n.includes('sql') || n.includes('db') || n.includes('storage')) {
-            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(0, 117, 143, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>';
+            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#FF7043" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3" fill="rgba(255, 112, 67, 0.2)"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>';
         }
         if (n.includes('pytorch')) {
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M13 2.5a6 6 0 0 0-6 6c0 1.6.6 3 1.6 4.1L7 14.2a8 8 0 1 1 11.3 0l-1.6-1.6a6 6 0 0 0 1.6-4.1 6 6 0 0 0-5.3-6z" fill="#EE4C2C"/><circle cx="15.5" cy="5" r="1.5" fill="#EE4C2C"/></svg>';
@@ -1546,7 +1591,7 @@ The principles should not.
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><path d="M3 12c0-5 4-9 9-9 4.5 0 8.3 3.3 9 7.8-.3-1.6-1.7-2.8-3.4-2.8-2 0-3.6 1.6-3.6 3.6 0 1.2.6 2.3 1.5 2.9-1.2 1-2.8 1.5-4.5 1.5-4 0-7-3-7-7z" stroke="#76B900" stroke-width="1.8" fill="rgba(118, 185, 0, 0.15)"/><circle cx="12" cy="12" r="2.5" fill="#76B900"/></svg>';
         }
         if (n.includes('opencv')) {
-            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="#EA2D2E" stroke-width="2"/><circle cx="7" cy="16" r="4" stroke="#2496ED" stroke-width="2"/><circle cx="17" cy="16" r="4" stroke="#39FF14" stroke-width="2"/></svg>';
+            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="#EA2D2E" stroke-width="2"/><circle cx="7" cy="16" r="4" stroke="#FF7043" stroke-width="2"/><circle cx="17" cy="16" r="4" stroke="#39FF14" stroke-width="2"/></svg>';
         }
         if (n.includes('tailscale')) {
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="#00C48C"/><circle cx="18" cy="12" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="6" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><circle cx="12" cy="18" r="2.5" fill="#2E3440" stroke="#4C566A" stroke-width="1.2"/><line x1="8.5" y1="12" x2="9" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="15" y1="12" x2="15.5" y2="12" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="8.5" x2="12" y2="9" stroke="#00C48C" stroke-width="1.5"/><line x1="12" y1="15" x2="12" y2="15.5" stroke="#00C48C" stroke-width="1.5"/></svg>';
@@ -1561,7 +1606,7 @@ The principles should not.
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#3399FF" stroke-width="1.8"><circle cx="6" cy="12" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="6" r="3" fill="rgba(51, 153, 255, 0.2)"/><circle cx="18" cy="18" r="3" fill="rgba(51, 153, 255, 0.2)"/><path d="M8.5 10.5l7-3M8.5 13.5l7 3" stroke-dasharray="2 2"/></svg>';
         }
         if (n.includes('network') || n.includes('socket') || n.includes('pcap') || n.includes('grpc') || n.includes('ipc') || n.includes('mesh')) {
-            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>';
+            return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#FF5252" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>';
         }
         if (n.includes('simd') || n.includes('avx') || n.includes('thread') || n.includes('ring-0') || n.includes('bare-metal') || n.includes('asm') || n.includes('sdl2') || n.includes('hardware') || n.includes('intrinsics') || n.includes('atomics')) {
             return '<svg class="tech-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#39FF14" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="2" fill="rgba(57, 255, 20, 0.08)"/><path d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>';
@@ -1602,7 +1647,7 @@ The principles should not.
     }
 
     function openProjectModal(projectId, trigger = null) {
-        const data = PROJECTS_DB[projectId];
+        const data = getProjectRecord(projectId);
         if (!data || !projectModalBackdrop) return;
 
         if (modalProjectId) modalProjectId.textContent = data.id;
@@ -1615,6 +1660,10 @@ The principles should not.
         if (modalProjectDesc) modalProjectDesc.textContent = data.desc;
         if (modalCodeFileName) modalCodeFileName.textContent = data.fileName;
         if (modalProjectCode) modalProjectCode.textContent = data.code;
+        if (modalProjectGithubLink) {
+            modalProjectGithubLink.href = data.githubUrl || '#';
+            modalProjectGithubLink.hidden = !data.githubUrl;
+        }
 
         // Populate Features List
         if (modalProjectFeatures) {
@@ -1719,7 +1768,7 @@ The principles should not.
     const modalHwLog = document.getElementById('modalHwLog');
     const modalHwOem = document.getElementById('modalHwOem');
 
-    const HARDWARE_DB = (typeof window !== 'undefined' && window.__SERVER_HARDWARE__) ? window.__SERVER_HARDWARE__ : [
+    const HARDWARE_DB = (typeof window !== 'undefined' && Array.isArray(window.__SERVER_HARDWARE__)) ? window.__SERVER_HARDWARE__ : []; /*
         {
             nodeId: 'NODE.01 // LAB ARCHIVE',
             tag: 'PRESERVED',
@@ -1817,10 +1866,34 @@ The principles should not.
             ],
             log: 'Capacitor inspection passed. Refitted with low-noise fan profile and headless boot configuration for isolated network packet verification and subnet benchmarking.'
         }
-    ];
+    ]; */
+
+    const normalizeHardwareRecord = (node) => {
+        if (!node || typeof node !== 'object') return null;
+        let specs = node.specs || node.specs_json || [];
+        if (!Array.isArray(specs)) {
+            try {
+                specs = JSON.parse(specs || '[]');
+            } catch (error) {
+                specs = [];
+            }
+        }
+        return {
+            nodeId: node.node_id || node.nodeId || '',
+            tag: node.tag || '',
+            title: node.title || node.name || '',
+            subtitle: node.subtitle || node.description || '',
+            oem: node.oem ? `OEM: ${node.oem}` : 'OEM: Not provided',
+            specs: specs.filter((spec) => spec && typeof spec === 'object').map((spec) => ({
+                label: spec.label || '',
+                val: spec.val || spec.value || ''
+            })),
+            log: node.diagnostics_log || node.log || 'No diagnostics log attached.'
+        };
+    };
 
     function openHardwareModal(index, trigger = null) {
-        const node = HARDWARE_DB[index];
+        const node = normalizeHardwareRecord(HARDWARE_DB[index]);
         if (!node || !hardwareModalBackdrop) return;
 
         if (modalHwNodeId) modalHwNodeId.textContent = node.nodeId;

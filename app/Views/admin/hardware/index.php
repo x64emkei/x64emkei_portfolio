@@ -7,8 +7,8 @@
         <form action="<?= e(url('admin/hardware')) ?>" method="POST" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <div class="form-group">
-                <label class="form-label" for="node_id">// NODE ID</label>
-                <input type="text" id="node_id" name="node_id" class="form-control" placeholder="NODE.01 // LAB ARCHIVE" required>
+                <label class="form-label" for="node_id">// DEVICE ID</label>
+                <input type="text" id="node_id" name="node_id" class="form-control" placeholder="DEVICE.01 // HARDWARE ARCHIVE" required>
             </div>
             <div class="form-group">
                 <label class="form-label" for="tag">// STATUS TAG</label>
@@ -19,7 +19,7 @@
                 <input type="text" id="title" name="title" class="form-control" placeholder="Sony Vaio W-series VPCW115XG" required>
             </div>
             <div class="form-group">
-                <label class="form-label" for="subtitle">// SUBTITLE / ARCHITECTURE</label>
+                <label class="form-label" for="subtitle">// SUBTITLE / PLATFORM</label>
                 <input type="text" id="subtitle" name="subtitle" class="form-control" placeholder="Intel Atom N280 Netbook Platform" required>
             </div>
             <div class="form-group">
@@ -42,7 +42,7 @@
                 <label class="form-label" for="image_file">// UPLOAD IMAGE (OPTIONAL)</label>
                 <input type="file" id="image_file" name="image_file" class="form-control" accept="image/*">
             </div>
-            <button type="submit" class="btn-admin btn-admin-cyan" style="width: 100%;">+ ARCHIVE NODE</button>
+            <button type="submit" class="btn-admin btn-admin-cyan" style="width: 100%;">+ ADD DEVICE</button>
         </form>
     </div>
 
@@ -54,7 +54,7 @@
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>NODE & OEM</th>
+                    <th>DEVICE & OEM</th>
                     <th>PLATFORM</th>
                     <th>TAG</th>
                     <th>ACTION</th>

@@ -164,10 +164,10 @@ register_shutdown_function(function () use ($appConfig) {
             http_response_code(500);
         }
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>SYS.FAULT // 500</title>';
-        echo '<style>body{background:#0a0c10;color:#00e5ff;font-family:"JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}';
+        echo '<style>body{background:#0a0c10;color:#ff5252;font-family:"JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}';
         echo '.hud-box{border:1px solid #ff3366;padding:40px;background:rgba(255,51,102,0.05);max-width:550px;box-shadow:0 0 30px rgba(255,51,102,0.2);text-align:center;}';
         echo 'h1{color:#ff3366;margin:0 0 10px 0;font-size:22px;letter-spacing:2px;}p{color:#94a3b8;font-size:13px;line-height:1.6;}';
-        echo '.incident{color:#ffb800;font-size:12px;margin-top:15px;display:block;}a{color:#00e5ff;text-decoration:none;display:inline-block;margin-top:20px;border:1px solid #00e5ff;padding:8px 16px;}</style></head>';
+        echo '.incident{color:#ffb800;font-size:12px;margin-top:15px;display:block;}a{color:#ff5252;text-decoration:none;display:inline-block;margin-top:20px;border:1px solid #ff5252;padding:8px 16px;}</style></head>';
         echo '<body><div class="hud-box"><h1>[SYS.FAULT // 500]</h1><p>A fatal system error occurred. Diagnostics recorded to telemetry.</p><span class="incident">INCIDENT REF: ' . htmlspecialchars(REQUEST_ID) . '</span><a href="/">// RECONNECT HOMEVIEW</a></div></body></html>';
     }
 });
@@ -215,10 +215,10 @@ set_exception_handler(function (Throwable $e) use ($appConfig) {
             : 'A critical subsystem error occurred. Diagnostics have been recorded to internal telemetry.';
 
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>' . htmlspecialchars($faultTitle) . '</title>';
-        echo '<style>body{background:#0a0c10;color:#00e5ff;font-family:"JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}';
+        echo '<style>body{background:#0a0c10;color:#ff5252;font-family:"JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}';
         echo '.hud-box{border:1px solid #ff3366;padding:40px;background:rgba(255,51,102,0.05);max-width:550px;box-shadow:0 0 30px rgba(255,51,102,0.2);text-align:center;}';
         echo 'h1{color:#ff3366;margin:0 0 10px 0;font-size:22px;letter-spacing:2px;}p{color:#94a3b8;font-size:13px;line-height:1.6;}';
-        echo '.incident{color:#ffb800;font-size:12px;margin-top:15px;display:block;}a{color:#00e5ff;text-decoration:none;display:inline-block;margin-top:20px;border:1px solid #00e5ff;padding:8px 16px;}</style></head>';
+        echo '.incident{color:#ffb800;font-size:12px;margin-top:15px;display:block;}a{color:#ff5252;text-decoration:none;display:inline-block;margin-top:20px;border:1px solid #ff5252;padding:8px 16px;}</style></head>';
         echo '<body><div class="hud-box"><h1>[' . htmlspecialchars($faultTitle) . ']</h1><p>' . htmlspecialchars($faultDesc) . '</p><span class="incident">INCIDENT REF: ' . htmlspecialchars(REQUEST_ID) . '</span><a href="/">// RETURN TO HOMEVIEW</a></div></body></html>';
     }
     exit;

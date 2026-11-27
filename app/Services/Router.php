@@ -90,8 +90,8 @@ class Router
         // Route Not Found (404)
         http_response_code(404);
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>404 // ROUTE NOT FOUND</title>';
-        echo '<style>body{background:#0a0c10;color:#00e5ff;font-family:"JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}';
-        echo '.hud{border:1px solid #00e5ff;padding:40px;background:rgba(0,229,255,0.05);max-width:500px;text-align:center;}a{color:#00e5ff;}</style></head>';
+        echo '<style>body{background:#0a0c10;color:#ff5252;font-family:"JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}';
+        echo '.hud{border:1px solid #ff5252;padding:40px;background:rgba(255,82,82,0.05);max-width:500px;text-align:center;}a{color:#ff5252;}</style></head>';
         echo '<body><div class="hud"><h2>[404 // NODE NOT FOUND]</h2><p>The requested route does not exist in the active telemetry matrix.</p><a href="' . e(url('/')) . '">// RETURN TO HOME</a></div></body></html>';
     }
 }

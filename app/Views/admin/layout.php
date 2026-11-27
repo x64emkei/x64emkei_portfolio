@@ -37,8 +37,11 @@ $currentUser = AuthService::user();
         }
         .admin-sidebar {
             width: 280px;
-            background: var(--admin-surface);
-            border-right: 1px solid var(--admin-border);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-right: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
@@ -101,13 +104,14 @@ $currentUser = AuthService::user();
         }
         .admin-topbar {
             height: 60px;
-            border-bottom: 1px solid var(--admin-border);
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 30px;
-            background: rgba(14, 18, 26, 0.6);
-            backdrop-filter: blur(8px);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
         }
         .admin-telemetry-badge {
             display: inline-flex;
@@ -149,11 +153,21 @@ $currentUser = AuthService::user();
             color: #ff6b8b;
         }
         .admin-card {
-            background: var(--admin-surface);
-            border: 1px solid var(--admin-border);
-            border-radius: 6px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius-md);
+            box-shadow: var(--glass-shadow);
             padding: 24px;
             margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .admin-card:hover {
+            border-color: var(--glass-border-hover);
+            box-shadow: var(--glass-shadow-hover);
         }
         .admin-card-header {
             display: flex;
@@ -185,8 +199,10 @@ $currentUser = AuthService::user();
         .form-control {
             width: 100%;
             padding: 10px 14px;
-            background: rgba(7, 9, 14, 0.8);
-            border: 1px solid rgba(255, 42, 42, 0.25);
+            background: var(--input-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--input-border);
             color: #f8fafc;
             font-family: inherit;
             font-size: 0.88rem;
@@ -245,6 +261,52 @@ $currentUser = AuthService::user();
         .btn-admin-outline:hover {
             color: #fff;
             border-color: #64748b;
+        }
+        /* Legacy editor views use the shorter admin-btn names. Keep them
+           visually aligned with the current CMS controls. */
+        .admin-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 18px;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .admin-btn-primary {
+            background: var(--admin-primary);
+            color: #fff;
+            border-color: var(--admin-primary);
+        }
+        .admin-btn-primary:hover {
+            box-shadow: 3px 3px 0 #000;
+            transform: translateY(-1px);
+        }
+        .admin-btn-secondary {
+            background: transparent;
+            border-color: var(--admin-border);
+            color: #94a3b8;
+        }
+        .admin-btn-secondary:hover {
+            color: #fff;
+            border-color: #64748b;
+        }
+        .admin-btn-danger {
+            background: transparent;
+            border-color: var(--admin-magenta);
+            color: var(--admin-magenta);
+        }
+        .admin-btn-danger:hover {
+            background: var(--admin-magenta);
+            color: #fff;
         }
         .admin-table {
             width: 100%;
@@ -380,7 +442,8 @@ $currentUser = AuthService::user();
             .admin-content [style*="display: flex"] {
                 flex-wrap: wrap;
             }
-            .btn-admin {
+            .btn-admin,
+            .admin-btn {
                 min-height: 42px;
                 justify-content: center;
             }
@@ -388,6 +451,7 @@ $currentUser = AuthService::user();
     </style>
 </head>
 <body class="admin-body">
+    <a class="skip-link" href="#adminMainContent">Skip to main content</a>
     <!-- Mobile Drawer Backdrop -->
     <div class="admin-backdrop" id="adminBackdrop" onclick="toggleAdminDrawer()"></div>
 
@@ -413,7 +477,7 @@ $currentUser = AuthService::user();
             <li><a href="<?= e(url('admin/users')) ?>" class="<?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'users') ? 'active' : '' ?>"><span>&rsaquo; Operators & RBAC</span></a></li>
 
             <li style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
-                <a href="<?= e(url('/')) ?>" target="_blank" style="color: #38bdf8;"><span>&nearr; PUBLIC PORTFOLIO</span></a>
+                <a href="<?= e(url('/')) ?>" target="_blank" rel="noopener noreferrer" style="color: #FF5252;"><span>&nearr; PUBLIC PORTFOLIO</span></a>
             </li>
             <li>
                 <a href="<?= e(url('admin/logout')) ?>" style="color: var(--admin-magenta);"><span>&cross; LOGOUT</span></a>
@@ -439,12 +503,12 @@ $currentUser = AuthService::user();
                 </div>
             </div>
             <div style="font-size: 0.85rem; color: #94a3b8;">
-                OPERATOR: <span style="color: var(--admin-cyan);"><?= e($currentUser['username'] ?? 'Admin') ?></span>
+                USER: <span style="color: var(--admin-cyan);"><?= e($currentUser['username'] ?? 'Admin') ?></span>
                 (<?= e($currentUser['role'] ?? 'admin') ?>)
             </div>
         </header>
 
-        <main class="admin-content">
+        <main class="admin-content" id="adminMainContent" tabindex="-1">
             <?php if (has_flash('success')): ?>
                 <div class="admin-alert admin-alert-success">
                     <span>&#10004;</span> <?= e(flash('success')) ?>

@@ -13,7 +13,7 @@
                 <input type="text" id="title" name="title" class="form-control" placeholder="e.g. Valkyrie POS Pro" required>
             </div>
             <div class="form-group">
-                <label class="form-label" for="code_id">// TELEMETRY CODE ID</label>
+            <label class="form-label" for="code_id">// PROJECT CODE ID</label>
                 <input type="text" id="code_id" name="code_id" class="form-control" placeholder="CS.001 // ENTERPRISE_POS" required>
             </div>
             <div class="form-group">
@@ -70,7 +70,7 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label" for="code_snippet">// ARCHITECTURAL CODE SNIPPET (SHOWN IN MODAL INSPECTOR)</label>
+            <label class="form-label" for="code_snippet">// CODE SNIPPET (SHOWN IN PROJECT DETAILS)</label>
             <textarea id="code_snippet" name="code_snippet" class="form-control" rows="6" style="font-family: monospace;"></textarea>
         </div>
 
@@ -92,7 +92,7 @@
         <div style="display: flex; gap: 20px; align-items: center; margin: 20px 0;">
             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                 <input type="checkbox" name="is_published" value="1" checked style="width: auto;">
-                <span>PUBLISH IMMEDIATELY TO LIVE TELEMETRY</span>
+                <span>PUBLISH IMMEDIATELY</span>
             </label>
             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                 <input type="checkbox" name="is_featured" value="1" checked style="width: auto;">
@@ -100,6 +100,6 @@
             </label>
         </div>
 
-        <button type="submit" class="btn-admin btn-admin-cyan">&#10004; COMMIT NEW PROJECT</button>
+        <button type="submit" class="btn-admin btn-admin-cyan">&#10004; CREATE PROJECT</button>
     </form>
 </div>

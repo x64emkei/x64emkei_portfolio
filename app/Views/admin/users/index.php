@@ -1,17 +1,17 @@
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
     <div>
-        <h1 style="color: var(--admin-cyan); margin: 0 0 4px 0; font-size: 1.3rem;">OPERATOR ACCESS CONTROL // RBAC</h1>
+    <h1 style="color: var(--admin-cyan); margin: 0 0 4px 0; font-size: 1.3rem;">USER ACCESS // RBAC</h1>
         <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Manage administrator and editor permissions, roles, and authentication security.</p>
     </div>
 </div>
 
 <div class="layout-split">
     <div class="admin-card">
-        <h3 style="color: var(--admin-cyan); font-size: 0.95rem; margin-top: 0; margin-bottom: 16px;">// OPERATOR ROSTER</h3>
+        <h3 style="color: var(--admin-cyan); font-size: 0.95rem; margin-top: 0; margin-bottom: 16px;">// USER LIST</h3>
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>OPERATOR</th>
+                    <th>USER</th>
                     <th>EMAIL</th>
                     <th>ROLE</th>
                     <th>STATUS</th>
@@ -67,7 +67,7 @@
     </div>
 
     <div class="admin-card">
-        <h3 style="color: var(--admin-cyan); font-size: 0.95rem; margin-top: 0; margin-bottom: 16px;">// PROVISION OPERATOR</h3>
+        <h3 style="color: var(--admin-cyan); font-size: 0.95rem; margin-top: 0; margin-bottom: 16px;">// ADD USER</h3>
         <form method="POST" action="<?= url('admin/users') ?>">
             <?= csrf_field() ?>
             <div class="form-group">
@@ -75,7 +75,7 @@
                 <input type="text" id="username" name="username" class="form-control" required placeholder="operator_callsign">
             </div>
             <div class="form-group">
-                <label class="form-label" for="email">OPERATOR EMAIL *</label>
+                <label class="form-label" for="email">EMAIL *</label>
                 <input type="email" id="email" name="email" class="form-control" required placeholder="operator@x64emkei.dev">
             </div>
             <div class="form-group">
@@ -93,7 +93,7 @@
                     <?php endif; ?>
                 </select>
             </div>
-            <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; margin-top: 10px;">PROVISION ACCOUNT</button>
+            <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; margin-top: 10px;">CREATE ACCOUNT</button>
         </form>
     </div>
 </div>

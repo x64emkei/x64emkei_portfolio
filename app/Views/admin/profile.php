@@ -59,7 +59,7 @@
         </div>
 
         <button type="submit" class="btn-admin btn-admin-cyan" style="margin-top: 10px;">
-            &#128190; SYNCHRONIZE PROFILE TELEMETRY
+            &#128190; SAVE PROFILE
         </button>
     </form>
 </div>

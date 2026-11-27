@@ -80,6 +80,15 @@ class Article extends BaseModel
         return $art;
     }
 
+    /**
+     * Return the single canonical AI principles article used across the site.
+     * The legacy slug remains supported for existing links and seeded data.
+     */
+    public static function getManifesto(): ?array
+    {
+        return self::findBySlug('my-ai-manifesto') ?: self::findBySlug('ai-manifesto');
+    }
+
     public static function getByCategory(int $categoryId, int $limit = 20, int $offset = 0): array
     {
         $pdo = Database::getConnection();

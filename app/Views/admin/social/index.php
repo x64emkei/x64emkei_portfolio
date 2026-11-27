@@ -41,7 +41,7 @@
                     <tr>
                         <td><span style="font-size: 0.75rem; color: var(--admin-cyan);"><?= e($lk['platform']) ?></span></td>
                         <td><b><?= e($lk['label']) ?></b></td>
-                        <td style="font-size: 0.8rem;"><a href="<?= e($lk['url']) ?>" target="_blank" style="color: #38bdf8;"><?= e($lk['url']) ?></a></td>
+                        <td style="font-size: 0.8rem;"><a href="<?= e($lk['url']) ?>" target="_blank" rel="noopener noreferrer" style="color: #FF5252;"><?= e($lk['url']) ?></a></td>
                         <td>
                             <form action="<?= e(url('admin/social/' . $lk['id'] . '/delete')) ?>" method="POST" onsubmit="return confirm('Delete social link?');">
                                 <?= csrf_field() ?>

@@ -24,14 +24,16 @@
             background-size: 32px 32px;
         }
         .login-box {
-            background: #0C0E12;
-            border: 1px solid rgba(255, 42, 42, 0.35);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
             border-top: 2px solid var(--primary);
-            border-radius: 4px;
+            border-radius: var(--card-radius-lg);
             padding: 36px;
             width: 100%;
             max-width: 420px;
-            box-shadow: 4px 4px 0px #000000;
+            box-shadow: var(--glass-shadow);
             box-sizing: border-box;
             position: relative;
         }
@@ -73,12 +75,12 @@
         input {
             width: 100%;
             padding: 12px 14px;
-            background: #06080A;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
             color: #fff;
             font-family: inherit;
             font-size: 0.9rem;
-            border-radius: 4px;
+            border-radius: var(--card-radius-sm);
             box-sizing: border-box;
             transition: border-color 0.2s;
         }
@@ -139,7 +141,7 @@
 <body>
     <div class="login-box">
         <div class="login-header">
-            <h1>SYS.AUTH // OPERATOR</h1>
+            <h1>ADMIN LOGIN</h1>
             <p>X64EMKEI Telemetry Control Deck</p>
         </div>
 
@@ -154,7 +156,7 @@
         <form action="<?= e(url('admin/login')) ?>" method="POST">
             <?= csrf_field() ?>
             <div class="form-group">
-                <label for="username">// OPERATOR IDENTIFIER</label>
+                <label for="username">// USERNAME</label>
                 <input type="text" id="username" name="username" required autocomplete="username" autofocus>
             </div>
             <div class="form-group">

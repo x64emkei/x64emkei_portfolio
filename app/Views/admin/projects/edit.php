@@ -17,7 +17,7 @@ $techRaw = implode(", ", json_decode($project['technologies_json'] ?: '[]', true
                 <input type="text" id="title" name="title" class="form-control" value="<?= e($project['title']) ?>" required>
             </div>
             <div class="form-group">
-                <label class="form-label" for="code_id">// TELEMETRY CODE ID</label>
+                <label class="form-label" for="code_id">// PROJECT CODE ID</label>
                 <input type="text" id="code_id" name="code_id" class="form-control" value="<?= e($project['code_id']) ?>" required>
             </div>
             <div class="form-group">
