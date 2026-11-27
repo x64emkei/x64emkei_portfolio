@@ -77,7 +77,7 @@
         <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="github_url">// GITHUB REPOSITORY URL</label>
-                <input type="url" id="github_url" name="github_url" class="form-control" value="https://github.com/x64_emkei">
+                <input type="url" id="github_url" name="github_url" class="form-control" placeholder="https://github.com/username/repo">
             </div>
             <div class="form-group">
                 <label class="form-label" for="demo_url">// LIVE DEMONSTRATION URL (OPTIONAL)</label>

@@ -48,8 +48,13 @@ class UsersController
             $role = 'admin';
         }
 
-        if ($username === '' || $email === '' || strlen($password) < 8) {
+        if ($username === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 8) {
             flash('error', 'Username, valid email, and minimum 8-character password are required.');
+            redirect('admin/users');
+        }
+
+        if (User::findByUsernameOrEmail($username) || User::findByUsernameOrEmail($email)) {
+            flash('error', 'An operator with that username or email already exists.');
             redirect('admin/users');
         }
 
@@ -57,11 +62,11 @@ class UsersController
             User::create([
                 'username' => $username,
                 'email' => $email,
-                'password_hash' => password_hash($password, PASSWORD_BCRYPT),
+                'password' => $password,
                 'role' => $role,
                 'is_active' => 1
             ]);
-            ActivityLog::record('user_create', "Registered operator account: {$username} ({$role})", AuthService::id());
+            ActivityLog::record(AuthService::id(), 'user_create', "Registered operator account: {$username} ({$role})");
             flash('success', "Operator account '{$username}' successfully created.");
         } catch (\Throwable $e) {
             flash('error', "Failed to create user: " . $e->getMessage());
@@ -70,7 +75,7 @@ class UsersController
         redirect('admin/users');
     }
 
-    public function updateRole(string $id): void
+    public function updateRole(int|string $id): void
     {
         $currentUser = AuthService::user();
         if ($currentUser['role'] !== 'superadmin') {
@@ -85,14 +90,14 @@ class UsersController
         $newRole = (string)($_POST['role'] ?? '');
         if (in_array($newRole, ['superadmin', 'admin', 'editor', 'author'])) {
             User::update((int)$id, ['role' => $newRole]);
-            ActivityLog::record('user_role_change', "Modified role of {$targetUser['username']} to {$newRole}", AuthService::id());
+            ActivityLog::record(AuthService::id(), 'user_role_change', "Modified role of {$targetUser['username']} to {$newRole}");
             flash('success', "Updated permissions for {$targetUser['username']}.");
         }
 
         redirect('admin/users');
     }
 
-    public function toggleStatus(string $id): void
+    public function toggleStatus(int|string $id): void
     {
         $currentUser = AuthService::user();
         if ($currentUser['role'] !== 'superadmin' && $currentUser['role'] !== 'admin') {
@@ -111,7 +116,7 @@ class UsersController
 
         $newStatus = empty($targetUser['is_active']) ? 1 : 0;
         User::update((int)$id, ['is_active' => $newStatus]);
-        ActivityLog::record('user_status_toggle', "Toggled status of {$targetUser['username']} to " . ($newStatus ? 'active' : 'suspended'), AuthService::id());
+        ActivityLog::record(AuthService::id(), 'user_status_toggle', "Toggled status of {$targetUser['username']} to " . ($newStatus ? 'active' : 'suspended'));
         flash('success', "Account status updated for {$targetUser['username']}.");
         redirect('admin/users');
     }

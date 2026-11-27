@@ -9,6 +9,7 @@ $secContact = $secHelper->getSection('contact');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact &amp; Communication // <?= e($profile['full_name'] ?? 'Michael Benedict Ordenes') ?> (x64emkei)</title>
+    <?php $seoTitle = 'Contact // ' . ($profile['full_name'] ?? 'Michael Benedict Ordenes'); $seoDesc = 'Contact Michael Benedict Ordenes for software development, PHP web engineering, and systems collaboration.'; require __DIR__ . '/partials/seo_head.php'; ?>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">

@@ -8,6 +8,15 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const birthdayPoke = document.querySelector('[data-birthday-poke]');
+    const birthdayResponse = document.querySelector('[data-birthday-response]');
+    if (birthdayPoke && birthdayResponse) {
+        birthdayPoke.addEventListener('click', () => {
+            birthdayResponse.textContent = 'POKE RECEIVED! YOU JUST MADE MY DAY! 🎉';
+            birthdayPoke.disabled = true;
+            birthdayPoke.textContent = 'Poke received';
+        }, { once: true });
+    }
     // ==========================================
     // 0. MOBILE SIDEBAR & DRAWER ENGINE (HOISTED)
     const mobileToggle = document.getElementById('mobileToggle');
@@ -442,16 +451,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const glyphs = '0123456789ABCDEF_//<>[]#*+!~=%&$';
 
-    function scrambleText(rawText, onUpdate, onComplete, speed = 20) {
-        let iteration = 0;
-        const maxIterations = rawText.length;
+    function scrambleText(rawText, onUpdate, onComplete, speed = 28) {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            onUpdate(rawText);
+            if (onComplete) onComplete();
+            return null;
+        }
+
+        const totalFrames = 12; // ~336ms total regardless of text length
+        const chars = rawText.split('');
+        const resolveAt = chars.map((char) => {
+            if (char === ' ' || char === '\n' || char === '\t' || char === '\r') return 0;
+            return Math.floor(Math.random() * (totalFrames - 3)) + 4;
+        });
+
+        let frame = 0;
         const timer = setInterval(() => {
-            const result = rawText
-                .split('')
+            frame += 1;
+            const result = chars
                 .map((char, index) => {
                     if (char === ' ' || char === '\n' || char === '\t' || char === '\r') return char;
-                    if (index < iteration) {
-                        return rawText[index];
+                    if (frame >= resolveAt[index]) {
+                        return char;
                     }
                     return glyphs[Math.floor(Math.random() * glyphs.length)];
                 })
@@ -459,12 +480,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             onUpdate(result);
 
-            if (iteration >= maxIterations) {
+            if (frame >= totalFrames) {
                 clearInterval(timer);
                 onUpdate(rawText);
                 if (onComplete) onComplete();
             }
-            iteration += 1 / 2;
         }, speed);
         return timer;
     }

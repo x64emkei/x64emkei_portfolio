@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
     <div>
     <h1 style="color: var(--admin-cyan); margin: 0 0 4px 0; font-size: 1.3rem;">USER ACCESS // RBAC</h1>
         <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Manage administrator and editor permissions, roles, and authentication security.</p>
@@ -68,19 +68,19 @@
 
     <div class="admin-card">
         <h3 style="color: var(--admin-cyan); font-size: 0.95rem; margin-top: 0; margin-bottom: 16px;">// ADD USER</h3>
-        <form method="POST" action="<?= url('admin/users') ?>">
+        <form method="POST" action="<?= url('admin/users') ?>" autocomplete="off">
             <?= csrf_field() ?>
             <div class="form-group">
                 <label class="form-label" for="username">USERNAME *</label>
-                <input type="text" id="username" name="username" class="form-control" required placeholder="operator_callsign">
+                <input type="text" id="username" name="username" class="form-control" required autocomplete="off" placeholder="operator_callsign">
             </div>
             <div class="form-group">
                 <label class="form-label" for="email">EMAIL *</label>
-                <input type="email" id="email" name="email" class="form-control" required placeholder="operator@x64emkei.dev">
+                <input type="email" id="email" name="email" class="form-control" required autocomplete="off" placeholder="operator@x64emkei.dev">
             </div>
             <div class="form-group">
                 <label class="form-label" for="password">PASSWORD *</label>
-                <input type="password" id="password" name="password" class="form-control" required minlength="8" placeholder="••••••••••••">
+                <input type="password" id="password" name="password" class="form-control" required minlength="8" autocomplete="new-password" placeholder="••••••••••••">
             </div>
             <div class="form-group">
                 <label class="form-label" for="role">ASSIGNED ROLE</label>

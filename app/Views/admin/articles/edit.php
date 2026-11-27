@@ -66,16 +66,16 @@
         </div>
     </div>
 
-    <div style="display: flex; gap: 24px; align-items: center; margin-bottom: 24px; padding: 16px; background: rgba(255, 42, 42, 0.04); border: 1px solid var(--admin-border); border-radius: 4px;">
+    <div class="layout-form-grid" style="gap: 16px; align-items: center; margin-bottom: 24px; padding: 16px; background: rgba(255, 42, 42, 0.04); border: 1px solid var(--admin-border); border-radius: 4px;">
         <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label" for="status">PUBLICATION STATUS</label>
-            <select id="status" name="status" class="form-control" style="width: 160px;">
+            <select id="status" name="status" class="form-control">
                 <option value="draft" <?= ($article['status'] === 'draft') ? 'selected' : '' ?>>Draft (Private)</option>
                 <option value="published" <?= ($article['status'] === 'published') ? 'selected' : '' ?>>Published (Live)</option>
                 <option value="archived" <?= ($article['status'] === 'archived') ? 'selected' : '' ?>>Archived</option>
             </select>
         </div>
-        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin-top: 18px; font-size: 0.85rem; color: #f8fafc;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85rem; color: #f8fafc;">
             <input type="checkbox" name="is_featured" value="1" <?= !empty($article['is_featured']) ? 'checked' : '' ?>>
             <span>Mark as Featured Article</span>
         </label>

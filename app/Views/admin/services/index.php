@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="display_order">// DISPLAY ORDER</label>
-                <input type="number" id="display_order" name="display_order" class="form-control" value="0">
+                <input type="number" id="display_order" name="display_order" class="form-control" placeholder="0">
             </div>
             <button type="submit" class="btn-admin btn-admin-cyan" style="width: 100%;">+ REGISTER SERVICE</button>
         </form>

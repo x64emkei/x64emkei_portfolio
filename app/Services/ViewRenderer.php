@@ -21,6 +21,8 @@ class ViewRenderer
             throw new Exception("View template not found: {$view}");
         }
 
+        $data['birthday'] ??= BirthdayService::state();
+
         // Extract variables to local scope
         extract($data, EXTR_SKIP);
 

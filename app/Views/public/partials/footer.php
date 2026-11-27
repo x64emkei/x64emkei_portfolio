@@ -1,6 +1,15 @@
 <?php
 $currentYear = date('Y');
 ?>
+<?php if (!empty($birthday['active'])): ?>
+<aside class="birthday-signal" aria-label="Birthday greeting" data-birthday-signal>
+    <span class="birthday-signal-copy"><strong><?= e($birthday['greeting']) ?></strong> <?= e($birthday['headline']) ?></span>
+    <?php if (!empty($birthday['poke_enabled'])): ?>
+        <button class="birthday-poke" type="button" data-birthday-poke>Send a birthday poke</button>
+    <?php endif; ?>
+    <span class="birthday-response" aria-live="polite" data-birthday-response></span>
+</aside>
+<?php endif; ?>
 <!-- MASTER PROFESSIONAL WEBSITE FOOTER -->
 <footer class="site-footer" id="siteFooter" role="contentinfo">
     <div class="footer-inner">

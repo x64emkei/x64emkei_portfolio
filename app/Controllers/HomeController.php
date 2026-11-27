@@ -232,4 +232,40 @@ class HomeController
         $renderer = new ViewRenderer();
         echo $renderer->render('public.legal', $data);
     }
+
+    public function sitemapXml(): void
+    {
+        $appConfig = require dirname(__DIR__, 2) . '/config/app.php';
+        $base = rtrim((string) ($appConfig['url'] ?? 'https://welcome.x64emkei.dpdns.org'), '/');
+
+        $urls = [
+            url('/'),
+            url('about'),
+            url('work'),
+            url('journal'),
+            url('contact'),
+            url('privacy'),
+            url('terms'),
+            url('accessibility'),
+        ];
+
+        try {
+            foreach (Project::getPublished() as $proj) {
+                $urls[] = url('project/' . $proj['slug']);
+            }
+            foreach (Article::getPublished(100, 0) as $art) {
+                $urls[] = url('journal/' . $art['slug']);
+            }
+        } catch (\Throwable) {
+            // Fall back to static primary routes if DB is temporarily unavailable
+        }
+
+        header('Content-Type: application/xml; charset=utf-8');
+        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+        foreach (array_unique($urls) as $path) {
+            echo "  <url><loc>" . e($base . $path) . "</loc></url>\n";
+        }
+        echo "</urlset>\n";
+    }
 }

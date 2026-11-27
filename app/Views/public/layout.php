@@ -10,8 +10,8 @@ $manifestoTitle = (string)($manifestoArticle['title'] ?? 'AI Principles');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <script>if(location.protocol==='http:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'){location.replace('https://'+location.host+location.pathname+location.search+location.hash);}</script>
-    <meta name="description" content="<?= e($metaDesc ?? "Michael Benedict Ordenes — Computer Science Student, IT Enthusiast & Developer portfolio.") ?>">
     <title><?= e($metaTitle ?? "Michael Benedict Ordenes | Portfolio") ?></title>
+    <?php $seoTitle = $metaTitle ?? "Michael Benedict Ordenes | Portfolio"; $seoDesc = $metaDesc ?? "Michael Benedict Ordenes — Computer Science Student, IT Enthusiast & Developer portfolio."; require __DIR__ . '/partials/seo_head.php'; ?>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

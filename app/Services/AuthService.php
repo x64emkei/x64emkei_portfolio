@@ -58,7 +58,36 @@ class AuthService
 
     public static function check(): bool
     {
-        return !empty($_SESSION[self::SESSION_USER_KEY]);
+        $userId = $_SESSION[self::SESSION_USER_KEY] ?? null;
+        if (!is_int($userId) && !ctype_digit((string) $userId)) {
+            return false;
+        }
+
+        try {
+            $user = User::find((int) $userId);
+        } catch (\Throwable) {
+            // A failed revalidation must never grant access based solely on
+            // data that was previously stored in the session.
+            self::forgetSession();
+            return false;
+        }
+
+        if ($user === null || empty($user['is_active'])) {
+            self::forgetSession();
+            return false;
+        }
+
+        // Refresh the authorization snapshot on every protected request so
+        // a role change takes effect immediately rather than at next login.
+        $_SESSION[self::SESSION_USER_KEY] = (int) $user['id'];
+        $_SESSION[self::SESSION_USER_DATA] = [
+            'id' => (int) $user['id'],
+            'username' => $user['username'],
+            'email' => $user['email'],
+            'role' => $user['role'],
+        ];
+
+        return true;
     }
 
     public static function user(): ?array
@@ -78,7 +107,12 @@ class AuthService
             ActivityLog::record($userId, 'AUTH_LOGOUT', 'Administrator logged out.');
         }
 
-        unset($_SESSION[self::SESSION_USER_KEY], $_SESSION[self::SESSION_USER_DATA]);
+        self::forgetSession();
         session_regenerate_id(true);
+    }
+
+    private static function forgetSession(): void
+    {
+        unset($_SESSION[self::SESSION_USER_KEY], $_SESSION[self::SESSION_USER_DATA]);
     }
 }

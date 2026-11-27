@@ -87,10 +87,10 @@ class UploadService
         ];
         $ext = $extensions[$realMime] ?? 'bin';
 
-        // Additional sanity check for SVG (ensure no embedded scripts)
+        // Additional sanity check for SVG (ensure no embedded scripts, foreignObject, or event handlers)
         if ($ext === 'svg') {
             $svgContent = file_get_contents($file['tmp_name']);
-            if ($svgContent !== false && preg_match('/<script|onload|javascript:|onerror/i', $svgContent)) {
+            if ($svgContent !== false && preg_match('/<script|<foreignObject|\bon[a-z]+\s*=|javascript:|data:text\/html|data:image\/svg\+xml/i', $svgContent)) {
                 throw new Exception('Malicious SVG payload detected. Script execution is prohibited.');
             }
         }

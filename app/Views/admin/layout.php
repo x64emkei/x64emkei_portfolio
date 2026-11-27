@@ -47,9 +47,29 @@ $currentUser = AuthService::user();
             flex-shrink: 0;
             z-index: 50;
         }
+        .admin-mobile-close {
+            display: none;
+            background: rgba(255, 42, 42, 0.1);
+            border: 1px solid rgba(255, 42, 42, 0.35);
+            color: var(--admin-cyan);
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
+            font-size: 1.3rem;
+            line-height: 1;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+        }
         .admin-brand {
             padding: 24px;
             border-bottom: 1px solid var(--admin-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
         }
         .admin-brand h2 {
             font-size: 1.1rem;
@@ -87,6 +107,26 @@ $currentUser = AuthService::user();
             color: var(--admin-primary);
             background: rgba(255, 42, 42, 0.1);
             border-left-color: var(--admin-primary);
+        }
+        .admin-logout-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            border: 0;
+            border-left: 2px solid transparent;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--admin-magenta);
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        .admin-logout-button:hover,
+        .admin-logout-button:focus-visible {
+            background: rgba(255, 51, 102, 0.1);
+            border-left-color: var(--admin-magenta);
         }
         .admin-badge {
             background: var(--admin-magenta);
@@ -374,7 +414,7 @@ $currentUser = AuthService::user();
                 top: 0;
                 bottom: 0;
                 left: 0;
-                width: 280px;
+                width: min(85vw, 300px);
                 transform: translateX(-100%);
                 transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                 z-index: 100;
@@ -388,17 +428,27 @@ $currentUser = AuthService::user();
             }
             .admin-mobile-toggle {
                 display: inline-flex;
+                min-height: 38px;
+            }
+            .admin-mobile-close {
+                display: inline-flex;
+            }
+            .admin-brand {
+                padding: 18px 16px;
             }
             .admin-topbar {
-                padding: 0 16px;
-                gap: 12px;
+                padding: 10px 16px;
+                height: auto;
+                min-height: 60px;
+                gap: 10px 14px;
+                flex-wrap: wrap;
             }
             .admin-content {
                 padding: 20px 16px;
             }
             .admin-card {
                 padding: 16px;
-                overflow-x: auto;
+                overflow: hidden;
             }
             .admin-table {
                 min-width: 600px;
@@ -415,32 +465,53 @@ $currentUser = AuthService::user();
                 min-width: 0;
             }
             .admin-content {
-                padding: 16px 12px;
+                padding: 16px 12px 28px;
+            }
+            .admin-content h1 {
+                font-size: clamp(1.15rem, 4.5vw, 1.4rem) !important;
+                overflow-wrap: anywhere;
             }
             .admin-topbar {
-                height: auto;
-                min-height: 60px;
                 padding: 10px 12px;
-                align-items: flex-start;
+                align-items: center;
+            }
+            .admin-topbar > div:first-child {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+            .admin-telemetry-badge {
+                min-width: 0;
+                max-width: 100%;
+                font-size: 0.72rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .admin-topbar > div:last-child {
-                font-size: 0.72rem !important;
+                font-size: 0.74rem !important;
                 overflow-wrap: anywhere;
-                text-align: right;
+                text-align: left;
             }
             .admin-card {
                 padding: 14px;
+                margin-bottom: 18px;
             }
             .admin-card-header {
                 align-items: flex-start;
                 flex-direction: column;
-                gap: 12px;
+                gap: 10px;
+                margin-bottom: 16px;
+                padding-bottom: 12px;
             }
             .admin-content [style*="grid-template-columns"] {
                 grid-template-columns: minmax(0, 1fr) !important;
             }
             .admin-content [style*="display: flex"] {
                 flex-wrap: wrap;
+                gap: 10px;
+            }
+            .form-control {
+                font-size: 16px;
             }
             .btn-admin,
             .admin-btn {
@@ -458,8 +529,11 @@ $currentUser = AuthService::user();
     <!-- Sidebar -->
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="admin-brand">
-            <h2>X64EMKEI // CMS</h2>
-            <span>Systems Telemetry &bull; v2.0-PROD</span>
+            <div>
+                <h2>X64EMKEI // CMS</h2>
+                <span>Systems Telemetry &bull; v2.0-PROD</span>
+            </div>
+            <button type="button" class="admin-mobile-close" onclick="toggleAdminDrawer(false)" aria-label="Close navigation menu">&times;</button>
         </div>
         <ul class="admin-nav">
             <li><a href="<?= e(url('admin/dashboard')) ?>" class="<?= (($_SERVER['REQUEST_URI'] ?? '') === url('admin') || str_contains($_SERVER['REQUEST_URI'] ?? '', 'dashboard')) ? 'active' : '' ?>"><span>// DASHBOARD</span></a></li>
@@ -480,7 +554,10 @@ $currentUser = AuthService::user();
                 <a href="<?= e(url('/')) ?>" target="_blank" rel="noopener noreferrer" style="color: #FF5252;"><span>&nearr; PUBLIC PORTFOLIO</span></a>
             </li>
             <li>
-                <a href="<?= e(url('admin/logout')) ?>" style="color: var(--admin-magenta);"><span>&cross; LOGOUT</span></a>
+                <form action="<?= e(url('admin/logout')) ?>" method="POST" style="margin: 0;">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="admin-logout-button"><span>&cross; LOGOUT</span></button>
+                </form>
             </li>
         </ul>
     </aside>
@@ -489,7 +566,7 @@ $currentUser = AuthService::user();
     <div class="admin-main">
         <header class="admin-topbar">
             <div style="display: flex; align-items: center; gap: 12px;">
-                <button type="button" class="admin-mobile-toggle" onclick="toggleAdminDrawer()" aria-label="Toggle navigation menu">
+                <button type="button" class="admin-mobile-toggle" id="adminMobileToggle" onclick="toggleAdminDrawer()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="adminSidebar">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="3" y1="12" x2="21" y2="12"></line>
                         <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -526,21 +603,44 @@ $currentUser = AuthService::user();
     </div>
 
     <script>
-        function toggleAdminDrawer() {
+        function toggleAdminDrawer(forceOpen) {
             var sidebar = document.getElementById('adminSidebar');
             var backdrop = document.getElementById('adminBackdrop');
+            var toggleBtn = document.getElementById('adminMobileToggle');
             if (!sidebar || !backdrop) return;
             var isOpen = sidebar.classList.contains('open');
-            if (isOpen) {
-                sidebar.classList.remove('open');
-                backdrop.classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                sidebar.classList.add('open');
-                backdrop.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            var nextOpen = typeof forceOpen === 'boolean' ? forceOpen : !isOpen;
+            sidebar.classList.toggle('open', nextOpen);
+            backdrop.classList.toggle('active', nextOpen);
+            document.body.style.overflow = nextOpen ? 'hidden' : '';
+            if (toggleBtn) {
+                toggleBtn.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
             }
         }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                toggleAdminDrawer(false);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.admin-nav a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    if (window.innerWidth <= 900) {
+                        toggleAdminDrawer(false);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.admin-table').forEach(function (table) {
+                if (table.parentElement && table.parentElement.classList.contains('table-scroll')) return;
+                var wrapper = document.createElement('div');
+                wrapper.className = 'table-scroll';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+            });
+        });
     </script>
 </body>
 </html>

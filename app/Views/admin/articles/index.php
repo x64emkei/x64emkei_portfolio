@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
     <div>
         <h1 style="color: var(--admin-cyan); margin: 0 0 4px 0; font-size: 1.3rem;">JOURNAL // ARTICLES</h1>
         <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Manage articles, technical writeups, publication statuses, and tags.</p>

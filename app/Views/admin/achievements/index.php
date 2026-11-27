@@ -43,7 +43,7 @@
             <div class="layout-form-grid" style="margin-bottom: 16px;">
                 <div>
                     <label class="form-label" for="display_order">// SEQUENCE</label>
-                    <input type="number" id="display_order" name="display_order" class="form-control" value="0">
+                    <input type="number" id="display_order" name="display_order" class="form-control" placeholder="0">
                 </div>
                 <div style="display: flex; flex-direction: column; justify-content: center; gap: 8px;">
                     <label style="font-size: 0.8rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">

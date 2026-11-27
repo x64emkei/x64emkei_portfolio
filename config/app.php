@@ -29,4 +29,12 @@ return [
         'contact_max_attempts' => 4,
         'contact_decay_seconds' => 3600, // 1 hour
     ],
+    'birthday' => [
+        'month' => 7,
+        'day' => 20,
+        'timezone' => 'Asia/Manila',
+        'greeting' => "HEY THERE! TODAY'S A SPECIAL DAY!",
+        'headline' => "IT'S MY BIRTHDAY! 🎂",
+        'poke_enabled' => true,
+    ],
 ];

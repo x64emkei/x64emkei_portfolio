@@ -21,6 +21,7 @@ use App\Services\AuthService;
 use App\Services\CsrfService;
 use App\Services\RateLimiter;
 use App\Services\UploadService;
+use App\Services\BirthdayService;
 
 echo "\n======================================================\n";
 echo "   x64emkei.dev // AUTOMATED COMPREHENSIVE TEST SUITE \n";
@@ -131,6 +132,14 @@ it("CSRF token generates, persists, and validates with hash_equals", function() 
     }
 });
 
+it("Birthday presentation follows July 20 in Asia/Manila", function() {
+    $active = BirthdayService::state(new DateTimeImmutable('2026-07-20 00:00:00', new DateTimeZone('Asia/Manila')));
+    $inactive = BirthdayService::state(new DateTimeImmutable('2026-07-21 00:00:00', new DateTimeZone('Asia/Manila')));
+    if (empty($active['active']) || !empty($inactive['active'])) {
+        throw new Exception('Birthday state did not activate and expire on the configured Manila date.');
+    }
+});
+
 // ----------------------------------------------------
 // 3. Security Services: RateLimiter
 // ----------------------------------------------------
@@ -160,6 +169,24 @@ it("RateLimiter correctly tracks attempts and locks out abuse", function() {
     }
 });
 
+it("Client IP forwarding headers require a trusted proxy", function() {
+    putenv('TRUSTED_PROXIES=10.0.0.0/8,2001:db8::/32');
+
+    $_SERVER['REMOTE_ADDR'] = '198.51.100.10';
+    $_SERVER['HTTP_X_FORWARDED_FOR'] = '203.0.113.8';
+    if (client_ip() !== '198.51.100.10') {
+        throw new Exception('Untrusted peer must not control the client IP.');
+    }
+
+    $_SERVER['REMOTE_ADDR'] = '10.4.5.6';
+    if (client_ip() !== '203.0.113.8') {
+        throw new Exception('Trusted CIDR proxy did not supply client IP.');
+    }
+
+    putenv('TRUSTED_PROXIES');
+    unset($_SERVER['HTTP_X_FORWARDED_FOR']);
+});
+
 // ----------------------------------------------------
 // 4. Authentication & Lockout Defense
 // ----------------------------------------------------
@@ -185,6 +212,30 @@ it("User model hashes password and verifies securely", function() {
     }
 
     // Clean up test user
+    User::delete($userId);
+});
+
+it("Authentication revalidates disabled accounts on each request", function() {
+    $username = 'test_session_' . substr(bin2hex(random_bytes(4)), 0, 8);
+    $userId = User::create([
+        'username' => $username,
+        'email' => $username . '@example.com',
+        'password' => 'Complex_Sec!2026',
+        'role' => 'editor',
+        'is_active' => 1,
+    ]);
+
+    $_SESSION['admin_user_id'] = $userId;
+    $_SESSION['admin_user_data'] = ['id' => $userId, 'role' => 'editor'];
+    if (!AuthService::check()) {
+        throw new Exception('Active account should pass session revalidation.');
+    }
+
+    User::update($userId, ['is_active' => 0]);
+    if (AuthService::check()) {
+        throw new Exception('Disabled account retained access through a stale session.');
+    }
+
     User::delete($userId);
 });
 

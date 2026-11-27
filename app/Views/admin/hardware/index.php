@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="tag">// STATUS TAG</label>
-                <input type="text" id="tag" name="tag" class="form-control" value="PRESERVED">
+                <input type="text" id="tag" name="tag" class="form-control" placeholder="e.g. PRESERVED">
             </div>
             <div class="form-group">
                 <label class="form-label" for="title">// HARDWARE TITLE</label>
@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="image_url">// IMAGE PATH / URL</label>
-                <input type="text" id="image_url" name="image_url" class="form-control" value="images/carousel-retro.jpg">
+                <input type="text" id="image_url" name="image_url" class="form-control" placeholder="e.g. images/carousel-retro.jpg">
             </div>
             <div class="form-group">
                 <label class="form-label" for="image_file">// UPLOAD IMAGE (OPTIONAL)</label>

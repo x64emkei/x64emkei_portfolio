@@ -22,11 +22,11 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="proficiency_level">// PROFICIENCY LEVEL (1-100%)</label>
-                <input type="number" id="proficiency_level" name="proficiency_level" class="form-control" value="85" min="1" max="100">
+                <input type="number" id="proficiency_level" name="proficiency_level" class="form-control" placeholder="85" min="1" max="100">
             </div>
             <div class="form-group">
                 <label class="form-label" for="display_order">// DISPLAY ORDER</label>
-                <input type="number" id="display_order" name="display_order" class="form-control" value="0">
+                <input type="number" id="display_order" name="display_order" class="form-control" placeholder="0">
             </div>
             <button type="submit" class="btn-admin btn-admin-cyan" style="width: 100%;">+ ADD SKILL</button>
         </form>

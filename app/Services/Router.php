@@ -54,16 +54,17 @@ class Router
             $uri = '/';
         }
 
+        $pathMatched = false;
         foreach ($this->routes as $route) {
-            if ($route['method'] !== $method) {
-                continue;
-            }
-
             // Convert route pattern with {param} to regex
             $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $route['path']);
             $pattern = '#^' . $pattern . '$#';
 
             if (preg_match($pattern, $uri, $matches)) {
+                $pathMatched = true;
+                if ($route['method'] !== $method) {
+                    continue;
+                }
                 // Execute Middlewares
                 foreach ($route['middleware'] as $mw) {
                     $mw::handle();
@@ -85,6 +86,16 @@ class Router
                 $controller->$action(...$params);
                 return;
             }
+        }
+
+        if ($pathMatched) {
+            http_response_code(405);
+            header('Allow: ' . implode(', ', array_unique(array_column(array_filter($this->routes, static function (array $route) use ($uri): bool {
+                $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $route['path']);
+                return preg_match('#^' . $pattern . '$#', $uri) === 1;
+            }), 'method'))));
+            echo 'Method Not Allowed';
+            return;
         }
 
         // Route Not Found (404)

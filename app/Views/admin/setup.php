@@ -18,6 +18,8 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
+            padding: 16px;
+            box-sizing: border-box;
             background-image: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 60%);
         }
         .setup-box {
@@ -101,6 +103,17 @@
             border-radius: 4px;
             margin-bottom: 20px;
         }
+        @media (max-width: 560px) {
+            .setup-box {
+                padding: 24px 20px;
+            }
+            input {
+                font-size: 16px;
+            }
+            .btn-submit {
+                min-height: 44px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -114,23 +127,23 @@
             <div class="alert"><?= e(flash('error')) ?></div>
         <?php endif; ?>
 
-        <form action="<?= e(url('admin/setup')) ?>" method="POST">
+        <form action="<?= e(url('admin/setup')) ?>" method="POST" autocomplete="off">
             <?= csrf_field() ?>
             <div class="form-group">
                 <label for="username">// USERNAME</label>
-                <input type="text" id="username" name="username" value="<?= old('username', 'x64emkei') ?>" required autofocus>
+                <input type="text" id="username" name="username" autocomplete="off" required autofocus>
             </div>
             <div class="form-group">
                 <label for="email">// NOTIFICATION EMAIL</label>
-                <input type="email" id="email" name="email" value="<?= old('email', 'mordenes@acm.org') ?>" required>
+                <input type="email" id="email" name="email" autocomplete="off" required>
             </div>
             <div class="form-group">
                 <label for="password">// MASTER PASSCODE (MINIMUM 8 CHARACTERS)</label>
-                <input type="password" id="password" name="password" minlength="8" required>
+                <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required>
             </div>
             <div class="form-group">
                 <label for="password_confirmation">// CONFIRM MASTER PASSCODE</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" minlength="8" required>
+                <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password" minlength="8" required>
             </div>
             <button type="submit" class="btn-submit">INITIALIZE ADMINISTRATOR &rarr;</button>
         </form>

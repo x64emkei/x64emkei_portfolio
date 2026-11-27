@@ -7854,21 +7854,46 @@ code {
         padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
     }
 
+    .page-container .content-section {
+        padding-inline: 0;
+    }
+
     .hero-actions,
+    .bio-card-actions,
     .project-modal-buttons,
     .hardware-modal-footer,
     .footer-bottom,
     .footer-sub-telemetry {
         align-items: stretch;
         flex-direction: column;
+        gap: var(--space-3);
     }
 
     .hero-actions .btn,
+    .bio-card-actions .btn,
     .project-modal-buttons .btn,
     .hardware-modal-footer .btn {
         justify-content: center;
         width: 100%;
         min-height: 44px;
+        text-align: center;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .btn,
+    .subnav-btn,
+    .program-badge,
+    .skill-badge {
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-control {
+        font-size: 16px;
     }
 
     .section-watermark-num {
@@ -7935,99 +7960,10 @@ code {
     }
 }
 
-/* Mobile glass mode: preserve the original skeuomorphic surfaces while
-   reducing padding and keeping every panel within the viewport. */
-@media (max-width: 700px) {
-    .bento-card,
-    .stat-card,
-    .program-card,
-    .retro-machine-card,
-    .service-card,
-    .glass-card,
-    .edu-entry-card,
-    .edu-cert-card,
-    .contact-channels-card,
-    .dichotomy-card,
-    .pillar-card,
-    .manifesto-alert-panel,
-    .manifesto-silica-card,
-    .manifesto-filipino-maxim-card,
-    .question-box,
-    .flow-card,
-    .manifesto-creed-box,
-    .hardware-logs-card,
-    .about-bio-card,
-    .about-skills-card,
-    .project-card,
-    .article-card,
-    .admin-card {
-        background: var(--card-bg) !important;
-        border: 1px solid var(--glass-border) !important;
-        border-radius: var(--card-radius-sm) !important;
-        box-shadow: var(--glass-shadow) !important;
-        backdrop-filter: var(--glass-blur) !important;
-        -webkit-backdrop-filter: var(--glass-blur) !important;
-        padding-inline: var(--space-4) !important;
-        transform: none !important;
-    }
-
-    .bento-card::before,
-    .bento-card::after,
-    .stat-card::before,
-    .stat-card::after,
-    .program-card::before,
-    .program-card::after,
-    .retro-machine-card::before,
-    .retro-machine-card::after,
-    .service-card::before,
-    .service-card::after,
-    .glass-card::before,
-    .glass-card::after {
-        display: block !important;
-        opacity: 0.7;
-    }
-
-    .program-card,
-    .retro-machine-card,
-    .service-card,
-    .project-card,
-    .article-card,
-    .admin-card {
-        border-bottom-color: var(--glass-border) !important;
-        padding-block: var(--space-4) !important;
-    }
-
-    .admin-card {
-        border-bottom-color: var(--admin-border) !important;
-    }
-
-    .program-card:first-child,
-    .retro-machine-card:first-child,
-    .service-card:first-child,
-    .project-card:first-child,
-    .article-card:first-child {
-        padding-top: 0 !important;
-    }
-
-    .program-card:last-child,
-    .retro-machine-card:last-child,
-    .service-card:last-child,
-    .project-card:last-child,
-    .article-card:last-child,
-    .admin-card:last-child {
-        border-bottom: 0 !important;
-    }
-
-    .admin-card-header {
-        background: transparent !important;
-        border: 0 !important;
-        padding-inline: 0 !important;
-    }
-}
-
-/* Mobile reading mode: flatten content surfaces into an editorial flow.
+/* Mobile reading mode: flatten public content surfaces into an editorial flow.
    Desktop keeps the original glass cards; narrow screens use spacing and
-   rules to separate content without forcing every item into a tall panel. */
+   rules to separate content without forcing every item into a tall panel.
+   CMS .admin-card surfaces are intentionally excluded so admin panels stay distinct. */
 @media (max-width: 700px) {
     .bento-card,
     .stat-card,
@@ -8057,8 +7993,7 @@ code {
     .about-bio-card,
     .about-skills-card,
     .project-card,
-    .article-card,
-    .admin-card {
+    .article-card {
         background: transparent !important;
         border: 0 !important;
         border-radius: 0 !important;
@@ -8075,8 +8010,7 @@ code {
     .program-card,
     .retro-machine-card,
     .project-card,
-    .article-card,
-    .admin-card {
+    .article-card {
         min-height: 0 !important;
         padding: var(--space-5) 0 !important;
         border-bottom: 1px solid var(--border) !important;
@@ -8123,9 +8057,7 @@ code {
     .service-card::before,
     .service-card::after,
     .glass-card::before,
-    .glass-card::after,
-    .admin-card::before,
-    .admin-card::after {
+    .glass-card::after {
         display: none !important;
     }
 
@@ -8135,7 +8067,6 @@ code {
     .retro-machine-card:last-child,
     .project-card:last-child,
     .article-card:last-child,
-    .admin-card:last-child,
     .stats-grid > .stat-card:last-child,
     .edu-container > .edu-entry-card:last-child,
     .edu-cert-section > .edu-cert-card:last-child {
@@ -8148,8 +8079,7 @@ code {
     .programs-grid-sm > .program-card:first-child,
     .portfolio-grid > .project-card:first-child,
     .contact-bento-grid > .bento-card:first-child,
-    .journal-grid > .article-card:first-child,
-    .admin-content > .admin-card:first-child {
+    .journal-grid > .article-card:first-child {
         padding-top: 0 !important;
     }
 
@@ -8167,16 +8097,6 @@ code {
         border-top: 2px solid var(--primary) !important;
         border-bottom: 0 !important;
         padding-top: var(--space-6) !important;
-    }
-
-    .admin-card {
-        border-bottom-color: var(--admin-border) !important;
-    }
-
-    .admin-card > .admin-card-header {
-        margin-bottom: var(--space-4) !important;
-        padding-bottom: var(--space-3) !important;
-        border-bottom: 1px solid var(--admin-border) !important;
     }
 
     .stats-grid {
@@ -8323,3 +8243,179 @@ code {
     height: 100%;
     background: var(--glass-beam-left);
 }
+
+/* ===========================================================================
+   2026 EDITORIAL SYSTEM RESET
+   Crimson / orange / ink only. This final layer intentionally supersedes
+   earlier glass-heavy declarations while retaining the existing HUD language.
+   ========================================================================== */
+:root {
+    --ink: #0a0a0a;
+    --ink-raised: #141414;
+    --ink-soft: #1d1d1d;
+    --paper: #fffaf6;
+    --paper-muted: #e8dfd8;
+    --gray: #a9a09a;
+    --gray-dark: #544f4c;
+    --crimson: #dc1835;
+    --crimson-bright: #ff3b54;
+    --orange: #ff6a24;
+    --orange-bright: #ff9a32;
+    --primary: var(--crimson);
+    --primary-hover: var(--crimson-bright);
+    --primary-dark: #a70f27;
+    --primary-glow: rgba(220, 24, 53, .24);
+    --accent-amber: var(--orange-bright);
+    --accent-cyan: var(--orange);
+    --accent-green: var(--orange-bright);
+    --background: var(--ink);
+    --background-dark: #050505;
+    --background-light: var(--ink-raised);
+    --text-primary: var(--paper);
+    --text-secondary: #d8cfca;
+    --text-muted: #9d938d;
+    --border: #373230;
+    --border-accent: var(--crimson);
+    --grid-border: #312d2b;
+    --sidebar-bg: rgba(10, 10, 10, .94);
+    --card-bg: rgba(20, 20, 20, .92);
+    --card-hover-bg: #202020;
+    --glass-bg: rgba(20, 20, 20, .96);
+    --glass-bg-hover: #232323;
+    --glass-border: rgba(255, 250, 246, .14);
+    --glass-blur: blur(10px);
+    --surface-bg: #161616;
+    --surface-panel: #1c1c1c;
+    --grad-text-metallic: linear-gradient(135deg, #fffaf6 0%, #d7ccc5 55%, #a79c95 100%);
+    --grad-primary: linear-gradient(115deg, var(--crimson) 0%, var(--crimson-bright) 56%, var(--orange) 100%);
+    --grad-primary-hover: linear-gradient(115deg, #f02848 0%, #ff4a5f 54%, var(--orange-bright) 100%);
+    --grad-cyan-glow: linear-gradient(115deg, var(--crimson) 0%, var(--orange) 100%);
+    --card-radius-lg: 8px;
+    --card-radius-md: 6px;
+    --card-radius-sm: 4px;
+}
+
+body.light-theme {
+    --background: #f7f1eb;
+    --background-dark: #eee5dd;
+    --background-light: #fffaf6;
+    --text-primary: #171312;
+    --text-secondary: #443d39;
+    --text-muted: #716762;
+    --border: #cfc1b8;
+    --grid-border: #c8bbb3;
+    --sidebar-bg: rgba(255, 250, 246, .96);
+    --card-bg: rgba(255, 250, 246, .96);
+    --card-hover-bg: #fff;
+    --glass-bg: rgba(255, 250, 246, .96);
+    --glass-bg-hover: #fff;
+    --glass-border: rgba(48, 39, 35, .16);
+    --surface-bg: #fffaf6;
+    --surface-panel: #f6eee8;
+    --brutalist-shadow: 4px 4px 0 #241d1a;
+    --shadow-sm: 2px 2px 0 #241d1a;
+    --shadow-md: 4px 4px 0 #241d1a;
+    --shadow-lg: 6px 6px 0 #241d1a;
+}
+
+html { scroll-padding-top: 5rem; }
+body {
+    background-color: var(--background);
+    background-image:
+        linear-gradient(rgba(255, 250, 246, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 250, 246, .035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    letter-spacing: -.01em;
+}
+body.light-theme { background-image: linear-gradient(rgba(50, 38, 32, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 38, 32, .06) 1px, transparent 1px); }
+
+.orb-cyan, .orb-violet { background: radial-gradient(circle, rgba(255, 106, 36, .22), transparent 70%) !important; }
+.ambient-laser-sweep { opacity: .32; }
+.section-header { max-width: 74rem; margin-inline: auto; }
+.section-title, .hero-title { letter-spacing: -.055em; }
+.section-subtitle, .bento-tag, .project-badge-tag { color: var(--orange) !important; }
+
+.bento-card, .project-card, .article-card, .service-card, .program-card, .retro-machine-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: none !important;
+}
+.bento-card:hover, .project-card:hover, .article-card:hover, .service-card:hover, .program-card:hover, .retro-machine-card:hover {
+    border-color: var(--orange) !important;
+    box-shadow: 5px 5px 0 rgba(220, 24, 53, .55) !important;
+    transform: translate(-2px, -2px);
+}
+.bento-card::before, .bento-card::after, .project-card::before, .project-card::after { opacity: .35 !important; }
+
+.btn, .btn-primary, .btn-outline, .btn-submit {
+    border-radius: 3px !important;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: .01em;
+}
+.btn-primary, .btn-submit { background: var(--grad-primary) !important; color: #fffaf6 !important; }
+.btn-outline { border-color: var(--orange) !important; color: var(--text-primary) !important; }
+.btn-outline:hover { background: rgba(255, 106, 36, .12) !important; }
+
+:where(a, button, input, textarea, select):focus-visible {
+    outline: 3px solid var(--orange-bright) !important;
+    outline-offset: 3px;
+    box-shadow: none !important;
+}
+
+/* Mobile-first navigation: a compact, tactile command strip. */
+.top-utility-bar {
+    background: rgba(10, 10, 10, .96) !important;
+    border-bottom: 1px solid rgba(255, 250, 246, .16);
+    backdrop-filter: blur(10px);
+}
+.utility-menu-toggle, .drawer-close-btn, .utility-theme-btn {
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 3px !important;
+}
+.sidebar { background: var(--sidebar-bg) !important; border-right-color: var(--border) !important; }
+.nav-link.active, .nav-link:hover, .sidebar-sub-link.child-active { color: var(--paper) !important; background: rgba(220, 24, 53, .14) !important; }
+.nav-link.active::before, .sidebar-sub-link.child-active::before { background: var(--orange) !important; }
+
+@media (max-width: 767px) {
+    .main-content { padding-top: 4.25rem; }
+    .hero-layout { gap: var(--space-6) !important; }
+    .hero-title { font-size: clamp(3.1rem, 16vw, 5.2rem) !important; line-height: .86; }
+    .hero-description { font-size: 1rem; line-height: 1.65; }
+    .hero-actions { display: grid; grid-template-columns: 1fr; gap: .75rem; }
+    .hero-actions .btn { justify-content: center; width: 100%; }
+    .section-header { margin-bottom: var(--space-6); }
+    .section-title { font-size: clamp(2rem, 10vw, 3rem); }
+    .project-card, .article-card { min-width: 0; }
+}
+
+@media (min-width: 1024px) {
+    .main-content { max-width: none; }
+    .view-wrapper { max-width: 1600px; padding-inline: clamp(2rem, 5vw, 6rem); }
+    .hero-title { font-size: clamp(5rem, 10vw, 9.5rem) !important; }
+    .hero-layout { align-items: end; }
+    .hero-content { max-width: 54rem; }
+    .sidebar { border-right: 1px solid rgba(255, 250, 246, .12) !important; }
+}
+
+.birthday-signal {
+    align-items: center;
+    background: linear-gradient(90deg, rgba(220, 24, 53, .18), rgba(255, 106, 36, .14));
+    border-block: 1px solid rgba(255, 154, 50, .55);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem 1rem;
+    justify-content: center;
+    padding: .75rem 1rem;
+    position: relative;
+    text-align: center;
+}
+.birthday-signal-copy { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .05em; }
+.birthday-poke { background: var(--orange); border: 1px solid var(--orange-bright); color: #170b06; cursor: pointer; font: 700 .78rem var(--font-display); min-height: 36px; padding: .45rem .75rem; }
+.birthday-poke:disabled { cursor: default; opacity: .76; }
+.birthday-response { color: var(--orange-bright); font: 700 .75rem var(--font-mono); }
+@media (prefers-reduced-motion: no-preference) { .birthday-signal { animation: birthday-signal-in .45s ease-out both; } }
+@keyframes birthday-signal-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

@@ -196,13 +196,78 @@ if (!function_exists('formatPhtDate')) {
 if (!function_exists('client_ip')) {
     function client_ip(): string
     {
-        $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-            $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $parts = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-            $ip = trim($parts[0]);
+        $remoteAddress = (string) ($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0');
+        $trustedProxies = array_filter(array_map(
+            'trim',
+            explode(',', (string) env('TRUSTED_PROXIES', ''))
+        ));
+
+        $ip = $remoteAddress;
+        // Forwarding headers can be forged by clients. Honor them only when
+        // the direct peer has been explicitly designated as a trusted proxy.
+        $isTrustedProxy = false;
+        foreach ($trustedProxies as $trustedProxy) {
+            if (ip_matches_cidr($remoteAddress, $trustedProxy)) {
+                $isTrustedProxy = true;
+                break;
+            }
+        }
+
+        if ($isTrustedProxy) {
+            if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+                $ip = (string) $_SERVER['HTTP_CF_CONNECTING_IP'];
+            } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $parts = explode(',', (string) $_SERVER['HTTP_X_FORWARDED_FOR']);
+                $ip = trim($parts[0]);
+            }
         }
         return filter_var($ip, FILTER_VALIDATE_IP) ? $ip : '0.0.0.0';
+    }
+}
+
+if (!function_exists('ip_matches_cidr')) {
+    /**
+     * Match an address against a literal IP or CIDR range without trusting
+     * client-provided forwarding headers.
+     */
+    function ip_matches_cidr(string $ip, string $network): bool
+    {
+        if (filter_var($ip, FILTER_VALIDATE_IP) === false) {
+            return false;
+        }
+
+        if (!str_contains($network, '/')) {
+            return hash_equals($network, $ip);
+        }
+
+        [$subnet, $prefix] = explode('/', $network, 2);
+        if (!ctype_digit($prefix)) {
+            return false;
+        }
+
+        $packedIp = inet_pton($ip);
+        $packedSubnet = inet_pton($subnet);
+        if ($packedIp === false || $packedSubnet === false || strlen($packedIp) !== strlen($packedSubnet)) {
+            return false;
+        }
+
+        $prefixLength = (int) $prefix;
+        $maxPrefixLength = strlen($packedIp) * 8;
+        if ($prefixLength < 0 || $prefixLength > $maxPrefixLength) {
+            return false;
+        }
+
+        $fullBytes = intdiv($prefixLength, 8);
+        $remainingBits = $prefixLength % 8;
+        if (substr($packedIp, 0, $fullBytes) !== substr($packedSubnet, 0, $fullBytes)) {
+            return false;
+        }
+
+        if ($remainingBits === 0) {
+            return true;
+        }
+
+        $mask = (0xFF << (8 - $remainingBits)) & 0xFF;
+        return (ord($packedIp[$fullBytes]) & $mask) === (ord($packedSubnet[$fullBytes]) & $mask);
     }
 }

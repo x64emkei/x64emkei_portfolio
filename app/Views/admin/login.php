@@ -18,6 +18,8 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
+            padding: 16px;
+            box-sizing: border-box;
             background-image: 
                 linear-gradient(rgba(255, 42, 42, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 42, 42, 0.03) 1px, transparent 1px);
@@ -136,6 +138,17 @@
         .back-link a:hover {
             color: var(--primary);
         }
+        @media (max-width: 560px) {
+            .login-box {
+                padding: 24px 20px;
+            }
+            input {
+                font-size: 16px;
+            }
+            .btn-submit {
+                min-height: 44px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -153,15 +166,15 @@
             <div class="alert alert-info"><?= e(flash('info')) ?></div>
         <?php endif; ?>
 
-        <form action="<?= e(url('admin/login')) ?>" method="POST">
+        <form action="<?= e(url('admin/login')) ?>" method="POST" autocomplete="off">
             <?= csrf_field() ?>
             <div class="form-group">
                 <label for="username">// USERNAME</label>
-                <input type="text" id="username" name="username" required autocomplete="username" autofocus>
+                <input type="text" id="username" name="username" required autocomplete="off" autofocus>
             </div>
             <div class="form-group">
                 <label for="password">// SECURITY CIPHER</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password">
+                <input type="password" id="password" name="password" required autocomplete="new-password">
             </div>
             <button type="submit" class="btn-submit">AUTHENTICATE &rarr;</button>
         </form>

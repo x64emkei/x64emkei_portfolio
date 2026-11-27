@@ -16,12 +16,22 @@ class ArticlesController
     public function index(): void
     {
         $pdo = \Database\Database::getConnection();
+        $user = $this->currentUser();
         $sql = "SELECT a.*, c.name as category_name, u.username as author_name 
                 FROM `articles` a
                 LEFT JOIN `article_categories` c ON c.id = a.category_id
-                LEFT JOIN `users` u ON u.id = a.author_id
-                ORDER BY a.created_at DESC";
-        $articles = $pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+                LEFT JOIN `users` u ON u.id = a.author_id";
+        if ($user['role'] === 'author') {
+            $sql .= ' WHERE a.author_id = :author_id';
+        }
+        $sql .= ' ORDER BY a.created_at DESC';
+        $stmt = $pdo->prepare($sql);
+        if ($user['role'] === 'author') {
+            $stmt->execute(['author_id' => $user['id']]);
+        } else {
+            $stmt->execute();
+        }
+        $articles = $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
 
         $renderer = new ViewRenderer();
         echo $renderer->render('admin.articles.index', [
@@ -45,6 +55,7 @@ class ArticlesController
 
     public function store(): void
     {
+        $user = $this->currentUser();
         $title = trim((string)($_POST['title'] ?? ''));
         $slug = trim((string)($_POST['slug'] ?? ''));
         if ($slug === '') {
@@ -58,6 +69,10 @@ class ArticlesController
         $categoryId = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
         $status = in_array($_POST['status'] ?? '', ['draft', 'published', 'archived']) ? $_POST['status'] : 'draft';
         $isFeatured = !empty($_POST['is_featured']) ? 1 : 0;
+        if ($user['role'] === 'author') {
+            $status = 'draft';
+            $isFeatured = 0;
+        }
         $featuredImage = trim((string)($_POST['featured_image'] ?? ''));
         $seoTitle = trim((string)($_POST['seo_title'] ?? ''));
         $seoDesc = trim((string)($_POST['seo_description'] ?? ''));
@@ -68,7 +83,7 @@ class ArticlesController
             redirect('admin/articles/create');
         }
 
-        $userId = AuthService::id();
+        $userId = (int) $user['id'];
 
         $pdo = \Database\Database::getConnection();
         $sql = "INSERT INTO `articles` 
@@ -105,17 +120,18 @@ class ArticlesController
             Article::syncTags($articleId, $tagIds);
         }
 
-        ActivityLog::record('article_create', "Created article: {$title}", $userId);
+        ActivityLog::record($userId, 'ARTICLE_CREATE', "Created article: {$title}");
         flash('success', "Article '{$title}' was created successfully.");
         redirect('admin/articles');
     }
 
-    public function edit(string $id): void
+    public function edit(int|string $id): void
     {
         $article = Article::find((int)$id);
         if (!$article) {
             throw new HttpException(404, "Article {$id} not found.");
         }
+        $this->ensureCanManageArticle($article);
 
         $categories = ArticleCategory::allOrdered();
         $tags = ArticleTag::allOrdered();
@@ -132,12 +148,14 @@ class ArticlesController
         ], 'admin.layout');
     }
 
-    public function update(string $id): void
+    public function update(int|string $id): void
     {
+        $id = (int)$id;
         $article = Article::find((int)$id);
         if (!$article) {
             throw new HttpException(404, "Article {$id} not found.");
         }
+        $user = $this->ensureCanManageArticle($article);
 
         $title = trim((string)($_POST['title'] ?? ''));
         $slug = trim((string)($_POST['slug'] ?? ''));
@@ -147,6 +165,10 @@ class ArticlesController
         $categoryId = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
         $status = in_array($_POST['status'] ?? '', ['draft', 'published', 'archived']) ? $_POST['status'] : 'draft';
         $isFeatured = !empty($_POST['is_featured']) ? 1 : 0;
+        if ($user['role'] === 'author') {
+            $status = 'draft';
+            $isFeatured = 0;
+        }
         $featuredImage = trim((string)($_POST['featured_image'] ?? ''));
         $seoTitle = trim((string)($_POST['seo_title'] ?? ''));
         $seoDesc = trim((string)($_POST['seo_description'] ?? ''));
@@ -199,19 +221,41 @@ class ArticlesController
             Article::syncTags((int)$id, $tagIds);
         }
 
-        ActivityLog::record('article_update', "Updated article record #{$id}: {$title}", AuthService::id());
+        ActivityLog::record(AuthService::id(), 'ARTICLE_UPDATE', "Updated article record #{$id}: {$title}");
         flash('success', "Article '{$title}' updated successfully.");
         redirect('admin/articles');
     }
 
-    public function delete(string $id): void
+    public function delete(int|string $id): void
     {
-        $article = Article::find((int)$id);
+        $id = (int)$id;
+        $article = Article::find($id);
         if ($article) {
-            Article::delete((int)$id);
-            ActivityLog::record('article_delete', "Deleted article #{$id}: {$article['title']}", AuthService::id());
+            $this->ensureCanManageArticle($article);
+            Article::delete($id);
+            ActivityLog::record(AuthService::id(), 'ARTICLE_DELETE', "Deleted article #{$id}: {$article['title']}");
             flash('success', "Article deleted successfully.");
         }
         redirect('admin/articles');
+    }
+
+    private function currentUser(): array
+    {
+        $user = AuthService::user();
+        if ($user === null) {
+            throw new HttpException(403, 'Authentication context is unavailable.');
+        }
+
+        return $user;
+    }
+
+    private function ensureCanManageArticle(array $article): array
+    {
+        $user = $this->currentUser();
+        if ($user['role'] === 'author' && (int) ($article['author_id'] ?? 0) !== (int) $user['id']) {
+            throw new HttpException(403, 'Authors may only manage their own articles.');
+        }
+
+        return $user;
     }
 }

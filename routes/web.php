@@ -84,6 +84,7 @@ $router->get('privacy', [HomeController::class, 'privacy']);
 $router->get('terms', [HomeController::class, 'terms']);
 $router->get('accessibility', [HomeController::class, 'accessibility']);
 $router->get('sitemap', [HomeController::class, 'sitemap']);
+$router->get('sitemap.xml', [HomeController::class, 'sitemapXml']);
 
 $router->get('health', [ApiController::class, 'health']);
 
@@ -99,7 +100,6 @@ $router->get('admin/login', [AuthController::class, 'login']);
 $router->post('admin/login', [AuthController::class, 'authenticate'], [CsrfMiddleware::class]);
 $router->get('admin/setup', [AuthController::class, 'setup']);
 $router->post('admin/setup', [AuthController::class, 'createFirstAdmin'], [CsrfMiddleware::class]);
-$router->get('admin/logout', [AuthController::class, 'logout']);
 $router->post('admin/logout', [AuthController::class, 'logout'], [CsrfMiddleware::class]);
 
 // ==========================================

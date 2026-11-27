@@ -18,7 +18,7 @@ class ApiController
     public function project(string $slug): void
     {
         $project = Project::findBySlug($slug);
-        if (!$project) {
+        if (!$project || empty($project['is_published'])) {
             json_response(['status' => 'error', 'message' => 'Project record not found in telemetry registry.'], 404);
         }
 
@@ -29,10 +29,10 @@ class ApiController
         json_response(['status' => 'success', 'data' => $project]);
     }
 
-    public function hardware(string $id): void
+    public function hardware(int|string $id): void
     {
         $node = HardwareNode::find((int)$id);
-        if (!$node) {
+        if (!$node || (array_key_exists('is_published', $node) && empty($node['is_published']))) {
             json_response(['status' => 'error', 'message' => 'Hardware node not found in archive.'], 404);
         }
 
@@ -55,11 +55,6 @@ class ApiController
         json_response([
             'status' => $healthy ? 'healthy' : 'degraded',
             'timestamp' => date('c'),
-            'subsystems' => [
-                'php' => PHP_VERSION,
-                'database' => $dbStatus,
-                'storage' => is_writable(dirname(__DIR__, 2) . '/storage/logs') ? 'writable' : 'readonly',
-            ]
         ], $healthy ? 200 : 503);
     }
 }

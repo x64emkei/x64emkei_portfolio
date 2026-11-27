@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /app/
+Disallow: /bootstrap/
+Disallow: /config/
+Disallow: /database/
+Disallow: /storage/logs/
+Disallow: /storage/cache/
+
+Sitemap: /sitemap.xml
