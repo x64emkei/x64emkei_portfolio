@@ -11,7 +11,7 @@ $techRaw = implode(", ", json_decode($project['technologies_json'] ?: '[]', true
     <form action="<?= e(url('admin/projects/' . $project['id'] . '/edit')) ?>" method="POST" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="title">// PROJECT TITLE</label>
                 <input type="text" id="title" name="title" class="form-control" value="<?= e($project['title']) ?>" required>
@@ -26,7 +26,7 @@ $techRaw = implode(", ", json_decode($project['technologies_json'] ?: '[]', true
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="filter_tag">// FILTER TAG</label>
                 <select id="filter_tag" name="filter_tag" class="form-control">
@@ -62,7 +62,7 @@ $techRaw = implode(", ", json_decode($project['technologies_json'] ?: '[]', true
             <textarea id="features_raw" name="features_raw" class="form-control" rows="4"><?= e($featuresRaw) ?></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid">
             <div class="form-group">
                 <label class="form-label" for="code_filename">// SAMPLE CODE FILENAME</label>
                 <input type="text" id="code_filename" name="code_filename" class="form-control" value="<?= e($project['code_filename'] ?? '') ?>">
@@ -78,7 +78,7 @@ $techRaw = implode(", ", json_decode($project['technologies_json'] ?: '[]', true
             <textarea id="code_snippet" name="code_snippet" class="form-control" rows="6" style="font-family: monospace;"><?= e($project['code_snippet'] ?? '') ?></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="github_url">// GITHUB REPOSITORY URL</label>
                 <input type="url" id="github_url" name="github_url" class="form-control" value="<?= e($project['github_url'] ?? '') ?>">

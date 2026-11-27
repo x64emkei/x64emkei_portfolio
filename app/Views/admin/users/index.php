@@ -5,7 +5,7 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+<div class="layout-split">
     <div class="admin-card">
         <h3 style="color: var(--admin-cyan); font-size: 0.95rem; margin-top: 0; margin-bottom: 16px;">// OPERATOR ROSTER</h3>
         <table class="admin-table">

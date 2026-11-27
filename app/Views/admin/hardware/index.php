@@ -1,4 +1,4 @@
-<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+<div class="layout-split">
     <!-- Add Hardware Form -->
     <div class="admin-card">
         <div class="admin-card-header">

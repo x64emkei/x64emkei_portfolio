@@ -1,4 +1,4 @@
-<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+<div class="layout-split">
     <!-- Add Achievement Form -->
     <div class="admin-card">
         <div class="admin-card-header">
@@ -40,7 +40,7 @@
                 <label class="form-label" for="description">// CITATION / DESCRIPTION</label>
                 <textarea id="description" name="description" class="form-control" rows="3" placeholder="Brief details about the recognition..."></textarea>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div class="layout-form-grid" style="margin-bottom: 16px;">
                 <div>
                     <label class="form-label" for="display_order">// SEQUENCE</label>
                     <input type="number" id="display_order" name="display_order" class="form-control" value="0">

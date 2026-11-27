@@ -1,4 +1,4 @@
-<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+<div class="layout-split">
     <!-- Add Experience Form -->
     <div class="admin-card">
         <div class="admin-card-header">
@@ -18,7 +18,7 @@
                 <label class="form-label" for="location">// LOCATION</label>
                 <input type="text" id="location" name="location" class="form-control">
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="layout-form-grid" style="gap: 10px;">
                 <div class="form-group">
                     <label class="form-label" for="period_start">// START</label>
                     <input type="text" id="period_start" name="period_start" class="form-control" placeholder="2023" required>

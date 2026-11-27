@@ -7,7 +7,7 @@
     <form action="<?= e(url('admin/projects/create')) ?>" method="POST" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="title">// PROJECT TITLE</label>
                 <input type="text" id="title" name="title" class="form-control" placeholder="e.g. Valkyrie POS Pro" required>
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="filter_tag">// FILTER TAG (csharp, python, cpp, web, systems)</label>
                 <select id="filter_tag" name="filter_tag" class="form-control">
@@ -58,7 +58,7 @@
             <textarea id="features_raw" name="features_raw" class="form-control" rows="4" placeholder="Local Write-Ahead Transaction Ledger&#10;Peer-to-peer multi-terminal sync&#10;Hardware abstraction layer for ESC/POS"></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid">
             <div class="form-group">
                 <label class="form-label" for="code_filename">// SAMPLE CODE FILENAME</label>
                 <input type="text" id="code_filename" name="code_filename" class="form-control" placeholder="ValkyrieEngine.cs">
@@ -74,7 +74,7 @@
             <textarea id="code_snippet" name="code_snippet" class="form-control" rows="6" style="font-family: monospace;"></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="github_url">// GITHUB REPOSITORY URL</label>
                 <input type="url" id="github_url" name="github_url" class="form-control" value="https://github.com/x64_emkei">

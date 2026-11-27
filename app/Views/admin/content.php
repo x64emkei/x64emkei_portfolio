@@ -17,7 +17,7 @@
         </div>
         <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Manage biographical profiles, academic history, technical proficiencies, career experience, and certifications.</p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+        <div class="layout-auto-grid" style="gap: 14px;">
             <a href="<?= e(url('admin/profile')) ?>" style="text-decoration: none; display: block; background: rgba(7, 9, 14, 0.6); border: 1px solid var(--admin-border); padding: 16px; border-radius: 4px; transition: border-color 0.2s;">
                 <div style="font-size: 0.75rem; color: var(--admin-cyan); font-weight: 700;">/about/biography</div>
                 <div style="font-size: 0.95rem; font-weight: 600; color: #f8fafc; margin: 4px 0;">Biography & Profile</div>
@@ -57,7 +57,7 @@
         </div>
         <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Control production software projects, engineering services, laboratory telemetry, and vintage hardware archives.</p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+        <div class="layout-auto-grid" style="gap: 14px;">
             <a href="<?= e(url('admin/projects')) ?>" style="text-decoration: none; display: block; background: rgba(7, 9, 14, 0.6); border: 1px solid var(--admin-border); padding: 16px; border-radius: 4px; transition: border-color 0.2s;">
                 <div style="font-size: 0.75rem; color: var(--admin-magenta); font-weight: 700;">/work/projects</div>
                 <div style="font-size: 0.95rem; font-weight: 600; color: #f8fafc; margin: 4px 0;">Projects Matrix (<?= (int)($counts['projects'] ?? 0) ?>)</div>
@@ -92,7 +92,7 @@
         </div>
         <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">Publish technical blogs, tutorials, deep-dive research, technical notes, and manage the AI Manifesto.</p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+        <div class="layout-auto-grid" style="gap: 14px;">
             <a href="<?= e(url('admin/articles')) ?>" style="text-decoration: none; display: block; background: rgba(7, 9, 14, 0.6); border: 1px solid var(--admin-border); padding: 16px; border-radius: 4px; transition: border-color 0.2s;">
                 <div style="font-size: 0.75rem; color: var(--admin-green); font-weight: 700;">/journal/blog & /journal/articles</div>
                 <div style="font-size: 0.95rem; font-weight: 600; color: #f8fafc; margin: 4px 0;">All Articles (<?= (int)($counts['articles'] ?? 0) ?>)</div>
@@ -112,7 +112,7 @@
     </div>
 
     <!-- CONTACT & HOME SECTIONS MANAGEMENT -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+    <div class="layout-form-grid" style="gap: 24px;">
         <!-- CONTACT MANAGEMENT -->
         <div class="admin-card">
             <div class="admin-card-header" style="border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding-bottom: 12px; margin-bottom: 18px;">

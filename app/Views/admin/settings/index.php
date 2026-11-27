@@ -6,7 +6,7 @@
     <form action="<?= e(url('admin/settings')) ?>" method="POST">
         <?= csrf_field() ?>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid">
             <div class="form-group">
                 <label class="form-label" for="site_title">// PORTFOLIO TITLE</label>
                 <input type="text" id="site_title" name="site_title" class="form-control" value="<?= e($settings['site_title'] ?? '') ?>" required>
@@ -32,7 +32,7 @@
             <input type="text" id="meta_keywords" name="meta_keywords" class="form-control" value="<?= e($settings['meta_keywords'] ?? '') ?>">
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="contact_email">// PRIMARY CONTACT INBOX</label>
                 <input type="email" id="contact_email" name="contact_email" class="form-control" value="<?= e($settings['contact_email'] ?? '') ?>">

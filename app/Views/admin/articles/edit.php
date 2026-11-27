@@ -12,7 +12,7 @@
         <input type="text" id="title" name="title" class="form-control" required value="<?= e($article['title']) ?>">
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <div class="layout-form-grid" style="gap: 16px;">
         <div class="form-group">
             <label class="form-label" for="slug">URL SLUG</label>
             <input type="text" id="slug" name="slug" class="form-control" value="<?= e($article['slug']) ?>">
@@ -40,7 +40,7 @@
         <textarea id="content" name="content" class="form-control" rows="14" required><?= e($article['content'] ?? '') ?></textarea>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <div class="layout-form-grid" style="gap: 16px;">
         <div class="form-group">
             <label class="form-label" for="tags_input">TAGS (COMMA SEPARATED)</label>
             <input type="text" id="tags_input" name="tags_input" class="form-control" value="<?= e($articleTagNames ?? '') ?>">
@@ -53,7 +53,7 @@
 
     <div style="border-top: 1px solid var(--admin-border); margin: 24px 0 20px 0; padding-top: 20px;">
         <h3 style="color: var(--admin-cyan); font-size: 0.95rem; margin-top: 0;">// SEO METADATA</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="layout-form-grid" style="gap: 16px;">
             <div class="form-group">
                 <label class="form-label" for="seo_title">SEO TITLE OVERRIDE</label>
                 <input type="text" id="seo_title" name="seo_title" class="form-control" value="<?= e($article['seo_title'] ?? '') ?>">

@@ -9,7 +9,7 @@
     <!-- Upload Box -->
     <form action="<?= e(url('admin/media/upload')) ?>" method="POST" enctype="multipart/form-data" style="margin-bottom: 24px; padding: 18px; border: 1px dashed var(--admin-border); border-radius: 4px; background: rgba(255,42,42,0.02);">
         <?= csrf_field() ?>
-        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 14px; align-items: end;">
+        <div class="layout-media-grid" style="gap: 14px;">
             <div class="form-group" style="margin-bottom: 0;">
                 <label class="form-label" for="file">// SELECT MEDIA FILE (JPEG, PNG, WEBP, GIF, SVG - MAX 8MB)</label>
                 <input type="file" id="file" name="file" class="form-control" required accept="image/*">

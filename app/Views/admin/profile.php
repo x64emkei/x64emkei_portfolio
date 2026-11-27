@@ -6,7 +6,7 @@
     <form action="<?= e(url('admin/profile')) ?>" method="POST" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid">
             <div class="form-group">
                 <label class="form-label" for="full_name">// FULL NAME</label>
                 <input type="text" id="full_name" name="full_name" class="form-control" value="<?= e($profile['full_name'] ?? '') ?>" required>
@@ -32,7 +32,7 @@
             <textarea id="bio_full" name="bio_full" class="form-control" rows="5"><?= e($profile['bio_full'] ?? '') ?></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid-3">
             <div class="form-group">
                 <label class="form-label" for="location">// LOCATION</label>
                 <input type="text" id="location" name="location" class="form-control" value="<?= e($profile['location'] ?? '') ?>">
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="layout-form-grid">
             <div class="form-group">
                 <label class="form-label" for="avatar_url">// AVATAR IMAGE PATH / URL</label>
                 <input type="text" id="avatar_url" name="avatar_url" class="form-control" value="<?= e($profile['avatar_url'] ?? '') ?>">

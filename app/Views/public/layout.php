@@ -98,7 +98,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 <div class="stat-card">
                                     <div class="stat-header-row">
                                         <span class="stat-badge">DEV.CORE</span>
-                                        <span class="stat-tag-mini">16 BUILDS</span>
+                                        <span class="stat-tag-mini"><?= count($projects ?? []) ?> BUILDS</span>
                                     </div>
                                     <span class="stat-number">Software</span>
                                     <span class="stat-label">C#, C++, Python, WASM & WebDev</span>
@@ -106,7 +106,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 <div class="stat-card">
                                     <div class="stat-header-row">
                                         <span class="stat-badge stat-badge-sys">LAB.VIRT</span>
-                                        <span class="stat-tag-mini">24/7 ONLINE</span>
+                                        <span class="stat-tag-mini">LAB INFRA</span>
                                     </div>
                                     <span class="stat-number">Homelab</span>
                                     <span class="stat-label">Proxmox VE, Debian & Docker</span>
@@ -114,7 +114,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 <div class="stat-card">
                                     <div class="stat-header-row">
                                         <span class="stat-badge stat-badge-net">NET.MESH</span>
-                                        <span class="stat-tag-mini">ENCRYPTED</span>
+                                        <span class="stat-tag-mini">PRIVATE ACCESS</span>
                                     </div>
                                     <span class="stat-number">Mesh Net</span>
                                     <span class="stat-label">Tailscale, WireGuard & DNS</span>
@@ -122,7 +122,7 @@ $secHelper = new \App\Renderers\SectionRenderer($sections ?? []);
                                 <div class="stat-card">
                                     <div class="stat-header-row">
                                         <span class="stat-badge stat-badge-hw">SYS.ARCHIVE</span>
-                                        <span class="stat-tag-mini">6 NODES</span>
+                                        <span class="stat-tag-mini"><?= count($hardwareNodes ?? []) ?> NODES</span>
                                     </div>
                                     <span class="stat-number">Hardware</span>
                                     <span class="stat-label">Restoration & Legacy Platforms</span>

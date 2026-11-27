@@ -6172,6 +6172,27 @@ body.light-theme .activity-item {
     }
 }
 
+@media (min-width: 768px) and (max-width: 1040px) {
+    .hero-layout {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: auto;
+    }
+
+    .hero-container {
+        min-height: auto;
+        padding-block: 36px;
+    }
+
+    .hero-image-panel {
+        width: min(100%, 560px);
+        margin-inline: auto;
+    }
+
+    .main-content [style*="grid-template-columns"] {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+
 /* ==========================================================================
    PORTFOLIO SUBSECTIONS & FEATURED HIGHLIGHTS
    ========================================================================== */
@@ -7629,4 +7650,278 @@ body.light-theme .footer-links a:hover {
 body.light-theme .footer-bottom {
     border-top-color: rgba(15, 23, 42, 0.1);
     color: #64748B;
+}
+
+/* ===========================================================================
+   RESPONSIVE COMPOSITION PRIMITIVES
+   Shared across public and CMS templates. These preserve the existing hard
+   edges, carbon panels, and crimson telemetry while replacing brittle inline
+   desktop-only grids.
+   =========================================================================== */
+.layout-split,
+.layout-form-grid,
+.layout-form-grid-3,
+.layout-form-grid-4,
+.layout-media-grid,
+.layout-auto-grid {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+}
+
+.layout-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--space-6);
+}
+
+.layout-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.layout-form-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.layout-form-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.layout-media-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(160px, 1fr) minmax(160px, 1fr) auto;
+    align-items: end;
+}
+
+.layout-auto-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+.table-scroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll > table {
+    min-width: 600px;
+}
+
+@media (max-width: 900px) {
+    .layout-split {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .layout-media-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .layout-media-grid > :first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .layout-form-grid,
+    .layout-form-grid-3,
+    .layout-form-grid-4,
+    .layout-media-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .layout-media-grid > :first-child {
+        grid-column: auto;
+    }
+}
+
+/* ===========================================================================
+   PRODUCTION RESPONSIVE GUARDRAILS
+   Preserve the crimson HUD language while keeping every public view inside
+   the viewport at narrow widths and high zoom levels.
+   =========================================================================== */
+html {
+    overflow-x: clip;
+}
+
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+main,
+section,
+article,
+aside,
+header,
+footer,
+.view-wrapper,
+.page-view,
+.content-section,
+.bento-card,
+.program-card,
+.retro-machine-card,
+.section-box,
+.hud-panel,
+.site-footer {
+    min-width: 0;
+}
+
+.main-content,
+.view-wrapper,
+.page-view,
+.content-section,
+.section-box,
+.hud-panel,
+.bento-card,
+.program-card,
+.retro-machine-card,
+.modal-block-text,
+.article-content,
+.footer-brand-desc {
+    overflow-wrap: anywhere;
+}
+
+.project-modal-container,
+.hardware-modal-container,
+.manifesto-modal-container {
+    max-width: min(96vw, 1100px);
+    max-height: min(92dvh, 1000px);
+}
+
+.modal-code-viewer,
+pre,
+code {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 900px) {
+    .hero-layout,
+    .dossier-grid,
+    .about-bento-grid,
+    .work-bento-grid,
+    .contact-bento-grid,
+    .journal-grid {
+        min-width: 0;
+    }
+
+    .hero-actions,
+    .project-modal-buttons,
+    .hardware-modal-footer,
+    .footer-bottom,
+    .footer-sub-telemetry {
+        gap: var(--space-3);
+    }
+}
+
+@media (max-width: 700px) {
+    .main-content {
+        width: 100%;
+        padding-inline: 0;
+    }
+
+    .view-wrapper,
+    .page-view {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .page-view,
+    .content-section {
+        padding-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
+    }
+
+    .hero-actions,
+    .project-modal-buttons,
+    .hardware-modal-footer,
+    .footer-bottom,
+    .footer-sub-telemetry {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .hero-actions .btn,
+    .project-modal-buttons .btn,
+    .hardware-modal-footer .btn {
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .section-watermark-num {
+        font-size: clamp(4rem, 22vw, 7rem);
+        right: 8px;
+    }
+
+    .hero-title {
+        font-size: clamp(2.7rem, 17vw, 4.2rem);
+        overflow-wrap: anywhere;
+    }
+
+    .project-modal-container,
+    .hardware-modal-container,
+    .manifesto-modal-container {
+        width: calc(100vw - 24px);
+        max-width: none;
+        max-height: calc(100dvh - 24px);
+        margin: 12px;
+    }
+
+    .modal-tech-pills-row,
+    .project-filter-row,
+    .subnav-tabs {
+        flex-wrap: wrap;
+    }
+
+    .modal-tech-pills-row,
+    .project-filter-row {
+        overflow-x: visible;
+    }
+
+    [style*="grid-template-columns"] {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    [style*="display: flex"] {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 420px) {
+    .utility-brand,
+    .utility-actions,
+    .hero-tag,
+    .hero-subtitle-badge,
+    .footer-telemetry-pill {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .utility-manifesto-btn .manifesto-btn-text,
+    .utility-status-pill,
+    .telemetry-sep {
+        display: none;
+    }
+
+    .footer-inner {
+        padding-inline: 16px;
+    }
+
+    .retro-machine-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }

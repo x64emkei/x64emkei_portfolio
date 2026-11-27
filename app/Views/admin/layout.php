@@ -342,6 +342,49 @@ $currentUser = AuthService::user();
                 min-width: 600px;
             }
         }
+
+        @media (max-width: 700px) {
+            .admin-main,
+            .admin-content,
+            .admin-card,
+            .admin-card-header,
+            .admin-topbar,
+            .admin-topbar > div {
+                min-width: 0;
+            }
+            .admin-content {
+                padding: 16px 12px;
+            }
+            .admin-topbar {
+                height: auto;
+                min-height: 60px;
+                padding: 10px 12px;
+                align-items: flex-start;
+            }
+            .admin-topbar > div:last-child {
+                font-size: 0.72rem !important;
+                overflow-wrap: anywhere;
+                text-align: right;
+            }
+            .admin-card {
+                padding: 14px;
+            }
+            .admin-card-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .admin-content [style*="grid-template-columns"] {
+                grid-template-columns: minmax(0, 1fr) !important;
+            }
+            .admin-content [style*="display: flex"] {
+                flex-wrap: wrap;
+            }
+            .btn-admin {
+                min-height: 42px;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body class="admin-body">

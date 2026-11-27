@@ -26,7 +26,7 @@
 </div>
 
 <!-- Two-Column Diagnostics Grid -->
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+<div class="layout-form-grid" style="gap: 24px;">
 
     <!-- PHP Runtime Telemetry -->
     <div class="admin-card">
@@ -96,7 +96,7 @@
         <div class="admin-card-header">
             <h3 class="admin-card-title">&#128451; Active Database Tables (<?= count($systemInfo['database']['tables']) ?>)</h3>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+        <div class="layout-auto-grid" style="gap: 10px;">
             <?php foreach ($systemInfo['database']['tables'] as $tbl): ?>
                 <div style="background: rgba(7, 9, 14, 0.6); border: 1px solid var(--admin-border); padding: 8px 12px; border-radius: 4px; font-family: monospace; font-size: 0.8rem; color: #94a3b8;">
                     <span style="color: var(--admin-cyan);">&#9656;</span> <?= e($tbl) ?>

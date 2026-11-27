@@ -4,7 +4,7 @@
 </div>
 
 <!-- Telemetry Stats Bento Grid -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 30px;">
+<div class="layout-auto-grid" style="gap: 18px; margin-bottom: 30px;">
     <div class="admin-card" style="margin-bottom: 0;">
         <div class="form-label">// PROJECTS REGISTRY</div>
         <div style="font-size: 2rem; font-weight: 700; color: var(--admin-cyan);"><?= e((string)$stats['total_projects']) ?></div>
@@ -64,7 +64,7 @@
 </div>
 
 <!-- Two Column Info Grid -->
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+<div class="layout-form-grid" style="gap: 24px;">
     <!-- Recent Transmitted Messages -->
     <div class="admin-card">
         <div class="admin-card-header">
